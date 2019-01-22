@@ -1,0 +1,124 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module ctype</title>
+<meta charset="utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>ctype</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/rsayle/api/dnac/ctype.py">/home/rsayle/api/dnac/ctype.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="__builtin__.html#object">__builtin__.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="ctype.html#CType">CType</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="CType">class <strong>CType</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Class&nbsp;<a href="#CType">CType</a>&nbsp;stores&nbsp;the&nbsp;content&nbsp;type&nbsp;a&nbsp;user&nbsp;wants&nbsp;a&nbsp;CRUD&nbsp;API&nbsp;to&nbsp;return.<br>
+&nbsp;<br>
+Attributes:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ctype:&nbsp;The&nbsp;content&nbsp;type&nbsp;to&nbsp;return.&nbsp;&nbsp;Valid&nbsp;types&nbsp;include:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"applicaion/json"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"application/xml"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;public<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;"application/json"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;hdr:&nbsp;a&nbsp;string&nbsp;for&nbsp;constructing&nbsp;CRUD&nbsp;request&nbsp;headers<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;public<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;"'Content-Type':&nbsp;application/json"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;hdrs:&nbsp;a&nbsp;dict&nbsp;for&nbsp;constructing&nbsp;CRUD&nbsp;request&nbsp;headers<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;dict<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;public<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;{'Content-Type':&nbsp;application/json}<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="CType-__init__"><strong>__init__</strong></a>(self, contentType<font color="#909090">='application/json'</font>)</dt><dd><tt>Method&nbsp;__init__&nbsp;initializes&nbsp;a&nbsp;<a href="#CType">CType</a>&nbsp;<a href="__builtin__.html#object">object</a>.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;contentType:&nbsp;content&nbsp;type&nbsp;to&nbsp;return.&nbsp;&nbsp;Valid&nbsp;types&nbsp;include:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"applicaion/json"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"application/xml"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;"application/json"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;No<br>
+&nbsp;<br>
+Return&nbsp;Values:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#CType">CType</a>&nbsp;<a href="__builtin__.html#object">object</a>:&nbsp;The&nbsp;newly&nbsp;constructed&nbsp;content&nbsp;type&nbsp;<a href="__builtin__.html#object">object</a>.<br>
+&nbsp;<br>
+Usage:&nbsp;c&nbsp;=&nbsp;<a href="#CType">CType</a>()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c&nbsp;=&nbsp;<a href="#CType">CType</a>(contentType="&lt;content&nbsp;type&gt;")</tt></dd></dl>
+
+<dl><dt><a name="CType-__str__"><strong>__str__</strong></a>(self)</dt><dd><tt>String&nbsp;handler&nbsp;for&nbsp;a&nbsp;<a href="#CType">CType</a>&nbsp;<a href="__builtin__.html#object">object</a>.<br>
+&nbsp;<br>
+Usage:&nbsp;c&nbsp;=&nbsp;<a href="#CType">CType</a>()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;str(c)</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>ctype</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;ctype&nbsp;returns&nbsp;the&nbsp;string&nbsp;value&nbsp;of&nbsp;__ctype.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;<br>
+Return&nbsp;Values:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;The&nbsp;content&nbsp;type&nbsp;selected.<br>
+&nbsp;<br>
+Usage:&nbsp;c&nbsp;=&nbsp;CType()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c.ctype</tt></dd>
+</dl>
+<dl><dt><strong>hdr</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;hdr&nbsp;returns&nbsp;the&nbsp;string&nbsp;value&nbsp;of&nbsp;__hdr.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;<br>
+Return&nbsp;Values:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;A&nbsp;string&nbsp;formatted&nbsp;as&nbsp;"'Content-Type':&nbsp;'&lt;ctype&gt;'"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;which&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;construct&nbsp;headers&nbsp;for&nbsp;CRUD<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;requests.<br>
+&nbsp;<br>
+Usage:&nbsp;c&nbsp;=&nbsp;CType()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c.hdr</tt></dd>
+</dl>
+<dl><dt><strong>hdrs</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;hdrs&nbsp;returns&nbsp;the&nbsp;string&nbsp;value&nbsp;of&nbsp;__hdrs.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;<br>
+Return&nbsp;Values:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;The&nbsp;dictionary&nbsp;{'Content-Type':&nbsp;'&lt;ctype&gt;'},&nbsp;which<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;build&nbsp;headers&nbsp;for&nbsp;CRUD&nbsp;requests<br>
+&nbsp;<br>
+Usage:&nbsp;c&nbsp;=&nbsp;CType()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c.hdrs</tt></dd>
+</dl>
+</td></tr></table></td></tr></table>
+</body></html>
