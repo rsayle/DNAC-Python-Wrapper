@@ -7,34 +7,35 @@ import json
 
 class XAuthToken(object):
     '''
-    Class XAuthToken stores a token used to authenticate DNAC API calls.
+    Class XAuthToken stores a token used to authenticate Cisco DNAC API
+    calls.
 
     Dnac objects contain one XAuthToken instance for all of its DnacApi
-    instances to reference when making a request to DNAC.  Use the
+    instances to reference when making a request to Cisco DNAC.  Use the
     Dnac.token class method to access the current token value instead
     of referencing the Dnac.xauth attribute, which is an instantiation
     of this class.
 
     Attributes:
-        url: The base URL for contacting DNAC.
+        url: The base URL for contacting Cisco DNAC.
             type: str
             default: None
         bauth: A basic authentication object for requesting a token
-               from DNAC.
+               from Cisco DNAC.
             type: BasicAuth object
             default: None
-        ctype: A content type object for requesting a token from DNAC.
+        ctype: A content type object for requesting a token from Cisco DNAC.
             type: CType object
             default: CType("application/json")
-        respath: The resource path used to request a token from DNAC.
+        respath: The resource path used to request a token from Cisco DNAC.
             type: str
             default: "/api/system/v1/auth/token"
         verify: Flag indicating whether or not the request should verify
-                DNAC's certificate.
+                Cisco DNAC's certificate.
             type: boolean
             default: False
         timeout: The number of seconds the request for a token should wait
-                 before assuming DNAC is unavailable.
+                 before assuming Cisco DNAC is unavailable.
             type: int
             default: 5
     '''
@@ -48,9 +49,9 @@ class XAuthToken(object):
                  timeout=5):
        '''
        The __init__ method initializes an XAuthToken object.  It takes
-       a URL pointing to the DNAC cluster and a BasicAuth object for the
-       token request.  When creating a Dnac object, the object's __init__
-       method passes its base URL (Dnac.url), its BasicAuth object
+       a URL pointing to the Cisco DNAC cluster and a BasicAuth object for
+       the token request.  When creating a Dnac object, the object's
+       __init__ method passes its base URL (Dnac.url), its BasicAuth object
        (Dnac.__bauth) and its chosen content type (Dnac.__ctype).  This
        ensures that the XAuthToken instance (Dnac.__xauth) remains
        consistent with all of the DnacApi objects Dnac uses, i.e. any
@@ -58,16 +59,16 @@ class XAuthToken(object):
        remain the same when calling on the XAuthToken instance.
 
        Parameters:
-            url: The URL for reaching DNAC.
+            url: The URL for reaching Cisco DNAC.
                 type: str
                 default: None
                 required: Yes
-            basicAuth: A BasicAuth object for logging into DNAC.
+            basicAuth: A BasicAuth object for logging into Cisco DNAC.
                 type: BasicAuth object
                 default: None
                 required: Yes
             conentType: A CType object indicating the token's format
-                        requested from DNAC
+                        requested from Cisco DNAC
                 type: CType object
                 default: CType("application/json")
                 required: No
@@ -75,11 +76,12 @@ class XAuthToken(object):
                 type: str
                 default: "/api/system/v1/auth/token"
                 required: No
-            verify: A flag used to check DNAC's certificate.
+            verify: A flag used to check Cisco DNAC's certificate.
                 type: boolean
                 default: False
                 required: No
-            timeout: The number of seconds to wait for DNAC's response.
+            timeout: The number of seconds to wait for Cisco DNAC's
+                     response.
                 type: int
                 default: 5
                 required: No
@@ -425,7 +427,7 @@ class XAuthToken(object):
                                 verify=self.verify, \
                                 timeout=self.timeout)
         if resp.status_code != requests.codes.ok:
-            print "Failed to get a token from DNAC: " + \
+            print "Failed to get a token from Cisco DNAC: " + \
                   str(resp.status_code)
         else:
             self.__token = json.loads(resp.text)['Token']

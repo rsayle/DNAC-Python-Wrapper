@@ -26,7 +26,7 @@ class Dnac(object):
     each setting.
 
     Upon instantiation, a Dnac object uses the values in the config file
-    to perform the initial login, retrieve an XAuth token from DNAC,
+    to perform the initial login, retrieve an XAuth token from Cisco DNAC,
     sets the content type for responses, and creates a base URL for
     issuing API calls.
 
@@ -40,36 +40,36 @@ class Dnac(object):
 
     Attributes:
         version: 
-            str: The version DNAC software running on the cluster.
+            str: The version Cisco DNAC software running on the cluster.
             default: DNAC_VERSION
         name:
-            str: The FQDN used to reach the DNAC cluster.
+            str: The FQDN used to reach the Cisco DNAC cluster.
             default: DNAC_NAME
         ip:
-            str: An IPv4 address used to reach the DNAC cluster when an
-                 FQDN is not available.
+            str: An IPv4 address used to reach the Cisco DNAC cluster when
+                 an FQDN is not available.
             default: DNAC_IP
         port:
-            int: The TCP port for communicating with DNAC.
+            int: The TCP port for communicating with Cisco DNAC.
             default: DNAC_PORT
         ctype:
             Ctype object: The content type for API responses.
             default: DNAC_CONTENT_TYPE
         user:
-            string: The administrator's name for logging into DNAC.
+            string: The administrator's name for logging into Cisco DNAC.
             default: DNAC_USER
         passwd:
-            str: The administrator's password for logging into DNAC.
+            str: The administrator's password for logging into Cisco DNAC.
             default: DNAC_PASSWD
         bauth:
             BasicAuth object: The base64 encoded username and password for
-                              basic HTTP authentication to DNAC.
+                              basic HTTP authentication to Cisco DNAC.
             default: The base64 encoded string "<user>:<passwd>".
         xauth:
             XAuthToken object: The x-auth-token for authorizing API calls
                                after performing a basic authenticaiton.
-            default: An x-auth-token retrieved from DNAC when logging in
-                     with a basic authentication.
+            default: An x-auth-token retrieved from Cisco DNAC when logging
+                     in with a basic authentication.
         api:
             dict: The DnacApi store for referencing API calls.
             default: {}
@@ -103,28 +103,30 @@ class Dnac(object):
         way to control Dnac's configuration, but if desired, each one
         can be overridden using key word arguments.
 
-        __init__ also peforms the initial login to the DNA Center cluster
-        and gets an authorization token for subsequent API calls.
+        __init__ also peforms the initial login to the Cisco DNA Center
+        cluster and gets an authorization token for subsequent API calls.
 
         Parameters:
             version: 
-                str: The version DNAC software running on the cluster.
+                str: The version Cisco DNAC software running on the cluster.
                 default: DNAC_VERSION
             name:
-                str: The FQDN used to reach the DNAC cluster.
+                str: The FQDN used to reach the Cisco DNAC cluster.
                 default: DNAC_NAME
             ip:
-                str: An IPv4 address used to reach the DNAC cluster when an
-                     FQDN is not available.
+                str: An IPv4 address used to reach the Cisco DNAC cluster
+                     when an FQDN is not available.
                 default: DNAC_IP
             port:
-                int: The TCP port for communicating with DNAC.
+                int: The TCP port for communicating with Cisco DNAC.
                 default: DNAC_PORT
             user:
-                string: The administrator's name for logging into DNAC.
+                string: The administrator's name for logging into Cisco
+                        DNAC.
                 default: DNAC_USER
             passwd:
-                str: The administrator's password for logging into DNAC.
+                str: The administrator's password for logging into Cisco
+                     DNAC.
                 default: DNAC_PASSWD
             contentType:
                 str: The content type for API responses.
@@ -157,13 +159,13 @@ class Dnac(object):
     def version(self):
         '''
         Get method version returns the value of __version, the version of
-        DNA Center software running on the cluster.
+        Cisco DNA Center software running on the cluster.
     
         Parameters:
             None
     
         Return Values:
-            str: The DNAC cluster software version.
+            str: The Cisco DNAC cluster software version.
     
         Usage:
             d = Dnac()
@@ -179,7 +181,7 @@ class Dnac(object):
         Set method version changes __version's value to the given string.
     
         Parameters:
-            str: The new DNAC software version.
+            str: The new Cisco DNAC software version.
             default: None
     
         Return Values:
@@ -196,13 +198,13 @@ class Dnac(object):
     @property
     def name(self):
         '''
-        Get method name returns the value of __version, DNAC's FQDN.
+        Get method name returns the value of __version, Cisco DNAC's FQDN.
     
         Parameters:
             None
     
         Return Values:
-            str: DNA Center's fully qualified domain name.
+            str: Cisco DNA Center's fully qualified domain name.
     
         Usage:
             d = Dnac()
@@ -218,7 +220,7 @@ class Dnac(object):
         Set method name changes __name's value to the given FQDN.
     
         Parameters:
-            str: The new DNAC fully qualified domain name.
+            str: The new Cisco DNAC fully qualified domain name.
             default: None
     
         Return Values:
@@ -235,13 +237,13 @@ class Dnac(object):
     @property
     def ip(self):
         '''
-        Get method name returns the value of __ip, DNAC's IP address.
+        Get method name returns the value of __ip, Cisco DNAC's IP address.
     
         Parameters:
             None
     
         Return Values:
-            str: DNA Center's IPv4 address.
+            str: Cisco DNA Center's IPv4 address.
     
         Usage:
             d = Dnac()
@@ -257,7 +259,7 @@ class Dnac(object):
         Set method ip changes __ip's value to the given IPv4 address.
     
         Parameters:
-            str: The new DNAC IP address.
+            str: The new Cisco DNAC IP address.
             default: None
     
         Return Values:
@@ -274,13 +276,14 @@ class Dnac(object):
     @property
     def port(self):
         '''
-        Get method port returns the value of __ip, the TCP port DNAC uses.
+        Get method port returns the value of __ip, the TCP port Cisco
+        DNAC uses.
     
         Parameters:
             None
     
         Return Values:
-            int: DNA Center's TCP port for communication.
+            int: Cisco DNA Center's TCP port for communication.
     
         Usage:
             d = Dnac()
@@ -296,7 +299,7 @@ class Dnac(object):
         Set method port changes __port's value to the given TCP port.
     
         Parameters:
-            int: The new DNAC TCP port.
+            int: The new Cisco DNAC TCP port.
             default: None
     
         Return Values:
@@ -314,13 +317,13 @@ class Dnac(object):
     def user(self):
         '''
         Get method user returns the value of __user, an account name for
-        logging into the DNAC cluster.
+        logging into the Cisco DNAC cluster.
     
         Parameters:
             None
     
         Return Values:
-            str: DNA Center's administrative user name.
+            str: Cisco DNA Center's administrative user name.
     
         Usage:
             d = Dnac()
@@ -335,12 +338,12 @@ class Dnac(object):
         '''
         Set method user changes __user's value to the username given.  When
         changing the username, a programmer should also change the password
-        and then handle logging into DNAC with the new credentials and
+        and then handle logging into Cisco DNAC with the new credentials and
         getting a new x-auth-token, i.e. recreating Dnac's BasicAuth and
         XAuthToken objects stored in __bauth and __xauth, respectively.
     
         Parameters:
-            str: The new DNAC administator username.
+            str: The new Cisco DNAC administator username.
             default: None
     
         Return Values:
@@ -358,13 +361,13 @@ class Dnac(object):
     def passwd(self):
         '''
         Get method passwd returns the value of __passwd, the user's
-        password for logging into the DNAC cluster.
+        password for logging into the Cisco DNAC cluster.
     
         Parameters:
             None
     
         Return Values:
-            str: DNA Center's administrative user's password.
+            str: Cisco DNA Center's administrative user's password.
     
         Usage:
             d = Dnac()
@@ -379,12 +382,13 @@ class Dnac(object):
         '''
         Set method passwd changes __passwd's value to the password given.
         When changing the password, a programmer should also change the
-        username and then handle logging into DNAC with the new credentials
-        and getting a new x-auth-token, i.e. recreating Dnac's BasicAuth
-        and XAuthToken objects stored in __bauth and __xauth, respectively.
+        username and then handle logging into Cisco DNAC with the new
+        credentials and getting a new x-auth-token, i.e. recreating Dnac's
+        BasicAuth and XAuthToken objects stored in __bauth and __xauth,
+        respectively.
     
         Parameters:
-            str: The new DNAC administator username.
+            str: The new Cisco DNAC administator username.
             default: None
     
         Return Values:
@@ -408,7 +412,8 @@ class Dnac(object):
             None
     
         Return Values:
-            Ctype object: The content type DNA Center returns in responses.
+            Ctype object: The content type Cisco DNA Center returns in
+                          responses.
     
         Usage:
             d = Dnac()
@@ -425,8 +430,8 @@ class Dnac(object):
         sets the content type for all DnacApi responses.
     
         Parameters:
-            ctype: A CType object for directing DNAC what format to use when
-                   responding to API calls.
+            ctype: A CType object for directing Cisco DNAC what format to
+                   use when responding to API calls.
     
         Return Values:
             None
@@ -443,14 +448,14 @@ class Dnac(object):
     def bauth(self):
         '''
         Get method bauth returns the value of __bauth, a BasicAuth object
-        for logging into DNA Center.
+        for logging into Cisco DNA Center.
     
         Parameters:
             None
     
         Return Values:
             BasicAuth object: An object containing the base64 encoded
-                              crednetials for logging into DNA Center.
+                              crednetials for logging into Cisco DNA Center.
     
         Usage:
             d = Dnac()
@@ -464,12 +469,12 @@ class Dnac(object):
     def bauth(self, bauth):
         '''
         Set method bauth changes the value of __bauth, a BasicAuth object
-        used for logging into DNA Center.  If you change Dnac's bauth, you
-        are also responsible for resetting Dnac's user and passwd as well
-        as generating a new XAuthToken object.
+        used for logging into Cisco DNA Center.  If you change Dnac's
+        bauth, you are also responsible for resetting Dnac's user and
+        passwd as well as generating a new XAuthToken object.
     
         Parameters:
-            bauth: A BasicAuth object for logging into DNA Center.
+            bauth: A BasicAuth object for logging into Cisco DNA Center.
     
         Return Values:
             None
@@ -488,14 +493,14 @@ class Dnac(object):
     def xauth(self):
         '''
         Get method xauth returns the value of __xauth, an XAuthToken
-        for authorizing API calls to DNA Center.
+        for authorizing API calls to Cisco DNA Center.
     
         Parameters:
             None
     
         Return Values:
             BasicAuth object: An object containing the base64 encoded
-                              crednetials for logging into DNA Center.
+                              crednetials for logging into Cisco DNA Center.
     
         Usage:
             d = Dnac()
@@ -512,7 +517,8 @@ class Dnac(object):
         instance for authorizing API calls after basic login succeeds.
 
         Parameters:
-            xauth: An XAuthToken object for authorizing DNAC API calls.
+            xauth: An XAuthToken object for authorizing Cisco DNAC API
+                   calls.
 
         Return Values:
             None
@@ -662,9 +668,10 @@ class Dnac(object):
     @property
     def url(self):
         '''
-        The url method formats a base URL for reaching a DNA Center cluster.
-        It combines either Dnac's name (preferred) or its ip with its port.
-        If neither values are set, then it returns and empty string.
+        The url method formats a base URL for reaching a Cisco DNA Center
+        cluster.  It combines either Dnac's name (preferred) or its ip with
+        its port.  If neither values are set, then it returns and empty
+        string.
 
         url is decorated as a property so that it can be used like an
         attribute's get method.
@@ -724,7 +731,7 @@ class Dnac(object):
         '''
         The hdrs method returns a dictionary containing the hdrs values
         of __ctype and __xauth.  In other words, it provides the headers
-        structure for making CRUD calls to a DNA Center cluster.
+        structure for making CRUD calls to a Cisco DNA Center cluster.
 
         The children classes of DnacApi use this function to complete
         their API calls.
@@ -737,7 +744,7 @@ class Dnac(object):
 
         Return Values:
             dict: The object used as CRUD headers when communicating with
-                  a DNAC cluster.
+                  a Cisco DNAC cluster.
 
         Usage:
             d = Dnac()

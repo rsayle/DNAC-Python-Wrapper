@@ -42,42 +42,43 @@
 <font color="#000000" face="helvetica, arial"><a name="XAuthToken">class <strong>XAuthToken</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>Class&nbsp;<a href="#XAuthToken">XAuthToken</a>&nbsp;stores&nbsp;a&nbsp;token&nbsp;used&nbsp;to&nbsp;authenticate&nbsp;DNAC&nbsp;API&nbsp;calls.<br>
+<td colspan=2><tt>Class&nbsp;<a href="#XAuthToken">XAuthToken</a>&nbsp;stores&nbsp;a&nbsp;token&nbsp;used&nbsp;to&nbsp;authenticate&nbsp;Cisco&nbsp;DNAC&nbsp;API<br>
+calls.<br>
 &nbsp;<br>
 Dnac&nbsp;objects&nbsp;contain&nbsp;one&nbsp;<a href="#XAuthToken">XAuthToken</a>&nbsp;instance&nbsp;for&nbsp;all&nbsp;of&nbsp;its&nbsp;DnacApi<br>
-instances&nbsp;to&nbsp;reference&nbsp;when&nbsp;making&nbsp;a&nbsp;request&nbsp;to&nbsp;DNAC.&nbsp;&nbsp;Use&nbsp;the<br>
+instances&nbsp;to&nbsp;reference&nbsp;when&nbsp;making&nbsp;a&nbsp;request&nbsp;to&nbsp;Cisco&nbsp;DNAC.&nbsp;&nbsp;Use&nbsp;the<br>
 Dnac.token&nbsp;class&nbsp;method&nbsp;to&nbsp;access&nbsp;the&nbsp;current&nbsp;token&nbsp;value&nbsp;instead<br>
 of&nbsp;referencing&nbsp;the&nbsp;Dnac.xauth&nbsp;attribute,&nbsp;which&nbsp;is&nbsp;an&nbsp;instantiation<br>
 of&nbsp;this&nbsp;class.<br>
 &nbsp;<br>
 Attributes:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;url:&nbsp;The&nbsp;base&nbsp;URL&nbsp;for&nbsp;contacting&nbsp;DNAC.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;url:&nbsp;The&nbsp;base&nbsp;URL&nbsp;for&nbsp;contacting&nbsp;Cisco&nbsp;DNAC.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bauth:&nbsp;A&nbsp;basic&nbsp;authentication&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;for&nbsp;requesting&nbsp;a&nbsp;token<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;from&nbsp;DNAC.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;from&nbsp;Cisco&nbsp;DNAC.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;BasicAuth&nbsp;<a href="__builtin__.html#object">object</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ctype:&nbsp;A&nbsp;content&nbsp;type&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;for&nbsp;requesting&nbsp;a&nbsp;token&nbsp;from&nbsp;DNAC.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ctype:&nbsp;A&nbsp;content&nbsp;type&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;for&nbsp;requesting&nbsp;a&nbsp;token&nbsp;from&nbsp;Cisco&nbsp;DNAC.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;CType&nbsp;<a href="__builtin__.html#object">object</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;CType("application/json")<br>
-&nbsp;&nbsp;&nbsp;&nbsp;respath:&nbsp;The&nbsp;resource&nbsp;path&nbsp;used&nbsp;to&nbsp;request&nbsp;a&nbsp;token&nbsp;from&nbsp;DNAC.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;respath:&nbsp;The&nbsp;resource&nbsp;path&nbsp;used&nbsp;to&nbsp;request&nbsp;a&nbsp;token&nbsp;from&nbsp;Cisco&nbsp;DNAC.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;"/api/system/v1/auth/token"<br>
 &nbsp;&nbsp;&nbsp;&nbsp;verify:&nbsp;Flag&nbsp;indicating&nbsp;whether&nbsp;or&nbsp;not&nbsp;the&nbsp;request&nbsp;should&nbsp;verify<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DNAC's&nbsp;certificate.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cisco&nbsp;DNAC's&nbsp;certificate.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;boolean<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;False<br>
 &nbsp;&nbsp;&nbsp;&nbsp;timeout:&nbsp;The&nbsp;number&nbsp;of&nbsp;seconds&nbsp;the&nbsp;request&nbsp;for&nbsp;a&nbsp;token&nbsp;should&nbsp;wait<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;before&nbsp;assuming&nbsp;DNAC&nbsp;is&nbsp;unavailable.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;before&nbsp;assuming&nbsp;Cisco&nbsp;DNAC&nbsp;is&nbsp;unavailable.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;5<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>
 <dl><dt><a name="XAuthToken-__init__"><strong>__init__</strong></a>(self, url, basicAuth, contentType, resourcePath<font color="#909090">='/api/system/v1/auth/token'</font>, verify<font color="#909090">=False</font>, timeout<font color="#909090">=5</font>)</dt><dd><tt>The&nbsp;__init__&nbsp;method&nbsp;initializes&nbsp;an&nbsp;<a href="#XAuthToken">XAuthToken</a>&nbsp;<a href="__builtin__.html#object">object</a>.&nbsp;&nbsp;It&nbsp;takes<br>
-a&nbsp;URL&nbsp;pointing&nbsp;to&nbsp;the&nbsp;DNAC&nbsp;cluster&nbsp;and&nbsp;a&nbsp;BasicAuth&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;for&nbsp;the<br>
-token&nbsp;request.&nbsp;&nbsp;When&nbsp;creating&nbsp;a&nbsp;Dnac&nbsp;<a href="__builtin__.html#object">object</a>,&nbsp;the&nbsp;<a href="__builtin__.html#object">object</a>'s&nbsp;__init__<br>
-method&nbsp;passes&nbsp;its&nbsp;base&nbsp;URL&nbsp;(Dnac.url),&nbsp;its&nbsp;BasicAuth&nbsp;<a href="__builtin__.html#object">object</a><br>
+a&nbsp;URL&nbsp;pointing&nbsp;to&nbsp;the&nbsp;Cisco&nbsp;DNAC&nbsp;cluster&nbsp;and&nbsp;a&nbsp;BasicAuth&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;for<br>
+the&nbsp;token&nbsp;request.&nbsp;&nbsp;When&nbsp;creating&nbsp;a&nbsp;Dnac&nbsp;<a href="__builtin__.html#object">object</a>,&nbsp;the&nbsp;<a href="__builtin__.html#object">object</a>'s<br>
+__init__&nbsp;method&nbsp;passes&nbsp;its&nbsp;base&nbsp;URL&nbsp;(Dnac.url),&nbsp;its&nbsp;BasicAuth&nbsp;<a href="__builtin__.html#object">object</a><br>
 (Dnac.__bauth)&nbsp;and&nbsp;its&nbsp;chosen&nbsp;content&nbsp;type&nbsp;(Dnac.__ctype).&nbsp;&nbsp;This<br>
 ensures&nbsp;that&nbsp;the&nbsp;<a href="#XAuthToken">XAuthToken</a>&nbsp;instance&nbsp;(Dnac.__xauth)&nbsp;remains<br>
 consistent&nbsp;with&nbsp;all&nbsp;of&nbsp;the&nbsp;DnacApi&nbsp;objects&nbsp;Dnac&nbsp;uses,&nbsp;i.e.&nbsp;any<br>
@@ -85,16 +86,16 @@ changes&nbsp;to&nbsp;the&nbsp;basic&nbsp;authentication&nbsp;or&nbsp;to&nbsp;the
 remain&nbsp;the&nbsp;same&nbsp;when&nbsp;calling&nbsp;on&nbsp;the&nbsp;<a href="#XAuthToken">XAuthToken</a>&nbsp;instance.<br>
 &nbsp;<br>
 Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url:&nbsp;The&nbsp;URL&nbsp;for&nbsp;reaching&nbsp;DNAC.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url:&nbsp;The&nbsp;URL&nbsp;for&nbsp;reaching&nbsp;Cisco&nbsp;DNAC.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;Yes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;basicAuth:&nbsp;A&nbsp;BasicAuth&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;for&nbsp;logging&nbsp;into&nbsp;DNAC.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;basicAuth:&nbsp;A&nbsp;BasicAuth&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;for&nbsp;logging&nbsp;into&nbsp;Cisco&nbsp;DNAC.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;BasicAuth&nbsp;<a href="__builtin__.html#object">object</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;Yes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;conentType:&nbsp;A&nbsp;CType&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;indicating&nbsp;the&nbsp;token's&nbsp;format<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;requested&nbsp;from&nbsp;DNAC<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;requested&nbsp;from&nbsp;Cisco&nbsp;DNAC<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;CType&nbsp;<a href="__builtin__.html#object">object</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;CType("application/json")<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;No<br>
@@ -102,11 +103,12 @@ Parameters:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;"/api/system/v1/auth/token"<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;No<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verify:&nbsp;A&nbsp;flag&nbsp;used&nbsp;to&nbsp;check&nbsp;DNAC's&nbsp;certificate.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verify:&nbsp;A&nbsp;flag&nbsp;used&nbsp;to&nbsp;check&nbsp;Cisco&nbsp;DNAC's&nbsp;certificate.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;boolean<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;False<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;No<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;timeout:&nbsp;The&nbsp;number&nbsp;of&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;DNAC's&nbsp;response.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;timeout:&nbsp;The&nbsp;number&nbsp;of&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;Cisco&nbsp;DNAC's<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;response.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;5<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;No<br>

@@ -63,15 +63,17 @@ class CommandRunner(DnacApi):
                 type: dict
                 default: None
                 required: No
-            requestFilter: An expression for filtering DNAC's response.
+            requestFilter: An expression for filtering Cisco DNAC's
+                           response.
                 type: str
                 default: None
                 required: No
-            verify: A flag used to check DNAC's certificate.
+            verify: A flag used to check Cisco DNAC's certificate.
                 type: boolean
                 default: False
                 required: No
-            timeout: The number of seconds to wait for DNAC's response.
+            timeout: The number of seconds to wait for Cisco DNAC's
+                     response.
                 type: int
                 default: 5
                 required: No
@@ -90,7 +92,7 @@ class CommandRunner(DnacApi):
                 "/api/v1/network-device-poller/cli/read-request"
         else:
             # rewrite this to throw an exception
-            print "Unsupported version of DNAC: " + dnac.version
+            print "Unsupported version of Cisco DNAC: " + dnac.version
 
         self.__cmds = cmds
         self.__task = None
@@ -107,7 +109,7 @@ class CommandRunner(DnacApi):
     @property
     def cmds(self):
         '''
-        Get method cmds returns the __cmds body to be sent to DNAC.
+        Get method cmds returns the __cmds body to be sent to Cisco DNAC.
 
         Paramters:
             None
@@ -201,9 +203,9 @@ class CommandRunner(DnacApi):
     def formatCmd(self, cmd, uuid):
         '''
         The formatCmd method takes a single CLI command and runs it against
-        the UUID of a network device in DNA Center.  It converts the command
-        and the UUID into a dict stored in the __cmds attribute and returns 
-        __cmds' value.
+        the UUID of a network device in Cisco DNA Center.  It converts the
+        command and the UUID into a dict stored in the __cmds attribute
+        and returns __cmds' value.
 
         Parameters:
             cmd: A CLI commands.
@@ -211,7 +213,7 @@ class CommandRunner(DnacApi):
 
         Return Values:
             dict: The command instructions used as the body for making
-                  an API call to DNAC's command runner.
+                  an API call to Cisco DNAC's command runner.
 
         Usage:
             d = Dnac()
@@ -231,8 +233,8 @@ class CommandRunner(DnacApi):
     def formatCmds(self, cmdList, uuidList):
         '''
         The formatCmds method accepts a list of CLI commands to run against
-        a list of UUIDs for the target network devices in DNA Center.  It
-        converts the two lists into a dict stored in the __cmds attribute
+        a list of UUIDs for the target network devices in Cisco DNA Center.
+        It converts the two lists into a dict stored in the __cmds attribute
         and returns __cmds' value.
 
         Parameters:
@@ -241,7 +243,7 @@ class CommandRunner(DnacApi):
 
         Return Values:
             dict: The command instructions used as the body for making
-                  an API call to DNAC's command runner.
+                  an API call to Cisco DNAC's command runner.
 
         Usage:
             d = Dnac()
@@ -258,9 +260,9 @@ class CommandRunner(DnacApi):
 
     def run(self):
         '''
-        Method run instructs DNAC to execute the command set stored in
+        Method run instructs Cisco DNAC to execute the command set stored in
         the CommandRunner object.  It does not wait for the task to
-        complete on DNA Center.  It does, however, create a new Task
+        complete on Cisco DNA Center.  It does, however, create a new Task
         object, saves it in the __task attribute, checks the task, and
         then returns the task's status.  See the task.py module for
         valid task states.  When using this function, the programmer

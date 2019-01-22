@@ -7,36 +7,37 @@ import json
 
 ## module globals
 
+#Used when no task has been created in Cisco DNA Center.
 TASK_EMPTY=""
-'''Used when no task has been created in DNA Center.'''
+
+#Used when Cisco DNA Center is preparing the task to run.
 TASK_CREATION="CLI Runner request creation"
-'''Used when DNA Center is preparing the task to run.'''
 
 ## end module globals
 
 class Task(DnacApi):
     '''
     The Task class manages a task running on Cisco DNA Center.  Tasks run
-    asynchronously on DNAC.  In other words, although a task is created,
-    its results may not immediately be available.  DNA Center, provides
-    a task ID for checking a task's status, and this object stores it
-    in its __taskId attribute.
+    asynchronously on Cisco DNAC.  In other words, although a task is
+    created, its results may not immediately be available.  Cisco DNA Center
+    provides a task ID for checking a task's status, and this object stores
+    it in its __taskId attribute.
 
-    Task does not wait for a task running on DNAC to finish.  Instead,
+    Task does not wait for a task running on Cisco DNAC to finish.  Instead,
     it returns the task's current state contained in the response's
-    "progress" field.  DNAC provides two states: either the task is being
-    created or it has finished.  During creation, DNAC sets progress
-    to "CLI Runner request creation", and when it's done, progress is
-    a string that can be converted to a dict that will look like:
+    "progress" field.  Cisco DNAC provides two states: either the task is
+    being created or it has finished.  During creation, Cisco DNAC sets
+    progress to "CLI Runner request creation", and when it's done, progress
+    is a string that can be converted to a dict that will look like:
     {fileId: <uuid>}.
     
     The task.py module defines a two constant that can be used for
     monitoring a task with checkTask().  Use TASK_EMPTY to see if a task
-    has been created, and use TASK_CREATION to detect that DNA Center is
-    preparing a task to run.  There is no constant for task completion.
-    Instead, checkTask() returns the progress string DNAC furnished.
+    has been created, and use TASK_CREATION to detect that Cisco DNA Center
+    is preparing a task to run.  There is no constant for task completion.
+    Instead, checkTask() returns the progress string Cisco DNAC furnished.
 
-    When a task has completed, DNA Center stores the results in a file
+    When a task has completed, Cisco DNA Center stores the results in a file
     and provides the file's ID as the results of making an API call to
     the task.  Subsequently, when using this class' checkTask() method,
     if the task has completed, Task creates a TaskResults instance using
@@ -63,7 +64,7 @@ class Task(DnacApi):
         __init__ makes a new Task object.  An empty task object may be
         created by only passing a Dnac object and name for the task.  In
         this case, be certain to later set the taskId with the UUID of
-        a task running on DNAC.
+        a task running on Cisco DNAC.
         
         The preferred method of creating a Task object is to pass the
         task's UUID to __init__ so that the Task instance sets its name
@@ -83,7 +84,7 @@ class Task(DnacApi):
                 type: str
                 default: None
                 required: Yes
-            id: The UUID of the task running on DNAC.  When included,
+            id: The UUID of the task running on Cisco DNAC.  When included,
                 included as part of calling __init__, the new object sets
                 its name and url based on id's value:
                     name = "task_<id>"
@@ -91,15 +92,17 @@ class Task(DnacApi):
                 type: str
                 default: None
                 required: No
-            requestFilter: An expression for filtering DNAC's response.
+            requestFilter: An expression for filtering Cisco DNAC's
+                           response.
                 type: str
                 default: None
                 required: No
-            verify: A flag used to check DNAC's certificate.
+            verify: A flag used to check Cisco DNAC's certificate.
                 type: boolean
                 default: False
                 required: No
-            timeout: The number of seconds to wait for DNAC's response.
+            timeout: The number of seconds to wait for Cisco DNAC's
+                     response.
                 type: int
                 default: 5
                 required: No
@@ -109,11 +112,11 @@ class Task(DnacApi):
 
         Usage:
             d = Dnac()
-            id = <task ID from DNAC>
+            id = <task ID from Cisco DNAC>
             name = "task_" + id
             task = Task(d, name)
             task.taskId = id
-            newId = <another task ID from DNAC>
+            newId = <another task ID from Cisco DNAC>
             newTask = Task(d, "aNewName", newId)
         '''
 
@@ -121,7 +124,7 @@ class Task(DnacApi):
             self.__respath = "/api/v1/task"
         else:
             # rewrite this to throw an exception
-            print "Unsupported version of DNAC: " + dnac.version
+            print "Unsupported version of Cisco DNAC: " + dnac.version
 
         self.__id = taskId
         self.__url = url
@@ -143,7 +146,8 @@ class Task(DnacApi):
     @property
     def id(self):
         '''
-        Get method id returns the value of __id, the task's UUID in DNAC.
+        Get method id returns the value of __id, the task's UUID in Cisco
+        DNAC.
 
         Parameters:
             None
@@ -192,7 +196,7 @@ class Task(DnacApi):
     def url(self):
         '''
         Get method url returns the value of __url, a resource path
-        for accessing a task running on DNAC.
+        for accessing a task running on Cisco DNAC.
 
         Parameters:
             None
@@ -214,7 +218,7 @@ class Task(DnacApi):
         '''
         Set method url changes attribute __url to the value passed.  In
         response to an API call that creates a task center such as running 
-        a command, DNA Center responds with a task ID and a URL.  The
+        a command, Cisco DNA Center responds with a task ID and a URL.  The
         URL is a resource path to the task with its ID pre-appended.
         Use the URL as this method's parameter.  __url is updated to the
         value passed, and the function extracts the task ID and updates
@@ -251,8 +255,8 @@ class Task(DnacApi):
 
         Return Values:
             str: The task's current state:
-                TASK_EMPTY: no task has been created in DNAC
-                TASK_CREATION: DNAC is preparing the task to run
+                TASK_EMPTY: no task has been created in Cisco DNAC
+                TASK_CREATION: Cisco DNAC is preparing the task to run
                 <progress>: a string formatted as "{fileId: <id>}".
                             Use json.loads to convert it to a dict.
 
@@ -355,7 +359,7 @@ class Task(DnacApi):
             None
 
         Return Values:
-            str: The UUID to the task's results, a file on DNAC.
+            str: The UUID to the task's results, a file on Cisco DNAC.
 
         Usage:
             d = Dnac()
@@ -371,7 +375,7 @@ class Task(DnacApi):
     def taskResultsId(self, taskResultsId):
         '''
         Set method taskResultsId sets the object's __taskResultsId to
-        to a new UUID for a task's results, i.e. a file on DNAC.
+        to a new UUID for a task's results, i.e. a file on Cisco DNAC.
 
         Parameters:
             taskResultsId: str
@@ -395,15 +399,15 @@ class Task(DnacApi):
 
     def checkTask(self):
         '''
-        Class method checkTask issues an API call to DNA Center and
+        Class method checkTask issues an API call to Cisco DNA Center and
         provides the task's results.  In its current form, this method
-        assumes the task has completed and that DNAC provided a file ID
-        for getting the task's results.  This will eventually be updated
+        assumes the task has completed and that Cisco DNAC provided a file
+        ID for getting the task's results.  This will eventually be updated
         to handle situation in which this is not the case.
 
-        If the task completed its work on DNAC, this function sets the
-        __taskResultsId value to the file's UUID on DNAC, and it creates
-        a new TaskResults object using the UUID to that the actual
+        If the task completed its work on Cisco DNAC, this function sets the
+        __taskResultsId value to the file's UUID on Cisco DNAC, and it
+        creates a new TaskResults object using the UUID to that the actual
         results may easily be queried from this object.  The results get
         save in __taskResults.
 
@@ -411,7 +415,7 @@ class Task(DnacApi):
             None
 
         Return Values:
-            str: The task's results identifier, a file UUID on DNAC.
+            str: The task's results identifier, a file UUID on Cisco DNAC.
 
         Usage:
             d = Dnac()

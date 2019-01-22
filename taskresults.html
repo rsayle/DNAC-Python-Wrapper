@@ -43,11 +43,11 @@
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
 <td colspan=2><tt>Class&nbsp;<a href="#TaskResults">TaskResults</a>&nbsp;gets&nbsp;and&nbsp;stores&nbsp;the&nbsp;results&nbsp;from&nbsp;a&nbsp;task&nbsp;run&nbsp;on<br>
-Cisco&nbsp;DNA&nbsp;Center.&nbsp;&nbsp;DNAC&nbsp;delivers&nbsp;the&nbsp;results&nbsp;from&nbsp;a&nbsp;file&nbsp;whose&nbsp;contents<br>
-are&nbsp;a&nbsp;string,&nbsp;which&nbsp;this&nbsp;class&nbsp;converts&nbsp;to&nbsp;a&nbsp;list.<br>
+Cisco&nbsp;DNA&nbsp;Center.&nbsp;&nbsp;Cisco&nbsp;DNAC&nbsp;delivers&nbsp;the&nbsp;results&nbsp;from&nbsp;a&nbsp;file&nbsp;whose&nbsp;<br>
+contents&nbsp;are&nbsp;a&nbsp;string,&nbsp;which&nbsp;this&nbsp;class&nbsp;converts&nbsp;to&nbsp;a&nbsp;list.<br>
 &nbsp;<br>
-Like&nbsp;all&nbsp;entities&nbsp;in&nbsp;DNAC,&nbsp;files&nbsp;are&nbsp;referenced&nbsp;via&nbsp;a&nbsp;UUID.&nbsp;&nbsp;Set&nbsp;the<br>
-file&nbsp;UUID&nbsp;either&nbsp;during&nbsp;initialization&nbsp;or&nbsp;by&nbsp;using&nbsp;the&nbsp;class'&nbsp;id<br>
+Like&nbsp;all&nbsp;entities&nbsp;in&nbsp;Cisco&nbsp;DNAC,&nbsp;files&nbsp;are&nbsp;referenced&nbsp;via&nbsp;a&nbsp;UUID.&nbsp;&nbsp;Set<br>
+the&nbsp;file&nbsp;UUID&nbsp;either&nbsp;during&nbsp;initialization&nbsp;or&nbsp;by&nbsp;using&nbsp;the&nbsp;class'&nbsp;id<br>
 set&nbsp;method&nbsp;before&nbsp;attempting&nbsp;to&nbsp;retrieve&nbsp;the&nbsp;file's&nbsp;data&nbsp;with&nbsp;the<br>
 <a href="#TaskResults-getResults">getResults</a>()&nbsp;method.<br>
 &nbsp;<br>
@@ -75,7 +75,7 @@ Methods defined here:<br>
 <dl><dt><a name="TaskResults-__init__"><strong>__init__</strong></a>(self, dnac, name, id<font color="#909090">=''</font>, requestFilter<font color="#909090">=''</font>, verify<font color="#909090">=False</font>, timeout<font color="#909090">=5</font>)</dt><dd><tt>Class&nbsp;method&nbsp;__init__&nbsp;creates&nbsp;a&nbsp;new&nbsp;<a href="#TaskResults">TaskResults</a>&nbsp;instance.&nbsp;&nbsp;When<br>
 making&nbsp;a&nbsp;<a href="#TaskResults">TaskResults</a>&nbsp;object,&nbsp;pass&nbsp;it&nbsp;a&nbsp;Dnac&nbsp;object&nbsp;and&nbsp;give&nbsp;it<br>
 a&nbsp;user-friendly&nbsp;name&nbsp;for&nbsp;retrieving&nbsp;it&nbsp;from&nbsp;Dnac's&nbsp;api&nbsp;store,<br>
-Dnac.api{}.&nbsp;&nbsp;Optionally,&nbsp;pass&nbsp;it&nbsp;the&nbsp;UUID&nbsp;of&nbsp;the&nbsp;file&nbsp;in&nbsp;DNAC<br>
+Dnac.api{}.&nbsp;&nbsp;Optionally,&nbsp;pass&nbsp;it&nbsp;the&nbsp;UUID&nbsp;of&nbsp;the&nbsp;file&nbsp;in&nbsp;Cisco&nbsp;DNAC<br>
 that&nbsp;this&nbsp;object&nbsp;represents.<br>
 &nbsp;<br>
 Parameters:<br>
@@ -88,23 +88,25 @@ Parameters:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;Yes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;id:&nbsp;The&nbsp;UUID&nbsp;of&nbsp;the&nbsp;file&nbsp;in&nbsp;DNAC&nbsp;this&nbsp;object&nbsp;represents.&nbsp;&nbsp;If<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;included&nbsp;as&nbsp;part&nbsp;of&nbsp;calling&nbsp;__init__,&nbsp;the&nbsp;new&nbsp;object&nbsp;sets<br>
+&nbsp;&nbsp;&nbsp;&nbsp;id:&nbsp;The&nbsp;UUID&nbsp;of&nbsp;the&nbsp;file&nbsp;in&nbsp;Cisco&nbsp;DNAC&nbsp;this&nbsp;object&nbsp;represents.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;included&nbsp;as&nbsp;part&nbsp;of&nbsp;calling&nbsp;__init__,&nbsp;the&nbsp;new&nbsp;object&nbsp;sets<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;its&nbsp;name&nbsp;and&nbsp;url&nbsp;based&nbsp;on&nbsp;id's&nbsp;value:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;=&nbsp;"task_&lt;id&gt;"<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url&nbsp;=&nbsp;"dnac.url/self.<strong>respath</strong>/&lt;id&gt;"<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;No<br>
-&nbsp;&nbsp;&nbsp;&nbsp;requestFilter:&nbsp;An&nbsp;expression&nbsp;for&nbsp;filtering&nbsp;DNAC's&nbsp;response.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;requestFilter:&nbsp;An&nbsp;expression&nbsp;for&nbsp;filtering&nbsp;Cisco&nbsp;DNAC's<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;response.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;No<br>
-&nbsp;&nbsp;&nbsp;&nbsp;verify:&nbsp;A&nbsp;flag&nbsp;used&nbsp;to&nbsp;check&nbsp;DNAC's&nbsp;certificate.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verify:&nbsp;A&nbsp;flag&nbsp;used&nbsp;to&nbsp;check&nbsp;Cisco&nbsp;DNAC's&nbsp;certificate.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;boolean<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;False<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;No<br>
-&nbsp;&nbsp;&nbsp;&nbsp;timeout:&nbsp;The&nbsp;number&nbsp;of&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;DNAC's&nbsp;response.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;timeout:&nbsp;The&nbsp;number&nbsp;of&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;Cisco&nbsp;DNAC's<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;response.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;5<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;No<br>
@@ -119,8 +121,8 @@ Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;emptyResults&nbsp;=&nbsp;<a href="#TaskResults">TaskResults</a>(d,&nbsp;name)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;realResults&nbsp;=&nbsp;<a href="#TaskResults">TaskResults</a>(d,&nbsp;name,&nbsp;id)</tt></dd></dl>
 
-<dl><dt><a name="TaskResults-getResults"><strong>getResults</strong></a>(self)</dt><dd><tt>getResults&nbsp;makes&nbsp;an&nbsp;API&nbsp;call&nbsp;to&nbsp;DNA&nbsp;Center&nbsp;and&nbsp;retrieves&nbsp;the&nbsp;task<br>
-results&nbsp;contained&nbsp;in&nbsp;the&nbsp;file&nbsp;identified&nbsp;by&nbsp;this&nbsp;object's<br>
+<dl><dt><a name="TaskResults-getResults"><strong>getResults</strong></a>(self)</dt><dd><tt>getResults&nbsp;makes&nbsp;an&nbsp;API&nbsp;call&nbsp;to&nbsp;Cisco&nbsp;DNA&nbsp;Center&nbsp;and&nbsp;retrieves&nbsp;the<br>
+task&nbsp;results&nbsp;contained&nbsp;in&nbsp;the&nbsp;file&nbsp;identified&nbsp;by&nbsp;this&nbsp;object's<br>
 __taskResultsId,&nbsp;i.e.&nbsp;the&nbsp;file's&nbsp;UUID.<br>
 &nbsp;<br>
 Parameters:<br>
@@ -139,7 +141,7 @@ Usage:<br>
 <hr>
 Data descriptors defined here:<br>
 <dl><dt><strong>id</strong></dt>
-<dd><tt>Get&nbsp;method&nbsp;id&nbsp;returns&nbsp;__id,&nbsp;the&nbsp;UUID&nbsp;of&nbsp;the&nbsp;file&nbsp;on&nbsp;DNA&nbsp;Center<br>
+<dd><tt>Get&nbsp;method&nbsp;id&nbsp;returns&nbsp;__id,&nbsp;the&nbsp;UUID&nbsp;of&nbsp;the&nbsp;file&nbsp;on&nbsp;Cisco&nbsp;DNA&nbsp;Center<br>
 that&nbsp;contains&nbsp;the&nbsp;task's&nbsp;results.<br>
 &nbsp;<br>
 Parameters:<br>
@@ -215,7 +217,7 @@ Usage:<br>
 </dl>
 <dl><dt><strong>filter</strong></dt>
 <dd><tt>Get&nbsp;method&nbsp;filter&nbsp;returns&nbsp;__filter,&nbsp;a&nbsp;string&nbsp;used&nbsp;to&nbsp;control<br>
-DNAC's&nbsp;response&nbsp;to&nbsp;the&nbsp;API&nbsp;call.&nbsp;&nbsp;Use&nbsp;the&nbsp;filter&nbsp;to&nbsp;create<br>
+Cisco&nbsp;DNAC's&nbsp;response&nbsp;to&nbsp;the&nbsp;API&nbsp;call.&nbsp;&nbsp;Use&nbsp;the&nbsp;filter&nbsp;to&nbsp;create<br>
 a&nbsp;URL&nbsp;for&nbsp;the&nbsp;API&nbsp;call.<br>
 &nbsp;<br>
 Parameters:<br>
@@ -246,9 +248,9 @@ Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dapi.name</tt></dd>
 </dl>
 <dl><dt><strong>respath</strong></dt>
-<dd><tt>Get&nbsp;method&nbsp;respath&nbsp;returns&nbsp;__respath,&nbsp;which&nbsp;is&nbsp;the&nbsp;API&nbsp;call&nbsp;to&nbsp;DNAC.<br>
-In&nbsp;child&nbsp;classes,&nbsp;use&nbsp;this&nbsp;method&nbsp;to&nbsp;form&nbsp;request&nbsp;by&nbsp;appending<br>
-it&nbsp;to&nbsp;DNAC's&nbsp;base&nbsp;url,&nbsp;i.e.&nbsp;Dnac.url.<br>
+<dd><tt>Get&nbsp;method&nbsp;respath&nbsp;returns&nbsp;__respath,&nbsp;which&nbsp;is&nbsp;the&nbsp;API&nbsp;call&nbsp;to<br>
+Cisco&nbsp;DNAC.&nbsp;&nbsp;In&nbsp;child&nbsp;classes,&nbsp;use&nbsp;this&nbsp;method&nbsp;to&nbsp;form&nbsp;request&nbsp;by<br>
+appending&nbsp;it&nbsp;to&nbsp;Cisco&nbsp;DNAC's&nbsp;base&nbsp;url,&nbsp;i.e.&nbsp;Dnac.url.<br>
 &nbsp;<br>
 Parameters:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;None<br>
@@ -279,8 +281,8 @@ Usage:<br>
 </dl>
 <dl><dt><strong>verify</strong></dt>
 <dd><tt>Get&nbsp;method&nbsp;verify&nbsp;returns&nbsp;value&nbsp;of&nbsp;__verify,&nbsp;which&nbsp;is&nbsp;used&nbsp;to&nbsp;<br>
-determine&nbsp;whether&nbsp;or&nbsp;not&nbsp;to&nbsp;check&nbsp;DNAC's&nbsp;certificate&nbsp;upon&nbsp;making<br>
-an&nbsp;API&nbsp;call.<br>
+determine&nbsp;whether&nbsp;or&nbsp;not&nbsp;to&nbsp;check&nbsp;Cisco&nbsp;DNAC's&nbsp;certificate&nbsp;upon<br>
+making&nbsp;an&nbsp;API&nbsp;call.<br>
 &nbsp;<br>
 Parameters:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;None<br>

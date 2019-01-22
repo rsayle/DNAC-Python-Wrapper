@@ -14,21 +14,21 @@ class DnacApi(object):
             type: Dnac object
             default: None
         name: A user friendly name for accessing the DnacAapi object
-              in DNAC's API, i.e. Dnac.api{}
+              in Cisco DNAC's API, i.e. Dnac.api{}
             type: str
             default: None
         respath: The resource path to the API call.
             type: str
             default: None
-        filter: A request filter for the DNAC API response.
+        filter: A request filter for the Cisco DNAC API response.
             type: str
             default: None
-        verify: A flag indicating whether or not to authenticate DNAC's
-                certificate when making the API call.
+        verify: A flag indicating whether or not to authenticate Cisco
+                DNAC's certificate when making the API call.
             type: boolean
             default: False
-        timeout: The time in seconds to wait for DNAC's response before
-                 declaring the cluster unavailable.
+        timeout: The time in seconds to wait for Cisco DNAC's response
+                 before declaring the cluster unavailable.
             type: int
             default: 5
     '''
@@ -57,19 +57,19 @@ class DnacApi(object):
                 type: str
                 default: None
                 required: Yes
-            resourcePath: The API call to DNAC.
+            resourcePath: The API call to Cisco DNAC.
                 type: str
                 default: None
                 required: Yes
-            requestFilter: An expression of filtering DNAC's response.
+            requestFilter: An expression of filtering Cisco DNAC's response.
                 type: str
                 default: None
                 required: No
-            verify: A flag used to check DNAC's certificate.
+            verify: A flag used to check Cisco DNAC's certificate.
                 type: boolean
                 default: False
                 required: No
-            timeout: The number of seconds to wait for DNAC's response.
+            timeout: The number of seconds to wait for Cisco DNAC's response.
                 type: int
                 default: 5
                 required: No
@@ -174,9 +174,9 @@ class DnacApi(object):
     @property
     def respath(self):
         '''
-        Get method respath returns __respath, which is the API call to DNAC.
-        In child classes, use this method to form request by appending
-        it to DNAC's base url, i.e. Dnac.url.
+        Get method respath returns __respath, which is the API call to
+        Cisco DNAC.  In child classes, use this method to form request by
+        appending it to Cisco DNAC's base url, i.e. Dnac.url.
 
         Parameters:
             None
@@ -217,7 +217,7 @@ class DnacApi(object):
     def filter(self):
         '''
         Get method filter returns __filter, a string used to control
-        DNAC's response to the API call.  Use the filter to create
+        Cisco DNAC's response to the API call.  Use the filter to create
         a URL for the API call.
 
         Parameters:
@@ -259,8 +259,8 @@ class DnacApi(object):
     def verify(self):
         '''
         Get method verify returns value of __verify, which is used to 
-        determine whether or not to check DNAC's certificate upon making
-        an API call.
+        determine whether or not to check Cisco DNAC's certificate upon
+        making an API call.
 
         Parameters:
             None
@@ -320,7 +320,7 @@ class DnacApi(object):
         '''
         Set method timeout changes the attribute __timeout to the value
         of timeout, which is the number of seconds to wait for the server
-        to respond before declaring DNAC unavailable.
+        to respond before declaring Cisco DNAC unavailable.
 
         Parameters:
             timeout: int

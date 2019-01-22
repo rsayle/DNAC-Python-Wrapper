@@ -96,15 +96,17 @@ be&nbsp;specified.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;dict<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;No<br>
-&nbsp;&nbsp;&nbsp;&nbsp;requestFilter:&nbsp;An&nbsp;expression&nbsp;for&nbsp;filtering&nbsp;DNAC's&nbsp;response.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;requestFilter:&nbsp;An&nbsp;expression&nbsp;for&nbsp;filtering&nbsp;Cisco&nbsp;DNAC's<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;response.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;No<br>
-&nbsp;&nbsp;&nbsp;&nbsp;verify:&nbsp;A&nbsp;flag&nbsp;used&nbsp;to&nbsp;check&nbsp;DNAC's&nbsp;certificate.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verify:&nbsp;A&nbsp;flag&nbsp;used&nbsp;to&nbsp;check&nbsp;Cisco&nbsp;DNAC's&nbsp;certificate.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;boolean<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;False<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;No<br>
-&nbsp;&nbsp;&nbsp;&nbsp;timeout:&nbsp;The&nbsp;number&nbsp;of&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;DNAC's&nbsp;response.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;timeout:&nbsp;The&nbsp;number&nbsp;of&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;Cisco&nbsp;DNAC's<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;response.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;5<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;No<br>
@@ -119,9 +121,9 @@ Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;cmd&nbsp;=&nbsp;<a href="#CommandRunner">CommandRunner</a>(d,&nbsp;"aName",&nbsp;cmds=cmds)</tt></dd></dl>
 
 <dl><dt><a name="CommandRunner-formatCmd"><strong>formatCmd</strong></a>(self, cmd, uuid)</dt><dd><tt>The&nbsp;formatCmd&nbsp;method&nbsp;takes&nbsp;a&nbsp;single&nbsp;CLI&nbsp;command&nbsp;and&nbsp;runs&nbsp;it&nbsp;against<br>
-the&nbsp;UUID&nbsp;of&nbsp;a&nbsp;network&nbsp;device&nbsp;in&nbsp;DNA&nbsp;Center.&nbsp;&nbsp;It&nbsp;converts&nbsp;the&nbsp;command<br>
-and&nbsp;the&nbsp;UUID&nbsp;into&nbsp;a&nbsp;dict&nbsp;stored&nbsp;in&nbsp;the&nbsp;__cmds&nbsp;attribute&nbsp;and&nbsp;returns&nbsp;<br>
-__cmds'&nbsp;value.<br>
+the&nbsp;UUID&nbsp;of&nbsp;a&nbsp;network&nbsp;device&nbsp;in&nbsp;Cisco&nbsp;DNA&nbsp;Center.&nbsp;&nbsp;It&nbsp;converts&nbsp;the<br>
+command&nbsp;and&nbsp;the&nbsp;UUID&nbsp;into&nbsp;a&nbsp;dict&nbsp;stored&nbsp;in&nbsp;the&nbsp;__cmds&nbsp;attribute<br>
+and&nbsp;returns&nbsp;__cmds'&nbsp;value.<br>
 &nbsp;<br>
 Parameters:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;cmd:&nbsp;A&nbsp;CLI&nbsp;commands.<br>
@@ -129,7 +131,7 @@ Parameters:<br>
 &nbsp;<br>
 Return&nbsp;Values:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;The&nbsp;command&nbsp;instructions&nbsp;used&nbsp;as&nbsp;the&nbsp;body&nbsp;for&nbsp;making<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;API&nbsp;call&nbsp;to&nbsp;DNAC's&nbsp;command&nbsp;runner.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;API&nbsp;call&nbsp;to&nbsp;Cisco&nbsp;DNAC's&nbsp;command&nbsp;runner.<br>
 &nbsp;<br>
 Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
@@ -139,8 +141,8 @@ Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;cmd.<a href="#CommandRunner-formatCmd">formatCmd</a>(cmd,&nbsp;uuid)</tt></dd></dl>
 
 <dl><dt><a name="CommandRunner-formatCmds"><strong>formatCmds</strong></a>(self, cmdList, uuidList)</dt><dd><tt>The&nbsp;formatCmds&nbsp;method&nbsp;accepts&nbsp;a&nbsp;list&nbsp;of&nbsp;CLI&nbsp;commands&nbsp;to&nbsp;run&nbsp;against<br>
-a&nbsp;list&nbsp;of&nbsp;UUIDs&nbsp;for&nbsp;the&nbsp;target&nbsp;network&nbsp;devices&nbsp;in&nbsp;DNA&nbsp;Center.&nbsp;&nbsp;It<br>
-converts&nbsp;the&nbsp;two&nbsp;lists&nbsp;into&nbsp;a&nbsp;dict&nbsp;stored&nbsp;in&nbsp;the&nbsp;__cmds&nbsp;attribute<br>
+a&nbsp;list&nbsp;of&nbsp;UUIDs&nbsp;for&nbsp;the&nbsp;target&nbsp;network&nbsp;devices&nbsp;in&nbsp;Cisco&nbsp;DNA&nbsp;Center.<br>
+It&nbsp;converts&nbsp;the&nbsp;two&nbsp;lists&nbsp;into&nbsp;a&nbsp;dict&nbsp;stored&nbsp;in&nbsp;the&nbsp;__cmds&nbsp;attribute<br>
 and&nbsp;returns&nbsp;__cmds'&nbsp;value.<br>
 &nbsp;<br>
 Parameters:<br>
@@ -149,7 +151,7 @@ Parameters:<br>
 &nbsp;<br>
 Return&nbsp;Values:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;The&nbsp;command&nbsp;instructions&nbsp;used&nbsp;as&nbsp;the&nbsp;body&nbsp;for&nbsp;making<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;API&nbsp;call&nbsp;to&nbsp;DNAC's&nbsp;command&nbsp;runner.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;API&nbsp;call&nbsp;to&nbsp;Cisco&nbsp;DNAC's&nbsp;command&nbsp;runner.<br>
 &nbsp;<br>
 Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
@@ -158,9 +160,9 @@ Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;cmds&nbsp;=&nbsp;<a href="#CommandRunner">CommandRunner</a>(d,&nbsp;"aName")<br>
 &nbsp;&nbsp;&nbsp;&nbsp;cmds.<a href="#CommandRunner-formatCmds">formatCmds</a>(cmds,&nbsp;uuids)</tt></dd></dl>
 
-<dl><dt><a name="CommandRunner-run"><strong>run</strong></a>(self)</dt><dd><tt>Method&nbsp;run&nbsp;instructs&nbsp;DNAC&nbsp;to&nbsp;execute&nbsp;the&nbsp;command&nbsp;set&nbsp;stored&nbsp;in<br>
+<dl><dt><a name="CommandRunner-run"><strong>run</strong></a>(self)</dt><dd><tt>Method&nbsp;run&nbsp;instructs&nbsp;Cisco&nbsp;DNAC&nbsp;to&nbsp;execute&nbsp;the&nbsp;command&nbsp;set&nbsp;stored&nbsp;in<br>
 the&nbsp;<a href="#CommandRunner">CommandRunner</a>&nbsp;object.&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;wait&nbsp;for&nbsp;the&nbsp;task&nbsp;to<br>
-complete&nbsp;on&nbsp;DNA&nbsp;Center.&nbsp;&nbsp;It&nbsp;does,&nbsp;however,&nbsp;create&nbsp;a&nbsp;new&nbsp;Task<br>
+complete&nbsp;on&nbsp;Cisco&nbsp;DNA&nbsp;Center.&nbsp;&nbsp;It&nbsp;does,&nbsp;however,&nbsp;create&nbsp;a&nbsp;new&nbsp;Task<br>
 object,&nbsp;saves&nbsp;it&nbsp;in&nbsp;the&nbsp;__task&nbsp;attribute,&nbsp;checks&nbsp;the&nbsp;task,&nbsp;and<br>
 then&nbsp;returns&nbsp;the&nbsp;task's&nbsp;status.&nbsp;&nbsp;See&nbsp;the&nbsp;task.py&nbsp;module&nbsp;for<br>
 valid&nbsp;task&nbsp;states.&nbsp;&nbsp;When&nbsp;using&nbsp;this&nbsp;function,&nbsp;the&nbsp;programmer<br>
@@ -204,7 +206,7 @@ Usage:<br>
 <hr>
 Data descriptors defined here:<br>
 <dl><dt><strong>cmds</strong></dt>
-<dd><tt>Get&nbsp;method&nbsp;cmds&nbsp;returns&nbsp;the&nbsp;__cmds&nbsp;body&nbsp;to&nbsp;be&nbsp;sent&nbsp;to&nbsp;DNAC.<br>
+<dd><tt>Get&nbsp;method&nbsp;cmds&nbsp;returns&nbsp;the&nbsp;__cmds&nbsp;body&nbsp;to&nbsp;be&nbsp;sent&nbsp;to&nbsp;Cisco&nbsp;DNAC.<br>
 &nbsp;<br>
 Paramters:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;None<br>
@@ -263,7 +265,7 @@ Usage:<br>
 </dl>
 <dl><dt><strong>filter</strong></dt>
 <dd><tt>Get&nbsp;method&nbsp;filter&nbsp;returns&nbsp;__filter,&nbsp;a&nbsp;string&nbsp;used&nbsp;to&nbsp;control<br>
-DNAC's&nbsp;response&nbsp;to&nbsp;the&nbsp;API&nbsp;call.&nbsp;&nbsp;Use&nbsp;the&nbsp;filter&nbsp;to&nbsp;create<br>
+Cisco&nbsp;DNAC's&nbsp;response&nbsp;to&nbsp;the&nbsp;API&nbsp;call.&nbsp;&nbsp;Use&nbsp;the&nbsp;filter&nbsp;to&nbsp;create<br>
 a&nbsp;URL&nbsp;for&nbsp;the&nbsp;API&nbsp;call.<br>
 &nbsp;<br>
 Parameters:<br>
@@ -294,9 +296,9 @@ Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dapi.name</tt></dd>
 </dl>
 <dl><dt><strong>respath</strong></dt>
-<dd><tt>Get&nbsp;method&nbsp;respath&nbsp;returns&nbsp;__respath,&nbsp;which&nbsp;is&nbsp;the&nbsp;API&nbsp;call&nbsp;to&nbsp;DNAC.<br>
-In&nbsp;child&nbsp;classes,&nbsp;use&nbsp;this&nbsp;method&nbsp;to&nbsp;form&nbsp;request&nbsp;by&nbsp;appending<br>
-it&nbsp;to&nbsp;DNAC's&nbsp;base&nbsp;url,&nbsp;i.e.&nbsp;Dnac.url.<br>
+<dd><tt>Get&nbsp;method&nbsp;respath&nbsp;returns&nbsp;__respath,&nbsp;which&nbsp;is&nbsp;the&nbsp;API&nbsp;call&nbsp;to<br>
+Cisco&nbsp;DNAC.&nbsp;&nbsp;In&nbsp;child&nbsp;classes,&nbsp;use&nbsp;this&nbsp;method&nbsp;to&nbsp;form&nbsp;request&nbsp;by<br>
+appending&nbsp;it&nbsp;to&nbsp;Cisco&nbsp;DNAC's&nbsp;base&nbsp;url,&nbsp;i.e.&nbsp;Dnac.url.<br>
 &nbsp;<br>
 Parameters:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;None<br>
@@ -327,8 +329,8 @@ Usage:<br>
 </dl>
 <dl><dt><strong>verify</strong></dt>
 <dd><tt>Get&nbsp;method&nbsp;verify&nbsp;returns&nbsp;value&nbsp;of&nbsp;__verify,&nbsp;which&nbsp;is&nbsp;used&nbsp;to&nbsp;<br>
-determine&nbsp;whether&nbsp;or&nbsp;not&nbsp;to&nbsp;check&nbsp;DNAC's&nbsp;certificate&nbsp;upon&nbsp;making<br>
-an&nbsp;API&nbsp;call.<br>
+determine&nbsp;whether&nbsp;or&nbsp;not&nbsp;to&nbsp;check&nbsp;Cisco&nbsp;DNAC's&nbsp;certificate&nbsp;upon<br>
+making&nbsp;an&nbsp;API&nbsp;call.<br>
 &nbsp;<br>
 Parameters:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;None<br>

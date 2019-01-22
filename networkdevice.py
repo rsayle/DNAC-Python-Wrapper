@@ -11,21 +11,22 @@ class NetworkDevice(DnacApi):
     current form, it does not extend these attributes with any others.
     NetworkDevice does, however, provide a set of functions that handle
     the details behind the API's various permutations.  Use this API
-    to retrieve information about network equipment under DNAC"s management.
+    to retrieve information about network equipment under Cisco DNAC"s
+    management.
 
     NetworkDevice automatically sets the resource path for the network-
-    device API call based upon the version of DNA Center indicated in
+    device API call based upon the version of Cisco DNA Center indicated in
     the Dnac object.  Edit the configuration file dnac_config.py and
-    set DNAC_VERSION to the version of DNA Center being used.
+    set DNAC_VERSION to the version of Cisco DNA Center being used.
 
     To use this class, instantiate a new object with a name and place it
     in a Dnac object's API store (Dnac.api{}).  To make API calls with it,
     reference it from the API store and execute one of its functions.
 
-    DNA Center responds with a dictionary whose first attribute, 'response',
-    leads to the desired data in the form of a list.  NetworkDevice's
-    methods simplify processing a response by stripping the initial dict
-    and returning the data listing.
+    Cisco DNA Center responds with a dictionary whose first attribute,
+    'response', leads to the desired data in the form of a list.
+    NetworkDevice's methods simplify processing a response by stripping
+    the initial dict and returning the data listing.
 
     Usage:
         d = Dnac()
@@ -58,20 +59,21 @@ class NetworkDevice(DnacApi):
                 type: str
                 default: None
                 required: Yes
-            requestFilter: An expression for filtering DNAC's response.
-                           The NetworkDevice methods already set the
-                           request filter as necessary to execute their
-                           intended function; however, this can be used
-                           for customizing calls not delivered in this
+            requestFilter: An expression for filtering Cisco DNAC's
+                           response.  The NetworkDevice methods already
+                           set the request filter as necessary to execute
+                           their intended function; however, this can be
+                           used for customizing calls not delivered in this
                            implementation.
                 type: str
                 default: None
                 required: No
-            verify: A flag used to check DNAC's certificate.
+            verify: A flag used to check Cisco DNAC's certificate.
                 type: boolean
                 default: False
                 required: No
-            timeout: The number of seconds to wait for DNAC's response.
+            timeout: The number of seconds to wait for Cisco DNAC's
+                     response.
                 type: int
                 default: 5
                 required: No
@@ -87,7 +89,7 @@ class NetworkDevice(DnacApi):
             self.__respath = "/dna/intent/api/v1/network-device"
         else:
             # rewrite this to raise an exception
-            print "Unsupported version of DNAC: " + dnac.version
+            print "Unsupported version of Cisco DNAC: " + dnac.version
 
         super(NetworkDevice, self).__init__(dnac, \
                                             name, \
@@ -100,14 +102,14 @@ class NetworkDevice(DnacApi):
     def getAllDevices(self):
         '''
         The getAllDevices method returns every network device managed
-        by DNA Center.
+        by Cisco DNA Center.
 
         Parameters:
             None
 
         Return Values:
             list: A list of dictionaries.  Each dictionary contains the
-                  attributes of a single device managed by DNAC.
+                  attributes of a single device managed by Cisco DNAC.
 
         Usage:
             d = Dnac()
@@ -125,7 +127,7 @@ class NetworkDevice(DnacApi):
                                 verify=self.verify, \
                                 timeout=self.timeout)
         if resp.status_code != requests.codes.ok:
-            print "Failed to get all devices from DNAC: " + \
+            print "Failed to get all devices from Cisco DNAC: " + \
                   str(resp.status_code)
         else:
             return json.loads(resp.text)['response']
@@ -134,7 +136,7 @@ class NetworkDevice(DnacApi):
 
     def getDeviceById(self, id):
         '''
-        getDeviceById finds a device in DNAC using its UUID.
+        getDeviceById finds a device in Cisco DNAC using its UUID.
 
         Parameters:
             id : str
@@ -162,7 +164,7 @@ class NetworkDevice(DnacApi):
                                 verify=self.verify, \
                                 timeout=self.timeout)
         if resp.status_code != requests.codes.ok:
-            print "Failed to get device " + id + "from DNAC: " + \
+            print "Failed to get device " + id + "from Cisco DNAC: " + \
                   str(resp.status_code)
         else:
             return json.loads(resp.text)['response']
@@ -171,7 +173,7 @@ class NetworkDevice(DnacApi):
 
     def getDeviceByName(self, name):
         '''
-        getDeviceByName finds a device in DNAC using its hostname.
+        getDeviceByName finds a device in Cisco DNAC using its hostname.
 
         Parameters:
             name : str
@@ -198,7 +200,7 @@ class NetworkDevice(DnacApi):
                                 verify=self.verify, \
                                 timeout=self.timeout)
         if resp.status_code != requests.codes.ok:
-            print "Failed to get " + name + " from DNAC: " + \
+            print "Failed to get " + name + " from Cisco DNAC: " + \
                   str(resp.status_code)
         else:
             return json.loads(resp.text)['response']
@@ -207,7 +209,8 @@ class NetworkDevice(DnacApi):
 
     def getDeviceByIp(self, ip):
         '''
-        getDeviceByIp finds a device in DNAC using its managed IP address.
+        getDeviceByIp finds a device in Cisco DNAC using its managed IP
+        address.
 
         Parameters:
             ip : str
@@ -234,7 +237,7 @@ class NetworkDevice(DnacApi):
                                 verify=self.verify, \
                                 timeout=self.timeout)
         if resp.status_code != requests.codes.ok:
-            print "Failed to get " + ip + " from DNAC: " + \
+            print "Failed to get " + ip + " from Cisco DNAC: " + \
                   str(resp.status_code)
         else:
             return json.loads(resp.text)['response']
@@ -265,7 +268,7 @@ if __name__ == '__main__':
     print "  verify  = " + str(nd.verify)
     print "  timeout = " + str(nd.timeout)
     print
-    print "Getting all network devices from DNAC..."
+    print "Getting all network devices from Cisco DNAC..."
 
     devs = nd.getAllDevices()
 

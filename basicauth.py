@@ -13,24 +13,19 @@ class BasicAuth(object):
     Attributes:
         user: The username for logging into the server.
             type: str
-            scope: public
             default: None
         passwd: The user's password for logging into the server.
             type: str
-            scope: public
             default: None
         creds: The Base64 encoded string "username:password" that is
                transmitted to the server for logging into it.
             type: base64 encoded string
-            scope: public
             default: base64 encoded string "user:passwd"
         hdr: a string for constructing CRUD request headers.
             type: str
-            scope: public
             default: "'Authorization': 'Basic <base64 encoded string>'"
         hdrs: a dict for constructing CRUD request headers.
             type: dict
-            scope: public
             default: {'Authorization' : 'Basic <base64 encoded string>'}
     '''
 

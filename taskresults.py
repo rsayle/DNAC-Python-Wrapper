@@ -7,11 +7,11 @@ import json
 class TaskResults(DnacApi):
     '''
     Class TaskResults gets and stores the results from a task run on
-    Cisco DNA Center.  DNAC delivers the results from a file whose contents
-    are a string, which this class converts to a list.
+    Cisco DNA Center.  Cisco DNAC delivers the results from a file whose 
+    contents are a string, which this class converts to a list.
     
-    Like all entities in DNAC, files are referenced via a UUID.  Set the
-    file UUID either during initialization or by using the class' id
+    Like all entities in Cisco DNAC, files are referenced via a UUID.  Set
+    the file UUID either during initialization or by using the class' id
     set method before attempting to retrieve the file's data with the
     getResults() method.
 
@@ -41,7 +41,7 @@ class TaskResults(DnacApi):
         Class method __init__ creates a new TaskResults instance.  When
         making a TaskResults object, pass it a Dnac object and give it
         a user-friendly name for retrieving it from Dnac's api store,
-        Dnac.api{}.  Optionally, pass it the UUID of the file in DNAC
+        Dnac.api{}.  Optionally, pass it the UUID of the file in Cisco DNAC
         that this object represents.
 
         Parameters:
@@ -54,23 +54,25 @@ class TaskResults(DnacApi):
                 type: str
                 default: None
                 required: Yes
-            id: The UUID of the file in DNAC this object represents.  If
-                included as part of calling __init__, the new object sets
+            id: The UUID of the file in Cisco DNAC this object represents.
+                If included as part of calling __init__, the new object sets
                 its name and url based on id's value:
                     name = "task_<id>"
                     url = "dnac.url/self.respath/<id>"
                 type: str
                 default: None
                 required: No
-            requestFilter: An expression for filtering DNAC's response.
+            requestFilter: An expression for filtering Cisco DNAC's
+                           response.
                 type: str
                 default: None
                 required: No
-            verify: A flag used to check DNAC's certificate.
+            verify: A flag used to check Cisco DNAC's certificate.
                 type: boolean
                 default: False
                 required: No
-            timeout: The number of seconds to wait for DNAC's response.
+            timeout: The number of seconds to wait for Cisco DNAC's
+                     response.
                 type: int
                 default: 5
                 required: No
@@ -89,7 +91,7 @@ class TaskResults(DnacApi):
             self.__respath = "/api/v1/file"
         else:
             # rewrite this to throw an exception
-            print "Unsupported version of DNAC: " + dnac.version
+            print "Unsupported version of Cisco DNAC: " + dnac.version
 
         self.__id = id # use the fileId in the task's progress
         self.__results = []
@@ -107,7 +109,7 @@ class TaskResults(DnacApi):
     @property
     def id(self):
         '''
-        Get method id returns __id, the UUID of the file on DNA Center
+        Get method id returns __id, the UUID of the file on Cisco DNA Center
         that contains the task's results.
 
         Parameters:
@@ -257,8 +259,8 @@ class TaskResults(DnacApi):
 
     def getResults(self):
         '''
-        getResults makes an API call to DNA Center and retrieves the task
-        results contained in the file identified by this object's
+        getResults makes an API call to Cisco DNA Center and retrieves the
+        task results contained in the file identified by this object's
         __taskResultsId, i.e. the file's UUID.
 
         Parameters:
