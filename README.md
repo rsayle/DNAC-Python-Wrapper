@@ -23,7 +23,7 @@ The initial contribution containing the base dnac module with its support for au
 - Improving commandrunner's results
 
 # License
-This project is licensed by Cisco System's according to the terms stated in the project's file named [LICENSE](https://github.com/rsayle/DNAC-Python-Wrapper/LICENSE).
+This project is licensed by Cisco System's according to the terms stated in the project's file named [LICENSE](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/LICENSE).
 
 # Modules
 - dnac.py: Base Dnac class.
