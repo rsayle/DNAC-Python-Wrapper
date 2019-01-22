@@ -12,30 +12,24 @@ class DnacApi(object):
     Attributes:
         dnac: A reference to the Dnac object that houses all the DnacApis.
             type: Dnac object
-            scope: public
             default: None
         name: A user friendly name for accessing the DnacAapi object
               in DNAC's API, i.e. Dnac.api{}
             type: str
-            scope: public
             default: None
         respath: The resource path to the API call.
             type: str
-            scope: public
             default: None
         filter: A request filter for the DNAC API response.
             type: str
-            scope: public
             default: None
         verify: A flag indicating whether or not to authenticate DNAC's
                 certificate when making the API call.
             type: boolean
-            scope: public
             default: False
         timeout: The time in seconds to wait for DNAC's response before
                  declaring the cluster unavailable.
             type: int
-            scope: public
             default: 5
     '''
     

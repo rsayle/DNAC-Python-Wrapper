@@ -42,24 +42,19 @@ automatically&nbsp;updates&nbsp;the&nbsp;encoded&nbsp;string.<br>
 Attributes:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;user:&nbsp;The&nbsp;username&nbsp;for&nbsp;logging&nbsp;into&nbsp;the&nbsp;server.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;public<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
 &nbsp;&nbsp;&nbsp;&nbsp;passwd:&nbsp;The&nbsp;user's&nbsp;password&nbsp;for&nbsp;logging&nbsp;into&nbsp;the&nbsp;server.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;public<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
 &nbsp;&nbsp;&nbsp;&nbsp;creds:&nbsp;The&nbsp;Base64&nbsp;encoded&nbsp;string&nbsp;"username:password"&nbsp;that&nbsp;is<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;transmitted&nbsp;to&nbsp;the&nbsp;server&nbsp;for&nbsp;logging&nbsp;into&nbsp;it.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;base64&nbsp;encoded&nbsp;string<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;public<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;base64&nbsp;encoded&nbsp;string&nbsp;"user:passwd"<br>
 &nbsp;&nbsp;&nbsp;&nbsp;hdr:&nbsp;a&nbsp;string&nbsp;for&nbsp;constructing&nbsp;CRUD&nbsp;request&nbsp;headers.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;public<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;"'Authorization':&nbsp;'Basic&nbsp;&lt;base64&nbsp;encoded&nbsp;string&gt;'"<br>
 &nbsp;&nbsp;&nbsp;&nbsp;hdrs:&nbsp;a&nbsp;dict&nbsp;for&nbsp;constructing&nbsp;CRUD&nbsp;request&nbsp;headers.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;dict<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;public<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;{'Authorization'&nbsp;:&nbsp;'Basic&nbsp;&lt;base64&nbsp;encoded&nbsp;string&gt;'}<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>

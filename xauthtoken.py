@@ -18,30 +18,24 @@ class XAuthToken(object):
     Attributes:
         url: The base URL for contacting DNAC.
             type: str
-            scope: public
             default: None
         bauth: A basic authentication object for requesting a token
                from DNAC.
             type: BasicAuth object
-            scope: public
             default: None
         ctype: A content type object for requesting a token from DNAC.
             type: CType object
-            scope: public
             default: CType("application/json")
         respath: The resource path used to request a token from DNAC.
             type: str
-            scope: public
             default: "/api/system/v1/auth/token"
         verify: Flag indicating whether or not the request should verify
                 DNAC's certificate.
             type: boolean
-            scope: public
             default: False
         timeout: The number of seconds the request for a token should wait
                  before assuming DNAC is unavailable.
             type: int
-            scope: Public
             default: 5
     '''
 
