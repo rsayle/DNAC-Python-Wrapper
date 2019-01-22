@@ -1,3 +1,5 @@
+[![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/rsayle/DNAC-Python-Wrapper)
+
 # DNAC-Python-Wrapper
 A python wrapper for easily accessing a Cisco DNA Center (DNAC) cluster.
 
