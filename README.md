@@ -26,15 +26,15 @@ The initial contribution containing the base dnac module with its support for au
 This project is licensed by Cisco System's according to the terms stated in the project's file named [LICENSE](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/LICENSE).
 
 # Modules
-- dnac.py: Base Dnac class.
-- dnac_config.py: Configuration file for instantiation a Dnac object.
-- basicauth.py: HTTP basic authentication class, BasicAuth, used by Dnac objects.
-- xauthtoken.py: X-auth-token class, XAuthToken, used by Dnac objects.
-- dnacapi.py: DnacApi virtual class from which all API calls inherit.
-- networkdevice.py: Manages devices in Cisco DNA Center.
-- commandrunner.py: Runs read-only, i.e. show commands, on Cisco DNA Center.
-- task.py: Manages tasks executing on Cisco DNAC.
-- taskresults.py: Retrieves the output created by completed tasks.
+- [dnac.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/dnac.py): Base Dnac class.
+- [dnac_config.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/dnac_config.py): Configuration file for instantiation a Dnac object.
+- [basicauth.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/basicauth.py): HTTP basic authentication class, BasicAuth, used by Dnac objects.
+- [xauthtoken.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/xauthtoken.py): X-auth-token class, XAuthToken, used by Dnac objects.
+- [dnacapi.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/dnacapi.py): DnacApi virtual class from which all API calls inherit.
+- [networkdevice.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/networkdevice.py): Manages devices in Cisco DNA Center.
+- [commandrunner.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/commandrunner.py): Runs read-only, i.e. show commands, on Cisco DNA Center.
+- [task.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/task.py): Manages tasks executing on Cisco DNAC.
+- [taskresults.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/taskresults.py): Retrieves the output created by completed tasks.
 
 # Documentation
 Detailed documentation for each module, its classes, attributes and functions can be found in this project's HTML files or the docstrings contained within the modules themselves as well as in [Cisco DNA Center References](https://developer.cisco.com/docs/dna-center/#!cisco-dna-center-platform-overview/cisco-dna-center-platform-overview).
