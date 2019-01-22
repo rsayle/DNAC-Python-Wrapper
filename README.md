@@ -39,4 +39,4 @@ This project is licensed by Cisco System's according to the terms stated in the 
 # Documentation
 Detailed documentation for each module, its classes, attributes and functions can be found in this project's HTML files or the docstrings contained within the modules themselves as well as in [Cisco DNA Center References](https://developer.cisco.com/docs/dna-center/#!cisco-dna-center-platform-overview/cisco-dna-center-platform-overview).
 
-A summary diagram of the class hierarchy and their inter-relationships can be found in file "DNAC Wrapper UML".
+A summary diagram of the class hierarchy and their inter-relationships can be found in file [Cisco DNAC Wrapper UML](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/Cisco%20DNAC%20Wrapper%20UML.pdf).
