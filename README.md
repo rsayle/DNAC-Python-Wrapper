@@ -23,7 +23,7 @@ The initial contribution containing the base dnac module with its support for au
 - Improving commandrunner's results
 
 # License
-This project is licensed by Cisco System's according to the terms stated in the project's file named LICENSE.
+This project is licensed by Cisco System's according to the terms stated in the project's file named [LICENSE](https://github.com/rsayle/DNAC-Python-Wrapper/LICENSE).
 
 # Modules
 - dnac.py: Base Dnac class.
@@ -37,6 +37,6 @@ This project is licensed by Cisco System's according to the terms stated in the 
 - taskresults.py: Retrieves the output created by completed tasks.
 
 # Documentation
-Detailed documentation for each module, its classes, attributes and functions can be found in this project's HTML files or the docstrings contained within the modules themselves.
+Detailed documentation for each module, its classes, attributes and functions can be found in this project's HTML files or the docstrings contained within the modules themselves as well as in [Cisco DNA Center References](https://developer.cisco.com/docs/dna-center/#!cisco-dna-center-platform-overview/cisco-dna-center-platform-overview).
 
 A summary diagram of the class hierarchy and their inter-relationships can be found in file "DNAC Wrapper UML".
