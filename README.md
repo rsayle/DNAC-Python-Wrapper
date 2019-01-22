@@ -39,4 +39,4 @@ This project is licensed by Cisco System's according to the terms stated in the 
 # Documentation
 Detailed documentation for each module, its classes, attributes and functions can be found in this project's HTML files or the docstrings contained within the modules themselves.
 
-A summary diagram of the class hierarchy and inter-relationships can be found in file "DNAC Wrapper Class Summary UML".
+A summary diagram of the class hierarchy and their inter-relationships can be found in file "DNAC Wrapper UML".
