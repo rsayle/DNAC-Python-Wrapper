@@ -1,8 +1,21 @@
 #/usr/bin/env python
 
-from dnacapi import DnacApi
+from dnac import SUPPORTED_DNAC_VERSIONS, \
+                 UNSUPPORTED_DNAC_VERSION
+from dnacapi import DnacApi, \
+                    DnacApiError, \
+                    REQUEST_NOT_OK
 import requests
 import json
+
+## exceptions
+
+class TaskResultsError(DnacApiError):
+
+    def __init__(self, msg):
+        super(TaskResultsError, self).__init__(msg)
+
+## end exceptions
 
 class TaskResults(DnacApi):
     '''
@@ -31,11 +44,11 @@ class TaskResults(DnacApi):
     '''
 
     def __init__(self,
-                 dnac, \
-                 name, \
-                 id = "", \
-                 requestFilter="", \
-                 verify=False, \
+                 dnac,
+                 name,
+                 id = "",
+                 requestFilter="",
+                 verify=False,
                  timeout=5):
         '''
         Class method __init__ creates a new TaskResults instance.  When
@@ -87,21 +100,24 @@ class TaskResults(DnacApi):
             emptyResults = TaskResults(d, name)
             realResults = TaskResults(d, name, id)
         '''
-        if dnac.version <= "1.2.8":
+
+        # check Cisco DNA Center's version and set the resourece path
+        if dnac.version in SUPPORTED_DNAC_VERSIONS:
             self.__respath = "/api/v1/file"
         else:
-            # rewrite this to throw an exception
-            print "Unsupported version of Cisco DNAC: " + dnac.version
-
+            raise TaskResultsError(
+                "__init__: %s: %s" %
+                (UNSUPPORTED_DNAC_VERSION, dnac.version)
+                                  )
         self.__id = id # use the fileId in the task's progress
         self.__results = []
         self.__url = self.__respath + "/" + self.__id
 
-        super(TaskResults, self).__init__(dnac, \
-                                          name, \
-                                          resourcePath=self.__respath, \
-                                          requestFilter=requestFilter, \
-                                          verify=verify, \
+        super(TaskResults, self).__init__(dnac,
+                                          name,
+                                          resourcePath=self.__respath,
+                                          requestFilter=requestFilter,
+                                          verify=verify,
                                           timeout=timeout)
 
 ## end __init__()
@@ -279,19 +295,19 @@ class TaskResults(DnacApi):
         url = self.dnac.url + self.url + self.filter
         print url
         hdrs = self.dnac.hdrs
-        resp = requests.request("GET", \
-                                url, \
-                                headers=hdrs, \
-                                verify=self.verify, \
+        resp = requests.request("GET",
+                                url,
+                                headers=hdrs,
+                                verify=self.verify,
                                 timeout=self.timeout)
         if resp.status_code != requests.codes.ok:
-            print "Failed to get results from file " + \
-                  self.id + \
-                  " with status code: " + \
-                  str(resp.status_code)
-        else:
-            self.__results = json.loads(resp.text)
-            return self.__results
+            raise TaskResultsError(
+                "getResults: %s: %s: %s: expected %s" %
+                (REQUEST_NOT_OK, url, str(resp.status_code),
+                str(requests.codes.ok))
+                                  )
+        self.__results = json.loads(resp.text)
+        return self.__results
 
 ## end getResults()
 
@@ -352,5 +368,22 @@ if  __name__ == '__main__':
     print "  verify  = " + str(r.verify)
     print "  timeout = " + str(r.timeout)
     print
+    print "Testing exceptions..."
+    print
 
+    def raiseTaskResultsError(msg):
+        raise TaskResultsError(msg)
+
+    errors = (UNSUPPORTED_DNAC_VERSION,
+              REQUEST_NOT_OK)
+
+    for error in errors:
+        try:
+            raiseTaskResultsError(error)
+        except TaskResultsError, e:
+            print str(type(e)) + " = " + str(e)
+
+    print
+    print "TaskResults: unit test complete."
+    print
 

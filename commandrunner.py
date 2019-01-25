@@ -1,10 +1,25 @@
 #!/usr/bin/env python
 
-from dnacapi import DnacApi
+from dnac import SUPPORTED_DNAC_VERSIONS, \
+                 UNSUPPORTED_DNAC_VERSION
+from dnacapi import DnacApi, \
+                    DnacApiError, \
+                    REQUEST_NOT_ACCEPTED
 from task import Task, TASK_CREATION
 import requests
 import json
 import time
+
+## exceptions
+
+class CommandRunnerError(DnacApiError):
+
+    def __init__(self, msg):
+        super(CommandRunnerError, self).__init__(msg)
+
+#E end class CommandRunnerError()
+
+## end exceptions
 
 class CommandRunner(DnacApi):
     '''
@@ -33,12 +48,12 @@ class CommandRunner(DnacApi):
         results = cmd.runSync()
     '''
 
-    def __init__(self, \
-                 dnac, \
-                 name, \
-                 cmds={}, \
-                 requestFilter="", \
-                 verify=False, \
+    def __init__(self,
+                 dnac,
+                 name,
+                 cmds={},
+                 requestFilter="",
+                 verify=False,
                  timeout=5):
         '''
         The __init__ method creates a CommandRunner object.  As with all
@@ -87,21 +102,24 @@ class CommandRunner(DnacApi):
                     'deviceUuids': ['<switch>', '<router>]}
 	    cmd = CommandRunner(d, "aName", cmds=cmds)
         '''
-        if dnac.version <= "1.2.8":
+        
+        if dnac.version in SUPPORTED_DNAC_VERSIONS:
             self.__respath = \
                 "/api/v1/network-device-poller/cli/read-request"
         else:
-            # rewrite this to throw an exception
-            print "Unsupported version of Cisco DNAC: " + dnac.version
+            raise TaskError(
+                "__init__: %s: %s" %
+                (UNSUPPORTED_DNAC_VERSION, dnac.version)
+                           )
 
         self.__cmds = cmds
         self.__task = None
 
-        super(CommandRunner, self).__init__(dnac, \
-                                            name, \
-                                            resourcePath=self.__respath, \
-                                            requestFilter=requestFilter, \
-                                            verify=verify, \
+        super(CommandRunner, self).__init__(dnac,
+                                            name,
+                                            resourcePath=self.__respath,
+                                            requestFilter=requestFilter,
+                                            verify=verify,
                                             timeout=timeout)
 
 ## end __init__()
@@ -281,13 +299,18 @@ class CommandRunner(DnacApi):
         '''
         url = self.dnac.url + self.respath + self.filter
         hdrs = self.dnac.hdrs
-        resp = requests.request("POST", \
-                                url, \
-                                data=json.dumps(self.__cmds), \
-                                headers=hdrs, \
-                                verify=self.verify, \
+        resp = requests.request("POST",
+                                url,
+                                data=json.dumps(self.__cmds),
+                                headers=hdrs,
+                                verify=self.verify,
                                 timeout=self.timeout)
         if resp.status_code != requests.codes.accepted:
+            raise TaskError(
+                "run: %s: %s: %s: expected %s" %
+                (REQUEST_NOT_ACCEPTED, url, str(resp.status_code),
+                str(requests.codes.accepted))
+                           )
             print "Failed to run the command: " + str(resp.status_code)
         else:
             tId = json.loads(resp.text)['response']['taskId']
@@ -327,24 +350,27 @@ class CommandRunner(DnacApi):
         '''
         url = self.dnac.url + self.respath + self.filter
         hdrs = self.dnac.hdrs
-        resp = requests.request("POST", \
-                                url, \
-                                data=json.dumps(self.__cmds), \
-                                headers=hdrs, \
-                                verify=self.verify, \
+        resp = requests.request("POST",
+                                url,
+                                data=json.dumps(self.__cmds),
+                                headers=hdrs,
+                                verify=self.verify,
                                 timeout=self.timeout)
         if resp.status_code != requests.codes.accepted:
-            print "Failed to run the command: " + str(resp.status_code)
-        else:
-            tid = json.loads(resp.text)['response']['taskId']
-            tname = "task_" + tid
-            turl = json.loads(resp.text)['response']['url']
-            self.task = Task(self.dnac, tname, taskId=tid, url=turl)
+            raise TaskError(
+                    "run: %s: %s: %s: expected %s" %
+                    (REQUEST_NOT_ACCEPTED, url, str(resp.status_code),
+                    str(requests.codes.accepted))
+                               )
+        tid = json.loads(resp.text)['response']['taskId']
+        tname = "task_" + tid
+        turl = json.loads(resp.text)['response']['url']
+        self.task = Task(self.dnac, tname, taskId=tid)
+        self.task.checkTask()
+        while self.task.progress == TASK_CREATION:
+            time.sleep(wait)
             self.task.checkTask()
-            while self.task.progress == TASK_CREATION:
-                time.sleep(wait)
-                self.task.checkTask()
-            return self.task.taskResults.results
+        return self.task.taskResults.results
 
 ## end runSync()
 
@@ -428,4 +454,22 @@ if  __name__ == '__main__':
     print "  task.url     = " + c.task.url
     print "  task.taskResults = " + str(c.task.taskResults)
     print "  task.taskResults.results = " + str(c.task.taskResults.results)
+    print
+    print "Testing exceptions..."
+    print
+
+    def raiseCommandRunnerError(msg):
+        raise CommandRunnerError(msg)
+
+    errors = (UNSUPPORTED_DNAC_VERSION,
+              REQUEST_NOT_ACCEPTED)
+
+    for error in errors:
+        try:
+            raiseCommandRunnerError(error)
+        except CommandRunnerError, error:
+            print str(type(error)) + " = " + str(error)
+
+    print
+    print "CommandRunner: unit test complete."
     print

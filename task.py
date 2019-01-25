@@ -1,17 +1,28 @@
 #!/usr/bin/env python
 
-from dnacapi import DnacApi
+from dnac import SUPPORTED_DNAC_VERSIONS, \
+                 UNSUPPORTED_DNAC_VERSION
+from dnacapi import DnacApi, \
+                    DnacApiError, \
+                    REQUEST_NOT_OK
 from taskresults import TaskResults
 import requests
 import json
 
 ## module globals
 
-#Used when no task has been created in Cisco DNA Center.
+# task states
 TASK_EMPTY=""
-
-#Used when Cisco DNA Center is preparing the task to run.
 TASK_CREATION="CLI Runner request creation"
+
+## exceptions
+
+class TaskError(DnacApiError):
+
+    def __init__(self, msg):
+        super(DnacApiError, self).__init__(msg)
+
+## end exceptions
 
 ## end module globals
 
@@ -53,11 +64,11 @@ class Task(DnacApi):
     '''
 
     def __init__(self,
-                 dnac, \
-                 name, \
-                 taskId = "", \
-                 requestFilter="", \
-                 verify=False, \
+                 dnac,
+                 name,
+                 taskId = "",
+                 requestFilter="",
+                 verify=False,
                  timeout=5):
         '''
         __init__ makes a new Task object.  An empty task object may be
@@ -119,22 +130,24 @@ class Task(DnacApi):
             newTask = Task(d, "aNewName", newId)
         '''
 
-        if dnac.version <= "1.2.8":
+        if dnac.version in SUPPORTED_DNAC_VERSIONS:
             self.__respath = "/api/v1/task"
         else:
-            # rewrite this to throw an exception
-            print "Unsupported version of Cisco DNAC: " + dnac.version
+            raise TaskError(
+                "__init__: %s: %s" %
+                (UNSUPPORTED_DNAC_VERSION, dnac.version)
+                           )
 
         self.__id = taskId
         self.__url = ""
         self.__progress = TASK_EMPTY
-        self.__taskResults = None
+        self.__taskResults = {}
         self.__taskResultsId = ""
-        super(Task, self).__init__(dnac, \
-                                   name, \
-                                   resourcePath=self.__respath, \
-                                   requestFilter=requestFilter, \
-                                   verify=verify, \
+        super(Task, self).__init__(dnac,
+                                   name,
+                                   resourcePath=self.__respath,
+                                   requestFilter=requestFilter,
+                                   verify=verify,
                                    timeout=timeout)
         if self.__id != "":
             self.name = "task_" + self.__id
@@ -424,16 +437,17 @@ class Task(DnacApi):
         '''
         url = self.dnac.url + self.url + self.filter
         hdrs = self.dnac.hdrs
-        resp = requests.request("GET", \
-                                url, \
-                                headers=hdrs, \
-                                verify=self.verify, \
+        resp = requests.request("GET",
+                                url,
+                                headers=hdrs,
+                                verify=self.verify,
                                 timeout=self.timeout)
         if resp.status_code != requests.codes.ok:
-            print "Failed to check task " + \
-                  self.id + \
-                  " with status code: " + \
-                  str(resp.status_code)
+            raise TaskError(
+                "checkTask: %s: %s: %s: expected %s" %
+                (REQUEST_NOT_OK, url, str(resp.status_code),
+                str(requests.codes.ok))
+                           )
         else:
             self.__progress = json.loads(resp.text)['response']['progress']
             if self.__progress != TASK_CREATION:
@@ -504,3 +518,22 @@ if  __name__ == '__main__':
     print "  taskResults   = " + str(t.taskResults)
     print "  taskResults   = " + str(t.taskResults.getResults())
     print
+    print "Testing exceptions..."
+    print
+
+    def raiseTaskError(msg):
+        raise TaskError(msg)
+
+    errors = (UNSUPPORTED_DNAC_VERSION,
+              REQUEST_NOT_OK)
+
+    for error in errors:
+        try:
+            raiseTaskError(error)
+        except TaskError, error:
+            print str(type(e)) + " = " + str(e)
+
+    print
+    print "Task: unit test complete."
+    print
+
