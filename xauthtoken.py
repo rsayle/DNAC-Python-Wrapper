@@ -5,6 +5,21 @@ from basicauth import BasicAuth
 import requests
 import json
 
+## exceptions
+
+## error messages
+
+INVALID_RESPONSE="Invalid response to API call"
+
+class XAuthTokenError(Exception):
+
+    def __init__(self, msg):
+        super(XAuthTokenError, self).__init__(msg)
+
+## end class XAuthTokenError
+
+## end exceptions
+
 class XAuthToken(object):
     '''
     Class XAuthToken stores a token used to authenticate Cisco DNAC API
@@ -427,8 +442,11 @@ class XAuthToken(object):
                                 verify=self.verify, \
                                 timeout=self.timeout)
         if resp.status_code != requests.codes.ok:
-            print "Failed to get a token from Cisco DNAC: " + \
-                  str(resp.status_code)
+            raise XAuthTokenError(
+                "XAuthToken: getToken: %s: %s: %s: expected %s" % \
+                (INVALID_RESPONSE, url, str(resp.status_code),
+                str(requests.codes.ok))
+                                 )
         else:
             self.__token = json.loads(resp.text)['Token']
             self.hdr = "\'X-Auth-Token\': " + self.__token
@@ -555,4 +573,20 @@ if  __name__ == '__main__':
     print "  hdr        = " + x.hdr
     print "  hdrs       = " + str(x.hdrs)
     print
+    print "Testing exceptions..."
+    print
+
+    def raiseXAuthTokenError(msg):
+        raise XAuthTokenError(msg)
+
+    errors = [INVALID_RESPONSE]
+
+    for e in errors:
+        try:
+            raiseXAuthTokenError(e)
+        except XAuthTokenError, e:
+            print str(type(e)) + " = " + str(e)
+
+    print
+    print "XAuthToken: unit test complete."
 

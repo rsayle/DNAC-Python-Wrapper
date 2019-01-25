@@ -296,7 +296,6 @@ class CommandRunner(DnacApi):
             tName = "task_" + tId
             self.__task = Task(self.dnac, tName, tId)
             return self.__task.checkTask()
-            #return resp.status_code
 
 ## end run()
 

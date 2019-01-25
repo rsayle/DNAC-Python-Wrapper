@@ -56,7 +56,6 @@ class Task(DnacApi):
                  dnac, \
                  name, \
                  taskId = "", \
-                 url="", \
                  requestFilter="", \
                  verify=False, \
                  timeout=5):
@@ -84,9 +83,9 @@ class Task(DnacApi):
                 type: str
                 default: None
                 required: Yes
-            id: The UUID of the task running on Cisco DNAC.  When included,
-                included as part of calling __init__, the new object sets
-                its name and url based on id's value:
+            taskId: The UUID of the task running on Cisco DNAC.  When
+                    included, as part of calling __init__, the new object
+                    sets its name and url based on id's value:
                     name = "task_<id>"
                     url = "dnac.url/self.respath/<id>"
                 type: str
@@ -127,7 +126,7 @@ class Task(DnacApi):
             print "Unsupported version of Cisco DNAC: " + dnac.version
 
         self.__id = taskId
-        self.__url = url
+        self.__url = ""
         self.__progress = TASK_EMPTY
         self.__taskResults = None
         self.__taskResultsId = ""
@@ -241,6 +240,7 @@ class Task(DnacApi):
         self.__url = url
         pathElts = url.split("/")
         self.__id = pathElts[ len(pathElts) - 1 ]
+        self.name = "task_" + self.__id
 
 ## end url setter
 

@@ -11,6 +11,23 @@ from dnac_config import DNAC_NAME, \
                         DNAC_PASSWD, \
                         DNAC_CONTENT_TYPE
 
+## globals
+
+SUPPORTED_DNAC_VERSIONS=["1.2.8"]
+
+## Dnac errors
+UNKNOWN_ERROR="Unknown error"
+UNSUPPORTED_DNAC_VERSION="Unsupported Cisco DNA Center version"
+
+## Dnac exception class - all others inherit from this one
+
+class DnacError(Exception):
+
+    def __init__(self, msg):
+        super(DnacError, self).__init__(msg)
+
+## end class DnacError()
+
 class Dnac(object):
     '''
     The Dnac class simplifies making API calls to a Cisco DNA Center
@@ -139,7 +156,14 @@ class Dnac(object):
             d = Dnac()
             newD = Dnac(user="operator", passwd="l3tm3in!"
         '''
-        self.__version = version
+
+        if version in SUPPORTED_DNAC_VERSIONS:
+            self.__version = version
+        else:
+            raise DnacError(
+                UNSUPPORTED_DNAC_VERSION + ": %s" % version
+                           )
+
         self.__name = name
         self.__ip = ip
         self.__port = port
@@ -822,3 +846,17 @@ if  __name__ == '__main__':
     print
     print "  api = " + str(d.api)
     print
+
+    print "Testing exceptions..."
+    
+    def raiseDnacError(msg):
+        raise DnacError(msg)
+
+    eMsgs = [UNKNOWN_ERROR] 
+    
+    for msg in eMsgs:
+        try:
+            raiseDnacError(msg)
+        except DnacError, e:
+            print str(type(e)) + " = " + str(e)
+

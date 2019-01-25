@@ -1,5 +1,23 @@
 #!/usr/bin/env python
 
+from dnac import DnacError, SUPPORTED_DNAC_VERSIONS
+
+## exceptions
+
+## DNAC API errors
+UNKNOWN_REQUEST_ERROR="Unexpected API request error"
+REQUEST_NOT_OK="API response from DNAC is not OK"
+REQUEST_NOT_ACCEPTED="DNAC did not accept the request"
+
+class DnacApiError(Exception):
+
+    def _init__(self, msg):
+        super(DnacApiError, self).__init__(msg)
+
+## end class DnacApiError
+
+## end exceptions
+
 class DnacApi(object):
     '''
     DnacApi is a virtual class for other classes that will implement
@@ -17,7 +35,10 @@ class DnacApi(object):
               in Cisco DNAC's API, i.e. Dnac.api{}
             type: str
             default: None
-        respath: The resource path to the API call.
+        respath: The resource path to the API call.  Each child class
+                 derives its resource path based upon the version of Cisco
+                 DNA Center being used.  Programmers should not change
+                 this value.
             type: str
             default: None
         filter: A request filter for the Cisco DNAC API response.
@@ -357,7 +378,7 @@ if  __name__ == '__main__':
     print "  verify         = " + str(dapi.verify)
     print "  timeout        = " + str(dapi.timeout)
     print "  isInApi        = " + str(d.isInApi(dapi.name))
-    api = d.getApi(dapi.name)
+    api = d.api
     print "  compare apis   = " + str(api == dapi)
     print
     print "Changing the attributes and assigning to a new Dnac()..."
@@ -378,8 +399,27 @@ if  __name__ == '__main__':
     print "  verify         = " + str(dapi.verify)
     print "  timeout        = " + str(dapi.timeout)
     print "  isInApi        = " + str(newD.isInApi(dapi.name))
-    api = newD.getApi(dapi.name)
+    api = newD.api[dapi.name]
     print "  compare apis   = " + str(api == dapi)
     print "  d.isInApi      = " + str(d.isInApi(dapi.name))
     print
+    print "Testing exceptions..."
+    print
+
+    def raiseDnacApiError(msg):
+        raise DnacApiError(msg)
+
+    errors = (UNKNOWN_REQUEST_ERROR,
+              REQUEST_NOT_OK,
+              REQUEST_NOT_ACCEPTED)
+
+    for error in errors:
+        try:
+            raiseDnacApiError(error)
+        except DnacApiError, e:
+            print str(type(e)) + " = " + str(e)
+
+    print
+    print "DnacApi: unit test complete."
+
 
