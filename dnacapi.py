@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from dnac import DnacError, SUPPORTED_DNAC_VERSIONS
+from crud import Crud
 
 ## exceptions
 
@@ -107,9 +108,18 @@ class DnacApi(object):
         self.__filter = requestFilter
         self.__verify = verify
         self.__timeout = timeout
+        self.__crud = Crud()
 
         # place the new API in Dnac's api dictionary
         self.__dnac.addApi(self.__name, self)
+
+## end __init__()
+
+    @property
+    def result(self):
+        return self.__crud.result
+
+## end result getter
 
     @property
     def dnac(self):

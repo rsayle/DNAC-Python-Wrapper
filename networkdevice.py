@@ -10,6 +10,10 @@ import json
 
 ## exceptions
 
+## errors
+NO_DEVICES="No devices found in DNAC"
+DEVICE_NOT_FOUND="Could not find the device"
+
 class NetworkDeviceError(DnacApiError):
     def __init__(self, msg):
         super(NetworkDeviceError, self).__init__(msg)
@@ -115,6 +119,102 @@ class NetworkDevice(DnacApi):
                                             timeout=timeout)
 ## end __init__()
 
+    def getNetworkDeviceApi(url, hdrs={}, body={}, filter=""):
+        if not hdrs: # empty hdrs - use the object's default
+            hdrs = self.hdrs
+        resp = requests.request("GET",
+                                url, 
+                                headers=hdrs,
+                                data=body,
+                                verify=self.verify,
+                                timeout=self.timeout)
+        if resp.status_code != requests.codes.ok:
+            raise NetworkDeviceError(
+                "getNetworkDeviceApi: %s: %s: %s: expected %s" %
+                (REQUEST_NOT_OK, url, str(resp.status_code),
+                str(requests.codes.ok))
+                                    )
+        devices = json.loads(resp.text)['response']
+        if not devices: # nothing returned from DNAC
+            raise NetworkDeviceError(
+                "getNetworkDeviceApi: %s " % NO_DEVICES
+                                    )
+        return devices
+
+## end getNetworkDeviceApi()
+
+    def putNetworkDeviceApi(url, hdrs={}, body={}, filter=""):
+        if not hdrs: # empty hdrs - use the object's default
+            hdrs = self.hdrs
+        resp = requests.request("PUT",
+                                url, 
+                                headers=hdrs,
+                                data=body,
+                                verify=self.verify,
+                                timeout=self.timeout)
+        if resp.status_code != requests.codes.ok:
+            raise NetworkDeviceError(
+                "putNetworkDeviceApi: %s: %s: %s: expected %s" %
+                (REQUEST_NOT_OK, url, str(resp.status_code),
+                str(requests.codes.ok))
+                                    )
+        devices = json.loads(resp.text)['response']
+        if not devices: # nothing returned from DNAC
+            raise NetworkDeviceError(
+                "putNetworkDeviceApi: %s " % NO_DEVICES
+                                    )
+        return devices
+
+## end putNetworkDeviceApi()
+
+    def postNetworkDeviceApi(url, hdrs={}, body={}, filter=""):
+        if not hdrs: # empty hdrs - use the object's default
+            hdrs = self.hdrs
+        resp = requests.request("POST",
+                                url, 
+                                headers=hdrs,
+                                data=body,
+                                verify=self.verify,
+                                timeout=self.timeout)
+        if resp.status_code != requests.codes.ok:
+            raise NetworkDeviceError(
+                "postNetworkDeviceApi: %s: %s: %s: expected %s" %
+                (REQUEST_NOT_OK, url, str(resp.status_code),
+                str(requests.codes.ok))
+                                    )
+        devices = json.loads(resp.text)['response']
+        if not devices: # nothing returned from DNAC
+            raise NetworkDeviceError(
+                "postNetworkDeviceApi: %s " % NO_DEVICES
+                                    )
+        return devices
+
+## end postNetworkDeviceApi()
+
+    def deleteNetworkDeviceApi(url, hdrs={}, body={}, filter=""):
+        if not hdrs: # empty hdrs - use the object's default
+            hdrs = self.hdrs
+        resp = requests.request("DELETE",
+                                url, 
+                                headers=hdrs,
+                                data=body,
+                                verify=self.verify,
+                                timeout=self.timeout)
+        if resp.status_code != requests.codes.ok:
+            raise NetworkDeviceError(
+                "deleteNetworkDeviceApi: %s: %s: %s: expected %s" %
+                (REQUEST_NOT_OK, url, str(resp.status_code),
+                str(requests.codes.ok))
+                                    )
+        devices = json.loads(resp.text)['response']
+        if not devices: # nothing returned from DNAC
+            raise NetworkDeviceError(
+                "deleteNetworkDeviceApi: %s " % NO_DEVICES
+                                    )
+        return devices
+
+## end deleteNetworkDeviceApi()
+
     def getAllDevices(self):
         '''
         The getAllDevices method returns every network device managed
@@ -136,19 +236,7 @@ class NetworkDevice(DnacApi):
                 print device['hostname']
         '''
         url = self.dnac.url + self.respath + self.filter
-        hdrs = self.dnac.hdrs
-        resp = requests.request("GET",
-                                url,
-                                headers=hdrs,
-                                verify=self.verify,
-                                timeout=self.timeout)
-        if resp.status_code != requests.codes.ok:
-            raise NetworkDeviceError(
-                "getAllDevices: %s: %s: %s: expected %s" %
-                (REQUEST_NOT_OK, url, str(resp.status_code),
-                str(requests.codes.ok))
-                                    )
-        return json.loads(resp.text)['response']
+        return self.getNetworkDeviceApi(url)
 
 ## end getAllDevices()
 
@@ -172,22 +260,8 @@ class NetworkDevice(DnacApi):
             device = d.api['network-device'].getDeviceById(uuid)
             print str(device)
         '''
-        url = self.dnac.url + self.respath + id
-        if self.filter != "":
-            url = url + "/" + self.filter
-        hdrs = self.dnac.hdrs
-        resp = requests.request("GET",
-                                url,
-                                headers=hdrs,
-                                verify=self.verify,
-                                timeout=self.timeout)
-        if resp.status_code != requests.codes.ok:
-            raise NetworkDeviceError(
-                "getAllDevices: %s: %s: %s: expected %s" %
-                (REQUEST_NOT_OK, url, str(resp.status_code),
-                str(requests.codes.ok))
-                                     )
-        return json.loads(resp.text)['response']
+        url = self.dnac.url + self.respath + ("/%s" % id)
+        return self.getNetworkDeviceApi(url)
 
 ## end getDeviceById()
 
@@ -211,21 +285,9 @@ class NetworkDevice(DnacApi):
             device = d.api['network-device'].getDeviceByName(name)
             print str(device)
         '''
-        filter = "?hostname=" + name
-        url = self.dnac.url + self.respath + filter
-        hdrs = self.dnac.hdrs
-        resp = requests.request("GET",
-                                url,
-                                headers=hdrs,
-                                verify=self.verify,
-                                timeout=self.timeout)
-        if resp.status_code != requests.codes.ok:
-            raise NetworkDeviceError(
-                "getDeviceByName: %s: %s: %s: expected %s" %
-                (REQUEST_NOT_OK, url, str(resp.status_code),
-                str(requests.codes.ok))
-                                     )
-        return json.loads(resp.text)['response']
+        hostfilter = "?hostname=" + name
+        url = self.dnac.url + self.respath
+        return self.getNetworkDeviceApi(url, filter=hostfilter)
 
 ## end getDeviceByName()
 
@@ -250,23 +312,33 @@ class NetworkDevice(DnacApi):
             device = d.api['network-device'].getDeviceByIp(ip)
             print str(device)
         '''
-        filter = "?managementIpAddress=" + ip
-        url = self.dnac.url + self.respath + filter
-        hdrs = self.dnac.hdrs
-        resp = requests.request("GET",
-                                url,
-                                headers=hdrs,
-                                verify=self.verify,
-                                timeout=self.timeout)
-        if resp.status_code != requests.codes.ok:
-            raise NetworkDeviceError(
-                "getDeviceByIp: %s: %s: %s: expected %s" %
-                (REQUEST_NOT_OK, url, str(resp.status_code),
-                str(requests.codes.ok))
-                                     )
-        return json.loads(resp.text)['response']
+        ipfilter = "?managementIpAddress=" + ip
+        url = self.dnac.url + self.respath
+        return self.getNetworkDeviceApi(url, filter=ipfilter)
 
-## end get DeviceByIp()
+## end getDeviceByIp()
+
+    def getVlansByDeviceId(self, id):
+        url = self.dnac.url + self.respath + ("/%s/l2vlan" % id)
+        return self.getNetworkDeviceApi(url)
+
+## end getVlansByDeviceId()
+
+    def getVlansByDeviceName(self, name):
+        device = getDeviceByName(name)
+        hostfilter = "?hostname=" + name
+        url = self.dnac.url + self.respath + ("/%s/l2vlan" % device['id'])
+        return self.getNetworkDeviceApi(url, filter=hostfilter)
+
+## end getVlansByDeviceName()
+
+    def getVlansByDeviceIp(self, ip):
+        device = getDeviceByIp(ip)
+        ipfilter = "?managementIpAddress=" + ip
+        url = self.dnac.url + self.respath + ("/%s/l2vlan" % device['id'])
+        return self.getNetworkDeviceApi(url, filter=ipfilter)
+
+## end getVlansByDeviceIp()
 
 ## end class NetworkDevice()
 
@@ -339,7 +411,9 @@ if __name__ == '__main__':
         raise NetworkDeviceError(msg)
 
     errors = (UNSUPPORTED_DNAC_VERSION,
-              REQUEST_NOT_OK)
+              REQUEST_NOT_OK,
+              NO_DEVICES,
+              DEVICE_NOT_FOUND)
 
     for error in errors:
         try:
