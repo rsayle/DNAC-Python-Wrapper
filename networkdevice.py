@@ -1,23 +1,15 @@
 #!/usr/bin/env python
 
-from dnac import SUPPORTED_DNAC_VERSIONS, \
+from dnac import DnacError, \
+                 SUPPORTED_DNAC_VERSIONS, \
                  UNSUPPORTED_DNAC_VERSION
 from dnacapi import DnacApi, \
                     DnacApiError
 from crud import OK, \
-                 REQUEST_NOT_OK
+                 REQUEST_NOT_OK, \
+                 ERROR_MSGS
 
-## exceptions
-
-## errors
-NO_DEVICES="No devices found in DNAC"
-DEVICE_NOT_FOUND="Could not find the device"
-
-class NetworkDeviceError(DnacApiError):
-    def __init__(self, msg):
-        super(NetworkDeviceError, self).__init__(msg)
-
-## end exceptions
+MODULE="networkdevice.py"
 
 class NetworkDevice(DnacApi):
     '''
@@ -93,10 +85,10 @@ class NetworkDevice(DnacApi):
         if dnac.version in SUPPORTED_DNAC_VERSIONS:
             path = "/dna/intent/api/v1/network-device"
         else:
-            raise NetworkDeviceError(
+            raise DnacError(
                 "__init__: %s: %s" %
                 (UNSUPPORTED_DNAC_VERSION, dnac.version)
-                                    )
+                           )
         self.__devices = None # API returns list or dict based on the call
         self.__vlans = []
         super(NetworkDevice, self).__init__(dnac,
@@ -133,10 +125,10 @@ class NetworkDevice(DnacApi):
                                         verify=self.verify,
                                         timeout=self.timeout)
         if status != OK:
-            raise NetworkDeviceError(
-                "getAllDevices: %s: %s: %s: excepted %s" %
-								(REQUEST_NOT_OK, url, status, OK)
-                                    )
+            raise DnacApiError(
+                MODULE, "getAllDevices", REQUEST_NOT_OK, url,
+                OK, status, ERROR_MSGS[status], str(results)
+                              )
         self.__devices = devices['response']
         return self.__devices
 
@@ -168,10 +160,10 @@ class NetworkDevice(DnacApi):
                                         verify=self.verify,
                                         timeout=self.timeout)
         if status != OK:
-            raise NetworkDeviceError(
-                "getDeviceById: %s: %s: %s: excepted %s" %
-								(REQUEST_NOT_OK, url, status, OK)
-                                    )
+            raise DnacApiError(
+                MODULE, "getDeviceById", REQUEST_NOT_OK, url,
+                OK, status, ERROR_MSGS[status], str(results)
+                              )
         self.__devices = devices['response']
         return self.__devices
 
@@ -204,10 +196,10 @@ class NetworkDevice(DnacApi):
                                         verify=self.verify,
                                         timeout=self.timeout)
         if status != OK:
-            raise NetworkDeviceError(
-                "getDeviceByName: %s: %s: %s: excepted %s" %
-								(REQUEST_NOT_OK, url, status, OK)
-                                    )
+            raise DnacApiError(
+                MODULE, "getDeviceByName", REQUEST_NOT_OK, url,
+                OK, status, ERROR_MSGS[status], str(results)
+                              )
         self.__devices = devices['response'][0]
         return self.__devices
 
@@ -241,10 +233,10 @@ class NetworkDevice(DnacApi):
                                         verify=self.verify,
                                         timeout=self.timeout)
         if status != OK:
-            raise NetworkDeviceError(
-                "getDeviceByIp: %s: %s: %s: excepted %s" %
-								(REQUEST_NOT_OK, url, status, OK)
-                                    )
+            raise DnacApiError(
+                MODULE, "getDeviceByIp", REQUEST_NOT_OK, url,
+                OK, status, ERROR_MSGS[status], str(results)
+                              )
         self.__devices = devices['response'][0]
         return self.__devices
 
@@ -257,10 +249,10 @@ class NetworkDevice(DnacApi):
                                       verify=self.verify,
                                       timeout=self.timeout)
         if status != OK:
-            raise NetworkDeviceError(
-                "getVlansByDeviceIp: %s: %s: %s: excepted %s" %
-								(REQUEST_NOT_OK, url, status, OK)
-                                    )
+            raise DnacApiError(
+                MODULE, "getVlansByDeviceId", REQUEST_NOT_OK, url,
+                OK, status, ERROR_MSGS[status], str(vlans)
+                              )
         self.__vlans = vlans['response']
         return self.__vlans
 
@@ -276,10 +268,10 @@ class NetworkDevice(DnacApi):
                                       verify=self.verify,
                                       timeout=self.timeout)
         if status != OK:
-            raise NetworkDeviceError(
-                "getVlansByDeviceName: %s: %s: %s: excepted %s" %
-								(REQUEST_NOT_OK, url, status, OK)
-                                    )
+            raise DnacApiError(
+                MODULE, "getVlansByDeviceName", REQUEST_NOT_OK, url,
+                OK, status, ERROR_MSGS[status], str(vlans)
+                              )
         self.__vlans = vlans['response']
         return self.__vlans
 
@@ -295,10 +287,10 @@ class NetworkDevice(DnacApi):
                                       verify=self.verify,
                                       timeout=self.timeout)
         if status != OK:
-            raise NetworkDeviceError(
-                "getVlansByDeviceIp: %s: %s: %s: excepted %s" %
-								(REQUEST_NOT_OK, url, status, OK)
-                                    )
+            raise DnacApiError(
+                MODULE, "getVlansByDeviceIp", REQUEST_NOT_OK, url,
+                OK, status, ERROR_MSGS[status], str(vlans)
+                              )
         self.__vlans = vlans['response']
         return self.__vlans
 
@@ -379,23 +371,6 @@ if __name__ == '__main__':
     vlans = nd.getVlansByDeviceIp("10.255.1.10")
 
     print "  vlans = " + str(vlans)
-    print
-    print "Testing exceptions..."
-    
-    def raiseNetworkDeviceError(msg):
-        raise NetworkDeviceError(msg)
-
-    errors = (UNSUPPORTED_DNAC_VERSION,
-              REQUEST_NOT_OK,
-              NO_DEVICES,
-              DEVICE_NOT_FOUND)
-
-    for error in errors:
-        try:
-            raiseNetworkDeviceError(error)
-        except NetworkDeviceError, e:
-            print str(type(e)) + " = " + str(e)
-
     print
     print "NetworkDevice: unit test complete."
     print

@@ -1,23 +1,13 @@
 #!/usr/bin/env python
 
-from dnac import SUPPORTED_DNAC_VERSIONS, \
+from dnac import DnacError, \
+                 SUPPORTED_DNAC_VERSIONS, \
                  UNSUPPORTED_DNAC_VERSION
 from dnacapi import DnacApi, \
                     DnacApiError
 from crud import ACCEPTED, \
-                 REQUEST_NOT_ACCEPTED
-
-## exceptions
-
-
-class DeploymentError(DnacApiError):
-
-    def __init__(self, msg):
-        super(DeploymentError, self).__init__(msg)
-
-## end class DeploymentError
-
-## end exceptions
+                 REQUEST_NOT_ACCEPTED, \
+                 ERROR_MSGS
 
 class Deployment(DnacApi):
 
@@ -31,9 +21,10 @@ class Deployment(DnacApi):
         if dnac.version in SUPPORTED_DNAC_VERSIONS:
             path = "/api/v1/template-programmer/template/deploy/status"
         else:
-            raise DeploymentError(
-		UNSUPPORTED_DNAC_VERSION + ": %s" % dnac.version
-	                         )
+            raise DnacError(
+                "__init__: %s: %s" %
+		(UNSUPPORTED_DNAC_VERSION, dnac.version)
+	                    )
         self.__id = id
         self.__url = "" # auto set by name and id
         self.__status = "" # for monitoring deployment status
@@ -107,15 +98,15 @@ class Deployment(DnacApi):
         url = self.dnac.url + self.url
         # make the call
         results, status = self.crud.get(url,
-                                     headers=self.dnac.hdrs,
-                                     verify=self.verify,
-                                     timeout=self.timeout)
+                                        headers=self.dnac.hdrs,
+                                        verify=self.verify,
+                                        timeout=self.timeout)
         # return the results
         if status != ACCEPTED:
-            raise DeploymentError(
-                "checkDeployment: %s: %s: %s: expected %s" % \
-                (REQUEST_NOT_ACCEPTED, url, status, ACCEPTED)
-                                 )
+            raise DnacApiError(
+                MODULE, "checkDeployment", REQUEST_NOT_ACCEPTED, url,
+                ACCEPTED, status, ERROR_MSGS[status], str(results)
+                              )
         self.__results = results
         self.__status = self.__results['status']
         return self.__status
@@ -191,19 +182,5 @@ if __name__ == '__main__':
     print
     print "  status  = " + d.status
     print "  results = " + str(d.results)
-    print
-    print "Testing exceptions..."
-
-    def raiseDeploymentError(msg):
-        raise DeploymentError(msg)
-
-    errors = [REQUEST_NOT_ACCEPTED]
-
-    for e in errors:
-        try:
-            raiseDeploymentError(e)
-        except DeploymentError, e:
-            print str(type(e)) + " = " + str(e)
-
     print
     print "Deployment: unit test complete."

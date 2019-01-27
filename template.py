@@ -1,17 +1,21 @@
 #!/user/bin/env python
 
-from dnac import SUPPORTED_DNAC_VERSIONS, \
+from dnac import DnacError, \
+                 SUPPORTED_DNAC_VERSIONS, \
                  UNSUPPORTED_DNAC_VERSION
 from dnacapi import DnacApi, \
                     DnacApiError
 from crud import OK, \
                  REQUEST_NOT_OK, \
                  ACCEPTED, \
-                 REQUEST_NOT_ACCEPTED
+                 REQUEST_NOT_ACCEPTED, \
+                 ERROR_MSGS
 from deployment import Deployment
 import json
 
 ## globals
+
+MODULE="template.py"
 
 # values instructing Cisco DNA Center how to interpret the target ID value
 TARGET_BY_DEFAULT="DEFAULT"
@@ -79,7 +83,7 @@ class Template(DnacApi):
         if dnac.version in SUPPORTED_DNAC_VERSIONS:
             path = "/dna/intent/api/v1/template-programmer/template"
         else:
-            raise TemplateError(
+            raise DnacError(
                 "__init__: %s: %s" %
                 (UNSUPPORTED_DNAC_VERSION, dnac.version)
                                )
@@ -87,7 +91,7 @@ class Template(DnacApi):
         self.__templateId = "" # base template ID
         self.__version = version # requested template version, 0 = latest
         self.__versionedTemplate = {} 
-        self.__versionedTemplateId = ""# template that can be deployed
+        self.__versionedTemplateId = "" # template that can be deployed
         self.__versionedTemplateParams = {}
         self.__targetId = "" # where to deploy the template
         self.__targetType = TARGET_BY_DEFAULT # how to find the target
@@ -106,7 +110,7 @@ class Template(DnacApi):
         # retrieve the versioned template
         self.__versionedTemplate = \
             self.getVersionedTemplateByName(self.name, self.__version)
-        if not bool(self.__versionedTemplate): # template is not empty
+        if not bool(self.__versionedTemplate): # template is empty
             raise TemplateError(
                 "__init__: %s: %s version %s" % 
                 (UNKNOWN_VERSION, self.name, str(self.__version))
@@ -217,10 +221,10 @@ class Template(DnacApi):
                                         verify=self.verify,
                                         timeout=self.timeout)
         if status != OK:
-            raise TemplateError(
-                "getAllTemplates: %s: %s: %s: expected %s" %
-                (REQUEST_NOT_OK, url, status, OK)
-                               )
+            raise DnacApiError(
+                MODULE, "checkDeployment", REQUEST_NOT_OK, url,
+                OK, status, ERROR_MSGS[status], str(results)
+                              )
         return templates
 
 ## end getAllTemplates()
@@ -232,10 +236,10 @@ class Template(DnacApi):
                                         verify=self.verify,
                                         timeout=self.timeout)
         if status != OK:
-            raise TemplateError(
-                "getTemplateById: %s: %s: %s: expected %s" %
-                (REQUEST_NOT_OK, url, status, OK)
-                               )
+            raise DnacApiError(
+                MODULE, "getTemplateById", REQUEST_NOT_OK, url,
+                OK, status, ERROR_MSGS[status], str(results)
+                              )
         return template
 
 ## end getTemplateById
@@ -356,16 +360,16 @@ class Template(DnacApi):
     def deploy(self):
         url = self.dnac.url + self.resource + "/deploy"
         body = self.makeBody()
-        results, status = self.crud.get(url,
-                                        headers=self.dnac.hdrs,
-                                        body=body,
-                                        verify=self.verify,
-                                        timeout=self.timeout)
+        results, status = self.crud.post(url,
+                                         headers=self.dnac.hdrs,
+                                         body=body,
+                                         verify=self.verify,
+                                         timeout=self.timeout)
         if status != ACCEPTED:
-            raise TemplateError(
-                "deploy: %s: %s: %s: expected %s" % 
-                (REQUEST_NOT_ACCEPTED, url, status, ACCEPTED)
-                               )
+            raise DnacApiError(
+                MODULE, "checkDeployment", REQUEST_NOT_ACCEPTED, url,
+                ACCEPTED, status, ERROR_MSGS[status], str(results)
+                              )
         # make a deployment object
         did = results['deploymentId']
         elts = did.split()
@@ -380,16 +384,16 @@ class Template(DnacApi):
     def deploySync(self, wait=3):
         url = self.dnac.url + self.resource + "/deploy"
         body = self.makeBody()
-        results, status = self.crud.get(url,
-                                        headers=self.dnac.hdrs,
-                                        body=body,
-                                        verify=self.verify,
-                                        timeout=self.timeout)
+        results, status = self.crud.post(url,
+                                         headers=self.dnac.hdrs,
+                                         body=body,
+                                         verify=self.verify,
+                                         timeout=self.timeout)
         if status != ACCEPTED:
-            raise TemplateError(
-                "deploy: %s: %s: %s: expected %s" % 
-                (REQUEST_NOT_ACCEPTED, url, status, ACCEPTED)
-                               )
+            raise DnacApiError(
+                MODULE, "checkDeployment", REQUEST_NOT_ACCEPTED, url,
+                ACCEPTED, status, ERROR_MSGS[status], str(results)
+                              )
         # make a deployment object
         did = result['deploymentId']
         elts = did.split()
@@ -462,7 +466,7 @@ if __name__ == '__main__':
 
     t.versionedTemplateParams['interface'] = "gig1/0/1"
     t.versionedTemplateParams['description'] = "Configured by template.py"
-    t.versionedTemplateParams['vlan'] = 40
+    t.versionedTemplateParams['vlan'] = 60
 
     print " interface   = " + t.versionedTemplateParams['interface']
     print " description = " + t.versionedTemplateParams['description']
@@ -475,14 +479,14 @@ if __name__ == '__main__':
     t.targetType = TARGET_BY_ID
     body = t.makeBody()
 
-    print " body = " + str(body)
+    print " body = " + body
     print
     print "Deploying the template asynchronously..."
     print
 
     status = t.deploy()
 
-    print " result           = " + str(result)
+    print " status           = " + str(status)
     print " type(deployment) = " + str(t.deployment)
     print " deployment.name  = " + t.deployment.name
     print " deployment.id    = " + t.deployment.id
@@ -497,26 +501,6 @@ if __name__ == '__main__':
     print " status          = " + status
     print " results[status] = " + t.deployment.results['status']
     print " results         = " + str(t.deployment.results)
-    print
-    print "Testing exceptions..."
-    print
-
-    def raiseTemplateError(msg):
-        raise TemplateError(msg)
-
-    tErrors = (ILLEGAL_TARGET_TYPE, \
-               UNKNOWN_DEPLOYMENT_STATUS, \
-               ALREADY_DEPLOYED, \
-               ILLEGAL_VERSION, \
-               UNKNOWN_VERSION, \
-               REQUEST_NOT_ACCEPTED)
-
-    for t in tErrors:
-        try:
-            raiseTemplateError(t)
-        except TemplateError, e:
-            print str(type(e)) + " = " + str(e)
-
     print
     print "Template: unit test complete."
 

@@ -3,16 +3,24 @@
 from dnac import DnacError, SUPPORTED_DNAC_VERSIONS
 from crud import Crud
 
+MODULE="dnacapi.py"
+
 ## exceptions
 
-## error msgs
-
-## end error msgs
-
 class DnacApiError(Exception):
-
-    def _init__(self, msg):
-        super(DnacApiError, self).__init__(msg)
+    def __init__(self,
+                 module,
+                 function,
+                 error,
+                 url,
+                 expected,
+                 received,
+                 msg,
+                 cause):
+        error = \
+          "%s: %s: %s: %s: expected %s: received %s: %s: problem %s" % \
+          (module, function, error, url, expected, received, msg, cause)
+        super(DnacApiError, self).__init__(error)
 
 ## end class DnacApiError
 
@@ -418,6 +426,21 @@ if  __name__ == '__main__':
     print "  status  = " + status
     print "  results = " + str(results)
     print
-    print "DnacApi: unit test complete."
+    print "Testing exception..."
 
+    dapierror = DnacApiError(MODULE, "aFunc", "anError", "aUrl",
+                             "this", "that", "aMsg", "aCause")
+
+    print "  exception = " + str(dapierror)
+    print 
+    print "Raising exception..."
+    print
+
+    try:
+        raise dapierror
+    except DnacApiError, e:
+            print e
+
+    print
+    print "DnacApi: unit test complete."
 
