@@ -3,16 +3,12 @@
 from dnac import SUPPORTED_DNAC_VERSIONS, \
                  UNSUPPORTED_DNAC_VERSION
 from dnacapi import DnacApi, \
-                    DnacApiError, \
-                    REQUEST_NOT_ACCEPTED
-import requests
-import json
+                    DnacApiError
+from crud import ACCEPTED, \
+                 REQUEST_NOT_ACCEPTED
 
 ## exceptions
 
-## error messages
-
-INVALID_RESPONSE="Invalid response to API call"
 
 class DeploymentError(DnacApiError):
 
@@ -29,32 +25,27 @@ class Deployment(DnacApi):
                  dnac,
                  name,
                  id="",
-                 requestFilter="",
                  verify=False,
                  timeout=5):
 
         if dnac.version in SUPPORTED_DNAC_VERSIONS:
-            self.__respath = \
-                "/api/v1/template-programmer/template/deploy/status"
+            path = "/api/v1/template-programmer/template/deploy/status"
         else:
             raise DeploymentError(
-							UNSUPPORTED_DNAC_VERSION + ": %s" % dnac.version
-							                   )
-
+		UNSUPPORTED_DNAC_VERSION + ": %s" % dnac.version
+	                         )
         self.__id = id
-        self.__url = ""
-        self.__status = ""
-        self.__results = {}
-
+        self.__url = "" # auto set by name and id
+        self.__status = "" # for monitoring deployment status
+        self.__results = {} # stores deployment's results
         super(Deployment, self).__init__(dnac,
                                          name,
-                                         resourcePath=self.__respath,
-                                         requestFilter=requestFilter,
+                                         resource=path,
                                          verify=verify,
                                          timeout=timeout)
         if bool(self.__id): # ID is not empty
             self.name = "deployment_" + self.__id
-            self.url = self.respath + "/" + self.__id
+            self.url = self.resource + "/" + self.__id
 
 ## end __init__()
 
@@ -68,7 +59,7 @@ class Deployment(DnacApi):
     def id(self, id):
         self.__id = id
         self.name = "deployment_" + self.__id
-        self.__url = self.respath + "/" + self.__id
+        self.__url = self.resource + "/" + self.__id
 
 ## end id setter
 
@@ -113,22 +104,19 @@ class Deployment(DnacApi):
 
     def checkDeployment(self):
         # prepare the API call
-        url = self.dnac.url + self.url + self.filter
-        hdrs = self.dnac.hdrs
+        url = self.dnac.url + self.url
         # make the call
-        resp = requests.request("GET", \
-                                url, \
-                                headers=hdrs, \
-                                verify=self.verify, \
-                                timeout=self.timeout)
+        results, status = self.crud.get(url,
+                                     headers=self.dnac.hdrs,
+                                     verify=self.verify,
+                                     timeout=self.timeout)
         # return the results
-        if resp.status_code != requests.codes.accepted:
+        if status != ACCEPTED:
             raise DeploymentError(
                 "checkDeployment: %s: %s: %s: expected %s" % \
-                (REQUEST_NOT_ACCEPTED, url, str(resp.status_code),
-                str(requests.codes.accepted))
+                (REQUEST_NOT_ACCEPTED, url, status, ACCEPTED)
                                  )
-        self.__results = json.loads(resp.text)
+        self.__results = results
         self.__status = self.__results['status']
         return self.__status
 
@@ -149,7 +137,7 @@ if __name__ == '__main__':
     print "  type(d) = " + str(type(d))
     print "  name    = " + d.name
     print "  id      = " + d.id
-    print "  respath = " + d.respath
+    print "  resource = " + d.resource
     print "  url     = " + d.url
     print "  status  = " + d.status
     print "  results = " + str(d.results)
@@ -160,13 +148,13 @@ if __name__ == '__main__':
                    id="edaf8986-5670-454a-8252-6fd77b7e1dd9")
 
     print
-    print "  type(d) = " + str(type(d))
-    print "  name    = " + d.name
-    print "  id      = " + d.id
-    print "  respath = " + d.respath
-    print "  url     = " + d.url
-    print "  status  = " + d.status
-    print "  results = " + str(d.results)
+    print "  type(d)  = " + str(type(d))
+    print "  name     = " + d.name
+    print "  id       = " + d.id
+    print "  resource = " + d.resource
+    print "  url      = " + d.url
+    print "  status   = " + d.status
+    print "  results  = " + str(d.results)
     print
     print "Resetting deployment to a blank and updating id..."
 
@@ -174,27 +162,27 @@ if __name__ == '__main__':
     d.id = "edaf8986-5670-454a-8252-6fd77b7e1dd9"
 
     print
-    print "  type(d) = " + str(type(d))
-    print "  name    = " + d.name
-    print "  id      = " + d.id
-    print "  respath = " + d.respath
-    print "  url     = " + d.url
-    print "  status  = " + d.status
-    print "  results = " + str(d.results)
+    print "  type(d)  = " + str(type(d))
+    print "  name     = " + d.name
+    print "  id       = " + d.id
+    print "  resource = " + d.resource
+    print "  url      = " + d.url
+    print "  status   = " + d.status
+    print "  results  = " + str(d.results)
     print
     print "Resetting deployment to a blank and updating url..."
 
     d = Deployment(dnac, "aName")
-    d.url = d.respath + "/edaf8986-5670-454a-8252-6fd77b7e1dd9"
+    d.url = d.resource + "/edaf8986-5670-454a-8252-6fd77b7e1dd9"
 
     print
-    print "  type(d) = " + str(type(d))
-    print "  name    = " + d.name
-    print "  id      = " + d.id
-    print "  respath = " + d.respath
-    print "  url     = " + d.url
-    print "  status  = " + d.status
-    print "  results = " + str(d.results)
+    print "  type(d)  = " + str(type(d))
+    print "  name     = " + d.name
+    print "  id       = " + d.id
+    print "  resource = " + d.resource
+    print "  url      = " + d.url
+    print "  status   = " + d.status
+    print "  results  = " + str(d.results)
     print
     print "Checking the deployment results..."
 
@@ -209,7 +197,7 @@ if __name__ == '__main__':
     def raiseDeploymentError(msg):
         raise DeploymentError(msg)
 
-    errors = [INVALID_RESPONSE]
+    errors = [REQUEST_NOT_ACCEPTED]
 
     for e in errors:
         try:

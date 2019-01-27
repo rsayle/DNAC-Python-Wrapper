@@ -5,10 +5,9 @@ from crud import Crud
 
 ## exceptions
 
-## DNAC API errors
-UNKNOWN_REQUEST_ERROR="Unexpected API request error"
-REQUEST_NOT_OK="API response from DNAC is not OK"
-REQUEST_NOT_ACCEPTED="DNAC did not accept the request"
+## error msgs
+
+## end error msgs
 
 class DnacApiError(Exception):
 
@@ -36,13 +35,10 @@ class DnacApi(object):
               in Cisco DNAC's API, i.e. Dnac.api{}
             type: str
             default: None
-        respath: The resource path to the API call.  Each child class
-                 derives its resource path based upon the version of Cisco
-                 DNA Center being used.  Programmers should not change
-                 this value.
-            type: str
-            default: None
-        filter: A request filter for the Cisco DNAC API response.
+        resource: The resource path to the API call.  Each child class
+                  derives its resource path based upon the version of Cisco
+                  DNA Center being used.  Programmers should not change
+                  this value.
             type: str
             default: None
         verify: A flag indicating whether or not to authenticate Cisco
@@ -58,8 +54,7 @@ class DnacApi(object):
     def __init__(self, \
                  dnac, \
                  name, \
-                 resourcePath, \
-                 requestFilter="", \
+                 resource="", \
                  verify=False, \
                  timeout=5):
         '''
@@ -79,14 +74,10 @@ class DnacApi(object):
                 type: str
                 default: None
                 required: Yes
-            resourcePath: The API call to Cisco DNAC.
+            resource: The API call to Cisco DNAC.
                 type: str
                 default: None
                 required: Yes
-            requestFilter: An expression of filtering Cisco DNAC's response.
-                type: str
-                default: None
-                required: No
             verify: A flag used to check Cisco DNAC's certificate.
                 type: boolean
                 default: False
@@ -104,22 +95,64 @@ class DnacApi(object):
         '''
         self.__dnac = dnac
         self.__name = name
-        self.__respath = resourcePath
-        self.__filter = requestFilter
+        self.__resource = resource
         self.__verify = verify
         self.__timeout = timeout
         self.__crud = Crud()
 
         # place the new API in Dnac's api dictionary
-        self.__dnac.addApi(self.__name, self)
+        self.__dnac.api[self.__name] = self
 
 ## end __init__()
 
     @property
-    def result(self):
-        return self.__crud.result
+    def crud(self):
+        return self.__crud
 
-## end result getter
+## end crud getter
+
+    @property
+    def results(self):
+        return self.__crud.results
+
+## end results getter
+
+    def get(self, url, body=""):
+        return self.__crud.get(url,
+                               headers=self.__dnac.hdrs,
+                               body=body,
+                               verify=self.__verify,
+                               timeout=self.__timeout)
+
+## end get()
+
+    def put(self, url, body=""):
+        return self.__crud.put(url,
+                               headers=self.__dnac.hdrs,
+                               body=body,
+                               verify=self.__verify,
+                               timeout=self.__timeout)
+        return results, status
+
+## end put()
+
+    def post(self, url, body=""):
+        return self.__crud.post(url,
+                                headers=self.__dnac.hdrs,
+                                body=body,
+                                verify=self.__verify,
+                                timeout=self.__timeout)
+
+## end post()
+
+    def delete(self, url, body=""):
+        return self.__crud.delete(url,
+                                  headers=self.__dnac.hdrs,
+                                  body=body,
+                                  verify=self.__verify,
+                                  timeout=self.__timeout)
+
+## end delete()
 
     @property
     def dnac(self):
@@ -135,7 +168,7 @@ class DnacApi(object):
 
         Usage:
             # Do not create a DnacApi object; inherit from it instead
-            dapi = DnacApi(dnac, name, respath)
+            dapi = DnacApi(dnac, name, resource)
             dnac = dapi.dnac
         '''
         return self.__dnac
@@ -156,7 +189,7 @@ class DnacApi(object):
 
         Usage:
             # Do not create a DnacApi object; inherit from it instead
-            dapi = DnacApi(dnac, name, respath)
+            dapi = DnacApi(dnac, name, resource)
             newDnac = Dnac()
             dapi.dnac = newDnac
         '''
@@ -176,7 +209,7 @@ class DnacApi(object):
 
         Usage:
             # Do not create a DnacApi object; inherit from it instead
-            dapi = DnacApi(dnac, name, respath)
+            dapi = DnacApi(dnac, name, resource)
             dapi.name
         '''
         return self.__name
@@ -197,15 +230,15 @@ class DnacApi(object):
 
         Usage:
             # Do not create a DnacApi object; inherit from it instead
-            dapi = DnacApi(dnac, name, respath)
+            dapi = DnacApi(dnac, name, resource)
             dapi.name = "aNewName"
         '''
         self.__name = name
 
     @property
-    def respath(self):
+    def resource(self):
         '''
-        Get method respath returns __respath, which is the API call to
+        Get method resource returns __resource, which is the API call to
         Cisco DNAC.  In child classes, use this method to form request by
         appending it to Cisco DNAC's base url, i.e. Dnac.url.
 
@@ -218,19 +251,19 @@ class DnacApi(object):
         Usage:
             # Do not create a DnacApi object; inherit from it instead
             d = Dnac()
-            dapi = DnacApi(d, name, respath)
-            apicall = d.url + dapi.respath
+            dapi = DnacApi(d, name, resource)
+            apicall = d.url + dapi.resource
         '''
-        return self.__respath
+        return self.__resource
 
-    @respath.setter
-    def respath(self, resourcePath):
+    @resource.setter
+    def resource(self, resource):
         '''
-        Set method respath updates the __respath attribute to a new
+        Set method resource updates the __resource attribute to a new
         value for the API call.
 
         Parameters:
-            respath: str
+            resource: str
             default: none
             Required: Yes
 
@@ -239,52 +272,10 @@ class DnacApi(object):
 
         Usage:
             # Do not create a DnacApi object; inherit from it instead
-            dapi = DnacApi(dnac, name, respath)
-            dapi.respath = "/a/new/resource/path"
+            dapi = DnacApi(dnac, name, resource)
+            dapi.resource = "/a/new/resource/path"
         '''
-        self.__respath = resourcePath
-
-    @property
-    def filter(self):
-        '''
-        Get method filter returns __filter, a string used to control
-        Cisco DNAC's response to the API call.  Use the filter to create
-        a URL for the API call.
-
-        Parameters:
-            None
-
-        Return Values:
-            str: A filter string.
-
-        Usage:
-            # Do not create a DnacApi object; inherit from it instead
-            d = Dnac()
-            dapi = DnacApi(d, name, respath)
-            url = d.url + dapi.respath + dapi.filter
-        '''
-        return self.__filter
-
-    @filter.setter
-    def filter(self, requestFilter):
-        '''
-        Set method filter updates the __respath attribute to a new
-        value for the API call.
-
-        Parameters:
-            respath: str
-            default: none
-            Required: Yes
-
-        Return Values:
-            None
-
-        Usage:
-            # Do not create a DnacApi object; inherit from it instead
-            dapi = DnacApi(dnac, name, respath)
-            dapi.respath = "/a/new/resource/path"
-        '''
-        self.__filter = requestFilter
+        self.__resource = resource
 
     @property
     def verify(self):
@@ -301,7 +292,7 @@ class DnacApi(object):
 
         Usage:
             # Do not create a DnacApi object; inherit from it instead
-            dapi = DnacApi(d, name, respath)
+            dapi = DnacApi(d, name, resource)
             dapi.verify
         '''
         return self.__verify
@@ -322,7 +313,7 @@ class DnacApi(object):
 
         Usage:
             # Do not create a DnacApi object; inherit from it instead
-            dapi = DnacApi(dnac, name, respath)
+            dapi = DnacApi(dnac, name, resource)
             dapi.verify = True
         '''
         self.__verify = verify
@@ -341,7 +332,7 @@ class DnacApi(object):
             int: time to wait in seconds for a response
 
         Usage:
-            dapi = DnacApi(dnac, name, respath)
+            dapi = DnacApi(dnac, name, resource)
             dapi.timeout
         '''
         return self.__timeout
@@ -363,7 +354,7 @@ class DnacApi(object):
 
         Usage:
             # Do not create a DnacApi object; inherit from it instead
-            dapi = DnacApi(dnac, name, respath)
+            dapi = DnacApi(dnac, name, resource)
             dapi.timeout = 10
         '''
         self.__timeout = timeout
@@ -381,13 +372,14 @@ if  __name__ == '__main__':
 
     print "DnacApi:"
     print
-    print "  dnac           = " + str(type(dapi.dnac))
-    print "  name           = " + dapi.name
-    print "  respath        = " + dapi.respath
-    print "  filter         = " + dapi.filter
-    print "  verify         = " + str(dapi.verify)
-    print "  timeout        = " + str(dapi.timeout)
-    print "  isInApi        = " + str(d.isInApi(dapi.name))
+    print "  dnac            = " + str(type(dapi.dnac))
+    print "  name            = " + dapi.name
+    print "  crud            = " + str(type(dapi.crud))
+    print "  results         = " + str(dapi.results)
+    print "  resource        = " + dapi.resource
+    print "  verify          = " + str(dapi.verify)
+    print "  timeout         = " + str(dapi.timeout)
+    print "  isInApi         = " + str(d.isInApi(dapi.name))
     api = d.api
     print "  compare apis   = " + str(api == dapi)
     print
@@ -396,39 +388,35 @@ if  __name__ == '__main__':
 
     newD = Dnac()
     dapi.name = "aNewName"
-    dapi.respath = "/a/new/resource/path"
+    dapi.resource = "/a/new/resource/path"
     dapi.filter = "a=newFilter"
     dapi.verify = True
     dapi.timeout = 10
     newD.addApi(dapi.name, dapi)
 
-    print "  dnac           = " + str(type(dapi.dnac))
-    print "  name           = " + dapi.name
-    print "  respath        = " + dapi.respath
-    print "  filter         = " + dapi.filter
-    print "  verify         = " + str(dapi.verify)
-    print "  timeout        = " + str(dapi.timeout)
-    print "  isInApi        = " + str(newD.isInApi(dapi.name))
+    print "  dnac            = " + str(type(dapi.dnac))
+    print "  name            = " + dapi.name
+    print "  crud            = " + str(type(dapi.crud))
+    print "  results         = " + str(dapi.results)
+    print "  resource        = " + dapi.resource
+    print "  verify          = " + str(dapi.verify)
+    print "  timeout         = " + str(dapi.timeout)
+    print "  isInApi         = " + str(newD.isInApi(dapi.name))
     api = newD.api[dapi.name]
-    print "  compare apis   = " + str(api == dapi)
-    print "  d.isInApi      = " + str(d.isInApi(dapi.name))
+    print "  compare apis    = " + str(api == dapi)
+    print "  d.isInApi       = " + str(d.isInApi(dapi.name))
     print
-    print "Testing exceptions..."
-    print
+    print "Making a get() call..."
 
-    def raiseDnacApiError(msg):
-        raise DnacApiError(msg)
+    dapi.name = "network-device"
+    dapi.resource = \
+        "/api/v1/network-device/a0116157-3a02-4b8d-ad89-45f45ecad5da"
+    dapi.verify = False
+    url = d.url + dapi.resource
+    results, status = dapi.get(url)
 
-    errors = (UNKNOWN_REQUEST_ERROR,
-              REQUEST_NOT_OK,
-              REQUEST_NOT_ACCEPTED)
-
-    for error in errors:
-        try:
-            raiseDnacApiError(error)
-        except DnacApiError, e:
-            print str(type(e)) + " = " + str(e)
-
+    print "  status  = " + status
+    print "  results = " + str(results)
     print
     print "DnacApi: unit test complete."
 

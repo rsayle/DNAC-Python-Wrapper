@@ -3,11 +3,12 @@
 from dnac import SUPPORTED_DNAC_VERSIONS, \
                  UNSUPPORTED_DNAC_VERSION
 from dnacapi import DnacApi, \
-                    DnacApiError, \
-                    REQUEST_NOT_OK, \
-                    REQUEST_NOT_ACCEPTED
+                    DnacApiError
+from crud import OK, \
+                 REQUEST_NOT_OK, \
+                 ACCEPTED, \
+                 REQUEST_NOT_ACCEPTED
 from deployment import Deployment
-import requests
 import json
 
 ## globals
@@ -66,43 +67,42 @@ class Template(DnacApi):
                  dnac,
                  name,
                  version=0,
-                 requestFilter="",
                  verify=False,
                  timeout=5):
-
-        # check Cisco DNA Center's version and set the resourece path
+        # version is the template's version and must not be negative
+        if version < 0:
+            raise TemplateError(
+                "__init__: %s: must not be negative: %s" %
+                (ILLEGAL_VERSION, str(version))
+                               )
+        # check Cisco DNA Center's version and set the resource path
         if dnac.version in SUPPORTED_DNAC_VERSIONS:
-            self.__respath = \
-                "/dna/intent/api/v1/template-programmer/template"
+            path = "/dna/intent/api/v1/template-programmer/template"
         else:
             raise TemplateError(
                 "__init__: %s: %s" %
                 (UNSUPPORTED_DNAC_VERSION, dnac.version)
                                )
-
         # setup initial attribute values
-        self.__url = self.__respath
-        self.__templateId = ""
-        self.__version = version
-        self.__versionedTemplate = {}
-        self.__versionedTemplateId = ""
+        self.__templateId = "" # base template ID
+        self.__version = version # requested template version, 0 = latest
+        self.__versionedTemplate = {} 
+        self.__versionedTemplateId = ""# template that can be deployed
         self.__versionedTemplateParams = {}
-        self.__targetId = ""
-        self.__targetType = TARGET_BY_DEFAULT
-        self.__deployment = ""
+        self.__targetId = "" # where to deploy the template
+        self.__targetType = TARGET_BY_DEFAULT # how to find the target
+        self.__deployment = "" # object for monitoring the deployment
         super(Template, self).__init__(dnac,
                                        name,
-                                       resourcePath=self.__respath,
+                                       resource=path,
                                        verify=verify,
                                        timeout=timeout)
-
         # retrieve the template ID by its name
         self.__templateId = self.getTemplateIdByName(self.name)
         if not self.__templateId: # template could not be found
             raise TemplateError(
                 "__init__: %s: %s" % (TEMPLATE_NOT_FOUND, self.name)
                                )
-
         # retrieve the versioned template
         self.__versionedTemplate = \
             self.getVersionedTemplateByName(self.name, self.__version)
@@ -113,18 +113,6 @@ class Template(DnacApi):
                                )
 
 ## end __init__()
-
-    @property
-    def url(self):
-        return self.__url
-
-## end url getter
-
-    @url.setter
-    def url(self, url):
-        self.__url = url
-
-## end url setter
 
     @property
     def templateId(self):
@@ -223,39 +211,31 @@ class Template(DnacApi):
 ## end deployment setter
 
     def getAllTemplates(self):
-        url = self.dnac.url + self.respath + self.filter
-        hdrs = self.dnac.hdrs
-        resp = requests.request("GET",
-                                url,
-                                headers=hdrs,
-                                verify=self.verify,
-                                timeout=self.timeout)
-        if resp.status_code != requests.codes.ok:
+        url = self.dnac.url + self.resource
+        templates, status = self.crud.get(url,
+                                        headers=self.dnac.hdrs,
+                                        verify=self.verify,
+                                        timeout=self.timeout)
+        if status != OK:
             raise TemplateError(
                 "getAllTemplates: %s: %s: %s: expected %s" %
-                (REQUEST_NOT_OK, url, str(resp.status_code),
-                str(requests.codes.ok))
+                (REQUEST_NOT_OK, url, status, OK)
                                )
-        return json.loads(resp.text)
+        return templates
 
 ## end getAllTemplates()
 
     def getTemplateById(self, id):
-        template = {}
-        url = self.dnac.url + self.respath + "/" + id
-        hdrs = self.dnac.hdrs
-        resp = requests.request("GET",
-                                url,
-                                headers=hdrs,
-                                verify=self.verify,
-                                timeout=self.timeout)
-        if resp.status_code != requests.codes.ok:
+        url = self.dnac.url + self.resource + "/" + id
+        template, status = self.crud.get(url,
+                                        headers=self.dnac.hdrs,
+                                        verify=self.verify,
+                                        timeout=self.timeout)
+        if status != OK:
             raise TemplateError(
                 "getTemplateById: %s: %s: %s: expected %s" %
-                (REQUEST_NOT_OK, url, str(resp.status_code),
-                str(requests.codes.ok))
+                (REQUEST_NOT_OK, url, status, OK)
                                )
-        template = json.loads(resp.text)
         return template
 
 ## end getTemplateById
@@ -281,6 +261,14 @@ class Template(DnacApi):
 ## end getTemplateByName()
 
     def getVersionedTemplateByName(self, name, ver):
+        # version is the template's version and must not be negative
+        if ver < 0:
+            raise TemplateError(
+              "getVersionedTemplateByName: %s: %s: %s \
+              must not be negative: %s" %
+              (ILLEGAL_VERSION, name, str(ver))
+                               )
+        # reset the versioned template information
         self.__versionedTemplate = {}
         self.__versionedTemplateId = ""
         self.__versionedTemplateParams = {}
@@ -304,7 +292,7 @@ class Template(DnacApi):
                                 # haven't found it - continue searching
                                 continue
                         if not self.__versionedTemplateId:
-                            # version requested is greater than any versions
+                            # version is greater than any versions
                             raise TemplateError(
                                 "getVersionedTemplateByName: %s: %s: %s" %
                                 (UNKNOWN_VERSION, name, str(ver))
@@ -323,12 +311,6 @@ class Template(DnacApi):
                         # got the latest version - save it
                         self.__version = latest['version']
                         self.__versionedTemplateId = latest['id']
-                    else:
-                        # negative version values are illegal
-                        raise TemplateError(
-                            "getVersionedTemplateByName: %s: %s: %s" % 
-                            (ILLEGAL_VERSION, name, str(ver))
-                                           )
                 else: # keep looking for the template by its name
                     continue
             # get the versioned template using its id
@@ -372,25 +354,20 @@ class Template(DnacApi):
 ## end makeBody()
 
     def deploy(self):
-        result = {}
-        url = self.dnac.url + self.respath + "/deploy"
-        hdrs = self.dnac.hdrs
+        url = self.dnac.url + self.resource + "/deploy"
         body = self.makeBody()
-        resp = requests.request("POST", 
-                                url, 
-                                headers=hdrs, 
-                                data=body, 
-                                verify=self.verify, 
-                                timeout=self.timeout)
-        if resp.status_code != requests.codes.accepted:
+        results, status = self.crud.get(url,
+                                        headers=self.dnac.hdrs,
+                                        body=body,
+                                        verify=self.verify,
+                                        timeout=self.timeout)
+        if status != ACCEPTED:
             raise TemplateError(
                 "deploy: %s: %s: %s: expected %s" % 
-                (REQUEST_NOT_ACCEPTED, url, str(resp.status_code)
-                str(requests.codes.accepted))
+                (REQUEST_NOT_ACCEPTED, url, status, ACCEPTED)
                                )
-        result = json.loads(resp.text)
         # make a deployment object
-        did = result['deploymentId']
+        did = results['deploymentId']
         elts = did.split()
         deployId = elts[len(elts) - 1]
         self.__deployment = Deployment(self.dnac, 
@@ -401,23 +378,18 @@ class Template(DnacApi):
 ## end deploy()
 
     def deploySync(self, wait=3):
-        result = {}
-        url = self.dnac.url + self.respath + "/deploy"
-        hdrs = self.dnac.hdrs
+        url = self.dnac.url + self.resource + "/deploy"
         body = self.makeBody()
-        resp = requests.request("POST", 
-                                url, 
-                                headers=hdrs, 
-                                data=body, 
-                                verify=self.verify, 
-                                timeout=self.timeout)
-        if resp.status_code != requests.codes.accepted:
+        results, status = self.crud.get(url,
+                                        headers=self.dnac.hdrs,
+                                        body=body,
+                                        verify=self.verify,
+                                        timeout=self.timeout)
+        if status != ACCEPTED:
             raise TemplateError(
-                "deploy: %s: %s: $s: expected %s" % 
-                (INVALID_RESPONSE, url, str(resp.status_code)
-                str(requests.codes.accepted))
+                "deploy: %s: %s: %s: expected %s" % 
+                (REQUEST_NOT_ACCEPTED, url, status, ACCEPTED)
                                )
-        result = json.loads(resp.text)
         # make a deployment object
         did = result['deploymentId']
         elts = did.split()
@@ -447,8 +419,7 @@ if __name__ == '__main__':
     print 
     print " type(t)                 = " + str(type(t))
     print " name                    = " + t.name
-    print " respath                 = " + t.respath
-    print " url                     = " + t.url
+    print " resource                = " + t.resource
     print " templateId              = " + t.templateId
     print " version                 = " + str(t.version)
     print " versionedTemplate       = " + str(t.versionedTemplate)
@@ -465,8 +436,7 @@ if __name__ == '__main__':
     print 
     print " type(t)                 = " + str(type(t))
     print " name                    = " + t.name
-    print " respath                 = " + t.respath
-    print " url                     = " + t.url
+    print " resource                = " + t.resource
     print " templateId              = " + t.templateId
     print " version                 = " + str(t.version)
     print " versionedTemplate       = " + str(t.versionedTemplate)
@@ -492,7 +462,7 @@ if __name__ == '__main__':
 
     t.versionedTemplateParams['interface'] = "gig1/0/1"
     t.versionedTemplateParams['description'] = "Configured by template.py"
-    t.versionedTemplateParams['vlan'] = 10
+    t.versionedTemplateParams['vlan'] = 40
 
     print " interface   = " + t.versionedTemplateParams['interface']
     print " description = " + t.versionedTemplateParams['description']
@@ -538,7 +508,8 @@ if __name__ == '__main__':
                UNKNOWN_DEPLOYMENT_STATUS, \
                ALREADY_DEPLOYED, \
                ILLEGAL_VERSION, \
-               UNKNOWN_VERSION)
+               UNKNOWN_VERSION, \
+               REQUEST_NOT_ACCEPTED)
 
     for t in tErrors:
         try:

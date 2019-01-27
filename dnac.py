@@ -174,7 +174,9 @@ class Dnac(object):
         self.__xauth = XAuthToken(self.url, \
                                   self.__bauth, \
                                   contentType=self.__ctype)
+        # get an authorization token for all API calls
         self.__xauth.getToken()
+        # create the store for all API instances
         self.__api = {}
 
 ## end __init__()
@@ -774,7 +776,7 @@ class Dnac(object):
             d = Dnac()
             headers = d.headers
         '''
-        h={}
+        h = {}
         h.update(self.__ctype.hdrs)
         h.update(self.__xauth.hdrs)
         return h

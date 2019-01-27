@@ -16,11 +16,13 @@ import json
 #
 _200_="200"
 _200_OK_="200 - API request succeeded"
+OK = _200_ # for simple comparisons to str(requests.codes.ok)
 _201_="201"
 _201_SUCCEEDED_WITH_RESULTS_= \
     "201 - API request succeeded with results returned"
 _202_="202"
 _202_ACCEPTED_="202 - API request accepted"
+ACCEPTED = _202_ # for simple comparisons to str(requests.codes.ok)
 _204_="204"
 _204_NO_CONTENT_="204 - API request succeeded but returned no content"
 _206_="206"
@@ -34,13 +36,15 @@ SUCCEEDED=(
           _206_PARTIAL_CONTENT_
           )
 
+# for simple message processing
+REQUEST_NOT_OK="API request is not OK"
+REQUEST_NOT_ACCEPTED="API request is not ACCEPTED"
+
 #
 # request error codes:
 # use the numbers for directly comparing to a requests object's status_code
 # use the longer form for exception messages
 #
-_REQUEST_NOT_OK_="API request not OK" # not 200
-_REQUEST_NOT_ACCEPTED_="API request not accepted" # not 202
 _400_="400"
 _400_REQUEST_INVALID_SYNTAX_="400 - API request syntax is malformed"
 _401_="401"
@@ -89,81 +93,101 @@ class CrudError(Exception):
 class Crud(object):
 
     def __init__(self):
-        self.__result = {}
+        self.__results = {}
 
 ## end __init__
 
     @property
-    def result(self):
-        return self.__result
+    def results(self):
+        return self.__results
 
-## end result getter
+## end results getter
 
-    def get(self, url, hdrs={}, body={}, verify=False, timeout=5):
+    def get(self, url, headers=None, body="", verify=False, timeout=5):
         resp = requests.request("GET",
                                 url,
-                                headers=hdrs,
+                                headers=headers,
                                 data=body,
                                 verify=verify,
                                 timeout=timeout)
-        if resp.status_code not in SUCCEEDED:
+        if resp.status_code in ERROR_MSGS:
             raise CrudError(
                 "get: request failed: %s" %
                 ERROR_MSGS[str(resp.status_code)]
                            ) 
-        self.__result = json.loads(resp.text)
-        return self.__result, resp.status_code
+        # if no content is returned
+        if str(resp.status_code) == _204_:
+            raise CrudError(
+                "get: %s: %s" % (_204_NO_CONTENT_, str(resp.status_code))
+                           )
+        self.__results = json.loads(resp.text)
+        return self.__results, str(resp.status_code)
 
 ## end get()
 
     def put(self, url, headers={}, body={}, verify=False, timeout=5):
         resp = requests.request("PUT",
                                 url,
-                                headers=hdrs,
+                                headers=headers,
                                 data=body,
                                 verify=verify,
                                 timeout=timeout)
-        if resp.status_code not in SUCCEEDED:
+        if resp.status_code in ERROR_MSGS:
             raise CrudError(
                 "put: request failed: %s" %
                 ERROR_MSGS[str(resp.status_code)]
                            ) 
-        self.__result = json.loads(resp.text)
-        return self.__result, resp.status_code
+        # if no content is returned
+        if str(resp.status_code) == _204_:
+            raise CrudError(
+                "get: %s: %s" % (_204_NO_CONTENT_, str(resp.status_code))
+                           )
+        self.__results = json.loads(resp.text)
+        return self.__results, str(resp.status_code)
 
 ## end put()
 
     def post(self, url, headers={}, body={}, verify=False, timeout=5):
         resp = requests.request("POST",
                                 url,
-                                headers=hdrs,
+                                headers=headers,
                                 data=body,
                                 verify=verify,
                                 timeout=timeout)
-        if resp.status_code not in SUCCEEDED:
+        if resp.status_code in ERROR_MSGS:
             raise CrudError(
                 "post: request failed: %s" %
                 ERROR_MSGS[str(resp.status_code)]
                            ) 
-        self.__result = json.loads(resp.text)
-        return self.__result, resp.status_code
+        # if no content is returned
+        if str(resp.status_code) == _204_:
+            raise CrudError(
+                "get: %s: %s" % (_204_NO_CONTENT_, str(resp.status_code))
+                           )
+        self.__results = json.loads(resp.text)
+        return self.__results, str(resp.status_code)
 
 ## end post()
 
     def delete(self, url, headers={}, body={}, verify=False, timeout=5):
         resp = requests.request("DELETE",
                                 url,
-                                headers=hdrs,
+                                headers=headers,
                                 data=body,
                                 verify=verify,
                                 timeout=timeout)
-        if resp.status_code not in SUCCEEDED:
+        if resp.status_code in ERROR_MSGS:
             raise CrudError(
                 "delete: request failed: %s" %
                 ERROR_MSGS[str(resp.status_code)]
                            ) 
-        self.__result = json.loads(resp.text)
-        return self.__result, resp.status_code
+        # if no content is returned
+        if str(resp.status_code) == _204_:
+            raise CrudError(
+                "get: %s: %s" % (_204_NO_CONTENT_, str(resp.status_code))
+                           )
+        self.__results = json.loads(resp.text)
+        return self.__results, str(resp.status_code)
 
 ## end delete()
 
@@ -173,7 +197,33 @@ class Crud(object):
 
 if __name__ == '__main__':
 
+    from dnac import Dnac
+
     print "Crud:"
+    print
+    print "Setting up test..."
+    print
+
+    # target server + object handles login, auth token and headers
+    d = Dnac()
+    # target resource - returns a single switch from Dnac
+    res = "/api/v1/network-device/a0116157-3a02-4b8d-ad89-45f45ecad5da"
+    # target URL
+    u = d.url + res
+    # class under test
+    c = Crud()
+
+    print "  url =  " + u
+    print "  hdrs = " + str(d.hdrs)
+    print
+    print "Getting (reading) a resource from a server..."
+    print
+
+    results, status = c.get(u, headers=d.hdrs)
+
+    print "  status    = " + str(status)
+    print "  results   = " + str(results)
+    print "  c.results = " + str(c.results)
     print
 
     print "Testing Exceptions..."
@@ -182,8 +232,8 @@ if __name__ == '__main__':
     def raiseCrudError(msg):
         raise CrudError(msg)
 
-    errors = (_REQUEST_NOT_OK_,
-              _REQUEST_NOT_ACCEPTED_,
+    errors = (REQUEST_NOT_OK,
+              REQUEST_NOT_ACCEPTED,
               _204_NO_CONTENT_,
               _206_PARTIAL_CONTENT_,
               _400_REQUEST_INVALID_SYNTAX_,

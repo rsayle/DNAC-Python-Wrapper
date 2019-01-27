@@ -446,12 +446,11 @@ class XAuthToken(object):
                 "XAuthToken: getToken: %s: %s: %s: expected %s" % \
                 (INVALID_RESPONSE, url, str(resp.status_code),
                 str(requests.codes.ok))
-                                 )
-        else:
-            self.__token = json.loads(resp.text)['Token']
-            self.hdr = "\'X-Auth-Token\': " + self.__token
-            self.hdrs['X-Auth-Token'] = self.__token
-            return self.__token
+                                  )
+        self.__token = str(json.loads(resp.text)['Token'])
+        self.hdr = "\'X-Auth-Token\': \'%s\'" % self.__token
+        self.hdrs['X-Auth-Token'] = self.__token
+        return self.__token
 
     @property
     def hdr(self):
