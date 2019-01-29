@@ -50,13 +50,14 @@ TEMPLATE_NOT_FOUND="Could not find template"
 NO_TEMPLATES_FOUND="Could not retrieve any templates"
 INVALID_RESPONSE="Invalid response to API call"
 EMPTY_TEMPLATE="Template has no data or does not exist"
-ILLEGAL_TARGET_TYPE="Illegal target type"
+EMPTY_TARGET="Template target ID is not set"
+ILLEGAL_TARGET_TYPE="Illegal template target type"
 UNKNOWN_DEPLOYMENT_STATUS="Unknown deployment status"
 ALREADY_DEPLOYED="Template already deployed"
 ILLEGAL_VERSION="Illegal template version"
 UNKNOWN_VERSION="Unknown template version"
 
-class TemplateError(DnacApiError):
+class TemplateError(Exception):
 
     def __init__(self, msg):
         super(TemplateError, self).__init__(msg)
@@ -359,6 +360,16 @@ class Template(DnacApi):
 
     def deploy(self):
         url = self.dnac.url + self.resource + "/deploy"
+        if not self.__targetId: # targetId is not set
+            raise TemplateError(
+                "%s: %s: %s" % (MODULE, "deploy", EMPTY_TEMPLATE)
+                               )
+        if self.__targetType not in VALID_TARGET_TYPES:
+            raise TemplateError(
+                "%s: %s: %s: valid types include %s" % \
+                (MODULE, "deploy", ILLEGAL_TARGET_TYPE,
+                 str(VALID_TARGET_TYPES))
+                               )
         body = self.makeBody()
         results, status = self.crud.post(url,
                                          headers=self.dnac.hdrs,
@@ -383,6 +394,16 @@ class Template(DnacApi):
 
     def deploySync(self, wait=3):
         url = self.dnac.url + self.resource + "/deploy"
+        if not self.__targetId: # targetId is not set
+            raise TemplateError(
+                "%s: %s: %s" % (MODULE, "deploy", EMPTY_TEMPLATE)
+                               )
+        if self.__targetType not in VALID_TARGET_TYPES:
+            raise TemplateError(
+                "%s: %s: %s: valid types include %s" % \
+                (MODULE, "deploy", ILLEGAL_TARGET_TYPE,
+                 str(VALID_TARGET_TYPES))
+                               )
         body = self.makeBody()
         results, status = self.crud.post(url,
                                          headers=self.dnac.hdrs,

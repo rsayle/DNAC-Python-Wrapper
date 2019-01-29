@@ -17,8 +17,7 @@ class DnacApiError(Exception):
                  received,
                  msg,
                  cause):
-        error = \
-          "%s: %s: %s: %s: expected %s: received %s: %s: problem %s" % \
+        error = "%s: %s: %s: %s: expected = %s: received = %s: %s: possible problem = %s" % \
           (module, function, error, url, expected, received, msg, cause)
         super(DnacApiError, self).__init__(error)
 

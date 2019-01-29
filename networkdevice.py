@@ -11,6 +11,10 @@ from crud import OK, \
 
 MODULE="networkdevice.py"
 
+# error messages
+NO_DEVICES="API response list is empty"
+CHECK_HOSTNAME="Check the hostname"
+
 class NetworkDevice(DnacApi):
     '''
     The NetworkDevice class wraps Cisco's DNA Center network-device API
@@ -200,10 +204,21 @@ class NetworkDevice(DnacApi):
                 MODULE, "getDeviceByName", REQUEST_NOT_OK, url,
                 OK, status, ERROR_MSGS[status], str(results)
                               )
+        if not devices['response']: # device list is empty
+            raise DnacApiError(
+                MODULE, "getDeviceByName", NO_DEVICES, url,
+                "", str(devices['response']), "", CHECK_HOSTNAME
+                              )
         self.__devices = devices['response'][0]
         return self.__devices
 
 ## end getDeviceByName()
+
+    def getIdByDeviceName(self, name):
+        device = self.getDeviceByName(name)
+        return device['id']
+
+## end getDeviceIdByName()
 
     def getDeviceByIp(self, ip):
         '''

@@ -9,6 +9,8 @@ from crud import ACCEPTED, \
                  REQUEST_NOT_ACCEPTED, \
                  ERROR_MSGS
 
+MODULE="deployment.py"
+
 class Deployment(DnacApi):
 
     def __init__(self,
