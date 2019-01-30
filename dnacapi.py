@@ -8,18 +8,95 @@ MODULE="dnacapi.py"
 ## exceptions
 
 class DnacApiError(Exception):
+    '''
+    DnacApiError is derived from Exception and used as the sole exception
+    that all children classes of DnacApi.  In other words, object inherited
+    from DnacApi, e.g. NetworkDevice and CommandRunner, all raise
+    DnacApiError exceptions instead of defining their own classes.
+
+    DnacApiError has no attributes itself, but its initialization method
+    includes a rich parameter set to indicate the problem, where it
+    happened and what its cause might be.  See the documentation for
+    the __init__ method for an explanation of each parameter and an example
+    of how to raise this exception.
+
+    Attributes:
+        None
+    '''
     def __init__(self,
                  module,
                  function,
                  error,
                  url,
-                 expected,
-                 received,
-                 msg,
-                 cause):
-        error = "%s: %s: %s: %s: expected = %s: received = %s: %s: possible problem = %s" % \
-          (module, function, error, url, expected, received, msg, cause)
-        super(DnacApiError, self).__init__(error)
+                 expectedValue,
+                 receivedValue,
+                 receivedMsg,
+                 possibleCause):
+        '''
+        DnacApiError's __init__ method formats a message based on its
+        parameters and then calls its parent class, Exception, to post it.
+
+        Parameter:
+            module: Name of the python module in which the error originated.
+                type: str
+                default: None
+                required: Yes
+            function: The function's name where the problem happened.
+                type: str
+                default: None
+                required: Yes
+            error: The error encountered.  Use one provided by the system
+                   or create your own.
+                type: str
+                default: None
+                required: Yes
+            url: The full resource path used during an API call if
+                 applicable.  If the exception is unrelated to an API call,
+                 use an empty string.
+                type: str
+                default: None
+                required: Yes
+            expectedValue: The value(s) that should have been provided.  If
+                           no value was expected, use an empty string.
+                type: str
+                default: None
+                required: Yes
+            receivedValue: The value that was handled and cause the program
+                           to raise an exception.  Use an empty string if
+                           no actual value caused the error.
+                type: str
+                default: None
+                required: Yes
+            receivedMsg: Any additional messaging received by the script
+                         when the error occurred.  Use an empty string if
+                         no additional message is available or create your
+                         own message.
+                type: str
+                default: None
+                required: Yes
+            possibleCause: Developer's notes on why the exception was
+                           thrown and any potential solutions.  Use hints
+                           the system provides or create your own.  If
+                           the cause or solution is unknown, use an empty
+                           string for this parameter.
+                type: str
+                default: None
+                require: Yes
+
+        Return Values:
+            DnacApiError object: the exception that gets thrown.
+
+        Usage:
+            if status != OK:
+                raise DnacApiError(
+                    MODULE, "getAllDevices", REQUEST_NOT_OK, url,
+                    OK, status, ERROR_MSGS[status], str(results)
+                                  )
+        '''
+        exceptionMsg = "%s: %s: %s: %s: expected = %s: received = %s: received message = %s: possible cause = %s" % \
+            (module, function, error, url, expectedValue, 
+             receivedValue, receivedMsg, possibleCause)
+        super(DnacApiError, self).__init__(exceptionMsg)
 
 ## end class DnacApiError
 
@@ -56,6 +133,11 @@ class DnacApi(object):
                  before declaring the cluster unavailable.
             type: int
             default: 5
+        crud: A Crud object used to making API calls.  This is a protected
+              attribute that is wrapped by the get, put, post and update
+              methods included in this class.
+            type: Crud object
+            default: Crud object
     '''
     
     def __init__(self, \
@@ -89,7 +171,9 @@ class DnacApi(object):
                 type: boolean
                 default: False
                 required: No
-            timeout: The number of seconds to wait for Cisco DNAC's response.
+            timeout: The number of seconds to wait for Cisco DNAC's
+                     response before the cluster is declared unreachable
+                     or unavailable.
                 type: int
                 default: 5
                 required: No
@@ -114,52 +198,52 @@ class DnacApi(object):
 
     @property
     def crud(self):
+        '''
+        Get method crud returns the reference to the Crud object this class
+        uses to make RESTful API calls.  Use this function in order to
+        access the Crud object's get, put, post and delete methods.
+
+        Parameters:
+            None
+
+        Return Values:
+            Crud object: The wrapped Crud object
+
+        Usage:
+            url = self.dnac.url + self.resource
+            devices, status = self.crud.get(url,
+                                            headers=self.dnac.hdrs,
+                                            verify=self.verify,
+                                            timeout=self.timeout)
+        '''
         return self.__crud
 
 ## end crud getter
 
     @property
     def results(self):
+        '''
+        The results method is decorated as if it was an attribute of this
+        class and can be used accordingly.  It returns the raw results
+        stored in the class' Crud object obtained from an API call.
+
+        Parameters:
+            None
+
+        Return Values:
+            dict: The results of the API call.
+
+        Usage:
+            d = Dnac()
+            # CommandRunner is a DnacApi
+            cmd = CommandRunner('running-config')
+            cmd.formatCmd('<uuid>', 'show run')
+            cmd.runSync()
+            print str(cmd.results)
+        '''
         return self.__crud.results
 
 ## end results getter
-
-    def get(self, url, body=""):
-        return self.__crud.get(url,
-                               headers=self.__dnac.hdrs,
-                               body=body,
-                               verify=self.__verify,
-                               timeout=self.__timeout)
-
-## end get()
-
-    def put(self, url, body=""):
-        return self.__crud.put(url,
-                               headers=self.__dnac.hdrs,
-                               body=body,
-                               verify=self.__verify,
-                               timeout=self.__timeout)
-        return results, status
-
-## end put()
-
-    def post(self, url, body=""):
-        return self.__crud.post(url,
-                                headers=self.__dnac.hdrs,
-                                body=body,
-                                verify=self.__verify,
-                                timeout=self.__timeout)
-
-## end post()
-
-    def delete(self, url, body=""):
-        return self.__crud.delete(url,
-                                  headers=self.__dnac.hdrs,
-                                  body=body,
-                                  verify=self.__verify,
-                                  timeout=self.__timeout)
-
-## end delete()
 
     @property
     def dnac(self):
@@ -179,6 +263,8 @@ class DnacApi(object):
             dnac = dapi.dnac
         '''
         return self.__dnac
+
+## end dnac getter
 
     @dnac.setter
     def dnac(self, dnac):
@@ -202,6 +288,8 @@ class DnacApi(object):
         '''
         self.__dnac = dnac
 
+## end dnac setter
+
     @property
     def name(self):
         '''
@@ -220,6 +308,8 @@ class DnacApi(object):
             dapi.name
         '''
         return self.__name
+
+## end name getter
 
     @name.setter
     def name(self, name):
@@ -242,6 +332,8 @@ class DnacApi(object):
         '''
         self.__name = name
 
+## end name setter
+
     @property
     def resource(self):
         '''
@@ -262,6 +354,8 @@ class DnacApi(object):
             apicall = d.url + dapi.resource
         '''
         return self.__resource
+
+## end resource getter
 
     @resource.setter
     def resource(self, resource):
@@ -284,6 +378,8 @@ class DnacApi(object):
         '''
         self.__resource = resource
 
+## end resource setter
+
     @property
     def verify(self):
         '''
@@ -303,6 +399,8 @@ class DnacApi(object):
             dapi.verify
         '''
         return self.__verify
+
+## end verify getter
 
     @verify.setter
     def verify(self, verify):
@@ -325,6 +423,8 @@ class DnacApi(object):
         '''
         self.__verify = verify
 
+## end verify setter
+
     @property
     def timeout(self):
         '''
@@ -343,6 +443,8 @@ class DnacApi(object):
             dapi.timeout
         '''
         return self.__timeout
+
+## end timeout getter
 
     @timeout.setter
     def timeout(self, timeout):
@@ -366,6 +468,8 @@ class DnacApi(object):
         '''
         self.__timeout = timeout
 
+## end timeout setter
+
 ## end class DnacApi()
 
 ## begin unit test
@@ -386,7 +490,6 @@ if  __name__ == '__main__':
     print "  resource        = " + dapi.resource
     print "  verify          = " + str(dapi.verify)
     print "  timeout         = " + str(dapi.timeout)
-    print "  isInApi         = " + str(d.isInApi(dapi.name))
     api = d.api
     print "  compare apis   = " + str(api == dapi)
     print
@@ -399,7 +502,7 @@ if  __name__ == '__main__':
     dapi.filter = "a=newFilter"
     dapi.verify = True
     dapi.timeout = 10
-    newD.addApi(dapi.name, dapi)
+    newD.api[dapi.name] = dapi
 
     print "  dnac            = " + str(type(dapi.dnac))
     print "  name            = " + dapi.name
@@ -408,10 +511,10 @@ if  __name__ == '__main__':
     print "  resource        = " + dapi.resource
     print "  verify          = " + str(dapi.verify)
     print "  timeout         = " + str(dapi.timeout)
-    print "  isInApi         = " + str(newD.isInApi(dapi.name))
+    print "  is in api       = " + str(dapi.name in dapi.dnac.api)
     api = newD.api[dapi.name]
     print "  compare apis    = " + str(api == dapi)
-    print "  d.isInApi       = " + str(d.isInApi(dapi.name))
+    print "  is in api       = " + str(dapi.name in dapi.dnac.api)
     print
     print "Making a get() call..."
 
@@ -420,7 +523,10 @@ if  __name__ == '__main__':
         "/api/v1/network-device/a0116157-3a02-4b8d-ad89-45f45ecad5da"
     dapi.verify = False
     url = d.url + dapi.resource
-    results, status = dapi.get(url)
+    results, status = dapi.crud.get(url,
+                                    headers=dapi.dnac.hdrs,
+                                    verify=dapi.verify,
+                                    timeout=dapi.timeout)
 
     print "  status  = " + status
     print "  results = " + str(results)

@@ -39,6 +39,31 @@ class NetworkDevice(DnacApi):
     NetworkDevice's methods simplify processing a response by stripping
     the initial dict and returning the data listing.
 
+    Attributes:
+        dnac:
+            Dnac object: A reference to the Dnac instance that contains
+                         a NetworkDevice object
+            default: None
+        name:
+            str: A user friendly name for the NetworkDevice object and is
+                 used as a key for finding it in a Dnac.api attribute.
+            default: None
+        devices:
+            list or dict: The results returned by making an API call.
+            default: None
+        vlans:
+            list: The results returned when making an API call that
+                  specifically asks for VLAN information from a device.
+            default: []
+        verify: Flag indicating whether or not the request should verify
+                Cisco DNAC's certificate.
+            type: boolean
+            default: False
+        timeout: The number of seconds the request for a token should wait
+                 before assuming Cisco DNAC is unavailable.
+            type: int
+            default: 5
+
     Usage:
         d = Dnac()
         nd = NetworkDevice(d, "network-device")
@@ -215,6 +240,24 @@ class NetworkDevice(DnacApi):
 ## end getDeviceByName()
 
     def getIdByDeviceName(self, name):
+        '''
+        Method getIdByDeviceName finds a device in Cisco DNA Center by
+        its hostname and returns its UUID.
+
+        Parameters:
+            name: str
+                default: None
+                required: Yes
+
+        Return Values:
+            str: The device's UUID in Cisco DNAC.
+
+        Usage:
+            d = Dnac()
+            nd = NetworkDevice(d, "network-device")
+            id = d.api['network-device'].getIdByDeviceName("R1")
+            print id
+        '''
         device = self.getDeviceByName(name)
         return device['id']
 
@@ -236,7 +279,6 @@ class NetworkDevice(DnacApi):
         Usage:
             d = Dnac()
             nd = NetworkDevice(d, "network-device")
-            d.api[nd.name] = nd
             ip = "10.255.1.10"
             device = d.api['network-device'].getDeviceByIp(ip)
             print str(device)
@@ -258,6 +300,25 @@ class NetworkDevice(DnacApi):
 ## end getDeviceByIp()
 
     def getVlansByDeviceId(self, id):
+        '''
+        getVlansByDeviceId obtains the list of VLANs configured on the 
+        device given by its UUID.
+
+        Parameters:
+            id : str
+                default: None
+                Required: Yes
+
+        Return Values:
+            list: The list of VLANs on the network device.
+
+        Usage:
+            d = Dnac()
+            nd = NetworkDevice(d, "network-device")
+            id = "a0116157-3a02-4b8d-ad89-45f45ecad5da"
+            vlans = d.api['network-device'].getVlansByDeviceId(id)
+            print str(vlans)
+        '''
         url = self.dnac.url + self.resource + ("/%s/l2vlan" % id)
         vlans, status = self.crud.get(url,
                                       headers=self.dnac.hdrs,
@@ -274,6 +335,25 @@ class NetworkDevice(DnacApi):
 ## end getVlansByDeviceId()
 
     def getVlansByDeviceName(self, name):
+        '''
+        getVlansByDeviceName obtains the list of VLANs configured on the 
+        device given by its hostname.
+
+        Parameters:
+            name : str
+                default: None
+                Required: Yes
+
+        Return Values:
+            list: The list of VLANs on the network device.
+
+        Usage:
+            d = Dnac()
+            nd = NetworkDevice(d, "network-device")
+            name = "S1"
+            vlans = d.api['network-device'].getVlansByDeviceName(name)
+            print str(vlans)
+        '''
         device = self.getDeviceByName(name)
         hostfilter = "?hostname=" + name
         url = self.dnac.url + self.resource + \
@@ -293,6 +373,25 @@ class NetworkDevice(DnacApi):
 ## end getVlansByDeviceName()
 
     def getVlansByDeviceIp(self, ip):
+        '''
+        getVlansByDeviceIp obtains the list of VLANs configured on the 
+        device given its IP address.
+
+        Parameters:
+            ip : str
+                default: None
+                Required: Yes
+
+        Return Values:
+            list: The list of VLANs on the network device.
+
+        Usage:
+            d = Dnac()
+            nd = NetworkDevice(d, "network-device")
+            ip = "10.255.1.10"
+            vlans = d.api['network-device'].getVlansByDeviceIp(ip)
+            print str(vlans)
+        '''
         device = self.getDeviceByIp(ip)
         ipfilter = "?managementIpAddress=" + ip
         url = self.dnac.url + self.resource + \

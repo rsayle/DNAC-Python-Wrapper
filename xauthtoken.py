@@ -12,8 +12,29 @@ import json
 INVALID_RESPONSE="Invalid response to API call"
 
 class XAuthTokenError(Exception):
+    '''
+    The XAuthTokenError exception class, derived from Exception, indicates
+    any problems specific to requesting a token from Cisco DNA Center.
 
+    Attributes:
+        None
+    '''
     def __init__(self, msg):
+        '''
+        XAuthTokenErrors's __init__ method passes a message to its
+        parent class.
+
+        Parameters:
+            msg: An error message indicating the problem.  Current values
+                 include:
+                    INVALID_RESPONSE="Invalid response to API call"
+
+        Return Values:
+            XAuthTokenError object: the new exception.
+
+        Usage:
+            raise XAuthTokenError(INVALID_RESPONSE)
+        '''
         super(XAuthTokenError, self).__init__(msg)
 
 ## end class XAuthTokenError
@@ -42,7 +63,7 @@ class XAuthToken(object):
         ctype: A content type object for requesting a token from Cisco DNAC.
             type: CType object
             default: CType("application/json")
-        respath: The resource path used to request a token from Cisco DNAC.
+        resource: The resource path used to request a token from Cisco DNAC.
             type: str
             default: "/api/system/v1/auth/token"
         verify: Flag indicating whether or not the request should verify
@@ -59,7 +80,7 @@ class XAuthToken(object):
                  url, \
                  basicAuth, \
                  contentType, \
-                 resourcePath="/api/system/v1/auth/token", \
+                 resource="/api/system/v1/auth/token", \
                  verify=False, \
                  timeout=5):
        '''
@@ -87,7 +108,7 @@ class XAuthToken(object):
                 type: CType object
                 default: CType("application/json")
                 required: No
-            resourcePath: The resource path used to request a token.
+            resource: The resource path used to request a token.
                 type: str
                 default: "/api/system/v1/auth/token"
                 required: No
@@ -110,7 +131,7 @@ class XAuthToken(object):
        self.__url = url 
        self.__bauth = basicAuth 
        self.__ctype = contentType 
-       self.__respath = resourcePath
+       self.__resource = resource
        self.__token = ""
        self.__verify = verify
        self.__timeout = timeout
@@ -256,9 +277,9 @@ class XAuthToken(object):
         self.__ctype = ctype
 
     @property
-    def respath(self):
+    def resource(self):
         '''
-        Get method respath returns the value of attribute __respath, the
+        Get method resource returns the value of attribute __resource, the
         resource path used to request an x-auth-token.
 
         Parameters:
@@ -269,19 +290,19 @@ class XAuthToken(object):
 
         Usage:
             x = XAuthToken(url, bauth, ctype)
-            x.respath
+            x.resource
         '''
-        return self.__respath
+        return self.__resource
 
-    @respath.setter
-    def respath(self, respath):
+    @resource.setter
+    def resource(self, resource):
         '''
-        Set method respath changes the attribute __respath to the value 
-        of respath.  The resource path used should be an API call requesting
-        an x-auth-token from an HTTP server
+        Set method resource changes the attribute __resource to the value 
+        of resource.  The resource path used should be an API call
+        requesting an x-auth-token from an HTTP server
 
         Parameters:
-            respath: string
+            resource: string
             default: None
             required: Yes
 
@@ -290,9 +311,9 @@ class XAuthToken(object):
 
         Usage:
             x = XAuthToken(url, bauth, ctype)
-            x.respath = "/api/system/v1/auth/token"
+            x.resource = "/api/system/v1/auth/token"
         '''
-        self.__respath = respath
+        self.__resource = resource
 
     @property
     def verify(self):
@@ -432,7 +453,7 @@ class XAuthToken(object):
             x.getToken()     # token gets saved in x
             t = x.getToken() # token gets saved in x and returned to t
         '''
-        url = self.url + self.respath
+        url = self.url + self.resource
         hdrs = {}
         hdrs.update(self.bauth.hdrs)
         hdrs.update(self.ctype.hdrs)
@@ -549,7 +570,7 @@ if  __name__ == '__main__':
     print "  bauth      = " + str(x.bauth)
     print "  ctype      = " + str(type(x.ctype))
     print "  ctype      = " + str(x.ctype)
-    print "  respath    = " + x.respath
+    print "  resource    = " + x.resource
     print "  token      = " + x.token
     print "  verify     = " + str(x.verify)
     print "  timeout    = " + str(x.timeout)
@@ -565,7 +586,7 @@ if  __name__ == '__main__':
     print "  bauth      = " + str(x.bauth)
     print "  ctype      = " + str(type(x.ctype))
     print "  ctype      = " + str(x.ctype)
-    print "  respath    = " + x.respath
+    print "  resource    = " + x.resource
     print "  token      = " + x.token
     print "  verify     = " + str(x.verify)
     print "  timeout    = " + str(x.timeout)

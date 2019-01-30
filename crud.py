@@ -84,26 +84,137 @@ ERROR_MSGS={
            }
 
 class CrudError(Exception):
+    '''
+    A CrudError object handles any errors detected when making an API call
+    to Cisco DNA Center.
 
+    This module pre-defines all Cisco DNA Center's error codes and what
+    they generally mean.  Some API calls expand on these by giving a bit
+    more information on how to interpret the codes.  Where applicable, the
+    various children of DnacApi objects provide this information.
+
+    See the DATA section using python's help documentation for the list
+    of error codes and their associated messages.
+
+    Attributes:
+        None
+    '''
     def __init__(self, msg):
+        '''
+        Crud's __init__ method passes along any error message its given to
+        its parent class, Exception.
+
+        Parameters:
+            msg:
+                type: str
+                default: None
+                required: Yes
+
+        Return Values:
+            CrudError object: The exception an API call raises.
+
+        Usage:
+            if str(resp.status_code) == _204_:
+            raise CrudError(
+                "get: %s: %s" % (_204_NO_CONTENT_, str(resp.status_code))
+                           )
+        '''
         super(CrudError, self).__init__(msg)
 
 ## end class CrudError
 
 class Crud(object):
+    '''
+    Class Crud handles REST API calls (get, put, post and delete) to a
+    server.  It converts the JSON formatted response it receives into
+    appropriate python data types and then stores it in its __results
+    attribute.
+
+    Attributes:
+        results: dict
+            scope: protected
+    '''
 
     def __init__(self):
+        '''
+        Crud's __init__ method sets up its results attribute as an empty
+        dictionary and then returns the newly created Crud object.
+
+        Parameters:
+            None
+
+        Return Values:
+            Crud object: The new Crud instance
+
+        Usage:
+            restapi = Crud()
+        '''
         self.__results = {}
 
 ## end __init__
 
     @property
     def results(self):
+        '''
+        Crud's results get method returns the value of its __results
+        attribute, which contains the response from the RESTful server
+
+        Parameters:
+            None
+
+        Return Values:
+            dict: The server's response to an API call
+
+        Usage:
+            restapi = Crud()
+            url = "https://server/resource/path"
+            restapi.get(url, headers=hdrs)
+            print str(resapi.results)
+        '''
         return self.__results
 
 ## end results getter
 
     def get(self, url, headers=None, body="", verify=False, timeout=5):
+        '''
+        Crud's get method performs a GET API call, a read request, to a
+        server.  It stores the results and also returns them to the user
+        along with the request's status code.
+
+        Parameters:
+            url: The path to the server's API resource.
+                type: str
+                default: None
+                required: No
+            headers: The headers for placing an API call.
+                type: dict
+                default: None
+                required: Yes, as a keyword argument
+            body: Any data elements required for the API call.
+                type: str
+                default: None
+                required: No
+            verify: A flag indicating if the server's certificate should
+                    be authenticated.
+                type: bool
+                default: False
+                required: No
+            timeout: Time in seconds to wait for the server's response
+                     before abandoning the API call.
+                type: int
+                default: 5
+                required: No
+
+        Return Values:
+            dict: The API response data.
+            str: The API response code.
+
+        Usage:
+            restapi = Crud()
+            url = "https://server/resource/path"
+            hdrs = {'content-type': 'application/json'}
+            results, status = restapi.get(url, headers=hdrs)
+        '''
         resp = requests.request("GET",
                                 url,
                                 headers=headers,
@@ -126,6 +237,46 @@ class Crud(object):
 ## end get()
 
     def put(self, url, headers={}, body={}, verify=False, timeout=5):
+        '''
+        Crud's put method performs a PUT API call, an update request, to a
+        server.  It stores the results and also returns them to the user
+        along with the request's status code.
+
+        Parameters:
+            url: The path to the server's API resource.
+                type: str
+                default: None
+                required: No
+            headers: The headers for placing an API call.
+                type: dict
+                default: None
+                required: Yes, as a keyword argument
+            body: Any data elements required for the API call.
+                type: str
+                default: None
+                required: No
+            verify: A flag indicating if the server's certificate should
+                    be authenticated.
+                type: bool
+                default: False
+                required: No
+            timeout: Time in seconds to wait for the server's response
+                     before abandoning the API call.
+                type: int
+                default: 5
+                required: No
+
+        Return Values:
+            dict: The API response data.
+            str: The API response code.
+
+        Usage:
+            restapi = Crud()
+            url = "https://server/resource/path"
+            body = "\{'parameter' : 'newValue'\}"
+            hdrs = {'content-type': 'application/json'}
+            results, status = restapi.put(url, headers=hdrs, body=body)
+        '''
         resp = requests.request("PUT",
                                 url,
                                 headers=headers,
@@ -148,6 +299,46 @@ class Crud(object):
 ## end put()
 
     def post(self, url, headers={}, body={}, verify=False, timeout=5):
+        '''
+        Crud's post method performs a POST API call, a create request, to
+        a server.  It stores the results and also returns them to the user
+        along with the request's status code.
+
+        Parameters:
+            url: The path to the server's API resource.
+                type: str
+                default: None
+                required: No
+            headers: The headers for placing an API call.
+                type: dict
+                default: None
+                required: Yes, as a keyword argument
+            body: Any data elements required for the API call.
+                type: str
+                default: None
+                required: No
+            verify: A flag indicating if the server's certificate should
+                    be authenticated.
+                type: bool
+                default: False
+                required: No
+            timeout: Time in seconds to wait for the server's response
+                     before abandoning the API call.
+                type: int
+                default: 5
+                required: No
+
+        Return Values:
+            dict: The API response data.
+            str: The API response code.
+
+        Usage:
+            restapi = Crud()
+            url = "https://server/resource/path"
+            body = "\{'parameter' : 'value'\}"
+            hdrs = {'content-type': 'application/json'}
+            results, status = restapi.post(url, headers=hdrs, body=body)
+        '''
         resp = requests.request("POST",
                                 url,
                                 headers=headers,
@@ -170,6 +361,45 @@ class Crud(object):
 ## end post()
 
     def delete(self, url, headers={}, body={}, verify=False, timeout=5):
+        '''
+        Crud's delete method performs a DELETE API call, a delete request,
+        to a server.  It stores the results and also returns them to the
+        user along with the request's status code.
+
+        Parameters:
+            url: The path to the server's API resource.
+                type: str
+                default: None
+                required: No
+            headers: The headers for placing an API call.
+                type: dict
+                default: None
+                required: Yes, as a keyword argument
+            body: Any data elements required for the API call.
+                type: str
+                default: None
+                required: No
+            verify: A flag indicating if the server's certificate should
+                    be authenticated.
+                type: bool
+                default: False
+                required: No
+            timeout: Time in seconds to wait for the server's response
+                     before abandoning the API call.
+                type: int
+                default: 5
+                required: No
+
+        Return Values:
+            dict: The API response data.
+            str: The API response code.
+
+        Usage:
+            restapi = Crud()
+            url = "https://server/resource/path"
+            hdrs = {'content-type': 'application/json'}
+            results, status = restapi.delete(url, headers=hdrs, body=body)
+        '''
         resp = requests.request("DELETE",
                                 url,
                                 headers=headers,

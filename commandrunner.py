@@ -70,11 +70,6 @@ class CommandRunner(DnacApi):
                 type: dict
                 default: None
                 required: No
-            requestFilter: An expression for filtering Cisco DNAC's
-                           response.
-                type: str
-                default: None
-                required: No
             verify: A flag used to check Cisco DNAC's certificate.
                 type: boolean
                 default: False
@@ -145,6 +140,9 @@ class CommandRunner(DnacApi):
 	Paramters:
 	    cmds: A dict of commands and device UUIDs to run the
                   commands against.
+                type: dict
+                default: None
+                required: Yes
 	
 	Return Values:
 	    None
@@ -168,7 +166,8 @@ class CommandRunner(DnacApi):
             None
         
         Return Values:
-            Task object: The task associated with the CommandRunner instance.
+            Task object: The task associated with the CommandRunner
+            instance.
 
         Usage:
             d = Dnac()
@@ -190,7 +189,10 @@ class CommandRunner(DnacApi):
         given.
    
         Paramters:
-           task: A Task object
+            task: A task object for monitoring the command's results
+                type: Task object
+                default: None
+                required: Yes
    
         Return Values:
            None
@@ -216,7 +218,13 @@ class CommandRunner(DnacApi):
 
         Parameters:
             cmd: A CLI command.
+                type: str
+                default: None
+                required: Yes
             uuid: A network device UUID.
+                type: str
+                default: None
+                required: Yes
 
         Return Values:
             dict: The command instructions used as the body for making
@@ -247,7 +255,13 @@ class CommandRunner(DnacApi):
 
         Parameters:
             cmdList: A list of CLI commands.
+                type: list of str
+                default: None
+                required: Yes
             uuidList: A list of network device UUIDs.
+                type: list of str
+                default: None
+                required: Yes
 
         Return Values:
             dict: The command instructions used as the body for making
@@ -319,9 +333,10 @@ class CommandRunner(DnacApi):
         the function's return value (results = cmd.runSync()).
 
         Parameters:
-            wait: int
-            default: 3
-            required: No
+            wait: The time to wait before checking the results.
+                type: int
+                default: 3
+                required: No
 
         Return Vaules:
             list: The command set's output

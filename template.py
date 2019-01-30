@@ -43,10 +43,10 @@ VALID_DEPLOYMENT_STATES=[DEPLOYMENT_INIT, \
 
 ## end globals
 
-## exceptions
-
 ## error messages
+
 TEMPLATE_NOT_FOUND="Could not find template"
+NO_TEMPLATE_ID="The template ID is empty or does not exist"
 NO_TEMPLATES_FOUND="Could not retrieve any templates"
 INVALID_RESPONSE="Invalid response to API call"
 EMPTY_TEMPLATE="Template has no data or does not exist"
@@ -55,16 +55,10 @@ ILLEGAL_TARGET_TYPE="Illegal template target type"
 UNKNOWN_DEPLOYMENT_STATUS="Unknown deployment status"
 ALREADY_DEPLOYED="Template already deployed"
 ILLEGAL_VERSION="Illegal template version"
+LEGAL_VERSIONS="Template version must be 0 or greater. Use 0 to signal this API wrapper to use the latest version automatically."
 UNKNOWN_VERSION="Unknown template version"
 
-class TemplateError(Exception):
-
-    def __init__(self, msg):
-        super(TemplateError, self).__init__(msg)
-
-## end class TemplateError()
-
-## end exceptions
+## end error messages
 
 class Template(DnacApi):
 
@@ -76,10 +70,10 @@ class Template(DnacApi):
                  timeout=5):
         # version is the template's version and must not be negative
         if version < 0:
-            raise TemplateError(
-                "__init__: %s: must not be negative: %s" %
-                (ILLEGAL_VERSION, str(version))
-                               )
+            raise DnacApiError(
+                MODULE, "__init__", ILLEGAL_VERSION, "", "",
+                version, "", LEGAL_VERSIONS
+                              )
         # check Cisco DNA Center's version and set the resource path
         if dnac.version in SUPPORTED_DNAC_VERSIONS:
             path = "/dna/intent/api/v1/template-programmer/template"
@@ -105,17 +99,19 @@ class Template(DnacApi):
         # retrieve the template ID by its name
         self.__templateId = self.getTemplateIdByName(self.name)
         if not self.__templateId: # template could not be found
-            raise TemplateError(
-                "__init__: %s: %s" % (TEMPLATE_NOT_FOUND, self.name)
-                               )
+            raise DnacApiError(
+                MODULE, "__init__", TEMPLATE_NOT_FOUND, "",
+                "", self.__templateId, "", ""
+                              )
         # retrieve the versioned template
         self.__versionedTemplate = \
             self.getVersionedTemplateByName(self.name, self.__version)
         if not bool(self.__versionedTemplate): # template is empty
-            raise TemplateError(
-                "__init__: %s: %s version %s" % 
-                (UNKNOWN_VERSION, self.name, str(self.__version))
-                               )
+            raise DnacApiError(
+                MODULE, "__init__", UNKNOWN_VERSION, "",
+                "", self.__versionedTemplate, "",
+                "%s version %i" % (self.name, self.__version)
+                              )
 
 ## end __init__()
 
@@ -257,9 +253,10 @@ class Template(DnacApi):
                 else: # keep looking for the template by its name
                     continue
         else:
-            raise TemplateError(
-                "getTemplateIdByName: %s:" % NO_TEMPLATES_FOUND
-                               )
+            raise DnacApiError(
+                MODULE, "getTemplateIdByName", NO_TEMPLATES_FOUND, "",
+                "", "", "", ""
+                              )
         # all done - return the template
         return self.__templateId
 
@@ -268,11 +265,10 @@ class Template(DnacApi):
     def getVersionedTemplateByName(self, name, ver):
         # version is the template's version and must not be negative
         if ver < 0:
-            raise TemplateError(
-              "getVersionedTemplateByName: %s: %s: %s \
-              must not be negative: %s" %
-              (ILLEGAL_VERSION, name, str(ver))
-                               )
+            raise DnacApiError(
+                MODULE, "getVersionedTemplateByName", ILLEGAL_VERSION,
+                "", "", version, "", LEGAL_VERSIONS
+                              )
         # reset the versioned template information
         self.__versionedTemplate = {}
         self.__versionedTemplateId = ""
@@ -298,10 +294,12 @@ class Template(DnacApi):
                                 continue
                         if not self.__versionedTemplateId:
                             # version is greater than any versions
-                            raise TemplateError(
-                                "getVersionedTemplateByName: %s: %s: %s" %
-                                (UNKNOWN_VERSION, name, str(ver))
-                                               )
+                            raise DnacApiError(
+                                MODULE, "getVersionedTemplateByName",
+                                UNKNOWN_VERSION, "", "", 
+                                self.__versionedTemplateId, "",
+                                "%s version %i" % (name, ver)
+                                              )
                     elif ver == 0:
                         # get the latest version
                         latest = versions[0]
@@ -331,15 +329,16 @@ class Template(DnacApi):
                              param['defaultValue']
                 # otherwise there are no parameters - keep going
             else:
-                raise TemplateError(
-                    "getVersionedTemplateByName: %s: %s: %s" %
-                    (EMPTY_TEMPLATE, name, self.__versionedTemplateId)
-                                   )
+                raise DnacApiError(
+                    MODULE, "getVersionedTemplateByName", EMPTY_TEMPLATE,
+                    "", "", str(self.__versionedTemplate), "",
+                    "%s version %i" % (name, self.__versionedTemplateId)
+                                  )
         else:
-            raise TemplateError(
-                "getVersionedTemplateByName: %s: %s" % 
-                (NO_TEMPLATES_FOUND, name)
-                               )
+            raise DnacApiError(
+                MODULE, "getVersionedTemplateByName", NO_TEMPLATES_FOUND,
+                "", "", str(templates), "", name
+                              )
         return self.__versionedTemplate
 
 ## end getVersionedTemplateByName()
@@ -361,15 +360,17 @@ class Template(DnacApi):
     def deploy(self):
         url = self.dnac.url + self.resource + "/deploy"
         if not self.__targetId: # targetId is not set
-            raise TemplateError(
-                "%s: %s: %s" % (MODULE, "deploy", EMPTY_TEMPLATE)
-                               )
+            raise DnacApiError(
+                MODULE, "deploy", EMPTY_TEMPLATE, url,
+                "", self.__targetId, "", NO_TEMPLATE_ID
+                              )
         if self.__targetType not in VALID_TARGET_TYPES:
-            raise TemplateError(
-                "%s: %s: %s: valid types include %s" % \
-                (MODULE, "deploy", ILLEGAL_TARGET_TYPE,
-                 str(VALID_TARGET_TYPES))
-                               )
+            raise DnacApiError(
+                MODULE, "deploy", ILLEGAL_TARGET_TYPE, url,
+                str(VALID_TARGET_TYPES), self.__targetType, "",
+                "%s is not one of %s" % (self.__targetType,
+                str(VALID_TARGET_TYPES))
+                              )
         body = self.makeBody()
         results, status = self.crud.post(url,
                                          headers=self.dnac.hdrs,
@@ -395,15 +396,17 @@ class Template(DnacApi):
     def deploySync(self, wait=3):
         url = self.dnac.url + self.resource + "/deploy"
         if not self.__targetId: # targetId is not set
-            raise TemplateError(
-                "%s: %s: %s" % (MODULE, "deploy", EMPTY_TEMPLATE)
-                               )
+            raise DnacApiError(
+                MODULE, "deploySync", EMPTY_TEMPLATE, url,
+                "", self.__targetId, "", NO_TEMPLATE_ID
+                              )
         if self.__targetType not in VALID_TARGET_TYPES:
-            raise TemplateError(
-                "%s: %s: %s: valid types include %s" % \
-                (MODULE, "deploy", ILLEGAL_TARGET_TYPE,
-                 str(VALID_TARGET_TYPES))
-                               )
+            raise DnacApiError(
+                MODULE, "deploySync", ILLEGAL_TARGET_TYPE, url,
+                str(VALID_TARGET_TYPES), self.__targetType, "",
+                "%s is not one of %s" % (self.__targetType,
+                str(VALID_TARGET_TYPES))
+                              )
         body = self.makeBody()
         results, status = self.crud.post(url,
                                          headers=self.dnac.hdrs,
