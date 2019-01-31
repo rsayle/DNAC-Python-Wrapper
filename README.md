@@ -36,6 +36,7 @@ v.1.0: 31 Jan 2019
 - Created exceptions and applied them throughout
 - Updated UML documentation
 - Provided examples for NetworkDevice, CommandRunner and Template
+- Updated module documentation
 
 # Roadmap
 - More enhancements to networkdevice
