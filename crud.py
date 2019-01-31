@@ -93,8 +93,8 @@ class CrudError(Exception):
     more information on how to interpret the codes.  Where applicable, the
     various children of DnacApi objects provide this information.
 
-    See the DATA section using python's help documentation for the list
-    of error codes and their associated messages.
+    Review the global data declared in the beginning of module crud.py
+    for a listing of  error codes and their associated messages.
 
     Attributes:
         None

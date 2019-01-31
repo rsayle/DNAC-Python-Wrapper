@@ -7,6 +7,10 @@ MODULE="dnacapi.py"
 
 ## exceptions
 
+SAME_NAME="Attempted to reset an API name to the same value"
+SAME_NAME_MSG="Changing an API's name to the same value will result in the object being deleted from the Dnac object's api store."
+SAME_NAME_CAUSE="Check that other functions are not changing the name after you've already modified it."
+
 class DnacApiError(Exception):
     '''
     DnacApiError is derived from Exception and used as the sole exception
@@ -315,7 +319,9 @@ class DnacApi(object):
     def name(self, name):
         '''
         Set method name updates the __name attribute thus renaming a
-        DnacApi instance.
+        DnacApi instance.  Since this attribute serves as the key into
+        a Dnac object's api dictionary, this method also updates the
+        api key.
 
         Parameters:
             name: str
@@ -330,7 +336,21 @@ class DnacApi(object):
             dapi = DnacApi(dnac, name, resource)
             dapi.name = "aNewName"
         '''
+        if name == self.name:
+            # could quietly return doing nothing but raising an error
+            raise DnacApiError(
+                MODULE, "name setter", SAME_NAME, "",
+                "", name, SAME_NAME_MSG, SAME_NAME_CAUSE
+                              )
+        # save the original name
+        oldname = self.__name
+        # assign the new one
         self.__name = name
+        # update the key in dnac.api{}
+        self.dnac.api[self.__name] = self
+        # remove the old key from Dnac's api{}
+        if oldname in self.dnac.api:
+            del self.dnac.api[oldname]
 
 ## end name setter
 
@@ -338,7 +358,7 @@ class DnacApi(object):
     def resource(self):
         '''
         Get method resource returns __resource, which is the API call to
-        Cisco DNAC.  In child classes, use this method to form request by
+        Cisco DNAC.  In child classes, use this method to form requests by
         appending it to Cisco DNAC's base url, i.e. Dnac.url.
 
         Parameters:
@@ -490,19 +510,18 @@ if  __name__ == '__main__':
     print "  resource        = " + dapi.resource
     print "  verify          = " + str(dapi.verify)
     print "  timeout         = " + str(dapi.timeout)
-    api = d.api
-    print "  compare apis   = " + str(api == dapi)
+    print "  is in api       = " + str(dapi.name in dapi.dnac.api)
+    print "  dapi            = " + str(dapi)
+    print "  dapi in api     = " + str(d.api[dapi.name])
     print
-    print "Changing the attributes and assigning to a new Dnac()..."
+    print "Changing the attributes..."
     print
 
-    newD = Dnac()
     dapi.name = "aNewName"
     dapi.resource = "/a/new/resource/path"
     dapi.filter = "a=newFilter"
     dapi.verify = True
     dapi.timeout = 10
-    newD.api[dapi.name] = dapi
 
     print "  dnac            = " + str(type(dapi.dnac))
     print "  name            = " + dapi.name
@@ -511,10 +530,10 @@ if  __name__ == '__main__':
     print "  resource        = " + dapi.resource
     print "  verify          = " + str(dapi.verify)
     print "  timeout         = " + str(dapi.timeout)
-    print "  is in api       = " + str(dapi.name in dapi.dnac.api)
-    api = newD.api[dapi.name]
-    print "  compare apis    = " + str(api == dapi)
-    print "  is in api       = " + str(dapi.name in dapi.dnac.api)
+    print "  is in api (old) = " + str(dapi.name in "aName")
+    print "  is in api (new) = " + str(dapi.name in dapi.dnac.api)
+    print "  dapi            = " + str(dapi)
+    print "  dapi in api     = " + str(d.api[dapi.name])
     print
     print "Making a get() call..."
 

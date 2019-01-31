@@ -57,17 +57,188 @@ ALREADY_DEPLOYED="Template already deployed"
 ILLEGAL_VERSION="Illegal template version"
 LEGAL_VERSIONS="Template version must be 0 or greater. Use 0 to signal this API wrapper to use the latest version automatically."
 UNKNOWN_VERSION="Unknown template version"
+ILLEGAL_NAME_CHANGE="Changing a template's name is prohibited"
+ILLEGAL_NAME_CHANGE_RESOLUTION="Create a new Template object using a different template's name"
 
 ## end error messages
 
 class Template(DnacApi):
+    '''
+    Class Template provides an abstraction of CLI templates in Cisco's
+    DNA Center.  Once a network device has first been provisioned in
+    Cisco DNAC, it's configuration can be updated with a CLI template.
+    This class encapsulates the API calls and tools required to deploy
+    a configuration template.
 
+    A Template object's name must match the name it is given in a Cisco
+    DNAC cluster.  You do not necessarily need to know in which project
+    it is listed, but the name must be the same.  Be careful: template
+    names in Cisco DNA Center are case sensitive.
+
+    Changing a template's name is prohibited by this class.  The very
+    purpose of this python package is to make it easy to use Cisco DNA
+    Center's APIs.  For this class, Template automatically handles finding
+    and loading a template by its name and the requested version; however,
+    a problem could arise if a template's name is changed but its version
+    is not available in Cisco DNA Center.  This class, therefore, overrides
+    its parent class name setter method and raises an exception whenever
+    an attempt to change a Template object's name occurs.  Doing so,
+    gives developers the ability to select and work with different versions
+    of a template using the same object at the expense of being able to
+    point the object at a different template.  If work must be done with
+    a different template in Cisco DNAC, create a new Template object with
+    a new template's name
+
+    The power in using CLI templates is the ability to parameterize values
+    that should be different across networking equipment.  For example,
+    every router and switch could have a loopback interface for management,
+    but they'll need to be assigned different IP addresses, naturally.  The
+    Template class handles a template's parameters as a dictionary making
+    it easy for programmers to update parameter values.
+
+    Cisco DNA Center will not apply a template unless it is versioned.  In
+    the Cisco DNA Center GUI, this amounts to having committed the
+    template.  Stated differently, every template has a base instantiation
+    in Cisco DNAC, but the base template cannot be deployed.  Instead,
+    users must access a committed version of the template.  The Template
+    class stores the base template in its template attribute and then
+    allows the selection of a particular version of the template using
+    its version attribute.  To use the latest version, simply set version's
+    value to zero, which is the default setting.
+
+    Pushing a template causes Cisco DNA to create a deployment job.
+    Depending upon the number of commands within a template as well as the
+    list of target devices upon which to apply it, deployment jobs do not
+    necessarily complete immediately.  The Template class creates and holds
+    a Deployment object for monitoring the job's status.  This happens
+    automatically whenever the deploy() or deploySync() methods are called.
+
+    Attributes:
+        dnac:
+            Dnac object: A reference to the Dnac instance that contains
+                         the Template object
+            default: None
+        name:
+            str: A user friendly name for the Template object that is
+                 used both as a key for finding it in a Dnac.api attribute
+                 and for locating the real CLI template in Cisco DNAC.
+                 The template name must match its name in Cisco DNAC
+                 exactly including its case.
+            default: None
+        version:
+            int: The version of a template to be deployed.  Setting the
+                 version to zero signals the Template object to use
+                 whatever the latest version may be.
+
+                 Changing a Template's version causes the object to
+                 search for and load the requested versioned template
+                 according to the Template's name.  If the requested
+                 version does not exist, Template throws an exception.
+                 
+                 When switching to a different template in Cisco DNA
+                 Center either create a new Template object altogether
+                 or first change the Template's name, which will trigger
+                 the object to load the latest version, and then update
+                 the version attribute so that the Template instance
+                 loads the correct one.
+            default: 0
+        templateId:
+            str: The UUID in Cisco DNAC of the base template.  A base
+                 template cannot be deployed on any equipment.
+            default: None
+            scope: protected
+        versionedTemplate:
+            dict: The CLI template as represented in Cisco DNA Center.
+            default: None
+            scope: protected
+        versionedTemplateId:
+            str: The UUID in Cisco DNAC of committed template, which can
+                 be deployed.
+            default: None
+            scope: protected
+        versionedTemplateParams:
+            dict: A dictionary whose keys are the template's parameter
+                  names.  Their values can each be set directly through
+                  accessing this dictionary.  See the example below in
+                  the Usage section.
+            default: None
+            scope: protected
+        targetId:
+            str: The UUID of a network device to which the template
+                 will be applied.
+            default: None
+        targetType:
+            str: An enumerated value that instructs Cisco DNA Center how
+                 to find the device so that the template can be applied.
+                 Legal values for targetType are kept in the global
+                 list:
+                    VALID_TARGET_TYPES=[TARGET_BY_DEFAULT,
+                                        TARGET_BY_ID,
+                                        TARGET_BY_HOSTNAME,
+                                        TARGET_BY_IP,
+                                        TARGET_BY_SERIAL,
+                                        TARGET_BY_MAC]
+            default: TARGET_BY_DEFAULT
+        deployment:
+            Deployment object: A Deployment instance that provides the
+                               deploy job's status and the job's results.
+            default: None
+            scope: protected
+    Usage:
+        d = Dnac()
+        template = Template(d, "Set VLAN")
+        d.api['Set VLAN'].targetId = <switch_uuid>
+        d.api['Set VLAN'].versionedTemplateParams['interface'] = "gig1/0/1"
+        d.api['Set VLAN'].versionedTemplateParams['vlan'] = 10
+        d.api['Set VLAN'].deploySync()
+        print str(template.deployment.results)
+    '''
     def __init__(self,
                  dnac,
                  name,
                  version=0,
                  verify=False,
                  timeout=5):
+        '''
+        Template's __init__ method constructs a new Template object.
+        It automatically searches for the template in Cisco DNA Center
+        by the Template's name.  If found, then it will search for the
+        committed version of the template according to the value passed
+        in the version keyword argument.  If no version is selected, it
+        chooses the latest version available.
+
+        Parameters:
+            dnac: A reference to the containing Dnac object.
+                type: Dnac object
+                default: None
+                required: Yes
+            name: The template's exact name, including its case, in
+                  Cisco DNA Center.
+                type: str
+                default: None
+                required: Yes
+            version: The template version that will be deployed.  When set
+                     to zero, Template selects the latest version.
+                type: int
+                default: 0
+                required: No
+            verify: A flag used to check Cisco DNAC's certificate.
+                type: boolean
+                default: False
+                required: No
+            timeout: The number of seconds to wait for Cisco DNAC's
+                     response.
+                type: int
+                default: 5
+                required: No
+
+        Return Values:
+            Template object: a newly build Template instance.
+
+        Usage:
+            d = Dnac()
+            template = Template(d, "Enable BGP", version=5)
+        '''
         # version is the template's version and must not be negative
         if version < 0:
             raise DnacApiError(
@@ -104,9 +275,11 @@ class Template(DnacApi):
                 "", self.__templateId, "", ""
                               )
         # retrieve the versioned template
-        self.__versionedTemplate = \
-            self.getVersionedTemplateByName(self.name, self.__version)
+        #   getVersionedTemplateByName sets self.__versionedTemplate
+        self.getVersionedTemplateByName(self.name, self.__version)
         if not bool(self.__versionedTemplate): # template is empty
+            # getVersionedTemplateByName should catch this condition, but
+            # just in case, here's another integrity check
             raise DnacApiError(
                 MODULE, "__init__", UNKNOWN_VERSION, "",
                 "", self.__versionedTemplate, "",
@@ -115,103 +288,229 @@ class Template(DnacApi):
 
 ## end __init__()
 
+## override DnacApi's name setter
+
+    @DnacApi.name.setter
+    def name(self, name):
+        '''
+        Changing a template's name is prohibited by this class.  The very
+        purpose of this python package is to make it easy to use Cisco DNA
+        Center's APIs.  For this class, Template automatically handles
+        finding and loading a template by its name and the requested
+        version; however, a problem could arise if a template's name is
+        changed but its version is not available in Cisco DNA Center.
+        This class, therefore, overrides its parent class name setter
+        method and raises an exception whenever an attempt to change a
+        Template object's name occurs.  Doing so, gives developers the
+        ability to select and work with different versions of a template
+        using the same object at the expense of being able to point the
+        object at a different template.  If work must be done with a
+        different template in Cisco DNAC, create a new Template object with
+        the new template's name
+        '''
+        raise DnacApiError(
+            MODULE, "name setter", ILLEGAL_NAME_CHANGE, "",
+            "", name, "", ILLEGAL_NAME_CHANGE_RESOLUTION
+                          )
+
+## end override DnacApi's name setter
+
     @property
     def templateId(self):
+        '''
+        Get method templateId returns the base template's UUID from Cisco
+        DNA Center.
+
+        Parameters:
+            None
+
+        Return Values:
+            str: The template's UUID.
+
+        Usage:
+            d = Dnac()
+            template = Template(d, "Add Loopback")
+            print (d.api['Add Loopback'].templateId)
+        '''
         return self.__templateId
 
 ## end templateId getter
 
-    @templateId.setter
-    def templateId(self, templateId):
-        self.__templateId = templateId
-
-## end templateId setter
-
     @property
     def version(self):
+        '''
+        The version get method returns the template's version number.
+
+        Parameters:
+            None
+
+        Return Value:
+            int: The template's version number.
+
+        Usage:
+            d = Dnac()
+            template = Template(d, "Add Loopback")
+            print d.api['Add Loopback'].version
+        '''
         return self.__version
 
 ## end version getter
 
     @version.setter
     def version(self, version):
+        '''
+        The version set method changes the desired version of the template
+        to be deployed.  This method also updates the versioned template,
+        its UUID and its parameters in this class' respective attributes.
+        See class method getVersionedTemplateByName for details.  If the
+        requested version does not exist, an exception is thrown.
+
+        Parameters:
+            int: The new template version.
+
+        Return Values:
+            None
+
+        Usage:
+            d = Dnac()
+            template = Template(d, "Set VLAN")
+            template.version = 5
+        '''
         self.__version = version
+        # reload versioned template info using getVersionedTemplateByName
+        self.getVersionedTemplateByName(self.name, self.__version)
+        # if the version requested does not exist, raise an exception
+        if not bool(self.__versionedTemplate): # template is empty
+            # getVersionedTemplateByName should catch this condition, but
+            # just in case, here's another integrity check
+            raise DnacApiError(
+                MODULE, "version setter", UNKNOWN_VERSION, "",
+                "", self.__versionedTemplate, "",
+                "%s version %i" % (self.name, version)
+                              )
 
 ## end version setter
 
     @property
     def versionedTemplate(self):
+        '''
+        The versionedTemplate get method returns the template's contents.
+
+        Parameters:
+            None
+
+        Return Value:
+            dict: The template's data.
+
+        Usage:
+            d = Dnac()
+            template = Template(d, "Add Loopback")
+            print str(d.api['Add Loopback'].versionedTemplate)
+        '''
         return self.__versionedTemplate
 
 ## end versionedTemplate getter
 
-    @versionedTemplate.setter
-    def versionedTemplate(self, versionedTemplate):
-        self.__versionedTemplate = versionedTemplate
-
-## end versionedTemplate setter
-
     @property
     def versionedTemplateId(self):
+        '''
+        The versionedTemplateId get method returns the UUID for the
+        committed template based upon the object's current template version.
+
+        Parameters:
+            None
+
+        Return Value:
+            str: The versioned template's UUID in Cisco DNA Center
+
+        Usage:
+            d = Dnac()
+            template = Template(d, "Add Loopback")
+            print d.api['Add Loopback'].versionedTemplateId
+        '''
         return self.__versionedTemplateId
 
 ## end versionedTemplateId getter
 
-    @versionedTemplateId.setter
-    def versionedTemplateId(self, versionedTemplateId):
-        self.__versionedTemplateId = versionedTemplateId
-
-## end versionedTemplateId setter
-
     @property
     def versionedTemplateParams(self):
+        '''
+        versionedTemplateParams returns the template's parameters
+        dictionary.  Values may be updated directly by accessing this
+        attribute.
+
+        Parameters:
+            None
+
+        Return Value:
+            dict: The template's parameters and their currnt values.
+
+        Usage:
+            d = Dnac()
+            template = Template(d, "Add Loopback")
+            print str(d.api['Add Loopback'].versionedTemplateParams)
+            d.api['Add Loopback'].versionedTemplateParams['ip'] = 10.1.1.1
+        '''
         return self.__versionedTemplateParams
 
 ## end versionedTemplateParams getter
 
-    @versionedTemplateParams.setter
-    def versionedTemplateParams(self, versionedTemplateParams):
-        self.__versionedTemplateParams = versionedTemplateParams
-
-## end versionedTemplateParams setter
-
     @property
     def targetId(self):
+        '''
+        Template's targetId get method returns the UUID of the managed
+        device where the template will be applied.
+
+        Parameters:
+            None
+
+        Return Values:
+            str: A Cisco DNAC managed device's UUID.
+
+        Usage:
+            d = Dnac()
+            template = Template(d, "Add Loopback")
+            print d.api['Add Loopback'].targetId
+        '''
         return self.__targetId
 
 ## end targetId getter
 
     @targetId.setter
     def targetId(self, targetId):
+        '''
+        '''
         self.__targetId = targetId
 
 ## end targetId setter
 
     @property
     def targetType(self):
+        '''
+        '''
         return self.__targetType
 
 ## end targetType getter
 
     @targetType.setter
     def targetType(self, targetType):
+        '''
+        '''
         self.__targetType = targetType
 
 ## end targetType setter
 
     @property
     def deployment(self):
+        '''
+        '''
         return self.__deployment
 
 ## end deployment getter
 
-    @deployment.setter
-    def deployment(self, deployment):
-        self.__deployment = deployment
-
-## end deployment setter
-
     def getAllTemplates(self):
+        '''
+        '''
         url = self.dnac.url + self.resource
         templates, status = self.crud.get(url,
                                         headers=self.dnac.hdrs,
@@ -227,6 +526,8 @@ class Template(DnacApi):
 ## end getAllTemplates()
 
     def getTemplateById(self, id):
+        '''
+        '''
         url = self.dnac.url + self.resource + "/" + id
         template, status = self.crud.get(url,
                                         headers=self.dnac.hdrs,
@@ -242,6 +543,8 @@ class Template(DnacApi):
 ## end getTemplateById
 
     def getTemplateIdByName(self, name):
+        '''
+        '''
         self.__templateId = ""
         # find the template by name
         templates = self.getAllTemplates()
@@ -263,6 +566,8 @@ class Template(DnacApi):
 ## end getTemplateByName()
 
     def getVersionedTemplateByName(self, name, ver):
+        '''
+        '''
         # version is the template's version and must not be negative
         if ver < 0:
             raise DnacApiError(
@@ -334,7 +639,7 @@ class Template(DnacApi):
                     "", "", str(self.__versionedTemplate), "",
                     "%s version %i" % (name, self.__versionedTemplateId)
                                   )
-        else:
+        else: # getAllTemplate failed to return any data
             raise DnacApiError(
                 MODULE, "getVersionedTemplateByName", NO_TEMPLATES_FOUND,
                 "", "", str(templates), "", name
@@ -344,6 +649,8 @@ class Template(DnacApi):
 ## end getVersionedTemplateByName()
 
     def makeBody(self):
+        '''
+        '''
         tgtinfo = {}
         tgtinfo['type'] = self.__targetType
         tgtinfo['id'] = self.__targetId
@@ -358,6 +665,8 @@ class Template(DnacApi):
 ## end makeBody()
 
     def deploy(self):
+        '''
+        '''
         url = self.dnac.url + self.resource + "/deploy"
         if not self.__targetId: # targetId is not set
             raise DnacApiError(
@@ -394,6 +703,8 @@ class Template(DnacApi):
 ## end deploy()
 
     def deploySync(self, wait=3):
+        '''
+        '''
         url = self.dnac.url + self.resource + "/deploy"
         if not self.__targetId: # targetId is not set
             raise DnacApiError(
