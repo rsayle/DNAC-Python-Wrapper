@@ -34,6 +34,12 @@
 <dt><font face="helvetica, arial"><a href="xauthtoken.html#XAuthToken">XAuthToken</a>
 </font></dt></dl>
 </dd>
+<dt><font face="helvetica, arial"><a href="exceptions.html#Exception">exceptions.Exception</a>(<a href="exceptions.html#BaseException">exceptions.BaseException</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="xauthtoken.html#XAuthTokenError">XAuthTokenError</a>
+</font></dt></dl>
+</dd>
 </dl>
  <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -62,7 +68,7 @@ Attributes:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ctype:&nbsp;A&nbsp;content&nbsp;type&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;for&nbsp;requesting&nbsp;a&nbsp;token&nbsp;from&nbsp;Cisco&nbsp;DNAC.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;CType&nbsp;<a href="__builtin__.html#object">object</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;CType("application/json")<br>
-&nbsp;&nbsp;&nbsp;&nbsp;respath:&nbsp;The&nbsp;resource&nbsp;path&nbsp;used&nbsp;to&nbsp;request&nbsp;a&nbsp;token&nbsp;from&nbsp;Cisco&nbsp;DNAC.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;resource:&nbsp;The&nbsp;resource&nbsp;path&nbsp;used&nbsp;to&nbsp;request&nbsp;a&nbsp;token&nbsp;from&nbsp;Cisco&nbsp;DNAC.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;"/api/system/v1/auth/token"<br>
 &nbsp;&nbsp;&nbsp;&nbsp;verify:&nbsp;Flag&nbsp;indicating&nbsp;whether&nbsp;or&nbsp;not&nbsp;the&nbsp;request&nbsp;should&nbsp;verify<br>
@@ -75,7 +81,7 @@ Attributes:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;5<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>
-<dl><dt><a name="XAuthToken-__init__"><strong>__init__</strong></a>(self, url, basicAuth, contentType, resourcePath<font color="#909090">='/api/system/v1/auth/token'</font>, verify<font color="#909090">=False</font>, timeout<font color="#909090">=5</font>)</dt><dd><tt>The&nbsp;__init__&nbsp;method&nbsp;initializes&nbsp;an&nbsp;<a href="#XAuthToken">XAuthToken</a>&nbsp;<a href="__builtin__.html#object">object</a>.&nbsp;&nbsp;It&nbsp;takes<br>
+<dl><dt><a name="XAuthToken-__init__"><strong>__init__</strong></a>(self, url, basicAuth, contentType, resource<font color="#909090">='/api/system/v1/auth/token'</font>, verify<font color="#909090">=False</font>, timeout<font color="#909090">=5</font>)</dt><dd><tt>The&nbsp;__init__&nbsp;method&nbsp;initializes&nbsp;an&nbsp;<a href="#XAuthToken">XAuthToken</a>&nbsp;<a href="__builtin__.html#object">object</a>.&nbsp;&nbsp;It&nbsp;takes<br>
 a&nbsp;URL&nbsp;pointing&nbsp;to&nbsp;the&nbsp;Cisco&nbsp;DNAC&nbsp;cluster&nbsp;and&nbsp;a&nbsp;BasicAuth&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;for<br>
 the&nbsp;token&nbsp;request.&nbsp;&nbsp;When&nbsp;creating&nbsp;a&nbsp;Dnac&nbsp;<a href="__builtin__.html#object">object</a>,&nbsp;the&nbsp;<a href="__builtin__.html#object">object</a>'s<br>
 __init__&nbsp;method&nbsp;passes&nbsp;its&nbsp;base&nbsp;URL&nbsp;(Dnac.url),&nbsp;its&nbsp;BasicAuth&nbsp;<a href="__builtin__.html#object">object</a><br>
@@ -99,7 +105,7 @@ Parameters:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;CType&nbsp;<a href="__builtin__.html#object">object</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;CType("application/json")<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;No<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resourcePath:&nbsp;The&nbsp;resource&nbsp;path&nbsp;used&nbsp;to&nbsp;request&nbsp;a&nbsp;token.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resource:&nbsp;The&nbsp;resource&nbsp;path&nbsp;used&nbsp;to&nbsp;request&nbsp;a&nbsp;token.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;"/api/system/v1/auth/token"<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;No<br>
@@ -212,8 +218,8 @@ Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;=&nbsp;XAuthToken(url,&nbsp;bauth,&nbsp;ctype)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x.hdrs</tt></dd>
 </dl>
-<dl><dt><strong>respath</strong></dt>
-<dd><tt>Get&nbsp;method&nbsp;respath&nbsp;returns&nbsp;the&nbsp;value&nbsp;of&nbsp;attribute&nbsp;__respath,&nbsp;the<br>
+<dl><dt><strong>resource</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;resource&nbsp;returns&nbsp;the&nbsp;value&nbsp;of&nbsp;attribute&nbsp;__resource,&nbsp;the<br>
 resource&nbsp;path&nbsp;used&nbsp;to&nbsp;request&nbsp;an&nbsp;x-auth-token.<br>
 &nbsp;<br>
 Parameters:<br>
@@ -224,7 +230,7 @@ Return&nbsp;Values:<br>
 &nbsp;<br>
 Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;=&nbsp;XAuthToken(url,&nbsp;bauth,&nbsp;ctype)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;x.respath</tt></dd>
+&nbsp;&nbsp;&nbsp;&nbsp;x.resource</tt></dd>
 </dl>
 <dl><dt><strong>timeout</strong></dt>
 <dd><tt>Get&nbsp;method&nbsp;timeout&nbsp;returns&nbsp;the&nbsp;value&nbsp;of&nbsp;attribute&nbsp;__timeout.&nbsp;&nbsp;The<br>
@@ -285,5 +291,88 @@ Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;=&nbsp;XAuthToken(url,&nbsp;bauth,&nbsp;ctype)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x.verify</tt></dd>
 </dl>
-</td></tr></table></td></tr></table>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="XAuthTokenError">class <strong>XAuthTokenError</strong></a>(<a href="exceptions.html#Exception">exceptions.Exception</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>The&nbsp;<a href="#XAuthTokenError">XAuthTokenError</a>&nbsp;exception&nbsp;class,&nbsp;derived&nbsp;from&nbsp;<a href="exceptions.html#Exception">Exception</a>,&nbsp;indicates<br>
+any&nbsp;problems&nbsp;specific&nbsp;to&nbsp;requesting&nbsp;a&nbsp;token&nbsp;from&nbsp;Cisco&nbsp;DNA&nbsp;Center.<br>
+&nbsp;<br>
+Attributes:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="xauthtoken.html#XAuthTokenError">XAuthTokenError</a></dd>
+<dd><a href="exceptions.html#Exception">exceptions.Exception</a></dd>
+<dd><a href="exceptions.html#BaseException">exceptions.BaseException</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="XAuthTokenError-__init__"><strong>__init__</strong></a>(self, msg)</dt><dd><tt>XAuthTokenErrors's&nbsp;__init__&nbsp;method&nbsp;passes&nbsp;a&nbsp;message&nbsp;to&nbsp;its<br>
+parent&nbsp;class.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;msg:&nbsp;An&nbsp;error&nbsp;message&nbsp;indicating&nbsp;the&nbsp;problem.&nbsp;&nbsp;Current&nbsp;values<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;include:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INVALID_RESPONSE="Invalid&nbsp;response&nbsp;to&nbsp;API&nbsp;call"<br>
+&nbsp;<br>
+Return&nbsp;Values:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#XAuthTokenError">XAuthTokenError</a>&nbsp;<a href="__builtin__.html#object">object</a>:&nbsp;the&nbsp;new&nbsp;exception.<br>
+&nbsp;<br>
+Usage:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;raise&nbsp;<a href="#XAuthTokenError">XAuthTokenError</a>(INVALID_RESPONSE)</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes inherited from <a href="exceptions.html#Exception">exceptions.Exception</a>:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object&gt;<dd><tt>T.<a href="#XAuthTokenError-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+<hr>
+Methods inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+<dl><dt><a name="XAuthTokenError-__delattr__"><strong>__delattr__</strong></a>(...)</dt><dd><tt>x.<a href="#XAuthTokenError-__delattr__">__delattr__</a>('name')&nbsp;&lt;==&gt;&nbsp;del&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="XAuthTokenError-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#XAuthTokenError-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="XAuthTokenError-__getitem__"><strong>__getitem__</strong></a>(...)</dt><dd><tt>x.<a href="#XAuthTokenError-__getitem__">__getitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;x[y]</tt></dd></dl>
+
+<dl><dt><a name="XAuthTokenError-__getslice__"><strong>__getslice__</strong></a>(...)</dt><dd><tt>x.<a href="#XAuthTokenError-__getslice__">__getslice__</a>(i,&nbsp;j)&nbsp;&lt;==&gt;&nbsp;x[i:j]<br>
+&nbsp;<br>
+Use&nbsp;of&nbsp;negative&nbsp;indices&nbsp;is&nbsp;not&nbsp;supported.</tt></dd></dl>
+
+<dl><dt><a name="XAuthTokenError-__reduce__"><strong>__reduce__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="XAuthTokenError-__repr__"><strong>__repr__</strong></a>(...)</dt><dd><tt>x.<a href="#XAuthTokenError-__repr__">__repr__</a>()&nbsp;&lt;==&gt;&nbsp;repr(x)</tt></dd></dl>
+
+<dl><dt><a name="XAuthTokenError-__setattr__"><strong>__setattr__</strong></a>(...)</dt><dd><tt>x.<a href="#XAuthTokenError-__setattr__">__setattr__</a>('name',&nbsp;value)&nbsp;&lt;==&gt;&nbsp;x.name&nbsp;=&nbsp;value</tt></dd></dl>
+
+<dl><dt><a name="XAuthTokenError-__setstate__"><strong>__setstate__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="XAuthTokenError-__str__"><strong>__str__</strong></a>(...)</dt><dd><tt>x.<a href="#XAuthTokenError-__str__">__str__</a>()&nbsp;&lt;==&gt;&nbsp;str(x)</tt></dd></dl>
+
+<dl><dt><a name="XAuthTokenError-__unicode__"><strong>__unicode__</strong></a>(...)</dt></dl>
+
+<hr>
+Data descriptors inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>args</strong></dt>
+</dl>
+<dl><dt><strong>message</strong></dt>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>INVALID_RESPONSE</strong> = 'Invalid response to API call'</td></tr></table>
 </body></html>

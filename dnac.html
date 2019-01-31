@@ -25,6 +25,12 @@
 <dt><font face="helvetica, arial"><a href="dnac.html#Dnac">Dnac</a>
 </font></dt></dl>
 </dd>
+<dt><font face="helvetica, arial"><a href="exceptions.html#Exception">exceptions.Exception</a>(<a href="exceptions.html#BaseException">exceptions.BaseException</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="dnac.html#DnacError">DnacError</a>
+</font></dt></dl>
+</dd>
 </dl>
  <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -150,58 +156,6 @@ Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;<a href="#Dnac">Dnac</a>()<br>
 &nbsp;&nbsp;&nbsp;&nbsp;newD&nbsp;=&nbsp;<a href="#Dnac">Dnac</a>(user="operator",&nbsp;passwd="l3tm3in!"</tt></dd></dl>
 
-<dl><dt><a name="Dnac-addApi"><strong>addApi</strong></a>(self, name, api)</dt><dd><tt>Class&nbsp;method&nbsp;addApi&nbsp;places&nbsp;a&nbsp;DnacApi&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;into&nbsp;<a href="#Dnac">Dnac</a>'s&nbsp;api&nbsp;store.<br>
-DnacApi&nbsp;uses&nbsp;this&nbsp;method&nbsp;to&nbsp;automatically&nbsp;add&nbsp;itself&nbsp;to&nbsp;<a href="#Dnac">Dnac</a>.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;name:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;Yes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;api:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;DnacApi&nbsp;<a href="__builtin__.html#object">object</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;Yes<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;<a href="#Dnac">Dnac</a>()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;nd&nbsp;=&nbsp;NetworkDevice(d,&nbsp;"nd")<br>
-&nbsp;&nbsp;&nbsp;&nbsp;newD&nbsp;=&nbsp;<a href="#Dnac">Dnac</a>()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;new.<a href="#Dnac-addApi">addApi</a>("nd",&nbsp;newD)</tt></dd></dl>
-
-<dl><dt><a name="Dnac-deleteAllApis"><strong>deleteAllApis</strong></a>(self)</dt><dd><tt>deleteAllApis&nbsp;clears&nbsp;<a href="#Dnac">Dnac</a>'s&nbsp;api&nbsp;dictionary&nbsp;and&nbsp;destroys&nbsp;all&nbsp;of<br>
-its&nbsp;elements.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;<a href="#Dnac">Dnac</a>()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;nd&nbsp;=&nbsp;NetworkDevice(d,&nbsp;"nd")<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d.<a href="#Dnac-deleteAllApis">deleteAllApis</a>()</tt></dd></dl>
-
-<dl><dt><a name="Dnac-deleteApi"><strong>deleteApi</strong></a>(self, name)</dt><dd><tt>The&nbsp;deleteApi&nbsp;method&nbsp;removes&nbsp;and&nbsp;destroys&nbsp;the&nbsp;named&nbsp;DnacApi.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;name:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;<a href="#Dnac">Dnac</a>()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;nd&nbsp;=&nbsp;NetworkDevice(d,&nbsp;"nd")<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d.<a href="#Dnac-deleteApi">deleteApi</a>("nd")</tt></dd></dl>
-
 <dl><dt><a name="Dnac-getNewToken"><strong>getNewToken</strong></a>(self)</dt><dd><tt>Class&nbsp;method&nbsp;getNewToken&nbsp;instructs&nbsp;<a href="#Dnac">Dnac</a>&nbsp;to&nbsp;get&nbsp;a&nbsp;new&nbsp;x-auth-token<br>
 value&nbsp;using&nbsp;its&nbsp;__xauth&nbsp;instance.<br>
 &nbsp;<br>
@@ -214,24 +168,6 @@ Return&nbsp;Values:<br>
 Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;<a href="#Dnac">Dnac</a>()<br>
 &nbsp;&nbsp;&nbsp;&nbsp;d.<a href="#Dnac-getNewToken">getNewToken</a>()</tt></dd></dl>
-
-<dl><dt><a name="Dnac-isInApi"><strong>isInApi</strong></a>(self, name)</dt><dd><tt>Method&nbsp;isInApi&nbsp;checks&nbsp;so&nbsp;see&nbsp;if&nbsp;the&nbsp;named&nbsp;API&nbsp;is&nbsp;located&nbsp;in&nbsp;<a href="#Dnac">Dnac</a>'s<br>
-api&nbsp;store.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;name:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;Yes<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;bool:&nbsp;True&nbsp;if&nbsp;the&nbsp;name&nbsp;matches&nbsp;an&nbsp;API's&nbsp;name;&nbsp;otherwise,&nbsp;False.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;<a href="#Dnac">Dnac</a>()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;nd&nbsp;=&nbsp;NetworkDevice(d,&nbsp;"nd")<br>
-&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;<a href="#Dnac-isInApi">isInApi</a>("nd"):<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;"It's&nbsp;in&nbsp;there!"</tt></dd></dl>
 
 <hr>
 Data descriptors defined here:<br>
@@ -425,6 +361,88 @@ Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
 &nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;str(d.bauth)</tt></dd>
 </dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="DnacError">class <strong>DnacError</strong></a>(<a href="exceptions.html#Exception">exceptions.Exception</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#DnacError">DnacError</a>&nbsp;is&nbsp;an&nbsp;exception&nbsp;class&nbsp;for&nbsp;any&nbsp;errors&nbsp;specific&nbsp;to&nbsp;setting<br>
+up&nbsp;and&nbsp;maintaining&nbsp;a&nbsp;connection&nbsp;with&nbsp;a&nbsp;Cisco&nbsp;DNA&nbsp;Center&nbsp;cluster.<br>
+&nbsp;<br>
+Attributes:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="dnac.html#DnacError">DnacError</a></dd>
+<dd><a href="exceptions.html#Exception">exceptions.Exception</a></dd>
+<dd><a href="exceptions.html#BaseException">exceptions.BaseException</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="DnacError-__init__"><strong>__init__</strong></a>(self, msg)</dt><dd><tt><a href="#DnacError">DnacError</a>'s&nbsp;__init__&nbsp;method&nbsp;passes&nbsp;a&nbsp;message&nbsp;to&nbsp;its&nbsp;parent&nbsp;class.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;msg:&nbsp;An&nbsp;error&nbsp;message&nbsp;indicating&nbsp;the&nbsp;problem.&nbsp;&nbsp;Current&nbsp;values<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;include:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UNKNOWN_ERROR="Unknown&nbsp;error"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UNSUPPORTED_DNAC_VERSION="Unsupported&nbsp;Cisco&nbsp;DNA<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Center&nbsp;version"<br>
+&nbsp;<br>
+Return&nbsp;Values:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#DnacError">DnacError</a>&nbsp;<a href="__builtin__.html#object">object</a>:&nbsp;the&nbsp;new&nbsp;exception.<br>
+&nbsp;<br>
+Usage:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;version&nbsp;in&nbsp;SUPPORTED_DNAC_VERSIONS:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.<strong>__version</strong>&nbsp;=&nbsp;version<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;raise&nbsp;<a href="#DnacError">DnacError</a>(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UNSUPPORTED_DNAC_VERSION&nbsp;+&nbsp;":&nbsp;%s"&nbsp;%&nbsp;version<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes inherited from <a href="exceptions.html#Exception">exceptions.Exception</a>:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object&gt;<dd><tt>T.<a href="#DnacError-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+<hr>
+Methods inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+<dl><dt><a name="DnacError-__delattr__"><strong>__delattr__</strong></a>(...)</dt><dd><tt>x.<a href="#DnacError-__delattr__">__delattr__</a>('name')&nbsp;&lt;==&gt;&nbsp;del&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="DnacError-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#DnacError-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="DnacError-__getitem__"><strong>__getitem__</strong></a>(...)</dt><dd><tt>x.<a href="#DnacError-__getitem__">__getitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;x[y]</tt></dd></dl>
+
+<dl><dt><a name="DnacError-__getslice__"><strong>__getslice__</strong></a>(...)</dt><dd><tt>x.<a href="#DnacError-__getslice__">__getslice__</a>(i,&nbsp;j)&nbsp;&lt;==&gt;&nbsp;x[i:j]<br>
+&nbsp;<br>
+Use&nbsp;of&nbsp;negative&nbsp;indices&nbsp;is&nbsp;not&nbsp;supported.</tt></dd></dl>
+
+<dl><dt><a name="DnacError-__reduce__"><strong>__reduce__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="DnacError-__repr__"><strong>__repr__</strong></a>(...)</dt><dd><tt>x.<a href="#DnacError-__repr__">__repr__</a>()&nbsp;&lt;==&gt;&nbsp;repr(x)</tt></dd></dl>
+
+<dl><dt><a name="DnacError-__setattr__"><strong>__setattr__</strong></a>(...)</dt><dd><tt>x.<a href="#DnacError-__setattr__">__setattr__</a>('name',&nbsp;value)&nbsp;&lt;==&gt;&nbsp;x.name&nbsp;=&nbsp;value</tt></dd></dl>
+
+<dl><dt><a name="DnacError-__setstate__"><strong>__setstate__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="DnacError-__str__"><strong>__str__</strong></a>(...)</dt><dd><tt>x.<a href="#DnacError-__str__">__str__</a>()&nbsp;&lt;==&gt;&nbsp;str(x)</tt></dd></dl>
+
+<dl><dt><a name="DnacError-__unicode__"><strong>__unicode__</strong></a>(...)</dt></dl>
+
+<hr>
+Data descriptors inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>args</strong></dt>
+</dl>
+<dl><dt><strong>message</strong></dt>
+</dl>
 </td></tr></table></td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#55aa55">
@@ -436,7 +454,12 @@ Usage:<br>
 <strong>DNAC_IP</strong> = '10.8.10.20'<br>
 <strong>DNAC_NAME</strong> = 'denlab-en-dnac.cisco.com'<br>
 <strong>DNAC_PASSWD</strong> = 'C!sco123'<br>
+<strong>DNAC_PATH</strong> = 'Set an FQDN or IP address for Cisco DNA Center in dnac_config.py'<br>
 <strong>DNAC_PORT</strong> = '443'<br>
 <strong>DNAC_USER</strong> = 'admin'<br>
-<strong>DNAC_VERSION</strong> = '1.2.8'</td></tr></table>
+<strong>DNAC_VERSION</strong> = '1.2.8'<br>
+<strong>NO_DNAC_PATH</strong> = 'No path to the Cisco DNA Center cluster'<br>
+<strong>SUPPORTED_DNAC_VERSIONS</strong> = ['1.2.8']<br>
+<strong>UNKNOWN_ERROR</strong> = 'Unknown error'<br>
+<strong>UNSUPPORTED_DNAC_VERSION</strong> = 'Unsupported Cisco DNA Center version'</td></tr></table>
 </body></html>
