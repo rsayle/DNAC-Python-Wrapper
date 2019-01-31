@@ -48,6 +48,7 @@ v.1.0: 31 Jan 2019
 # Roadmap
 - More enhancements to networkdevice
 - Interface class
+- Setting attributes as public, protected or private
 
 # History
 v.0.1: 21 Jan 2019
