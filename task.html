@@ -19,8 +19,7 @@
     
 <tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="json.html">json</a><br>
-</td><td width="25%" valign=top><a href="requests.html">requests</a><br>
-</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ee77aa">
 <td colspan=3 valign=bottom>&nbsp;<br>
@@ -83,7 +82,7 @@ Usage:<br>
 </dl>
 <hr>
 Methods defined here:<br>
-<dl><dt><a name="Task-__init__"><strong>__init__</strong></a>(self, dnac, name, taskId<font color="#909090">=''</font>, url<font color="#909090">=''</font>, requestFilter<font color="#909090">=''</font>, verify<font color="#909090">=False</font>, timeout<font color="#909090">=5</font>)</dt><dd><tt>__init__&nbsp;makes&nbsp;a&nbsp;new&nbsp;<a href="#Task">Task</a>&nbsp;object.&nbsp;&nbsp;An&nbsp;empty&nbsp;task&nbsp;object&nbsp;may&nbsp;be<br>
+<dl><dt><a name="Task-__init__"><strong>__init__</strong></a>(self, dnac, name, taskId<font color="#909090">=''</font>, verify<font color="#909090">=False</font>, timeout<font color="#909090">=5</font>)</dt><dd><tt>__init__&nbsp;makes&nbsp;a&nbsp;new&nbsp;<a href="#Task">Task</a>&nbsp;object.&nbsp;&nbsp;An&nbsp;empty&nbsp;task&nbsp;object&nbsp;may&nbsp;be<br>
 created&nbsp;by&nbsp;only&nbsp;passing&nbsp;a&nbsp;Dnac&nbsp;object&nbsp;and&nbsp;name&nbsp;for&nbsp;the&nbsp;task.&nbsp;&nbsp;In<br>
 this&nbsp;case,&nbsp;be&nbsp;certain&nbsp;to&nbsp;later&nbsp;set&nbsp;the&nbsp;taskId&nbsp;with&nbsp;the&nbsp;UUID&nbsp;of<br>
 a&nbsp;task&nbsp;running&nbsp;on&nbsp;Cisco&nbsp;DNAC.<br>
@@ -106,9 +105,9 @@ Parameters:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;Yes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;id:&nbsp;The&nbsp;UUID&nbsp;of&nbsp;the&nbsp;task&nbsp;running&nbsp;on&nbsp;Cisco&nbsp;DNAC.&nbsp;&nbsp;When&nbsp;included,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;included&nbsp;as&nbsp;part&nbsp;of&nbsp;calling&nbsp;__init__,&nbsp;the&nbsp;new&nbsp;object&nbsp;sets<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;its&nbsp;name&nbsp;and&nbsp;url&nbsp;based&nbsp;on&nbsp;id's&nbsp;value:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;taskId:&nbsp;The&nbsp;UUID&nbsp;of&nbsp;the&nbsp;task&nbsp;running&nbsp;on&nbsp;Cisco&nbsp;DNAC.&nbsp;&nbsp;When<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;included,&nbsp;as&nbsp;part&nbsp;of&nbsp;calling&nbsp;__init__,&nbsp;the&nbsp;new&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sets&nbsp;its&nbsp;name&nbsp;and&nbsp;url&nbsp;based&nbsp;on&nbsp;id's&nbsp;value:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;=&nbsp;"task_&lt;id&gt;"<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url&nbsp;=&nbsp;"dnac.url/self.<strong>respath</strong>/&lt;id&gt;"<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
@@ -238,21 +237,6 @@ Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;task.checkTask()<br>
 &nbsp;&nbsp;&nbsp;&nbsp;results&nbsp;=&nbsp;TaskResults(d,&nbsp;"aName",&nbsp;task.taskResultsId)</tt></dd>
 </dl>
-<dl><dt><strong>url</strong></dt>
-<dd><tt>Get&nbsp;method&nbsp;url&nbsp;returns&nbsp;the&nbsp;value&nbsp;of&nbsp;__url,&nbsp;a&nbsp;resource&nbsp;path<br>
-for&nbsp;accessing&nbsp;a&nbsp;task&nbsp;running&nbsp;on&nbsp;Cisco&nbsp;DNAC.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;The&nbsp;task's&nbsp;resource&nbsp;path.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;task&nbsp;=&nbsp;Task(d,&nbsp;"aTask",&nbsp;id=taskId)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;task.url</tt></dd>
-</dl>
 <hr>
 Data descriptors inherited from <a href="dnacapi.html#DnacApi">dnacapi.DnacApi</a>:<br>
 <dl><dt><strong>__dict__</strong></dt>
@@ -260,6 +244,24 @@ Data descriptors inherited from <a href="dnacapi.html#DnacApi">dnacapi.DnacApi</
 </dl>
 <dl><dt><strong>__weakref__</strong></dt>
 <dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>crud</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;crud&nbsp;returns&nbsp;the&nbsp;reference&nbsp;to&nbsp;the&nbsp;Crud&nbsp;object&nbsp;this&nbsp;class<br>
+uses&nbsp;to&nbsp;make&nbsp;RESTful&nbsp;API&nbsp;calls.&nbsp;&nbsp;Use&nbsp;this&nbsp;function&nbsp;in&nbsp;order&nbsp;to<br>
+access&nbsp;the&nbsp;Crud&nbsp;object's&nbsp;get,&nbsp;put,&nbsp;post&nbsp;and&nbsp;delete&nbsp;methods.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;<br>
+Return&nbsp;Values:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Crud&nbsp;object:&nbsp;The&nbsp;wrapped&nbsp;Crud&nbsp;object<br>
+&nbsp;<br>
+Usage:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;url&nbsp;=&nbsp;self.<strong>dnac</strong>.url&nbsp;+&nbsp;self.<strong>resource</strong><br>
+&nbsp;&nbsp;&nbsp;&nbsp;devices,&nbsp;status&nbsp;=&nbsp;self.<strong>crud</strong>.get(url,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;headers=self.<strong>dnac</strong>.hdrs,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verify=self.<strong>verify</strong>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;timeout=self.<strong>timeout</strong>)</tt></dd>
 </dl>
 <dl><dt><strong>dnac</strong></dt>
 <dd><tt>Get&nbsp;method&nbsp;dnac&nbsp;returns&nbsp;the&nbsp;reference&nbsp;to&nbsp;the&nbsp;Dnac&nbsp;instance&nbsp;that<br>
@@ -273,25 +275,8 @@ Return&nbsp;Values:<br>
 &nbsp;<br>
 Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;Do&nbsp;not&nbsp;create&nbsp;a&nbsp;DnacApi&nbsp;object;&nbsp;inherit&nbsp;from&nbsp;it&nbsp;instead<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dapi&nbsp;=&nbsp;DnacApi(dnac,&nbsp;name,&nbsp;respath)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dapi&nbsp;=&nbsp;DnacApi(dnac,&nbsp;name,&nbsp;resource)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dnac&nbsp;=&nbsp;dapi.dnac</tt></dd>
-</dl>
-<dl><dt><strong>filter</strong></dt>
-<dd><tt>Get&nbsp;method&nbsp;filter&nbsp;returns&nbsp;__filter,&nbsp;a&nbsp;string&nbsp;used&nbsp;to&nbsp;control<br>
-Cisco&nbsp;DNAC's&nbsp;response&nbsp;to&nbsp;the&nbsp;API&nbsp;call.&nbsp;&nbsp;Use&nbsp;the&nbsp;filter&nbsp;to&nbsp;create<br>
-a&nbsp;URL&nbsp;for&nbsp;the&nbsp;API&nbsp;call.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;A&nbsp;filter&nbsp;string.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;Do&nbsp;not&nbsp;create&nbsp;a&nbsp;DnacApi&nbsp;object;&nbsp;inherit&nbsp;from&nbsp;it&nbsp;instead<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dapi&nbsp;=&nbsp;DnacApi(d,&nbsp;name,&nbsp;respath)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;url&nbsp;=&nbsp;d.url&nbsp;+&nbsp;dapi.respath&nbsp;+&nbsp;dapi.filter</tt></dd>
 </dl>
 <dl><dt><strong>name</strong></dt>
 <dd><tt>Get&nbsp;method&nbsp;name&nbsp;returns&nbsp;__name,&nbsp;a&nbsp;user&nbsp;friendly&nbsp;name&nbsp;for&nbsp;accessing<br>
@@ -305,12 +290,12 @@ Return&nbsp;Values:<br>
 &nbsp;<br>
 Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;Do&nbsp;not&nbsp;create&nbsp;a&nbsp;DnacApi&nbsp;object;&nbsp;inherit&nbsp;from&nbsp;it&nbsp;instead<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dapi&nbsp;=&nbsp;DnacApi(dnac,&nbsp;name,&nbsp;respath)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dapi&nbsp;=&nbsp;DnacApi(dnac,&nbsp;name,&nbsp;resource)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dapi.name</tt></dd>
 </dl>
-<dl><dt><strong>respath</strong></dt>
-<dd><tt>Get&nbsp;method&nbsp;respath&nbsp;returns&nbsp;__respath,&nbsp;which&nbsp;is&nbsp;the&nbsp;API&nbsp;call&nbsp;to<br>
-Cisco&nbsp;DNAC.&nbsp;&nbsp;In&nbsp;child&nbsp;classes,&nbsp;use&nbsp;this&nbsp;method&nbsp;to&nbsp;form&nbsp;request&nbsp;by<br>
+<dl><dt><strong>resource</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;resource&nbsp;returns&nbsp;__resource,&nbsp;which&nbsp;is&nbsp;the&nbsp;API&nbsp;call&nbsp;to<br>
+Cisco&nbsp;DNAC.&nbsp;&nbsp;In&nbsp;child&nbsp;classes,&nbsp;use&nbsp;this&nbsp;method&nbsp;to&nbsp;form&nbsp;requests&nbsp;by<br>
 appending&nbsp;it&nbsp;to&nbsp;Cisco&nbsp;DNAC's&nbsp;base&nbsp;url,&nbsp;i.e.&nbsp;Dnac.url.<br>
 &nbsp;<br>
 Parameters:<br>
@@ -322,8 +307,27 @@ Return&nbsp;Values:<br>
 Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;Do&nbsp;not&nbsp;create&nbsp;a&nbsp;DnacApi&nbsp;object;&nbsp;inherit&nbsp;from&nbsp;it&nbsp;instead<br>
 &nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dapi&nbsp;=&nbsp;DnacApi(d,&nbsp;name,&nbsp;respath)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;apicall&nbsp;=&nbsp;d.url&nbsp;+&nbsp;dapi.respath</tt></dd>
+&nbsp;&nbsp;&nbsp;&nbsp;dapi&nbsp;=&nbsp;DnacApi(d,&nbsp;name,&nbsp;resource)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;apicall&nbsp;=&nbsp;d.url&nbsp;+&nbsp;dapi.resource</tt></dd>
+</dl>
+<dl><dt><strong>results</strong></dt>
+<dd><tt>The&nbsp;results&nbsp;method&nbsp;is&nbsp;decorated&nbsp;as&nbsp;if&nbsp;it&nbsp;was&nbsp;an&nbsp;attribute&nbsp;of&nbsp;this<br>
+class&nbsp;and&nbsp;can&nbsp;be&nbsp;used&nbsp;accordingly.&nbsp;&nbsp;It&nbsp;returns&nbsp;the&nbsp;raw&nbsp;results<br>
+stored&nbsp;in&nbsp;the&nbsp;class'&nbsp;Crud&nbsp;object&nbsp;obtained&nbsp;from&nbsp;an&nbsp;API&nbsp;call.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;<br>
+Return&nbsp;Values:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;The&nbsp;results&nbsp;of&nbsp;the&nbsp;API&nbsp;call.<br>
+&nbsp;<br>
+Usage:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;CommandRunner&nbsp;is&nbsp;a&nbsp;DnacApi<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cmd&nbsp;=&nbsp;CommandRunner('running-config')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cmd.formatCmd('&lt;uuid&gt;',&nbsp;'show&nbsp;run')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cmd.runSync()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;str(cmd.results)</tt></dd>
 </dl>
 <dl><dt><strong>timeout</strong></dt>
 <dd><tt>Get&nbsp;method&nbsp;timeout&nbsp;returns&nbsp;the&nbsp;value&nbsp;of&nbsp;attribute&nbsp;__timeout.&nbsp;&nbsp;The<br>
@@ -337,7 +341,7 @@ Return&nbsp;Values:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;int:&nbsp;time&nbsp;to&nbsp;wait&nbsp;in&nbsp;seconds&nbsp;for&nbsp;a&nbsp;response<br>
 &nbsp;<br>
 Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dapi&nbsp;=&nbsp;DnacApi(dnac,&nbsp;name,&nbsp;respath)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dapi&nbsp;=&nbsp;DnacApi(dnac,&nbsp;name,&nbsp;resource)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dapi.timeout</tt></dd>
 </dl>
 <dl><dt><strong>verify</strong></dt>
@@ -353,7 +357,7 @@ Return&nbsp;Values:<br>
 &nbsp;<br>
 Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;Do&nbsp;not&nbsp;create&nbsp;a&nbsp;DnacApi&nbsp;object;&nbsp;inherit&nbsp;from&nbsp;it&nbsp;instead<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dapi&nbsp;=&nbsp;DnacApi(d,&nbsp;name,&nbsp;respath)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dapi&nbsp;=&nbsp;DnacApi(d,&nbsp;name,&nbsp;resource)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dapi.verify</tt></dd>
 </dl>
 </td></tr></table></td></tr></table><p>
@@ -363,6 +367,11 @@ Usage:<br>
 <font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
     
 <tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><strong>TASK_CREATION</strong> = 'CLI Runner request creation'<br>
-<strong>TASK_EMPTY</strong> = ''</td></tr></table>
+<td width="100%"><strong>ERROR_MSGS</strong> = {'400': '400 - API request syntax is malformed', '401': '401 - API request has missing or invalid credentials', '403': '403 - API request is unauthorized', '404': '404 - API requested resource does not exist', '409': '409 - API requested resource is in a conflicted state', '415': '415 - API request body is in an unsupported format', '500': '500 - Server could not fulfill the API request', '501': '501 - Server has not implemented the requested function', '503': '503 - Server is unavailable', '504': '504 - Server did not respond before request timed-out'}<br>
+<strong>OK</strong> = '200'<br>
+<strong>REQUEST_NOT_OK</strong> = 'API request is not OK'<br>
+<strong>SUPPORTED_DNAC_VERSIONS</strong> = ['1.2.8']<br>
+<strong>TASK_CREATION</strong> = 'CLI Runner request creation'<br>
+<strong>TASK_EMPTY</strong> = ''<br>
+<strong>UNSUPPORTED_DNAC_VERSION</strong> = 'Unsupported Cisco DNA Center version'</td></tr></table>
 </body></html>

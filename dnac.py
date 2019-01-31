@@ -11,6 +11,52 @@ from dnac_config import DNAC_NAME, \
                         DNAC_PASSWD, \
                         DNAC_CONTENT_TYPE
 
+## globals
+
+SUPPORTED_DNAC_VERSIONS=["1.2.8"]
+
+## Dnac errors
+UNKNOWN_ERROR="Unknown error"
+UNSUPPORTED_DNAC_VERSION="Unsupported Cisco DNA Center version"
+NO_DNAC_PATH="No path to the Cisco DNA Center cluster"
+DNAC_PATH="Set an FQDN or IP address for Cisco DNA Center in dnac_config.py"
+
+## Dnac exception class - all others inherit from this one
+
+class DnacError(Exception):
+    '''
+    DnacError is an exception class for any errors specific to setting
+    up and maintaining a connection with a Cisco DNA Center cluster.
+
+    Attributes:
+        None
+    '''
+    def __init__(self, msg):
+        '''
+        DnacError's __init__ method passes a message to its parent class.
+
+        Parameters:
+            msg: An error message indicating the problem.  Current values
+                 include:
+                    UNKNOWN_ERROR="Unknown error"
+                    UNSUPPORTED_DNAC_VERSION="Unsupported Cisco DNA
+                                              Center version"
+
+        Return Values:
+            DnacError object: the new exception.
+
+        Usage:
+            if version in SUPPORTED_DNAC_VERSIONS:
+                self.__version = version
+            else:
+                raise DnacError(
+                    UNSUPPORTED_DNAC_VERSION + ": %s" % version
+                               )
+        '''
+        super(DnacError, self).__init__(msg)
+
+## end class DnacError()
+
 class Dnac(object):
     '''
     The Dnac class simplifies making API calls to a Cisco DNA Center
@@ -139,7 +185,14 @@ class Dnac(object):
             d = Dnac()
             newD = Dnac(user="operator", passwd="l3tm3in!"
         '''
-        self.__version = version
+
+        if version in SUPPORTED_DNAC_VERSIONS:
+            self.__version = version
+        else:
+            raise DnacError(
+                UNSUPPORTED_DNAC_VERSION + ": %s" % version
+                           )
+
         self.__name = name
         self.__ip = ip
         self.__port = port
@@ -150,7 +203,9 @@ class Dnac(object):
         self.__xauth = XAuthToken(self.url, \
                                   self.__bauth, \
                                   contentType=self.__ctype)
+        # get an authorization token for all API calls
         self.__xauth.getToken()
+        # create the store for all API instances
         self.__api = {}
 
 ## end __init__()
@@ -571,100 +626,6 @@ class Dnac(object):
 
 ## end api setter
 
-    def addApi(self, name, api):
-        '''
-        Class method addApi places a DnacApi object into Dnac's api store.
-        DnacApi uses this method to automatically add itself to Dnac.
-
-        Parameters:
-            name:
-                type: str
-                default: None
-                required: Yes
-            api:
-                type: DnacApi object
-                default: None
-                required: Yes
-
-        Return Values:
-            None
-
-        Usage:
-            d = Dnac()
-            nd = NetworkDevice(d, "nd")
-            newD = Dnac()
-            new.addApi("nd", newD)
-        '''
-        self.__api[name] = api
-
-## end addApi()
-
-    def deleteApi(self, name):
-        '''
-        The deleteApi method removes and destroys the named DnacApi.
-
-        Parameters:
-            name:
-                type: str
-                default: None
-                required: yes
-
-        Return Values:
-            None
-
-        Usage:
-            d = Dnac()
-            nd = NetworkDevice(d, "nd")
-            d.deleteApi("nd")
-        '''
-        del self.__api[name]
-
-## end deleteApi()
-
-    def deleteAllApis(self):
-        '''
-        deleteAllApis clears Dnac's api dictionary and destroys all of
-        its elements.
-
-        Parameters:
-            None
-
-        Return Values:
-            None
-
-        Usage:
-            d = Dnac()
-            nd = NetworkDevice(d, "nd")
-            d.deleteAllApis()
-        '''
-        self.__api.clear()
-
-## end deleteAllApis()
-
-    def isInApi(self, name):
-        '''
-        Method isInApi checks so see if the named API is located in Dnac's
-        api store.
-
-        Parameters:
-            name:
-                type: str
-                default: None
-                required: Yes
-
-        Return Values:
-            bool: True if the name matches an API's name; otherwise, False.
-
-        Usage:
-            d = Dnac()
-            nd = NetworkDevice(d, "nd")
-            if isInApi("nd"):
-                print "It's in there!"
-        '''
-        return name in self.__api
-
-## end isInApi()
-
     @property
     def url(self):
         '''
@@ -689,21 +650,14 @@ class Dnac(object):
             url = d.url
         '''
         # prefer FQDN over IP address
-        if self.name != "":
-            u = "https://" + \
-                self.name + \
-                ":" + \
-                str(self.port)
-            return u
-        elif self.ip != "":
-            u = "https://" + \
-                self.ip + \
-                ":" + \
-                str(self.port)
-            return u
-        else:
-            # rewrite to throw an exception
-            return ""
+        if bool(self.name): # FQDN is set
+            return "https://%s:%s" % (self.name, self.port)
+        elif bool(self.ip): # IP address is set
+            return "https://%s:%s" % (self.ip, self.port)
+        else: # no way to reach DNA Center
+            raise DnacError(
+                "%s: %s: %s: %s" % (MODULE, "url", NO_DNAC_PATH, DNAC_PATH)
+                           )
 
 ## end url()
 
@@ -750,7 +704,7 @@ class Dnac(object):
             d = Dnac()
             headers = d.headers
         '''
-        h={}
+        h = {}
         h.update(self.__ctype.hdrs)
         h.update(self.__xauth.hdrs)
         return h
@@ -801,10 +755,10 @@ if  __name__ == '__main__':
     from networkdevice import NetworkDevice
 
     nd = NetworkDevice(d, "network-device")
-    d.addApi(nd.name, nd)
+    d.api[nd.name] = nd
 
-    print "  isInApi['network-device'] = " + str(d.isInApi(nd.name))
-    print "  api['network-device']     = " + str(d.api[nd.name])
+    print "  is in api             = " + str(nd.name in d.api)
+    print "  api['network-device'] = " + str(d.api[nd.name])
     print
 
     print "Using network-device API..."
@@ -817,8 +771,27 @@ if  __name__ == '__main__':
 
     print "Clearing all APIs..."
     
-    d.deleteAllApis()
+    d.api.clear()
 
     print
     print "  api = " + str(d.api)
     print
+
+    print "Testing exceptions..."
+    
+    def raiseDnacError(msg):
+        raise DnacError(msg)
+
+    eMsgs = [UNKNOWN_ERROR,
+             NO_DNAC_PATH,
+             DNAC_PATH] 
+    
+    for msg in eMsgs:
+        try:
+            raiseDnacError(msg)
+        except DnacError, e:
+            print str(type(e)) + " = " + str(e)
+
+    print
+    print "Dnac unit test complete."
+

@@ -1,16 +1,20 @@
 #!/usr/bin/env python
 
-from dnacapi import DnacApi
+from dnac import DnacError, \
+                 SUPPORTED_DNAC_VERSIONS, \
+                 UNSUPPORTED_DNAC_VERSION
+from dnacapi import DnacApi, \
+                    DnacApiError
+from crud import OK, \
+                 REQUEST_NOT_OK, \
+                 ERROR_MSGS
 from taskresults import TaskResults
-import requests
 import json
 
 ## module globals
 
-#Used when no task has been created in Cisco DNA Center.
+# task states
 TASK_EMPTY=""
-
-#Used when Cisco DNA Center is preparing the task to run.
 TASK_CREATION="CLI Runner request creation"
 
 ## end module globals
@@ -53,12 +57,10 @@ class Task(DnacApi):
     '''
 
     def __init__(self,
-                 dnac, \
-                 name, \
-                 taskId = "", \
-                 url="", \
-                 requestFilter="", \
-                 verify=False, \
+                 dnac,
+                 name,
+                 taskId = "",
+                 verify=False,
                  timeout=5):
         '''
         __init__ makes a new Task object.  An empty task object may be
@@ -84,9 +86,9 @@ class Task(DnacApi):
                 type: str
                 default: None
                 required: Yes
-            id: The UUID of the task running on Cisco DNAC.  When included,
-                included as part of calling __init__, the new object sets
-                its name and url based on id's value:
+            taskId: The UUID of the task running on Cisco DNAC.  When
+                    included, as part of calling __init__, the new object
+                    sets its name and url based on id's value:
                     name = "task_<id>"
                     url = "dnac.url/self.respath/<id>"
                 type: str
@@ -119,27 +121,28 @@ class Task(DnacApi):
             newId = <another task ID from Cisco DNAC>
             newTask = Task(d, "aNewName", newId)
         '''
-
-        if dnac.version <= "1.2.8":
-            self.__respath = "/api/v1/task"
+        # check Cisco DNA Center's version and set the resourece path
+        if dnac.version in SUPPORTED_DNAC_VERSIONS:
+            path = "/api/v1/task"
         else:
-            # rewrite this to throw an exception
-            print "Unsupported version of Cisco DNAC: " + dnac.version
-
+            raise DnacError(
+                "__init__: %s: %s" %
+                (UNSUPPORTED_DNAC_VERSION, dnac.version)
+                           )
+        # setup the attributes
         self.__id = taskId
-        self.__url = url
         self.__progress = TASK_EMPTY
-        self.__taskResults = None
+        self.__taskResults = {}
         self.__taskResultsId = ""
-        super(Task, self).__init__(dnac, \
-                                   name, \
-                                   resourcePath=self.__respath, \
-                                   requestFilter=requestFilter, \
-                                   verify=verify, \
+        if bool(self.__id): # ID is not empty
+            # update name based on the ID
+            name = "task_" + self.__id
+        super(Task, self).__init__(dnac,
+                                   name,
+                                   verify=verify,
                                    timeout=timeout)
-        if self.__id != "":
-            self.name = "task_" + self.__id
-            self.__url = self.respath + "/" + self.__id
+        # update the resource path
+        self.resource = path
 
 ## end __init__()
 
@@ -170,7 +173,7 @@ class Task(DnacApi):
         The id set method changes attribute __id to the task UUID passed,
         and it changes the name and url attributes to include the new id.
             task.name = "task_<id>"
-            task.url = "respath/<id>"
+            task.url = "resource/<id>"
 
         Parameters:
             id: str
@@ -188,61 +191,8 @@ class Task(DnacApi):
         '''
         self.__id = id
         self.name = "task_" + self.__id
-        self.url = self.respath + "/" + self.__id
 
 ## end id setter
-
-    @property
-    def url(self):
-        '''
-        Get method url returns the value of __url, a resource path
-        for accessing a task running on Cisco DNAC.
-
-        Parameters:
-            None
-
-        Return Values:
-            str: The task's resource path.
-
-        Usage:
-            d = Dnac()
-            task = Task(d, "aTask", id=taskId)
-            task.url
-        '''
-        return self.__url
-
-## end url getter
-
-    @url.setter
-    def url(self, url):
-        '''
-        Set method url changes attribute __url to the value passed.  In
-        response to an API call that creates a task center such as running 
-        a command, Cisco DNA Center responds with a task ID and a URL.  The
-        URL is a resource path to the task with its ID pre-appended.
-        Use the URL as this method's parameter.  __url is updated to the
-        value passed, and the function extracts the task ID and updates
-        the object's __id accordingly.
-
-        Parameters:
-            url: str
-            default: None
-            required: Yes
-
-        Return Values:
-            None
-
-        Usage:
-            d = Dnac()
-            url = "/api/v1/task/<taskId>"
-            task = Task(d, "aTask")
-            task.url = url
-        '''
-        self.__url = url
-        pathElts = url.split("/")
-        self.__id = pathElts[ len(pathElts) - 1 ]
-
-## end url setter
 
     @property 
     def progress(self):
@@ -422,33 +372,30 @@ class Task(DnacApi):
             task = Task(d, "aTask", "aTaskId")
             task.checkTask()
         '''
-        url = self.dnac.url + self.url + self.filter
-        hdrs = self.dnac.hdrs
-        resp = requests.request("GET", \
-                                url, \
-                                headers=hdrs, \
-                                verify=self.verify, \
-                                timeout=self.timeout)
-        if resp.status_code != requests.codes.ok:
-            print "Failed to check task " + \
-                  self.id + \
-                  " with status code: " + \
-                  str(resp.status_code)
-        else:
-            self.__progress = json.loads(resp.text)['response']['progress']
-            if self.__progress != TASK_CREATION:
-                # task completed
-                # get the fileId in the progress dict
-                self.__taskResultsId = \
-                    json.loads(self.__progress)['fileId']
-                # create the task results
-                self.__taskResults = TaskResults(self.dnac, \
-                                                 "taskResults_", \
-                                                 id=self.__taskResultsId)
-                # retrieve the results, which are automatically saved in
-                # the taskReaults' __results attribute
-                self.__taskResults.getResults()
-            return self.__progress
+        url = self.dnac.url + self.resource + ("/%s" % self.id)
+        results, status = self.crud.get(url,
+                                        headers=self.dnac.hdrs,
+                                        verify=self.verify,
+                                        timeout=self.timeout)
+        if status != OK:
+            raise DnacApiError(
+                MODULE, "checkTask", REQUEST_NOT_OK, url,
+                OK, status, ERROR_MSGS[status], str(results)
+                              )
+        
+        self.__progress = results['response']['progress']
+        if self.__progress != TASK_CREATION:
+            # task completed - get the fileId in the progress dict
+            self.__progress = json.loads(self.__progress)
+            self.__taskResultsId = self.__progress['fileId']
+            # create the task results
+            self.__taskResults = TaskResults(self.dnac, \
+                                             "taskResults_", \
+                                             id=self.__taskResultsId)
+            # retrieve the results, which are automatically saved in
+            # taskReaults' __results attribute
+            self.__taskResults.getResults()
+        return self.__progress
                   
 ## end checkTask()
 
@@ -465,42 +412,38 @@ if  __name__ == '__main__':
 
     print "Task:"
     print
-    print "  dnac          = " + str(type(t.dnac))
-    print "  name          = " + t.name
-    print "  id            = " + t.id
-    print "  url           = " + t.url
-    print "  respath       = " + t.respath
-    print "  filter        = " + t.filter
-    print "  verify        = " + str(t.verify)
-    print "  timeout       = " + str(t.timeout)
-    print "  taskResultsId = " + t.taskResultsId
-    print "  taskResults   = " + str(t.taskResults)
+    print "  dnac           = " + str(type(t.dnac))
+    print "  name           = " + t.name
+    print "  id             = " + t.id
+    print "  verify         = " + str(t.verify)
+    print "  timeout        = " + str(t.timeout)
+    print "  taskResultsId  = " + t.taskResultsId
+    print "  taskResults    = " + str(t.taskResults)
     print
-    print "Checking task 6e9e1261-f088-4e9c-b2a0-8f006c682694..."
+    print "Checking task e749f5ce-ef1c-473f-bee3-aa370411975b..."
     print
     
-    t.id = "6e9e1261-f088-4e9c-b2a0-8f006c682694"
+    t.id = "e749f5ce-ef1c-473f-bee3-aa370411975b"
     progress = t.checkTask()
 
-    print "  name          = " + t.name
-    print "  id            = " + t.id
-    print "  url           = " + t.url
-    print "  taskResultsId = " + t.taskResultsId
-    print "  taskResultsUrl = " + t.taskResults.url
-    print "  taskResults   = " + str(t.taskResults)
-    print "  taskResults   = " + str(t.taskResults.getResults())
+    print "  name           = " + t.name
+    print "  id             = " + t.id
+    print "  taskResultsId  = " + t.taskResultsId
+    print "  taskResults    = " + str(t.taskResults)
+    print "  taskResults    = " + str(t.taskResults.getResults())
     print
-    print "Checking task /api/v1/task/7d8cb348-c41e-4565-a733-5df4cb91805a"
+    print "Checking task 8fabdd1e-6989-4e60-9be7-6bd7b42907f9..."
     print
 
-    t.url = "/api/v1/task/7d8cb348-c41e-4565-a733-5df4cb91805a"
+    t = Task(d, "task", "8fabdd1e-6989-4e60-9be7-6bd7b42907f9")
     progress = t.checkTask()
 
-    print "  name          = " + t.name
-    print "  id            = " + t.id
-    print "  url           = " + t.url
-    print "  taskResultsId = " + t.taskResultsId
-    print "  taskResultsUrl = " + t.taskResults.url
-    print "  taskResults   = " + str(t.taskResults)
-    print "  taskResults   = " + str(t.taskResults.getResults())
+    print "  name           = " + t.name
+    print "  id             = " + t.id
+    print "  taskResultsId  = " + t.taskResultsId
+    print "  taskResults    = " + str(t.taskResults)
+    print "  taskResults    = " + str(t.taskResults.getResults())
     print
+    print "Task: unit test complete."
+    print
+

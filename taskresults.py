@@ -1,8 +1,15 @@
 #/usr/bin/env python
 
-from dnacapi import DnacApi
-import requests
-import json
+from dnac import DnacError, \
+                 SUPPORTED_DNAC_VERSIONS, \
+                 UNSUPPORTED_DNAC_VERSION
+from dnacapi import DnacApi, \
+                    DnacApiError
+from crud import OK, \
+                 REQUEST_NOT_OK, \
+                 ERROR_MSGS
+
+MODULE="taskresults.py"
 
 class TaskResults(DnacApi):
     '''
@@ -31,11 +38,10 @@ class TaskResults(DnacApi):
     '''
 
     def __init__(self,
-                 dnac, \
-                 name, \
-                 id = "", \
-                 requestFilter="", \
-                 verify=False, \
+                 dnac,
+                 name,
+                 id = "",
+                 verify=False,
                  timeout=5):
         '''
         Class method __init__ creates a new TaskResults instance.  When
@@ -62,11 +68,6 @@ class TaskResults(DnacApi):
                 type: str
                 default: None
                 required: No
-            requestFilter: An expression for filtering Cisco DNAC's
-                           response.
-                type: str
-                default: None
-                required: No
             verify: A flag used to check Cisco DNAC's certificate.
                 type: boolean
                 default: False
@@ -87,21 +88,22 @@ class TaskResults(DnacApi):
             emptyResults = TaskResults(d, name)
             realResults = TaskResults(d, name, id)
         '''
-        if dnac.version <= "1.2.8":
-            self.__respath = "/api/v1/file"
+
+        # check Cisco DNA Center's version and set the resourece path
+        if dnac.version in SUPPORTED_DNAC_VERSIONS:
+            path  = "/api/v1/file"
         else:
-            # rewrite this to throw an exception
-            print "Unsupported version of Cisco DNAC: " + dnac.version
-
+            raise DnacError(
+                "__init__: %s: %s" %
+                (UNSUPPORTED_DNAC_VERSION, dnac.version)
+                            )
+        # setup the attributes
         self.__id = id # use the fileId in the task's progress
-        self.__results = []
-        self.__url = self.__respath + "/" + self.__id
-
-        super(TaskResults, self).__init__(dnac, \
-                                          name, \
-                                          resourcePath=self.__respath, \
-                                          requestFilter=requestFilter, \
-                                          verify=verify, \
+        self.__results = [] # raw data in case further processing needed
+        super(TaskResults, self).__init__(dnac,
+                                          name,
+                                          resource=path,
+                                          verify=verify,
                                           timeout=timeout)
 
 ## end __init__()
@@ -154,7 +156,6 @@ class TaskResults(DnacApi):
         '''
         self.__id = id
         self.name = "results_" + self.__id
-        self.__url = self.respath + "/" + self.__id
 
 ## end id setter
 
@@ -209,54 +210,6 @@ class TaskResults(DnacApi):
 
 ## end id setter
 
-    @property
-    def url(self):
-        '''
-        Get method url returns the object's __url value.
-
-        Parameters:
-            None
-
-        Return Values:
-            url: A url that can be used to retrieve the task results.
-
-        Usage:
-            d = Dnac()
-            task = Task(d, "aTask")
-            task.checkTask()
-            # task.taskResults below is a TaskResults object
-            url = task.taskResults.url
-        '''
-        return self.__url
-
-## end url getter
-
-    @url.setter
-    def url(self, url):
-        '''
-        Set method url changes the object's __url attribute to the given
-        value.
-
-        Parameters:
-            url: str
-            default: None
-            required: Yes
-
-        Return Values:
-            None
-
-        Usage:
-            d = Dnac()
-            task = Task(d, "aTask")
-            url = "/a/url/to/a/fileId"
-            # Not a realistic example but here it is anyway
-            # Remember: taskResults are TaskResults objects in Task()
-            task.taskResults.url = url
-        '''
-        self.__url = url
-
-## end id setter
-
     def getResults(self):
         '''
         getResults makes an API call to Cisco DNA Center and retrieves the
@@ -276,22 +229,18 @@ class TaskResults(DnacApi):
             # task.taskResults below is a TaskResults object
             results = task.TaskResults.getResults()
         '''
-        url = self.dnac.url + self.url + self.filter
-        print url
-        hdrs = self.dnac.hdrs
-        resp = requests.request("GET", \
-                                url, \
-                                headers=hdrs, \
-                                verify=self.verify, \
-                                timeout=self.timeout)
-        if resp.status_code != requests.codes.ok:
-            print "Failed to get results from file " + \
-                  self.id + \
-                  " with status code: " + \
-                  str(resp.status_code)
-        else:
-            self.__results = json.loads(resp.text)
-            return self.__results
+        url = self.dnac.url + self.resource + ("/%s" % self.id)
+        results, status = self.crud.get(url,
+                                        headers=self.dnac.hdrs,
+                                        verify=self.verify,
+                                        timeout=self.timeout)
+        if status != OK:
+            raise DnacApiError(
+                MODULE, "getResults", REQUEST_NOT_OK, url,
+                OK, status, ERROR_MSGS[status], str(results)
+                              )
+        self.__results = results
+        return self.__results
 
 ## end getResults()
 
@@ -311,10 +260,7 @@ if  __name__ == '__main__':
     print "  dnac    = " + str(r.dnac)
     print "  name    = " + r.name
     print "  id      = " + r.id
-    print "  url     = " + r.url
     print "  results = " + str(r.results)
-    print "  respath = " + r.respath
-    print "  filter  = " + r.filter
     print "  verify  = " + str(r.verify)
     print "  timeout = " + str(r.timeout)
     print
@@ -326,10 +272,7 @@ if  __name__ == '__main__':
     print "  dnac    = " + str(r.dnac)
     print "  name    = " + r.name
     print "  id      = " + r.id
-    print "  url     = " + r.url
     print "  results = " + str(r.results)
-    print "  respath = " + r.respath
-    print "  filter  = " + r.filter
     print "  verify  = " + str(r.verify)
     print "  timeout = " + str(r.timeout)
     print
@@ -342,15 +285,13 @@ if  __name__ == '__main__':
     print "  dnac    = " + str(r.dnac)
     print "  name    = " + r.name
     print "  id      = " + r.id
-    print "  url     = " + r.url
     print "  results = " + str(type(r.results))
     print "  results = " + str(r.results)
     print "  res     = " + str(type(res))
     print "  res     = " + str(res)
-    print "  respath = " + r.respath
-    print "  filter  = " + r.filter
     print "  verify  = " + str(r.verify)
     print "  timeout = " + str(r.timeout)
     print
-
+    print "TaskResults: unit test complete."
+    print
 

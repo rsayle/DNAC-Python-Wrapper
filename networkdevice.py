@@ -1,8 +1,19 @@
 #!/usr/bin/env python
 
-from dnacapi import DnacApi
-import requests
-import json
+from dnac import DnacError, \
+                 SUPPORTED_DNAC_VERSIONS, \
+                 UNSUPPORTED_DNAC_VERSION
+from dnacapi import DnacApi, \
+                    DnacApiError
+from crud import OK, \
+                 REQUEST_NOT_OK, \
+                 ERROR_MSGS
+
+MODULE="networkdevice.py"
+
+# error messages
+NO_DEVICES="API response list is empty"
+CHECK_HOSTNAME="Check the hostname"
 
 class NetworkDevice(DnacApi):
     '''
@@ -15,8 +26,8 @@ class NetworkDevice(DnacApi):
     management.
 
     NetworkDevice automatically sets the resource path for the network-
-    device API call based upon the version of Cisco DNA Center indicated in
-    the Dnac object.  Edit the configuration file dnac_config.py and
+    device API call based upon the version of Cisco DNA Center indicated
+    in the Dnac object.  Edit the configuration file dnac_config.py and
     set DNAC_VERSION to the version of Cisco DNA Center being used.
 
     To use this class, instantiate a new object with a name and place it
@@ -28,20 +39,44 @@ class NetworkDevice(DnacApi):
     NetworkDevice's methods simplify processing a response by stripping
     the initial dict and returning the data listing.
 
+    Attributes:
+        dnac:
+            Dnac object: A reference to the Dnac instance that contains
+                         a NetworkDevice object
+            default: None
+        name:
+            str: A user friendly name for the NetworkDevice object and is
+                 used as a key for finding it in a Dnac.api attribute.
+            default: None
+        devices:
+            list or dict: The results returned by making an API call.
+            default: None
+        vlans:
+            list: The results returned when making an API call that
+                  specifically asks for VLAN information from a device.
+            default: []
+        verify: Flag indicating whether or not the request should verify
+                Cisco DNAC's certificate.
+            type: boolean
+            default: False
+        timeout: The number of seconds the request for a token should wait
+                 before assuming Cisco DNAC is unavailable.
+            type: int
+            default: 5
+
     Usage:
         d = Dnac()
         nd = NetworkDevice(d, "network-device")
-        d.addApi(nd.name, nd)
+        d.api[nd.name] = nd
         devices = d.api['network-device'].getAllDevices()
         for device in devices:
             print device['hostname']
     '''
 
-    def __init__(self, \
-                 dnac, \
-                 name, \
-                 requestFilter="", \
-                 verify=False, \
+    def __init__(self,
+                 dnac,
+                 name,
+                 verify=False,
                  timeout=5):
         '''
         The __init__ class method instantiates a new NetworkDevice object.
@@ -59,15 +94,6 @@ class NetworkDevice(DnacApi):
                 type: str
                 default: None
                 required: Yes
-            requestFilter: An expression for filtering Cisco DNAC's
-                           response.  The NetworkDevice methods already
-                           set the request filter as necessary to execute
-                           their intended function; however, this can be
-                           used for customizing calls not delivered in this
-                           implementation.
-                type: str
-                default: None
-                required: No
             verify: A flag used to check Cisco DNAC's certificate.
                 type: boolean
                 default: False
@@ -85,18 +111,21 @@ class NetworkDevice(DnacApi):
             nd = NetworkDevice(d, "network-device")
         '''
 
-        if dnac.version <= "1.2.8":
-            self.__respath = "/dna/intent/api/v1/network-device"
+        if dnac.version in SUPPORTED_DNAC_VERSIONS:
+            path = "/dna/intent/api/v1/network-device"
         else:
-            # rewrite this to raise an exception
-            print "Unsupported version of Cisco DNAC: " + dnac.version
-
-        super(NetworkDevice, self).__init__(dnac, \
-                                            name, \
-                                            resourcePath=self.__respath, \
-                                            requestFilter=requestFilter, \
-                                            verify=verify, \
+            raise DnacError(
+                "__init__: %s: %s" %
+                (UNSUPPORTED_DNAC_VERSION, dnac.version)
+                           )
+        self.__devices = None # API returns list or dict based on the call
+        self.__vlans = []
+        super(NetworkDevice, self).__init__(dnac,
+                                            name,
+                                            resource=path,
+                                            verify=verify,
                                             timeout=timeout)
+
 ## end __init__()
 
     def getAllDevices(self):
@@ -114,23 +143,23 @@ class NetworkDevice(DnacApi):
         Usage:
             d = Dnac()
             nd = NetworkDevice(d, "network-device")
-            d.addApi(nd.name, nd)
+            d.api[nd.name] = nd
             devices = d.api['network-device'].getAllDevices()
             for device in devices:
                 print device['hostname']
         '''
-        url = self.dnac.url + self.respath + self.filter
-        hdrs = self.dnac.hdrs
-        resp = requests.request("GET", \
-                                url, \
-                                headers=hdrs, \
-                                verify=self.verify, \
-                                timeout=self.timeout)
-        if resp.status_code != requests.codes.ok:
-            print "Failed to get all devices from Cisco DNAC: " + \
-                  str(resp.status_code)
-        else:
-            return json.loads(resp.text)['response']
+        url = self.dnac.url + self.resource
+        devices, status = self.crud.get(url,
+                                        headers=self.dnac.hdrs,
+                                        verify=self.verify,
+                                        timeout=self.timeout)
+        if status != OK:
+            raise DnacApiError(
+                MODULE, "getAllDevices", REQUEST_NOT_OK, url,
+                OK, status, ERROR_MSGS[status], str(results)
+                              )
+        self.__devices = devices['response']
+        return self.__devices
 
 ## end getAllDevices()
 
@@ -149,25 +178,23 @@ class NetworkDevice(DnacApi):
         Usage:
             d = Dnac()
             nd = NetworkDevice(d, "network-device")
-            d.addApi(nd.name, nd)
+            d.api[nd.name] = nd
             uuid = '84e4b133-2668-4705-8163-5694c84e78fb'
             device = d.api['network-device'].getDeviceById(uuid)
             print str(device)
         '''
-        url = self.dnac.url + self.respath + id
-        if self.filter != "":
-            url = url + "/" + self.filter
-        hdrs = self.dnac.hdrs
-        resp = requests.request("GET", \
-                                url, \
-                                headers=hdrs, \
-                                verify=self.verify, \
-                                timeout=self.timeout)
-        if resp.status_code != requests.codes.ok:
-            print "Failed to get device " + id + "from Cisco DNAC: " + \
-                  str(resp.status_code)
-        else:
-            return json.loads(resp.text)['response']
+        url = self.dnac.url + self.resource + ("/%s" % id)
+        devices, status = self.crud.get(url,
+                                        headers=self.dnac.hdrs,
+                                        verify=self.verify,
+                                        timeout=self.timeout)
+        if status != OK:
+            raise DnacApiError(
+                MODULE, "getDeviceById", REQUEST_NOT_OK, url,
+                OK, status, ERROR_MSGS[status], str(results)
+                              )
+        self.__devices = devices['response']
+        return self.__devices
 
 ## end getDeviceById()
 
@@ -186,26 +213,55 @@ class NetworkDevice(DnacApi):
         Usage:
             d = Dnac()
             nd = NetworkDevice(d, "network-device")
-            d.addApi(nd.name, nd)
+            d.api[nd.name] =  nd
             name = "DC1-A3850.cisco.com"
             device = d.api['network-device'].getDeviceByName(name)
             print str(device)
         '''
-        filter = "?hostname=" + name
-        url = self.dnac.url + self.respath + filter
-        hdrs = self.dnac.hdrs
-        resp = requests.request("GET", \
-                                url, \
-                                headers=hdrs, \
-                                verify=self.verify, \
-                                timeout=self.timeout)
-        if resp.status_code != requests.codes.ok:
-            print "Failed to get " + name + " from Cisco DNAC: " + \
-                  str(resp.status_code)
-        else:
-            return json.loads(resp.text)['response']
+        hostfilter = "?hostname=" + name
+        url = self.dnac.url + self.resource + hostfilter
+        devices, status = self.crud.get(url,
+                                        headers=self.dnac.hdrs,
+                                        verify=self.verify,
+                                        timeout=self.timeout)
+        if status != OK:
+            raise DnacApiError(
+                MODULE, "getDeviceByName", REQUEST_NOT_OK, url,
+                OK, status, ERROR_MSGS[status], str(results)
+                              )
+        if not devices['response']: # device list is empty
+            raise DnacApiError(
+                MODULE, "getDeviceByName", NO_DEVICES, url,
+                "", str(devices['response']), "", CHECK_HOSTNAME
+                              )
+        self.__devices = devices['response'][0]
+        return self.__devices
 
 ## end getDeviceByName()
+
+    def getIdByDeviceName(self, name):
+        '''
+        Method getIdByDeviceName finds a device in Cisco DNA Center by
+        its hostname and returns its UUID.
+
+        Parameters:
+            name: str
+                default: None
+                required: Yes
+
+        Return Values:
+            str: The device's UUID in Cisco DNAC.
+
+        Usage:
+            d = Dnac()
+            nd = NetworkDevice(d, "network-device")
+            id = d.api['network-device'].getIdByDeviceName("R1")
+            print id
+        '''
+        device = self.getDeviceByName(name)
+        return device['id']
+
+## end getDeviceIdByName()
 
     def getDeviceByIp(self, ip):
         '''
@@ -223,26 +279,136 @@ class NetworkDevice(DnacApi):
         Usage:
             d = Dnac()
             nd = NetworkDevice(d, "network-device")
-            d.addApi(nd.name, nd)
             ip = "10.255.1.10"
             device = d.api['network-device'].getDeviceByIp(ip)
             print str(device)
         '''
-        filter = "?managementIpAddress=" + ip
-        url = self.dnac.url + self.respath + filter
-        hdrs = self.dnac.hdrs
-        resp = requests.request("GET", \
-                                url, \
-                                headers=hdrs, \
-                                verify=self.verify, \
-                                timeout=self.timeout)
-        if resp.status_code != requests.codes.ok:
-            print "Failed to get " + ip + " from Cisco DNAC: " + \
-                  str(resp.status_code)
-        else:
-            return json.loads(resp.text)['response']
+        url = self.dnac.url + self.resource + \
+            ("?managementIpAddress=%s" % ip)
+        devices, status = self.crud.get(url,
+                                        headers=self.dnac.hdrs,
+                                        verify=self.verify,
+                                        timeout=self.timeout)
+        if status != OK:
+            raise DnacApiError(
+                MODULE, "getDeviceByIp", REQUEST_NOT_OK, url,
+                OK, status, ERROR_MSGS[status], str(results)
+                              )
+        self.__devices = devices['response'][0]
+        return self.__devices
 
-## end get DeviceByIp()
+## end getDeviceByIp()
+
+    def getVlansByDeviceId(self, id):
+        '''
+        getVlansByDeviceId obtains the list of VLANs configured on the 
+        device given by its UUID.
+
+        Parameters:
+            id : str
+                default: None
+                Required: Yes
+
+        Return Values:
+            list: The list of VLANs on the network device.
+
+        Usage:
+            d = Dnac()
+            nd = NetworkDevice(d, "network-device")
+            id = "a0116157-3a02-4b8d-ad89-45f45ecad5da"
+            vlans = d.api['network-device'].getVlansByDeviceId(id)
+            print str(vlans)
+        '''
+        url = self.dnac.url + self.resource + ("/%s/l2vlan" % id)
+        vlans, status = self.crud.get(url,
+                                      headers=self.dnac.hdrs,
+                                      verify=self.verify,
+                                      timeout=self.timeout)
+        if status != OK:
+            raise DnacApiError(
+                MODULE, "getVlansByDeviceId", REQUEST_NOT_OK, url,
+                OK, status, ERROR_MSGS[status], str(vlans)
+                              )
+        self.__vlans = vlans['response']
+        return self.__vlans
+
+## end getVlansByDeviceId()
+
+    def getVlansByDeviceName(self, name):
+        '''
+        getVlansByDeviceName obtains the list of VLANs configured on the 
+        device given by its hostname.
+
+        Parameters:
+            name : str
+                default: None
+                Required: Yes
+
+        Return Values:
+            list: The list of VLANs on the network device.
+
+        Usage:
+            d = Dnac()
+            nd = NetworkDevice(d, "network-device")
+            name = "S1"
+            vlans = d.api['network-device'].getVlansByDeviceName(name)
+            print str(vlans)
+        '''
+        device = self.getDeviceByName(name)
+        hostfilter = "?hostname=" + name
+        url = self.dnac.url + self.resource + \
+            ("/%s/l2vlan" % device['id'])
+        vlans, status = self.crud.get(url,
+                                      headers=self.dnac.hdrs,
+                                      verify=self.verify,
+                                      timeout=self.timeout)
+        if status != OK:
+            raise DnacApiError(
+                MODULE, "getVlansByDeviceName", REQUEST_NOT_OK, url,
+                OK, status, ERROR_MSGS[status], str(vlans)
+                              )
+        self.__vlans = vlans['response']
+        return self.__vlans
+
+## end getVlansByDeviceName()
+
+    def getVlansByDeviceIp(self, ip):
+        '''
+        getVlansByDeviceIp obtains the list of VLANs configured on the 
+        device given its IP address.
+
+        Parameters:
+            ip : str
+                default: None
+                Required: Yes
+
+        Return Values:
+            list: The list of VLANs on the network device.
+
+        Usage:
+            d = Dnac()
+            nd = NetworkDevice(d, "network-device")
+            ip = "10.255.1.10"
+            vlans = d.api['network-device'].getVlansByDeviceIp(ip)
+            print str(vlans)
+        '''
+        device = self.getDeviceByIp(ip)
+        ipfilter = "?managementIpAddress=" + ip
+        url = self.dnac.url + self.resource + \
+            ("/%s/l2vlan" % device['id'])
+        vlans, status = self.crud.get(url,
+                                      headers=self.dnac.hdrs,
+                                      verify=self.verify,
+                                      timeout=self.timeout)
+        if status != OK:
+            raise DnacApiError(
+                MODULE, "getVlansByDeviceIp", REQUEST_NOT_OK, url,
+                OK, status, ERROR_MSGS[status], str(vlans)
+                              )
+        self.__vlans = vlans['response']
+        return self.__vlans
+
+## end getVlansByDeviceIp()
 
 ## end class NetworkDevice()
 
@@ -253,8 +419,6 @@ if __name__ == '__main__':
     from dnac import Dnac
     import urllib3
 
-    requests.packages.urllib3.disable_warnings()
-
     d = Dnac()
     ndName = "network-device"
     nd = NetworkDevice(d, ndName)
@@ -263,8 +427,7 @@ if __name__ == '__main__':
     print
     print "  dnac    = " + str(type(nd.dnac))
     print "  name    = " + nd.name
-    print "  respath = " + nd.respath
-    print "  filter  = " + nd.filter
+    print "  resource = " + nd.resource
     print "  verify  = " + str(nd.verify)
     print "  timeout = " + str(nd.timeout)
     print
@@ -274,16 +437,6 @@ if __name__ == '__main__':
 
     print
     print "  devs = " + str(type(devs))
-    print "  devs = " + str(devs)
-    print
-    print "Getting network device DC1-A3850.cisco.com with a filter..."
-
-    f="?hostname=DC1-A3850.cisco.com"
-    nd.filter = f
-    print "  filter = " + nd.filter
-    devs = nd.getAllDevices()
-
-    print
     print "  devs = " + str(devs)
     print
     print "Getting a network device by its UUID..."
@@ -311,3 +464,27 @@ if __name__ == '__main__':
     print "  devs = " + str(devs)
     print
 
+    print "Getting device's VLANs by its UUID..."
+    
+    uuid = devs['id']
+    print "  id = " + uuid
+    vlans = nd.getVlansByDeviceId(uuid)
+
+    print
+    print "  vlans = " + str(vlans)
+    print
+    print "Getting device DC1-A3850.cisco.com's VLANs by its name..."
+
+    vlans = nd.getVlansByDeviceName("DC1-A3850.cisco.com")
+
+    print
+    print "  vlans = " + str(vlans)
+    print
+    print "Getting device VLANs by its IP..."
+
+    vlans = nd.getVlansByDeviceIp("10.255.1.10")
+
+    print "  vlans = " + str(vlans)
+    print
+    print "NetworkDevice: unit test complete."
+    print

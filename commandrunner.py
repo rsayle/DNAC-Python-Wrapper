@@ -1,10 +1,18 @@
 #!/usr/bin/env python
 
-from dnacapi import DnacApi
+from dnac import DnacError, \
+                 SUPPORTED_DNAC_VERSIONS, \
+                 UNSUPPORTED_DNAC_VERSION
+from dnacapi import DnacApi, \
+                    DnacApiError
+from crud import ACCEPTED, \
+                 REQUEST_NOT_ACCEPTED, \
+                 ERROR_MSGS
 from task import Task, TASK_CREATION
-import requests
 import json
 import time
+
+MODULE="commandrunner.py"
 
 class CommandRunner(DnacApi):
     '''
@@ -33,12 +41,11 @@ class CommandRunner(DnacApi):
         results = cmd.runSync()
     '''
 
-    def __init__(self, \
-                 dnac, \
-                 name, \
-                 cmds={}, \
-                 requestFilter="", \
-                 verify=False, \
+    def __init__(self,
+                 dnac,
+                 name,
+                 cmds="",
+                 verify=False,
                  timeout=5):
         '''
         The __init__ method creates a CommandRunner object.  As with all
@@ -63,11 +70,6 @@ class CommandRunner(DnacApi):
                 type: dict
                 default: None
                 required: No
-            requestFilter: An expression for filtering Cisco DNAC's
-                           response.
-                type: str
-                default: None
-                required: No
             verify: A flag used to check Cisco DNAC's certificate.
                 type: boolean
                 default: False
@@ -87,21 +89,21 @@ class CommandRunner(DnacApi):
                     'deviceUuids': ['<switch>', '<router>]}
 	    cmd = CommandRunner(d, "aName", cmds=cmds)
         '''
-        if dnac.version <= "1.2.8":
-            self.__respath = \
-                "/api/v1/network-device-poller/cli/read-request"
+        # check Cisco DNA Center's version and set the resourece path
+        if dnac.version in SUPPORTED_DNAC_VERSIONS:
+            path = "/api/v1/network-device-poller/cli/read-request"
         else:
-            # rewrite this to throw an exception
-            print "Unsupported version of Cisco DNAC: " + dnac.version
-
-        self.__cmds = cmds
-        self.__task = None
-
-        super(CommandRunner, self).__init__(dnac, \
-                                            name, \
-                                            resourcePath=self.__respath, \
-                                            requestFilter=requestFilter, \
-                                            verify=verify, \
+            raise DnacError(
+                "__init__: %s: %s" %
+                (UNSUPPORTED_DNAC_VERSION, dnac.version)
+                           )
+        # setup the attributes
+        self.__cmds = cmds # commands to run
+        self.__task = None # Task object created after running cmds
+        super(CommandRunner, self).__init__(dnac,
+                                            name,
+                                            resource=path,
+                                            verify=verify,
                                             timeout=timeout)
 
 ## end __init__()
@@ -138,6 +140,9 @@ class CommandRunner(DnacApi):
 	Paramters:
 	    cmds: A dict of commands and device UUIDs to run the
                   commands against.
+                type: dict
+                default: None
+                required: Yes
 	
 	Return Values:
 	    None
@@ -161,7 +166,8 @@ class CommandRunner(DnacApi):
             None
         
         Return Values:
-            Task object: The task associated with the CommandRunner instance.
+            Task object: The task associated with the CommandRunner
+            instance.
 
         Usage:
             d = Dnac()
@@ -183,7 +189,10 @@ class CommandRunner(DnacApi):
         given.
    
         Paramters:
-           task: A Task object
+            task: A task object for monitoring the command's results
+                type: Task object
+                default: None
+                required: Yes
    
         Return Values:
            None
@@ -208,8 +217,14 @@ class CommandRunner(DnacApi):
         and returns __cmds' value.
 
         Parameters:
-            cmd: A CLI commands.
+            cmd: A CLI command.
+                type: str
+                default: None
+                required: Yes
             uuid: A network device UUID.
+                type: str
+                default: None
+                required: Yes
 
         Return Values:
             dict: The command instructions used as the body for making
@@ -217,15 +232,16 @@ class CommandRunner(DnacApi):
 
         Usage:
             d = Dnac()
-            cmd = ['show version', 'show ip interface brief']
-            uuid = ['<switch_uuid>']
+            cmd = 'show version'
+            uuid = '<switch_uuid>'
             cmd = CommandRunner(d, "aName")
             cmd.formatCmd(cmd, uuid)
         '''
         c = [cmd]
         u = [uuid]
-        self.__cmds = {'commands': c, \
-                       'deviceUuids': u}
+        cmds = {'commands': c, \
+                'deviceUuids': u}
+        self.__cmds = json.dumps(cmds)
         return self.__cmds
 
 ## end formatCmd()
@@ -239,7 +255,13 @@ class CommandRunner(DnacApi):
 
         Parameters:
             cmdList: A list of CLI commands.
+                type: list of str
+                default: None
+                required: Yes
             uuidList: A list of network device UUIDs.
+                type: list of str
+                default: None
+                required: Yes
 
         Return Values:
             dict: The command instructions used as the body for making
@@ -252,8 +274,9 @@ class CommandRunner(DnacApi):
             cmds = CommandRunner(d, "aName")
             cmds.formatCmds(cmds, uuids)
         '''
-        self.__cmds = {'commands': cmdList, \
-                       'deviceUuids': uuidList}
+        cmds = {'commands': cmdList, \
+                'deviceUuids': uuidList}
+        self.__cmds = json.dumps(cmds)
         return self.__cmds
 
 ## end formatCmds()
@@ -279,24 +302,20 @@ class CommandRunner(DnacApi):
             cmd = CommandRunner(d, "aName")
             cmdState = cmd.run()
         '''
-        url = self.dnac.url + self.respath + self.filter
-        hdrs = self.dnac.hdrs
-        resp = requests.request("POST", \
-                                url, \
-                                data=json.dumps(self.__cmds), \
-                                headers=hdrs, \
-                                verify=self.verify, \
-                                timeout=self.timeout)
-        if resp.status_code != requests.codes.accepted:
-            print "Failed to run the command: " + str(resp.status_code)
-        else:
-            tId = json.loads(resp.text)['response']['taskId']
-            tUrl = json.loads(resp.text)['response']['url']
-            #tResults = json.loads(resp.text)['response']
-            tName = "task_" + tId
-            self.__task = Task(self.dnac, tName, tId)
-            return self.__task.checkTask()
-            #return resp.status_code
+        url = self.dnac.url + self.resource
+        results, status = self.crud.post(url,
+                                         headers=self.dnac.hdrs,
+                                         body=self.cmds,
+                                         verify=self.verify,
+                                         timeout=self.timeout)
+        if status != ACCEPTED:
+            raise DnacApiError(MODULE, "run", REQUEST_NOT_ACCEPTED, url,
+                               ACCEPTED, status, ERROR_MSGS[status],
+                               str(results))
+        tId = results['response']['taskId']
+        tName = "task_" + tId
+        self.__task = Task(self.dnac, tName, tId)
+        return self.__task.checkTask()
 
 ## end run()
 
@@ -314,9 +333,10 @@ class CommandRunner(DnacApi):
         the function's return value (results = cmd.runSync()).
 
         Parameters:
-            wait: int
-            default: 3
-            required: No
+            wait: The time to wait before checking the results.
+                type: int
+                default: 3
+                required: No
 
         Return Vaules:
             list: The command set's output
@@ -326,26 +346,23 @@ class CommandRunner(DnacApi):
             cmd = CommandRunner(d, "aCmdName")
             results = cmd.runSync(wait=10)
         '''
-        url = self.dnac.url + self.respath + self.filter
-        hdrs = self.dnac.hdrs
-        resp = requests.request("POST", \
-                                url, \
-                                data=json.dumps(self.__cmds), \
-                                headers=hdrs, \
-                                verify=self.verify, \
-                                timeout=self.timeout)
-        if resp.status_code != requests.codes.accepted:
-            print "Failed to run the command: " + str(resp.status_code)
-        else:
-            tid = json.loads(resp.text)['response']['taskId']
-            tname = "task_" + tid
-            turl = json.loads(resp.text)['response']['url']
-            self.task = Task(self.dnac, tname, taskId=tid, url=turl)
+        url = self.dnac.url + self.resource
+        results, status = self.crud.post(url,
+                                         headers=self.dnac.hdrs,
+                                         body=self.cmds,
+                                         verify=self.verify,
+                                         timeout=self.timeout)
+        if status != ACCEPTED:
+            DnacApiError(MODULE, "run", REQUEST_NOT_ACCEPTED, url,
+                         ACCEPTED, status, ERROR_MSGS[status], str(results))
+        tid = results['response']['taskId']
+        tname = "task_" + tid
+        self.task = Task(self.dnac, tname, taskId=tid)
+        self.task.checkTask()
+        while self.task.progress == TASK_CREATION:
+            time.sleep(wait)
             self.task.checkTask()
-            while self.task.progress == TASK_CREATION:
-                time.sleep(wait)
-                self.task.checkTask()
-            return self.task.taskResults.results
+        return self.task.taskResults.results
 
 ## end runSync()
 
@@ -366,22 +383,21 @@ if  __name__ == '__main__':
 
     print "CommandRunner:"
     print
-    print "  dnac     = " + str(type(c.dnac))
-    print "  name     = " + c.name
-    print "  cmds     = " + str(c.cmds)
-    print "  task     = " + str(c.task)
-    print "  respath  = " + c.respath
-    print "  filter   = " + c.filter
-    print "  verify   = " + str(c.verify)
-    print "  timeout  = " + str(c.timeout)
+    print "  dnac      = " + str(type(c.dnac))
+    print "  name      = " + c.name
+    print "  cmds      = " + c.cmds
+    print "  task      = " + str(c.task)
+    print "  resource  = " + c.resource
+    print "  verify    = " + str(c.verify)
+    print "  timeout   = " + str(c.timeout)
     print
     print "Setting a single command on a single device..."
     print
 
     cmd = c.formatCmd("show vlan", "84e4b133-2668-4705-8163-5694c84e78fb")
 
-    print "  format  = " + str(cmd)
-    print "  cmds    = " + str(c.cmds)
+    print "  format  = " + cmd
+    print "  cmds    = " + c.cmds
     print
     print "Running the command asynchronously..."
     print
@@ -392,8 +408,8 @@ if  __name__ == '__main__':
         print "task     = " + str(c.task)
         print "progress = " + c.task.progress
         c.task.checkTask()
-    print "progress = " + c.task.progress
-    tid = json.loads(c.task.progress)['fileId']
+    print "progress = " + str(c.task.progress)
+    tid = c.task.progress['fileId']
     name = "task_" + tid
     c.task.taskResults = TaskResults(c.dnac, name, tid)
     results = c.task.taskResults.getResults()
@@ -401,8 +417,7 @@ if  __name__ == '__main__':
     print "  response                 = " + str(resp)
     print "  task                     = " + str(c.task)
     print "  task.id                  = " + c.task.id
-    print "  task.url                 = " + c.task.url
-    print "  task.progress            = " + c.task.progress
+    print "  task.progress            = " + str(c.task.progress)
     print "  task.taskResults         = " + str(c.task.taskResults)
     print "  task.taskResults.results = " + str(c.task.taskResults.results)
     print
@@ -414,8 +429,8 @@ if  __name__ == '__main__':
              'ca27cdcc-241c-456f-92d8-63e1361fbfd7']
     multicmds = c.formatCmds(cmds, uuids)
 
-    print "  format = " + str(multicmds)
-    print "  cmds   = " + str(c.cmds)
+    print "  format = " + multicmds
+    print "  cmds   = " + c.cmds
     print
     print "Running the commands syncronously..."
     print
@@ -426,7 +441,8 @@ if  __name__ == '__main__':
     print "  response     = " + str(resp)
     print "  task         = " + str(c.task)
     print "  task.id      = " + c.task.id
-    print "  task.url     = " + c.task.url
     print "  task.taskResults = " + str(c.task.taskResults)
     print "  task.taskResults.results = " + str(c.task.taskResults.results)
+    print
+    print "CommandRunner: unit test complete."
     print
