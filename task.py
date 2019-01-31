@@ -134,16 +134,15 @@ class Task(DnacApi):
         self.__progress = TASK_EMPTY
         self.__taskResults = {}
         self.__taskResultsId = ""
+        if bool(self.__id): # ID is not empty
+            # update name based on the ID
+            name = "task_" + self.__id
         super(Task, self).__init__(dnac,
                                    name,
                                    verify=verify,
                                    timeout=timeout)
-        # update name based on the ID
-        if bool(self.__id): # ID is not empty
-            self.name = "task_" + self.__id
-            self.resource = path
-        else:
-            self.resource = path
+        # update the resource path
+        self.resource = path
 
 ## end __init__()
 

@@ -12,6 +12,7 @@ from crud import OK, \
                  ERROR_MSGS
 from deployment import Deployment
 import json
+import time
 
 ## globals
 
@@ -479,6 +480,22 @@ class Template(DnacApi):
     @targetId.setter
     def targetId(self, targetId):
         '''
+        Method targetId sets the value to the UUID of the network device
+        where the template will be applied.
+
+        Parameters:
+            targetId:
+                type: str
+                default: None
+                required: Yes
+
+        Return Values:
+            None
+
+        Usage:
+            d = Dnac()
+            template = Template(d, "Enable EIGRP")
+            d.api['Enable EIGRP'].targetId = "<router_UUID>"
         '''
         self.__targetId = targetId
 
@@ -487,6 +504,26 @@ class Template(DnacApi):
     @property
     def targetType(self):
         '''
+        Template's targetType get method returns the value used to instruct
+        Cisco DNAC how to find targetted device in it inventory when
+        applying a CLI template.
+
+        Parameters:
+            None
+
+        Return Values:
+            str: One of the following enumerated values:
+                TARGET_BY_DEFAULT="DEFAULT"
+                TARGET_BY_ID="MANAGED_DEVICE_UUID"
+                TARGET_BY_HOSTNAME="MANAGED_DEVICE_HOSTNAME"
+                TARGET_BY_IP="MANAGED_DEVICE_IP"
+                TARGET_BY_SERIAL="PRE_PROVISIONED_SERIAL"
+                TARGET_BY_MAC="PRE_PROVISIONED_SERIAL"
+
+        Usage:
+            d = Dnac()
+            template = Template(d, "Set VLAN")
+            print d.api['Set VLAN'].targetType
         '''
         return self.__targetType
 
@@ -495,6 +532,29 @@ class Template(DnacApi):
     @targetType.setter
     def targetType(self, targetType):
         '''
+        Set method targetType changes the desired method that Cisco DNA
+        Center uses to find a device in its inventory in order to apply
+        the template.
+
+        Paramters:
+            targetType:
+                str: one of the following enumerated values:
+                    TARGET_BY_DEFAULT="DEFAULT"
+                    TARGET_BY_ID="MANAGED_DEVICE_UUID"
+                    TARGET_BY_HOSTNAME="MANAGED_DEVICE_HOSTNAME"
+                    TARGET_BY_IP="MANAGED_DEVICE_IP"
+                    TARGET_BY_SERIAL="PRE_PROVISIONED_SERIAL"
+                    TARGET_BY_MAC="PRE_PROVISIONED_SERIAL"
+                default: None
+                required: Yes
+
+        Return Values:
+            None
+
+        Usage:
+            d = Dnac()
+            template = Template(d, "Set VLAN")
+            d.api['Set VLAN'].targetType = TARGET_BY_HOSTNAME
         '''
         self.__targetType = targetType
 
@@ -503,6 +563,20 @@ class Template(DnacApi):
     @property
     def deployment(self):
         '''
+        The deployment get method returns a reference to the Template's
+        deploy job.  Use this attribute to monitor the job's status and
+        get its results.
+
+        Parameters:
+            None
+
+        Return Values:
+            Deployment object: The job for the deployed template.
+
+        Usage:
+            d = Dnac()
+            template = Template(d, "Set VLAN")
+            print str(d.api['Set Vlan'].deployment.results)
         '''
         return self.__deployment
 
@@ -510,6 +584,20 @@ class Template(DnacApi):
 
     def getAllTemplates(self):
         '''
+        Class method getAllTemplates queries the Cisco DNA Center cluster
+        for a listing of every template it has.  The listing includes
+        the base templates and all of its versions.
+
+        Parameters:
+            None
+
+        Return Values:
+            list: A listing of all available templates.
+
+        Usage:
+            d = Dnac()
+            template = Template(d, "Set VLAN")
+            print str(d.api['Set Vlan'].getAllTemplates)
         '''
         url = self.dnac.url + self.resource
         templates, status = self.crud.get(url,
@@ -518,7 +606,7 @@ class Template(DnacApi):
                                         timeout=self.timeout)
         if status != OK:
             raise DnacApiError(
-                MODULE, "checkDeployment", REQUEST_NOT_OK, url,
+                MODULE, "getAllTemplates", REQUEST_NOT_OK, url,
                 OK, status, ERROR_MSGS[status], str(results)
                               )
         return templates
@@ -527,6 +615,23 @@ class Template(DnacApi):
 
     def getTemplateById(self, id):
         '''
+        getTemplateById pulls the template information for the one
+        specified by the UUID passed to the function.  Either base or
+        versioned templates may be queried.
+
+        Parameters:
+            id: The UUID of a template.
+                type: str
+                default: None
+                required: Yes
+
+        Return Values:
+            dict: The template's data.
+
+        Usage:
+            d = Dnac()
+            template = Template(d, "Set VLAN")
+            print str(d.api['Set Vlan'].getTemplateById("<template_uuid>")
         '''
         url = self.dnac.url + self.resource + "/" + id
         template, status = self.crud.get(url,
@@ -542,9 +647,29 @@ class Template(DnacApi):
 
 ## end getTemplateById
 
-    def getTemplateIdByName(self, name):
+    def getTemplateIdByName(self, name=""):
         '''
+        getTemplateIdByName finds the base template by its name and
+        saves the value in its __templateId attribute and returns it.
+
+        Parameters:
+            name: The template's name, which must match exactly as it
+                  is entered in Cisco DNA Center.  If no name is given,
+                  the method defaults to the Template object's own name.
+                type: str
+                default: The Template object's name.
+                required: No
+
+        Return Values:
+            str: The template's UUID.
+
+        Usage:
+            d = Dnac()
+            template = Template(d, "Set VLAN")
+            print str(d.api['Set Vlan'].getTemplateByIdByName()
         '''
+        if not name: # parameter name was not given a value
+            name = self.__name # use the Template's name
         self.__templateId = ""
         # find the template by name
         templates = self.getAllTemplates()
@@ -560,15 +685,39 @@ class Template(DnacApi):
                 MODULE, "getTemplateIdByName", NO_TEMPLATES_FOUND, "",
                 "", "", "", ""
                               )
-        # all done - return the template
+        # all done - return the template's UUID
         return self.__templateId
 
 ## end getTemplateByName()
 
-    def getVersionedTemplateByName(self, name, ver):
+    def getVersionedTemplateByName(self, name="", ver=0):
         '''
+        Class method getVersionedTemplateByName finds a committed template
+        by the name and ver values passed.  It loads all of the template's
+        information into the object's versionedTemplate attributes including
+        its UUID, body and parameters.
+
+        Parameters:
+            name: The required template's name entered in Cisco DNAC.
+                type: str
+                default: The Template object's name.
+                required: No
+            ver: The version of the template to be deployed.
+                type: int
+                default: The latest version available.
+                required: No
+
+        Return Values:
+            str: The requested template's contents.
+
+        Usage:
+            d = Dnac()
+            t = Template(d, 'Set VLAN')
+            d.api['Set VLAN'].getgetVersionedTemplateByName()
         '''
-        # version is the template's version and must not be negative
+        if not name: # parameter name was not given a value
+            name = self.__name # use the Template's name
+        # version must not be negative
         if ver < 0:
             raise DnacApiError(
                 MODULE, "getVersionedTemplateByName", ILLEGAL_VERSION,
@@ -650,6 +799,22 @@ class Template(DnacApi):
 
     def makeBody(self):
         '''
+        The makeBody method converts the Template object's target and
+        versioned template information into a JSON encoded string used
+        as the payload of a POST request to Cisco DNA Center.  Both
+        deploy() and deploySync() already call this function.  It is
+        unnecessary to use this method for pushing a template.
+
+        Parameters:
+            None
+
+        Return Values:
+            str: A JSON encoded string for deploying a CLI template.
+        
+        Usage:
+            d = Dnac()
+            template = Template(d, "Enable CTS Interfaces")
+            d.api['Enable CTS Interfaces'].makeBody()
         '''
         tgtinfo = {}
         tgtinfo['type'] = self.__targetType
@@ -666,6 +831,26 @@ class Template(DnacApi):
 
     def deploy(self):
         '''
+        The deploy method asynchronously applies a template to a device.
+        The Template's target information and versioned template data
+        must be set prior to issuing this command.  The function creates
+        a Deployment object, saves it, and then instructs it to perform
+        a progress check on itself and then returns whateved Cisco DNA
+        Center reponds with.  Developers can then use the deployment
+        instance to further monitor the job's success or failure.
+
+        Parameters:
+            None
+
+        Return Values:
+            str: The deployment job's current state.
+
+        Usage:
+            d = Dnac()
+            template = Template(d, "Create VRF")
+            d.api['Create VRF'].targetId = "<router_uuid>"
+            d.api['Create VRF'].targetType = TARGET_BY_ID
+            print d.api['Create VRF'].deploy()
         '''
         url = self.dnac.url + self.resource + "/deploy"
         if not self.__targetId: # targetId is not set
@@ -704,6 +889,26 @@ class Template(DnacApi):
 
     def deploySync(self, wait=3):
         '''
+        deploySync pushes a template to the target device and then waits
+        for the job to finish.  By default, it checks the job every
+        three seconds, but this can be set using the wait keyword argument.
+        The Template's target information and versioned template data
+        must be set prior to issuing this command.  deploySync creates
+        a deployment object, saves it, and uses it to monitor the job's
+        progress.  Upon completion, deploySync returns the job's status.
+
+        Parameters:
+            None
+
+        Return Values:
+            str: The deployment job's current state.
+
+        Usage:
+            d = Dnac()
+            template = Template(d, "Create VRF")
+            d.api['Create VRF'].targetId = "<router_uuid>"
+            d.api['Create VRF'].targetType = TARGET_BY_ID
+            print d.api['Create VRF'].deploySync()
         '''
         url = self.dnac.url + self.resource + "/deploy"
         if not self.__targetId: # targetId is not set
@@ -730,7 +935,7 @@ class Template(DnacApi):
                 ACCEPTED, status, ERROR_MSGS[status], str(results)
                               )
         # make a deployment object
-        did = result['deploymentId']
+        did = results['deploymentId']
         elts = did.split()
         deployId = elts[len(elts) - 1]
         self.__deployment = Deployment(self.dnac,
@@ -750,6 +955,7 @@ if __name__ == '__main__':
 
     from dnac import Dnac
     import time
+    import sys
 
     d = Dnac()
     t = Template(d, "MGM Set VLAN")
@@ -768,6 +974,13 @@ if __name__ == '__main__':
     print " targetType              = " + t.targetType
     print " deployment              = " + t.deployment
     print
+
+    #print "Attempting to chance the template's name..."
+    #
+    #t.name = "Throw an exception"
+    #
+    #sys.exit(0)
+    
     print "Trying an earlier version of the template..."
 
     t = Template(d, "MGM Set VLAN", version=1)

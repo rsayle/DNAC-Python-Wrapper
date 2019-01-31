@@ -35,7 +35,7 @@ class DnacApiError(Exception):
                  expectedValue,
                  receivedValue,
                  receivedMsg,
-                 possibleCause):
+                 causeOrResolution):
         '''
         DnacApiError's __init__ method formats a message based on its
         parameters and then calls its parent class, Exception, to post it.
@@ -78,11 +78,11 @@ class DnacApiError(Exception):
                 type: str
                 default: None
                 required: Yes
-            possibleCause: Developer's notes on why the exception was
-                           thrown and any potential solutions.  Use hints
-                           the system provides or create your own.  If
-                           the cause or solution is unknown, use an empty
-                           string for this parameter.
+            causeOrResolution: Developer's notes on why the exception was
+                               thrown and any potential solutions.  Use
+                               hints the system provides or create your
+                               own.  If the cause or solution is unknown,
+                               use an empty string for this parameter.
                 type: str
                 default: None
                 require: Yes
@@ -97,9 +97,9 @@ class DnacApiError(Exception):
                     OK, status, ERROR_MSGS[status], str(results)
                                   )
         '''
-        exceptionMsg = "%s: %s: %s: %s: expected = %s: received = %s: received message = %s: possible cause = %s" % \
+        exceptionMsg = "%s: %s: %s: %s: expected = %s: received = %s: received message = %s: possible cause or resolution = %s" % \
             (module, function, error, url, expectedValue, 
-             receivedValue, receivedMsg, possibleCause)
+             receivedValue, receivedMsg, causeOrResolution)
         super(DnacApiError, self).__init__(exceptionMsg)
 
 ## end class DnacApiError
