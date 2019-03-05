@@ -1,7 +1,6 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head><title>Python: module xauthtoken</title>
-<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head><body bgcolor="#f0f0f8">
 
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
@@ -9,7 +8,7 @@
 <td valign=bottom>&nbsp;<br>
 <font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>xauthtoken</strong></big></big></font></td
 ><td align=right valign=bottom
-><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/rsayle/api/dnac/xauthtoken.py">/home/rsayle/api/dnac/xauthtoken.py</a></font></td></tr></table>
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/source/xauthtoken.py">/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/source/xauthtoken.py</a></font></td></tr></table>
     <p></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -28,16 +27,16 @@
     
 <tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><dl>
-<dt><font face="helvetica, arial"><a href="__builtin__.html#object">__builtin__.object</a>
-</font></dt><dd>
-<dl>
-<dt><font face="helvetica, arial"><a href="xauthtoken.html#XAuthToken">XAuthToken</a>
-</font></dt></dl>
-</dd>
-<dt><font face="helvetica, arial"><a href="exceptions.html#Exception">exceptions.Exception</a>(<a href="exceptions.html#BaseException">exceptions.BaseException</a>)
+<dt><font face="helvetica, arial"><a href="builtins.html#Exception">builtins.Exception</a>(<a href="builtins.html#BaseException">builtins.BaseException</a>)
 </font></dt><dd>
 <dl>
 <dt><font face="helvetica, arial"><a href="xauthtoken.html#XAuthTokenError">XAuthTokenError</a>
+</font></dt></dl>
+</dd>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="xauthtoken.html#XAuthToken">XAuthToken</a>
 </font></dt></dl>
 </dd>
 </dl>
@@ -45,91 +44,106 @@
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="XAuthToken">class <strong>XAuthToken</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
+<font color="#000000" face="helvetica, arial"><a name="XAuthToken">class <strong>XAuthToken</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>Class&nbsp;<a href="#XAuthToken">XAuthToken</a>&nbsp;stores&nbsp;a&nbsp;token&nbsp;used&nbsp;to&nbsp;authenticate&nbsp;Cisco&nbsp;DNAC&nbsp;API<br>
+<td colspan=2><tt>Class&nbsp;<a href="#XAuthToken">XAuthToken</a>&nbsp;stores&nbsp;a&nbsp;token&nbsp;used&nbsp;to&nbsp;authorize&nbsp;Cisco&nbsp;DNAC&nbsp;API<br>
 calls.<br>
 &nbsp;<br>
-Dnac&nbsp;objects&nbsp;contain&nbsp;one&nbsp;<a href="#XAuthToken">XAuthToken</a>&nbsp;instance&nbsp;for&nbsp;all&nbsp;of&nbsp;its&nbsp;DnacApi<br>
-instances&nbsp;to&nbsp;reference&nbsp;when&nbsp;making&nbsp;a&nbsp;request&nbsp;to&nbsp;Cisco&nbsp;DNAC.&nbsp;&nbsp;Use&nbsp;the<br>
+Dnac&nbsp;objects&nbsp;contain&nbsp;one&nbsp;<a href="#XAuthToken">XAuthToken</a>&nbsp;for&nbsp;all&nbsp;of&nbsp;its&nbsp;DnacApi&nbsp;instances<br>
+to&nbsp;reference&nbsp;when&nbsp;making&nbsp;a&nbsp;request&nbsp;to&nbsp;Cisco&nbsp;DNAC.&nbsp;&nbsp;Use&nbsp;the<br>
 Dnac.token&nbsp;class&nbsp;method&nbsp;to&nbsp;access&nbsp;the&nbsp;current&nbsp;token&nbsp;value&nbsp;instead<br>
 of&nbsp;referencing&nbsp;the&nbsp;Dnac.xauth&nbsp;attribute,&nbsp;which&nbsp;is&nbsp;an&nbsp;instantiation<br>
-of&nbsp;this&nbsp;class.<br>
+of&nbsp;this&nbsp;class.&nbsp;&nbsp;As&nbsp;necessary,&nbsp;use&nbsp;Dnac.get_new_token&nbsp;to&nbsp;refresh&nbsp;the<br>
+x-auth-token&nbsp;value.<br>
 &nbsp;<br>
 Attributes:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;url:&nbsp;The&nbsp;base&nbsp;URL&nbsp;for&nbsp;contacting&nbsp;Cisco&nbsp;DNAC.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
-&nbsp;&nbsp;&nbsp;&nbsp;bauth:&nbsp;A&nbsp;basic&nbsp;authentication&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;for&nbsp;requesting&nbsp;a&nbsp;token<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bauth:&nbsp;A&nbsp;basic&nbsp;authentication&nbsp;<a href="builtins.html#object">object</a>&nbsp;for&nbsp;requesting&nbsp;a&nbsp;token<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;from&nbsp;Cisco&nbsp;DNAC.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;BasicAuth&nbsp;<a href="__builtin__.html#object">object</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ctype:&nbsp;A&nbsp;content&nbsp;type&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;for&nbsp;requesting&nbsp;a&nbsp;token&nbsp;from&nbsp;Cisco&nbsp;DNAC.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;CType&nbsp;<a href="__builtin__.html#object">object</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;CType("application/json")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;BasicAuth&nbsp;<a href="builtins.html#object">object</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ctype:&nbsp;A&nbsp;content&nbsp;type&nbsp;<a href="builtins.html#object">object</a>&nbsp;for&nbsp;requesting&nbsp;a&nbsp;token&nbsp;from&nbsp;Cisco&nbsp;DNAC.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;CType&nbsp;<a href="builtins.html#object">object</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;CType('application/json')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;Ppotected<br>
 &nbsp;&nbsp;&nbsp;&nbsp;resource:&nbsp;The&nbsp;resource&nbsp;path&nbsp;used&nbsp;to&nbsp;request&nbsp;a&nbsp;token&nbsp;from&nbsp;Cisco&nbsp;DNAC.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;"/api/system/v1/auth/token"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;'/api/system/v1/auth/token'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
 &nbsp;&nbsp;&nbsp;&nbsp;verify:&nbsp;Flag&nbsp;indicating&nbsp;whether&nbsp;or&nbsp;not&nbsp;the&nbsp;request&nbsp;should&nbsp;verify<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cisco&nbsp;DNAC's&nbsp;certificate.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;boolean<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;False<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
 &nbsp;&nbsp;&nbsp;&nbsp;timeout:&nbsp;The&nbsp;number&nbsp;of&nbsp;seconds&nbsp;the&nbsp;request&nbsp;for&nbsp;a&nbsp;token&nbsp;should&nbsp;wait<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;before&nbsp;assuming&nbsp;Cisco&nbsp;DNAC&nbsp;is&nbsp;unavailable.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;5<br>&nbsp;</tt></td></tr>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;5<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
+&nbsp;&nbsp;&nbsp;&nbsp;token:&nbsp;The&nbsp;x-auth-token&nbsp;used&nbsp;to&nbsp;authorize&nbsp;API&nbsp;calls.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
+&nbsp;&nbsp;&nbsp;&nbsp;hdrs:&nbsp;The&nbsp;headers&nbsp;for&nbsp;requesting&nbsp;an&nbsp;x-auth-token&nbsp;from&nbsp;Cisco&nbsp;DNAC.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;dict<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>
-<dl><dt><a name="XAuthToken-__init__"><strong>__init__</strong></a>(self, url, basicAuth, contentType, resource<font color="#909090">='/api/system/v1/auth/token'</font>, verify<font color="#909090">=False</font>, timeout<font color="#909090">=5</font>)</dt><dd><tt>The&nbsp;__init__&nbsp;method&nbsp;initializes&nbsp;an&nbsp;<a href="#XAuthToken">XAuthToken</a>&nbsp;<a href="__builtin__.html#object">object</a>.&nbsp;&nbsp;It&nbsp;takes<br>
-a&nbsp;URL&nbsp;pointing&nbsp;to&nbsp;the&nbsp;Cisco&nbsp;DNAC&nbsp;cluster&nbsp;and&nbsp;a&nbsp;BasicAuth&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;for<br>
-the&nbsp;token&nbsp;request.&nbsp;&nbsp;When&nbsp;creating&nbsp;a&nbsp;Dnac&nbsp;<a href="__builtin__.html#object">object</a>,&nbsp;the&nbsp;<a href="__builtin__.html#object">object</a>'s<br>
-__init__&nbsp;method&nbsp;passes&nbsp;its&nbsp;base&nbsp;URL&nbsp;(Dnac.url),&nbsp;its&nbsp;BasicAuth&nbsp;<a href="__builtin__.html#object">object</a><br>
-(Dnac.__bauth)&nbsp;and&nbsp;its&nbsp;chosen&nbsp;content&nbsp;type&nbsp;(Dnac.__ctype).&nbsp;&nbsp;This<br>
-ensures&nbsp;that&nbsp;the&nbsp;<a href="#XAuthToken">XAuthToken</a>&nbsp;instance&nbsp;(Dnac.__xauth)&nbsp;remains<br>
-consistent&nbsp;with&nbsp;all&nbsp;of&nbsp;the&nbsp;DnacApi&nbsp;objects&nbsp;Dnac&nbsp;uses,&nbsp;i.e.&nbsp;any<br>
-changes&nbsp;to&nbsp;the&nbsp;basic&nbsp;authentication&nbsp;or&nbsp;to&nbsp;the&nbsp;content&nbsp;type&nbsp;used<br>
-remain&nbsp;the&nbsp;same&nbsp;when&nbsp;calling&nbsp;on&nbsp;the&nbsp;<a href="#XAuthToken">XAuthToken</a>&nbsp;instance.<br>
+<dl><dt><a name="XAuthToken-__init__"><strong>__init__</strong></a>(self, url, basic_auth, content_type, resource='/api/system/v1/auth/token', verify=False, timeout=5)</dt><dd><tt>The&nbsp;__init__&nbsp;method&nbsp;initializes&nbsp;an&nbsp;<a href="#XAuthToken">XAuthToken</a>&nbsp;<a href="builtins.html#object">object</a>.&nbsp;&nbsp;It&nbsp;takes<br>
+a&nbsp;URL&nbsp;pointing&nbsp;to&nbsp;the&nbsp;Cisco&nbsp;DNAC&nbsp;cluster&nbsp;as&nbsp;well&nbsp;as&nbsp;both&nbsp;a&nbsp;BasicAuth<br>
+and&nbsp;CType&nbsp;objects&nbsp;for&nbsp;constructing&nbsp;the&nbsp;token&nbsp;request.&nbsp;&nbsp;When&nbsp;creating<br>
+a&nbsp;Dnac&nbsp;<a href="builtins.html#object">object</a>,&nbsp;the&nbsp;<a href="builtins.html#object">object</a>'s&nbsp;__init__&nbsp;method&nbsp;passes&nbsp;its&nbsp;base&nbsp;URL<br>
+(Dnac.url),&nbsp;its&nbsp;BasicAuth&nbsp;<a href="builtins.html#object">object</a>&nbsp;(Dnac.bauth)&nbsp;and&nbsp;its&nbsp;chosen<br>
+content&nbsp;type&nbsp;(Dnac.ctype).&nbsp;&nbsp;This&nbsp;ensures&nbsp;that&nbsp;the&nbsp;<a href="#XAuthToken">XAuthToken</a><br>
+instance&nbsp;(Dnac.xauth)&nbsp;remains&nbsp;consistent&nbsp;with&nbsp;all&nbsp;of&nbsp;the&nbsp;DnacApi<br>
+objects&nbsp;in&nbsp;use,&nbsp;i.e.&nbsp;any&nbsp;changes&nbsp;to&nbsp;the&nbsp;basic&nbsp;authentication&nbsp;or&nbsp;to<br>
+the&nbsp;content&nbsp;type&nbsp;used&nbsp;remain&nbsp;the&nbsp;same&nbsp;when&nbsp;calling&nbsp;on&nbsp;the&nbsp;<a href="#XAuthToken">XAuthToken</a>.<br>
 &nbsp;<br>
 Parameters:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url:&nbsp;The&nbsp;URL&nbsp;for&nbsp;reaching&nbsp;Cisco&nbsp;DNAC.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;Yes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;basicAuth:&nbsp;A&nbsp;BasicAuth&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;for&nbsp;logging&nbsp;into&nbsp;Cisco&nbsp;DNAC.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;BasicAuth&nbsp;<a href="__builtin__.html#object">object</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;Yes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;conentType:&nbsp;A&nbsp;CType&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;indicating&nbsp;the&nbsp;token's&nbsp;format<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;basic_auth:&nbsp;A&nbsp;BasicAuth&nbsp;<a href="builtins.html#object">object</a>&nbsp;for&nbsp;logging&nbsp;into&nbsp;Cisco&nbsp;DNAC.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;BasicAuth&nbsp;<a href="builtins.html#object">object</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;content_type:&nbsp;A&nbsp;CType&nbsp;<a href="builtins.html#object">object</a>&nbsp;indicating&nbsp;the&nbsp;token's&nbsp;format<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;requested&nbsp;from&nbsp;Cisco&nbsp;DNAC<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;CType&nbsp;<a href="__builtin__.html#object">object</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;CType("application/json")<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;No<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;CType&nbsp;<a href="builtins.html#object">object</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resource:&nbsp;The&nbsp;resource&nbsp;path&nbsp;used&nbsp;to&nbsp;request&nbsp;a&nbsp;token.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;"/api/system/v1/auth/token"<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;No<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;'/api/system/v1/auth/token'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verify:&nbsp;A&nbsp;flag&nbsp;used&nbsp;to&nbsp;check&nbsp;Cisco&nbsp;DNAC's&nbsp;certificate.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;boolean<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;False<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;No<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;timeout:&nbsp;The&nbsp;number&nbsp;of&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;Cisco&nbsp;DNAC's<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;response.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;5<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;No<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
 &nbsp;<br>
 Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#XAuthToken">XAuthToken</a>&nbsp;<a href="__builtin__.html#object">object</a>:&nbsp;the&nbsp;newly&nbsp;constructed&nbsp;<a href="#XAuthToken">XAuthToken</a>.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#XAuthToken">XAuthToken</a>&nbsp;<a href="builtins.html#object">object</a>:&nbsp;the&nbsp;newly&nbsp;constructed&nbsp;<a href="#XAuthToken">XAuthToken</a>.<br>
 &nbsp;<br>
 Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;=&nbsp;<a href="#XAuthToken">XAuthToken</a>(url,&nbsp;bauth,&nbsp;ctype)</tt></dd></dl>
 
-<dl><dt><a name="XAuthToken-__str__"><strong>__str__</strong></a>(self)</dt><dd><tt>String&nbsp;handler&nbsp;for&nbsp;an&nbsp;<a href="#XAuthToken">XAuthToken</a>&nbsp;<a href="__builtin__.html#object">object</a>.&nbsp;&nbsp;Returns&nbsp;the&nbsp;current<br>
+<dl><dt><a name="XAuthToken-__str__"><strong>__str__</strong></a>(self)</dt><dd><tt>String&nbsp;handler&nbsp;for&nbsp;an&nbsp;<a href="#XAuthToken">XAuthToken</a>&nbsp;<a href="builtins.html#object">object</a>.&nbsp;&nbsp;Returns&nbsp;the&nbsp;current<br>
 value&nbsp;of&nbsp;__token.<br>
 &nbsp;<br>
 Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;none<br>
 &nbsp;<br>
 Return&nbsp;Values:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;The&nbsp;token's&nbsp;value.<br>
@@ -138,22 +152,22 @@ Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;=&nbsp;<a href="#XAuthToken">XAuthToken</a>(url,&nbsp;bauth,&nbsp;ctype)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;str(x)</tt></dd></dl>
 
-<dl><dt><a name="XAuthToken-getToken"><strong>getToken</strong></a>(self)</dt><dd><tt>Class&nbsp;method&nbsp;getToken&nbsp;causes&nbsp;the&nbsp;<a href="#XAuthToken">XAuthToken</a>&nbsp;instance&nbsp;to&nbsp;send&nbsp;a<br>
+<dl><dt><a name="XAuthToken-get_token"><strong>get_token</strong></a>(self)</dt><dd><tt>Class&nbsp;method&nbsp;getToken&nbsp;causes&nbsp;the&nbsp;<a href="#XAuthToken">XAuthToken</a>&nbsp;instance&nbsp;to&nbsp;send&nbsp;a<br>
 request&nbsp;to&nbsp;the&nbsp;server&nbsp;for&nbsp;a&nbsp;new&nbsp;x-auth-token.&nbsp;&nbsp;The&nbsp;returned<br>
 result&nbsp;gets&nbsp;stored&nbsp;in&nbsp;__token&nbsp;and&nbsp;then&nbsp;the&nbsp;function&nbsp;updates&nbsp;the<br>
-<a href="__builtin__.html#object">object</a>'s&nbsp;_hdr&nbsp;and&nbsp;__hdrs&nbsp;with&nbsp;the&nbsp;new&nbsp;token's&nbsp;value&nbsp;before&nbsp;<br>
-returning&nbsp;the&nbsp;token&nbsp;to&nbsp;the&nbsp;script<br>
+<a href="builtins.html#object">object</a>'s&nbsp;__hdrs&nbsp;dictionary&nbsp;with&nbsp;the&nbsp;new&nbsp;token's&nbsp;value&nbsp;before<br>
+returning&nbsp;the&nbsp;token&nbsp;to&nbsp;the&nbsp;calling&nbsp;script.<br>
 &nbsp;<br>
 Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;none<br>
 &nbsp;<br>
 Return&nbsp;values:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;str&nbsp;:&nbsp;the&nbsp;token's&nbsp;value<br>
 &nbsp;<br>
 Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;=&nbsp;<a href="#XAuthToken">XAuthToken</a>(url,&nbsp;bauth,&nbsp;ctype)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;x.<a href="#XAuthToken-getToken">getToken</a>()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;token&nbsp;gets&nbsp;saved&nbsp;in&nbsp;x<br>
-&nbsp;&nbsp;&nbsp;&nbsp;t&nbsp;=&nbsp;x.<a href="#XAuthToken-getToken">getToken</a>()&nbsp;#&nbsp;token&nbsp;gets&nbsp;saved&nbsp;in&nbsp;x&nbsp;and&nbsp;returned&nbsp;to&nbsp;t</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;x.getToken()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;token&nbsp;gets&nbsp;saved&nbsp;in&nbsp;x<br>
+&nbsp;&nbsp;&nbsp;&nbsp;t&nbsp;=&nbsp;x.getToken()&nbsp;&nbsp;#&nbsp;token&nbsp;gets&nbsp;saved&nbsp;in&nbsp;x&nbsp;and&nbsp;returned&nbsp;to&nbsp;t</tt></dd></dl>
 
 <hr>
 Data descriptors defined here:<br>
@@ -168,7 +182,7 @@ Data descriptors defined here:<br>
 BasicAuth&nbsp;object&nbsp;for&nbsp;logging&nbsp;into&nbsp;an&nbsp;HTTP&nbsp;server.<br>
 &nbsp;<br>
 Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;none<br>
 &nbsp;<br>
 Return&nbsp;Values:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;BasicAuth&nbsp;object:&nbsp;The&nbsp;HTTP&nbsp;basic&nbsp;authentication&nbsp;used&nbsp;to<br>
@@ -176,7 +190,7 @@ Return&nbsp;Values:<br>
 &nbsp;<br>
 Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;=&nbsp;XAuthToken(url,&nbsp;bauth,&nbsp;ctype)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;x.url</tt></dd>
+&nbsp;&nbsp;&nbsp;&nbsp;x.bauth</tt></dd>
 </dl>
 <dl><dt><strong>ctype</strong></dt>
 <dd><tt>Get&nbsp;method&nbsp;ctype&nbsp;returns&nbsp;the&nbsp;value&nbsp;of&nbsp;attribute&nbsp;__ctype,&nbsp;a<br>
@@ -184,35 +198,20 @@ CType&nbsp;object&nbsp;indicating&nbsp;the&nbsp;content&nbsp;type&nbsp;a&nbsp;us
 HTTP&nbsp;server&nbsp;to&nbsp;return.<br>
 &nbsp;<br>
 Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;none<br>
 &nbsp;<br>
 Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;CType&nbsp;object:&nbsp;An&nbsp;object&nbsp;with&nbsp;the&nbsp;content&nbsp;type&nbsp;that&nbsp;the&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;CType&nbsp;object:&nbsp;An&nbsp;object&nbsp;with&nbsp;the&nbsp;content&nbsp;type&nbsp;that&nbsp;the<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;server&nbsp;should&nbsp;provide&nbsp;in&nbsp;its&nbsp;response<br>
 &nbsp;<br>
 Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;=&nbsp;XAuthToken(url,&nbsp;bauth,&nbsp;ctype)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x.ctype</tt></dd>
 </dl>
-<dl><dt><strong>hdr</strong></dt>
-<dd><tt>Get&nbsp;method&nbsp;hdr&nbsp;returns&nbsp;the&nbsp;value&nbsp;of&nbsp;attribute&nbsp;__hdr,&nbsp;a&nbsp;string<br>
-whose&nbsp;value&nbsp;is&nbsp;"'X-Auth-Token':&nbsp;'&lt;token&gt;'"&nbsp;and&nbsp;can&nbsp;be&nbsp;used&nbsp;to<br>
-construct&nbsp;CRUD&nbsp;headers&nbsp;for&nbsp;authenticating&nbsp;calls&nbsp;to&nbsp;the&nbsp;server.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;An&nbsp;x-auth-token&nbsp;header&nbsp;string&nbsp;for&nbsp;CRUD&nbsp;calls.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;=&nbsp;XAuthToken(url,&nbsp;bauth,&nbsp;ctype)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;x.hdr</tt></dd>
-</dl>
 <dl><dt><strong>hdrs</strong></dt>
 <dd><tt>Get&nbsp;method&nbsp;hdrs&nbsp;returns&nbsp;the&nbsp;value&nbsp;of&nbsp;attribute&nbsp;__hdrs,&nbsp;a&nbsp;dict<br>
 whose&nbsp;value&nbsp;is&nbsp;{'X-Auth-Token':&nbsp;'&lt;token&gt;']&nbsp;and&nbsp;can&nbsp;be&nbsp;used&nbsp;to<br>
-construct&nbsp;CRUD&nbsp;headers&nbsp;for&nbsp;authenticating&nbsp;calls&nbsp;to&nbsp;the&nbsp;server.<br>
+construct&nbsp;CRUD&nbsp;headers&nbsp;for&nbsp;authenticating&nbsp;calls&nbsp;to&nbsp;a&nbsp;server.<br>
 &nbsp;<br>
 Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;=&nbsp;XAuthToken(url,&nbsp;bauth,&nbsp;ctype)<br>
@@ -223,7 +222,7 @@ Usage:<br>
 resource&nbsp;path&nbsp;used&nbsp;to&nbsp;request&nbsp;an&nbsp;x-auth-token.<br>
 &nbsp;<br>
 Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;none<br>
 &nbsp;<br>
 Return&nbsp;Values:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;A&nbsp;path&nbsp;to&nbsp;the&nbsp;server's&nbsp;token&nbsp;request&nbsp;API.<br>
@@ -238,7 +237,7 @@ value&nbsp;returned&nbsp;represents&nbsp;the&nbsp;number&nbsp;of&nbsp;seconds&nb
 HTTP&nbsp;server&nbsp;to&nbsp;return&nbsp;an&nbsp;x-auth-token.<br>
 &nbsp;<br>
 Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;none<br>
 &nbsp;<br>
 Return&nbsp;Values:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;int:&nbsp;time&nbsp;to&nbsp;wait&nbsp;in&nbsp;seconds&nbsp;for&nbsp;a&nbsp;response<br>
@@ -253,7 +252,7 @@ the&nbsp;x-auth-token&nbsp;value&nbsp;used&nbsp;by&nbsp;other&nbsp;API&nbsp;call
 with&nbsp;the&nbsp;HTTP&nbsp;server.<br>
 &nbsp;<br>
 Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;none<br>
 &nbsp;<br>
 Return&nbsp;Values:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;the&nbsp;token's&nbsp;value<br>
@@ -267,7 +266,7 @@ Usage:<br>
 base&nbsp;path&nbsp;to&nbsp;an&nbsp;HTTP&nbsp;server.<br>
 &nbsp;<br>
 Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;none<br>
 &nbsp;<br>
 Return&nbsp;Values:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;The&nbsp;base&nbsp;URL&nbsp;used&nbsp;to&nbsp;reach&nbsp;the&nbsp;HTTP&nbsp;server.<br>
@@ -278,11 +277,11 @@ Usage:<br>
 </dl>
 <dl><dt><strong>verify</strong></dt>
 <dd><tt>Get&nbsp;method&nbsp;verify&nbsp;returns&nbsp;the&nbsp;value&nbsp;of&nbsp;attribute&nbsp;__verify.&nbsp;&nbsp;Verify<br>
-determines&nbsp;whether&nbsp;the&nbsp;HTTP&nbsp;server's&nbsp;certificate&nbsp;should&nbsp;be&nbsp;<br>
+determines&nbsp;whether&nbsp;the&nbsp;HTTP&nbsp;server's&nbsp;certificate&nbsp;should&nbsp;be<br>
 validated&nbsp;or&nbsp;not.<br>
 &nbsp;<br>
 Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;none<br>
 &nbsp;<br>
 Return&nbsp;Values:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;boolean:&nbsp;True&nbsp;if&nbsp;the&nbsp;certificate&nbsp;should&nbsp;be&nbsp;verified,&nbsp;else&nbsp;False<br>
@@ -295,20 +294,20 @@ Usage:<br>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="XAuthTokenError">class <strong>XAuthTokenError</strong></a>(<a href="exceptions.html#Exception">exceptions.Exception</a>)</font></td></tr>
+<font color="#000000" face="helvetica, arial"><a name="XAuthTokenError">class <strong>XAuthTokenError</strong></a>(<a href="builtins.html#Exception">builtins.Exception</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>The&nbsp;<a href="#XAuthTokenError">XAuthTokenError</a>&nbsp;exception&nbsp;class,&nbsp;derived&nbsp;from&nbsp;<a href="exceptions.html#Exception">Exception</a>,&nbsp;indicates<br>
+<td colspan=2><tt>The&nbsp;<a href="#XAuthTokenError">XAuthTokenError</a>&nbsp;exception&nbsp;class,&nbsp;derived&nbsp;from&nbsp;<a href="builtins.html#Exception">Exception</a>,&nbsp;indicates<br>
 any&nbsp;problems&nbsp;specific&nbsp;to&nbsp;requesting&nbsp;a&nbsp;token&nbsp;from&nbsp;Cisco&nbsp;DNA&nbsp;Center.<br>
 &nbsp;<br>
 Attributes:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>&nbsp;</tt></td></tr>
+&nbsp;&nbsp;&nbsp;&nbsp;none<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="xauthtoken.html#XAuthTokenError">XAuthTokenError</a></dd>
-<dd><a href="exceptions.html#Exception">exceptions.Exception</a></dd>
-<dd><a href="exceptions.html#BaseException">exceptions.BaseException</a></dd>
-<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+<dd><a href="builtins.html#Exception">builtins.Exception</a></dd>
+<dd><a href="builtins.html#BaseException">builtins.BaseException</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
 </dl>
 <hr>
 Methods defined here:<br>
@@ -321,7 +320,7 @@ Parameters:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INVALID_RESPONSE="Invalid&nbsp;response&nbsp;to&nbsp;API&nbsp;call"<br>
 &nbsp;<br>
 Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#XAuthTokenError">XAuthTokenError</a>&nbsp;<a href="__builtin__.html#object">object</a>:&nbsp;the&nbsp;new&nbsp;exception.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#XAuthTokenError">XAuthTokenError</a>&nbsp;<a href="builtins.html#object">object</a>:&nbsp;the&nbsp;new&nbsp;exception.<br>
 &nbsp;<br>
 Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;raise&nbsp;<a href="#XAuthTokenError">XAuthTokenError</a>(INVALID_RESPONSE)</tt></dd></dl>
@@ -332,40 +331,43 @@ Data descriptors defined here:<br>
 <dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
 </dl>
 <hr>
-Data and other attributes inherited from <a href="exceptions.html#Exception">exceptions.Exception</a>:<br>
-<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object&gt;<dd><tt>T.<a href="#XAuthTokenError-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+Methods inherited from <a href="builtins.html#Exception">builtins.Exception</a>:<br>
+<dl><dt><a name="XAuthTokenError-__new__"><strong>__new__</strong></a>(*args, **kwargs)<font color="#909090"><font face="helvetica, arial"> from <a href="builtins.html#type">builtins.type</a></font></font></dt><dd><tt>Create&nbsp;and&nbsp;return&nbsp;a&nbsp;new&nbsp;<a href="builtins.html#object">object</a>.&nbsp;&nbsp;See&nbsp;help(type)&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
 
 <hr>
-Methods inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
-<dl><dt><a name="XAuthTokenError-__delattr__"><strong>__delattr__</strong></a>(...)</dt><dd><tt>x.<a href="#XAuthTokenError-__delattr__">__delattr__</a>('name')&nbsp;&lt;==&gt;&nbsp;del&nbsp;x.name</tt></dd></dl>
+Methods inherited from <a href="builtins.html#BaseException">builtins.BaseException</a>:<br>
+<dl><dt><a name="XAuthTokenError-__delattr__"><strong>__delattr__</strong></a>(self, name, /)</dt><dd><tt>Implement&nbsp;delattr(self,&nbsp;name).</tt></dd></dl>
 
-<dl><dt><a name="XAuthTokenError-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#XAuthTokenError-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
+<dl><dt><a name="XAuthTokenError-__getattribute__"><strong>__getattribute__</strong></a>(self, name, /)</dt><dd><tt>Return&nbsp;getattr(self,&nbsp;name).</tt></dd></dl>
 
-<dl><dt><a name="XAuthTokenError-__getitem__"><strong>__getitem__</strong></a>(...)</dt><dd><tt>x.<a href="#XAuthTokenError-__getitem__">__getitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;x[y]</tt></dd></dl>
+<dl><dt><a name="XAuthTokenError-__reduce__"><strong>__reduce__</strong></a>(...)</dt><dd><tt>helper&nbsp;for&nbsp;pickle</tt></dd></dl>
 
-<dl><dt><a name="XAuthTokenError-__getslice__"><strong>__getslice__</strong></a>(...)</dt><dd><tt>x.<a href="#XAuthTokenError-__getslice__">__getslice__</a>(i,&nbsp;j)&nbsp;&lt;==&gt;&nbsp;x[i:j]<br>
-&nbsp;<br>
-Use&nbsp;of&nbsp;negative&nbsp;indices&nbsp;is&nbsp;not&nbsp;supported.</tt></dd></dl>
+<dl><dt><a name="XAuthTokenError-__repr__"><strong>__repr__</strong></a>(self, /)</dt><dd><tt>Return&nbsp;repr(self).</tt></dd></dl>
 
-<dl><dt><a name="XAuthTokenError-__reduce__"><strong>__reduce__</strong></a>(...)</dt></dl>
-
-<dl><dt><a name="XAuthTokenError-__repr__"><strong>__repr__</strong></a>(...)</dt><dd><tt>x.<a href="#XAuthTokenError-__repr__">__repr__</a>()&nbsp;&lt;==&gt;&nbsp;repr(x)</tt></dd></dl>
-
-<dl><dt><a name="XAuthTokenError-__setattr__"><strong>__setattr__</strong></a>(...)</dt><dd><tt>x.<a href="#XAuthTokenError-__setattr__">__setattr__</a>('name',&nbsp;value)&nbsp;&lt;==&gt;&nbsp;x.name&nbsp;=&nbsp;value</tt></dd></dl>
+<dl><dt><a name="XAuthTokenError-__setattr__"><strong>__setattr__</strong></a>(self, name, value, /)</dt><dd><tt>Implement&nbsp;setattr(self,&nbsp;name,&nbsp;value).</tt></dd></dl>
 
 <dl><dt><a name="XAuthTokenError-__setstate__"><strong>__setstate__</strong></a>(...)</dt></dl>
 
-<dl><dt><a name="XAuthTokenError-__str__"><strong>__str__</strong></a>(...)</dt><dd><tt>x.<a href="#XAuthTokenError-__str__">__str__</a>()&nbsp;&lt;==&gt;&nbsp;str(x)</tt></dd></dl>
+<dl><dt><a name="XAuthTokenError-__str__"><strong>__str__</strong></a>(self, /)</dt><dd><tt>Return&nbsp;str(self).</tt></dd></dl>
 
-<dl><dt><a name="XAuthTokenError-__unicode__"><strong>__unicode__</strong></a>(...)</dt></dl>
+<dl><dt><a name="XAuthTokenError-with_traceback"><strong>with_traceback</strong></a>(...)</dt><dd><tt><a href="builtins.html#Exception">Exception</a>.<a href="#XAuthTokenError-with_traceback">with_traceback</a>(tb)&nbsp;--<br>
+set&nbsp;self.<strong>__traceback__</strong>&nbsp;to&nbsp;tb&nbsp;and&nbsp;return&nbsp;self.</tt></dd></dl>
 
 <hr>
-Data descriptors inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+Data descriptors inherited from <a href="builtins.html#BaseException">builtins.BaseException</a>:<br>
+<dl><dt><strong>__cause__</strong></dt>
+<dd><tt>exception&nbsp;cause</tt></dd>
+</dl>
+<dl><dt><strong>__context__</strong></dt>
+<dd><tt>exception&nbsp;context</tt></dd>
+</dl>
 <dl><dt><strong>__dict__</strong></dt>
 </dl>
-<dl><dt><strong>args</strong></dt>
+<dl><dt><strong>__suppress_context__</strong></dt>
 </dl>
-<dl><dt><strong>message</strong></dt>
+<dl><dt><strong>__traceback__</strong></dt>
+</dl>
+<dl><dt><strong>args</strong></dt>
 </dl>
 </td></tr></table></td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
