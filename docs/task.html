@@ -1,7 +1,6 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head><title>Python: module task</title>
-<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head><body bgcolor="#f0f0f8">
 
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
@@ -9,7 +8,7 @@
 <td valign=bottom>&nbsp;<br>
 <font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>task</strong></big></big></font></td
 ><td align=right valign=bottom
-><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/rsayle/api/dnac/task.py">/home/rsayle/api/dnac/task.py</a></font></td></tr></table>
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/task.py">/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/task.py</a></font></td></tr></table>
     <p></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -27,7 +26,7 @@
     
 <tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><dl>
-<dt><font face="helvetica, arial"><a href="dnacapi.html#DnacApi">dnacapi.DnacApi</a>(<a href="__builtin__.html#object">__builtin__.object</a>)
+<dt><font face="helvetica, arial"><a href="dnacapi.html#DnacApi">dnacapi.DnacApi</a>(<a href="builtins.html#object">builtins.object</a>)
 </font></dt><dd>
 <dl>
 <dt><font face="helvetica, arial"><a href="task.html#Task">Task</a>
@@ -45,7 +44,7 @@
 asynchronously&nbsp;on&nbsp;Cisco&nbsp;DNAC.&nbsp;&nbsp;In&nbsp;other&nbsp;words,&nbsp;although&nbsp;a&nbsp;task&nbsp;is<br>
 created,&nbsp;its&nbsp;results&nbsp;may&nbsp;not&nbsp;immediately&nbsp;be&nbsp;available.&nbsp;&nbsp;Cisco&nbsp;DNA&nbsp;Center<br>
 provides&nbsp;a&nbsp;task&nbsp;ID&nbsp;for&nbsp;checking&nbsp;a&nbsp;task's&nbsp;status,&nbsp;and&nbsp;this&nbsp;object&nbsp;stores<br>
-it&nbsp;in&nbsp;its&nbsp;__taskId&nbsp;attribute.<br>
+it&nbsp;in&nbsp;its&nbsp;__id&nbsp;attribute.<br>
 &nbsp;<br>
 <a href="#Task">Task</a>&nbsp;does&nbsp;not&nbsp;wait&nbsp;for&nbsp;a&nbsp;task&nbsp;running&nbsp;on&nbsp;Cisco&nbsp;DNAC&nbsp;to&nbsp;finish.&nbsp;&nbsp;Instead,<br>
 it&nbsp;returns&nbsp;the&nbsp;task's&nbsp;current&nbsp;state&nbsp;contained&nbsp;in&nbsp;the&nbsp;response's<br>
@@ -55,78 +54,75 @@ progress&nbsp;to&nbsp;"CLI&nbsp;Runner&nbsp;request&nbsp;creation",&nbsp;and&nbs
 is&nbsp;a&nbsp;string&nbsp;that&nbsp;can&nbsp;be&nbsp;converted&nbsp;to&nbsp;a&nbsp;dict&nbsp;that&nbsp;will&nbsp;look&nbsp;like:<br>
 {fileId:&nbsp;&lt;uuid&gt;}.<br>
 &nbsp;<br>
-The&nbsp;task.py&nbsp;module&nbsp;defines&nbsp;a&nbsp;two&nbsp;constant&nbsp;that&nbsp;can&nbsp;be&nbsp;used&nbsp;for<br>
-monitoring&nbsp;a&nbsp;task&nbsp;with&nbsp;<a href="#Task-checkTask">checkTask</a>().&nbsp;&nbsp;Use&nbsp;TASK_EMPTY&nbsp;to&nbsp;see&nbsp;if&nbsp;a&nbsp;task<br>
+The&nbsp;task.py&nbsp;module&nbsp;defines&nbsp;two&nbsp;constants&nbsp;that&nbsp;can&nbsp;be&nbsp;used&nbsp;for<br>
+monitoring&nbsp;a&nbsp;task&nbsp;with&nbsp;<a href="#Task-check_task">check_task</a>().&nbsp;&nbsp;Use&nbsp;TASK_EMPTY&nbsp;to&nbsp;see&nbsp;if&nbsp;a&nbsp;task<br>
 has&nbsp;been&nbsp;created,&nbsp;and&nbsp;use&nbsp;TASK_CREATION&nbsp;to&nbsp;detect&nbsp;that&nbsp;Cisco&nbsp;DNA&nbsp;Center<br>
 is&nbsp;preparing&nbsp;a&nbsp;task&nbsp;to&nbsp;run.&nbsp;&nbsp;There&nbsp;is&nbsp;no&nbsp;constant&nbsp;for&nbsp;task&nbsp;completion.<br>
-Instead,&nbsp;<a href="#Task-checkTask">checkTask</a>()&nbsp;returns&nbsp;the&nbsp;progress&nbsp;string&nbsp;Cisco&nbsp;DNAC&nbsp;furnished.<br>
 &nbsp;<br>
 When&nbsp;a&nbsp;task&nbsp;has&nbsp;completed,&nbsp;Cisco&nbsp;DNA&nbsp;Center&nbsp;stores&nbsp;the&nbsp;results&nbsp;in&nbsp;a&nbsp;file<br>
 and&nbsp;provides&nbsp;the&nbsp;file's&nbsp;ID&nbsp;as&nbsp;the&nbsp;results&nbsp;of&nbsp;making&nbsp;an&nbsp;API&nbsp;call&nbsp;to<br>
-the&nbsp;task.&nbsp;&nbsp;Subsequently,&nbsp;when&nbsp;using&nbsp;this&nbsp;class'&nbsp;<a href="#Task-checkTask">checkTask</a>()&nbsp;method,<br>
-if&nbsp;the&nbsp;task&nbsp;has&nbsp;completed,&nbsp;<a href="#Task">Task</a>&nbsp;creates&nbsp;a&nbsp;TaskResults&nbsp;instance&nbsp;using<br>
-the&nbsp;file&nbsp;ID&nbsp;returned.&nbsp;&nbsp;<a href="#Task">Task</a>&nbsp;then&nbsp;saves&nbsp;the&nbsp;TaskResults&nbsp;object&nbsp;as&nbsp;its<br>
-__taskResults&nbsp;attribute.&nbsp;&nbsp;This&nbsp;makes&nbsp;it&nbsp;easy&nbsp;for&nbsp;programmers&nbsp;to<br>
+the&nbsp;task.&nbsp;&nbsp;Subsequently,&nbsp;when&nbsp;using&nbsp;this&nbsp;class'&nbsp;<a href="#Task-check_task">check_task</a>()&nbsp;method,<br>
+if&nbsp;the&nbsp;task&nbsp;has&nbsp;completed,&nbsp;<a href="#Task">Task</a>&nbsp;creates&nbsp;a&nbsp;File&nbsp;instance&nbsp;using<br>
+the&nbsp;file&nbsp;ID&nbsp;returned.&nbsp;&nbsp;<a href="#Task">Task</a>&nbsp;then&nbsp;saves&nbsp;the&nbsp;File&nbsp;object&nbsp;as&nbsp;its<br>
+__file&nbsp;attribute.&nbsp;&nbsp;This&nbsp;makes&nbsp;it&nbsp;easy&nbsp;for&nbsp;programmers&nbsp;to<br>
 quickly&nbsp;and&nbsp;easily&nbsp;retrieve&nbsp;the&nbsp;actual&nbsp;results&nbsp;to&nbsp;be&nbsp;parsed.<br>
+&nbsp;<br>
+Attributes:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;id:&nbsp;The&nbsp;task's&nbsp;UUID&nbsp;in&nbsp;Cisco&nbsp;DNA&nbsp;Center.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
+&nbsp;&nbsp;&nbsp;&nbsp;progress:&nbsp;The&nbsp;task's&nbsp;current&nbsp;running&nbsp;state.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
+&nbsp;&nbsp;&nbsp;&nbsp;file:&nbsp;A&nbsp;File&nbsp;object&nbsp;containing&nbsp;the&nbsp;task's&nbsp;results.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;File&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
+&nbsp;&nbsp;&nbsp;&nbsp;file_id:&nbsp;The&nbsp;UUID&nbsp;of&nbsp;the&nbsp;file&nbsp;with&nbsp;the&nbsp;task's&nbsp;results.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
 &nbsp;<br>
 Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;task&nbsp;=&nbsp;<a href="#Task">Task</a>(d,&nbsp;"aTask")<br>
-&nbsp;&nbsp;&nbsp;&nbsp;task.<a href="#Task-checkTask">checkTask</a>()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;results&nbsp;=&nbsp;task.taskResults.getResults()<br>&nbsp;</tt></td></tr>
+&nbsp;&nbsp;&nbsp;&nbsp;task&nbsp;=&nbsp;<a href="#Task">Task</a>(d,&nbsp;a_task_id)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;task.<a href="#Task-check_task">check_task</a>()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;results&nbsp;=&nbsp;task.file.get_results()<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="task.html#Task">Task</a></dd>
 <dd><a href="dnacapi.html#DnacApi">dnacapi.DnacApi</a></dd>
-<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
 </dl>
 <hr>
 Methods defined here:<br>
-<dl><dt><a name="Task-__init__"><strong>__init__</strong></a>(self, dnac, name, taskId<font color="#909090">=''</font>, verify<font color="#909090">=False</font>, timeout<font color="#909090">=5</font>)</dt><dd><tt>__init__&nbsp;makes&nbsp;a&nbsp;new&nbsp;<a href="#Task">Task</a>&nbsp;object.&nbsp;&nbsp;An&nbsp;empty&nbsp;task&nbsp;object&nbsp;may&nbsp;be<br>
-created&nbsp;by&nbsp;only&nbsp;passing&nbsp;a&nbsp;Dnac&nbsp;object&nbsp;and&nbsp;name&nbsp;for&nbsp;the&nbsp;task.&nbsp;&nbsp;In<br>
-this&nbsp;case,&nbsp;be&nbsp;certain&nbsp;to&nbsp;later&nbsp;set&nbsp;the&nbsp;taskId&nbsp;with&nbsp;the&nbsp;UUID&nbsp;of<br>
-a&nbsp;task&nbsp;running&nbsp;on&nbsp;Cisco&nbsp;DNAC.<br>
-&nbsp;<br>
-The&nbsp;preferred&nbsp;method&nbsp;of&nbsp;creating&nbsp;a&nbsp;<a href="#Task">Task</a>&nbsp;object&nbsp;is&nbsp;to&nbsp;pass&nbsp;the<br>
-task's&nbsp;UUID&nbsp;to&nbsp;__init__&nbsp;so&nbsp;that&nbsp;the&nbsp;<a href="#Task">Task</a>&nbsp;instance&nbsp;sets&nbsp;its&nbsp;name<br>
-and&nbsp;URL&nbsp;making&nbsp;it&nbsp;ready&nbsp;for&nbsp;use&nbsp;to&nbsp;monitor&nbsp;the&nbsp;task.&nbsp;&nbsp;In&nbsp;this&nbsp;case,<br>
-the&nbsp;name&nbsp;parameter&nbsp;is&nbsp;ignored&nbsp;and&nbsp;<a href="#Task">Task</a>&nbsp;instead&nbsp;sets&nbsp;its&nbsp;name<br>
-to&nbsp;the&nbsp;value&nbsp;"task_&lt;id&gt;".<br>
+<dl><dt><a name="Task-__init__"><strong>__init__</strong></a>(self, dnac, id, verify=False, timeout=5)</dt><dd><tt>__init__&nbsp;makes&nbsp;a&nbsp;new&nbsp;<a href="#Task">Task</a>&nbsp;object.&nbsp;&nbsp;An&nbsp;empty&nbsp;task&nbsp;object&nbsp;may&nbsp;be<br>
+created&nbsp;by&nbsp;only&nbsp;passing&nbsp;a&nbsp;Dnac&nbsp;object&nbsp;and&nbsp;the&nbsp;task's&nbsp;UUID.<br>
+The&nbsp;<a href="#Task">Task</a>&nbsp;instance&nbsp;sets&nbsp;its&nbsp;name&nbsp;as&nbsp;"task_&lt;id&gt;"&nbsp;and&nbsp;the&nbsp;URL&nbsp;for<br>
+querying&nbsp;the&nbsp;task's&nbsp;progress.<br>
 &nbsp;<br>
 Parameters:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dnac:&nbsp;A&nbsp;reference&nbsp;to&nbsp;the&nbsp;containing&nbsp;Dnac&nbsp;object.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;Dnac&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;Yes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;name:&nbsp;A&nbsp;user&nbsp;friendly&nbsp;name&nbsp;for&nbsp;finding&nbsp;this&nbsp;object&nbsp;in&nbsp;a&nbsp;Dnac<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;instance.&nbsp;&nbsp;If&nbsp;name&nbsp;is&nbsp;not&nbsp;included,&nbsp;__init__&nbsp;sets<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;__name&nbsp;to&nbsp;"task__&lt;id&gt;",&nbsp;where&nbsp;&lt;id&gt;&nbsp;is&nbsp;the&nbsp;value&nbsp;of<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;object's&nbsp;__id&nbsp;attribute..<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;id:&nbsp;The&nbsp;UUID&nbsp;of&nbsp;the&nbsp;task&nbsp;running&nbsp;on&nbsp;Cisco&nbsp;DNAC.&nbsp;The&nbsp;new&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sets&nbsp;its&nbsp;name&nbsp;and&nbsp;url&nbsp;based&nbsp;on&nbsp;id's&nbsp;value:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;=&nbsp;"task_&lt;id&gt;"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url&nbsp;=&nbsp;"dnac.url/self.<strong>resource</strong>/&lt;id&gt;"<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;Yes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;taskId:&nbsp;The&nbsp;UUID&nbsp;of&nbsp;the&nbsp;task&nbsp;running&nbsp;on&nbsp;Cisco&nbsp;DNAC.&nbsp;&nbsp;When<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;included,&nbsp;as&nbsp;part&nbsp;of&nbsp;calling&nbsp;__init__,&nbsp;the&nbsp;new&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sets&nbsp;its&nbsp;name&nbsp;and&nbsp;url&nbsp;based&nbsp;on&nbsp;id's&nbsp;value:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;=&nbsp;"task_&lt;id&gt;"<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url&nbsp;=&nbsp;"dnac.url/self.<strong>respath</strong>/&lt;id&gt;"<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;No<br>
-&nbsp;&nbsp;&nbsp;&nbsp;requestFilter:&nbsp;An&nbsp;expression&nbsp;for&nbsp;filtering&nbsp;Cisco&nbsp;DNAC's<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;response.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;No<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;verify:&nbsp;A&nbsp;flag&nbsp;used&nbsp;to&nbsp;check&nbsp;Cisco&nbsp;DNAC's&nbsp;certificate.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;boolean<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;False<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;No<br>
-&nbsp;&nbsp;&nbsp;&nbsp;timeout:&nbsp;The&nbsp;number&nbsp;of&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;Cisco&nbsp;DNAC's<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;response.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
+&nbsp;&nbsp;&nbsp;&nbsp;timeout:&nbsp;The&nbsp;number&nbsp;of&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;Cisco&nbsp;DNAC's&nbsp;response.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;5<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;No<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
 &nbsp;<br>
 Return&nbsp;Values:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#Task">Task</a>&nbsp;object:&nbsp;a&nbsp;new&nbsp;<a href="#Task">Task</a>&nbsp;object.<br>
@@ -134,50 +130,81 @@ Return&nbsp;Values:<br>
 Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
 &nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;=&nbsp;&lt;task&nbsp;ID&nbsp;from&nbsp;Cisco&nbsp;DNAC&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;=&nbsp;"task_"&nbsp;+&nbsp;id<br>
-&nbsp;&nbsp;&nbsp;&nbsp;task&nbsp;=&nbsp;<a href="#Task">Task</a>(d,&nbsp;name)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;task.taskId&nbsp;=&nbsp;id<br>
-&nbsp;&nbsp;&nbsp;&nbsp;newId&nbsp;=&nbsp;&lt;another&nbsp;task&nbsp;ID&nbsp;from&nbsp;Cisco&nbsp;DNAC&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;newTask&nbsp;=&nbsp;<a href="#Task">Task</a>(d,&nbsp;"aNewName",&nbsp;newId)</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;task&nbsp;=&nbsp;<a href="#Task">Task</a>(d,&nbsp;a_task_id)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;task.<a href="#Task-check_task">check_task</a>()</tt></dd></dl>
 
-<dl><dt><a name="Task-checkTask"><strong>checkTask</strong></a>(self)</dt><dd><tt>Class&nbsp;method&nbsp;checkTask&nbsp;issues&nbsp;an&nbsp;API&nbsp;call&nbsp;to&nbsp;Cisco&nbsp;DNA&nbsp;Center&nbsp;and<br>
-provides&nbsp;the&nbsp;task's&nbsp;results.&nbsp;&nbsp;In&nbsp;its&nbsp;current&nbsp;form,&nbsp;this&nbsp;method<br>
-assumes&nbsp;the&nbsp;task&nbsp;has&nbsp;completed&nbsp;and&nbsp;that&nbsp;Cisco&nbsp;DNAC&nbsp;provided&nbsp;a&nbsp;file<br>
-ID&nbsp;for&nbsp;getting&nbsp;the&nbsp;task's&nbsp;results.&nbsp;&nbsp;This&nbsp;will&nbsp;eventually&nbsp;be&nbsp;updated<br>
-to&nbsp;handle&nbsp;situation&nbsp;in&nbsp;which&nbsp;this&nbsp;is&nbsp;not&nbsp;the&nbsp;case.<br>
+<dl><dt><a name="Task-check_task"><strong>check_task</strong></a>(self)</dt><dd><tt>Class&nbsp;method&nbsp;check_task&nbsp;issues&nbsp;an&nbsp;API&nbsp;call&nbsp;to&nbsp;Cisco&nbsp;DNA&nbsp;Center&nbsp;and<br>
+provides&nbsp;the&nbsp;task's&nbsp;results.<br>
 &nbsp;<br>
 If&nbsp;the&nbsp;task&nbsp;completed&nbsp;its&nbsp;work&nbsp;on&nbsp;Cisco&nbsp;DNAC,&nbsp;this&nbsp;function&nbsp;sets&nbsp;the<br>
-__taskResultsId&nbsp;value&nbsp;to&nbsp;the&nbsp;file's&nbsp;UUID&nbsp;on&nbsp;Cisco&nbsp;DNAC,&nbsp;and&nbsp;it<br>
-creates&nbsp;a&nbsp;new&nbsp;TaskResults&nbsp;object&nbsp;using&nbsp;the&nbsp;UUID&nbsp;to&nbsp;that&nbsp;the&nbsp;actual<br>
+__file_id&nbsp;value&nbsp;to&nbsp;the&nbsp;file's&nbsp;UUID&nbsp;on&nbsp;Cisco&nbsp;DNAC,&nbsp;and&nbsp;it<br>
+creates&nbsp;a&nbsp;new&nbsp;File&nbsp;object&nbsp;using&nbsp;the&nbsp;UUID&nbsp;to&nbsp;that&nbsp;the&nbsp;actual<br>
 results&nbsp;may&nbsp;easily&nbsp;be&nbsp;queried&nbsp;from&nbsp;this&nbsp;object.&nbsp;&nbsp;The&nbsp;results&nbsp;get<br>
-save&nbsp;in&nbsp;__taskResults.<br>
+saved&nbsp;in&nbsp;__file.<br>
 &nbsp;<br>
 Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;none<br>
 &nbsp;<br>
 Return&nbsp;Values:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;The&nbsp;task's&nbsp;results&nbsp;identifier,&nbsp;a&nbsp;file&nbsp;UUID&nbsp;on&nbsp;Cisco&nbsp;DNAC.<br>
 &nbsp;<br>
 Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;task&nbsp;=&nbsp;<a href="#Task">Task</a>(d,&nbsp;"aTask",&nbsp;"aTaskId")<br>
-&nbsp;&nbsp;&nbsp;&nbsp;task.<a href="#Task-checkTask">checkTask</a>()</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;task&nbsp;=&nbsp;<a href="#Task">Task</a>(d,&nbsp;a_task_id)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;task.<a href="#Task-check_task">check_task</a>()</tt></dd></dl>
 
 <hr>
 Data descriptors defined here:<br>
-<dl><dt><strong>id</strong></dt>
-<dd><tt>Get&nbsp;method&nbsp;id&nbsp;returns&nbsp;the&nbsp;value&nbsp;of&nbsp;__id,&nbsp;the&nbsp;task's&nbsp;UUID&nbsp;in&nbsp;Cisco<br>
-DNAC.<br>
+<dl><dt><strong>file</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;file&nbsp;returns&nbsp;the&nbsp;File&nbsp;object&nbsp;associated<br>
+with&nbsp;the&nbsp;task&nbsp;referenced&nbsp;by&nbsp;this&nbsp;object.&nbsp;&nbsp;If&nbsp;the&nbsp;task&nbsp;has&nbsp;not<br>
+finished,&nbsp;None&nbsp;is&nbsp;returned.<br>
+&nbsp;<br>
+Rather&nbsp;than&nbsp;using&nbsp;this&nbsp;method,&nbsp;users&nbsp;are&nbsp;encouraged&nbsp;to&nbsp;directly<br>
+access&nbsp;the&nbsp;File&nbsp;object&nbsp;and&nbsp;call&nbsp;its&nbsp;getResults&nbsp;method,<br>
+which&nbsp;returns&nbsp;a&nbsp;list&nbsp;with&nbsp;the&nbsp;task's&nbsp;output.<br>
 &nbsp;<br>
 Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;none<br>
+&nbsp;<br>
+Return&nbsp;Values:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;The&nbsp;task's&nbsp;resource&nbsp;path.<br>
+&nbsp;<br>
+Usage:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;task&nbsp;=&nbsp;Task(d,&nbsp;a_task_id)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;task.check_task()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;results&nbsp;=&nbsp;task.results</tt></dd>
+</dl>
+<dl><dt><strong>file_id</strong></dt>
+<dd><tt>The&nbsp;file_id&nbsp;get&nbsp;method&nbsp;retrieves&nbsp;the&nbsp;object&nbsp;current&nbsp;value<br>
+for&nbsp;__file_id,&nbsp;which&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;generate&nbsp;a&nbsp;new<br>
+File&nbsp;object.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;none<br>
+&nbsp;<br>
+Return&nbsp;Values:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;The&nbsp;UUID&nbsp;to&nbsp;the&nbsp;task's&nbsp;results,&nbsp;a&nbsp;file&nbsp;on&nbsp;Cisco&nbsp;DNAC.<br>
+&nbsp;<br>
+Usage:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;task&nbsp;=&nbsp;Task(d,&nbsp;a_task_id)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;task.check_task()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;results&nbsp;=&nbsp;File(d,&nbsp;task.file_id)</tt></dd>
+</dl>
+<dl><dt><strong>id</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;id&nbsp;returns&nbsp;the&nbsp;value&nbsp;of&nbsp;__id,&nbsp;the&nbsp;task's&nbsp;UUID&nbsp;in&nbsp;Cisco&nbsp;DNAC.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;none<br>
 &nbsp;<br>
 Return&nbsp;Values:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;The&nbsp;task's&nbsp;UUID.<br>
 &nbsp;<br>
 Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;task&nbsp;=&nbsp;Task(d,&nbsp;"aTask",&nbsp;id=taskId)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;task&nbsp;=&nbsp;Task(d,&nbsp;a_task_id)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;task.id</tt></dd>
 </dl>
 <dl><dt><strong>progress</strong></dt>
@@ -185,7 +212,7 @@ Usage:<br>
 indicates&nbsp;the&nbsp;current&nbsp;stat&nbsp;of&nbsp;the&nbsp;running&nbsp;task.<br>
 &nbsp;<br>
 Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;none<br>
 &nbsp;<br>
 Return&nbsp;Values:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;The&nbsp;task's&nbsp;current&nbsp;state:<br>
@@ -196,46 +223,8 @@ Return&nbsp;Values:<br>
 &nbsp;<br>
 Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;task&nbsp;=&nbsp;Task(d,&nbsp;"aTask",&nbsp;id=taskId)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;task&nbsp;=&nbsp;Task(d,&nbsp;a_task_id)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;task.progress</tt></dd>
-</dl>
-<dl><dt><strong>taskResults</strong></dt>
-<dd><tt>Get&nbsp;method&nbsp;taskResults&nbsp;returns&nbsp;the&nbsp;TaskResults&nbsp;object&nbsp;associated<br>
-with&nbsp;the&nbsp;task&nbsp;referenced&nbsp;by&nbsp;this&nbsp;object.&nbsp;&nbsp;If&nbsp;the&nbsp;task&nbsp;has&nbsp;not<br>
-finished,&nbsp;None&nbsp;is&nbsp;returned.<br>
-&nbsp;<br>
-Rather&nbsp;than&nbsp;using&nbsp;this&nbsp;method,&nbsp;users&nbsp;are&nbsp;encouraged&nbsp;to&nbsp;directly<br>
-access&nbsp;the&nbsp;TaskResults&nbsp;object&nbsp;and&nbsp;call&nbsp;its&nbsp;getResults&nbsp;method,<br>
-which&nbsp;returns&nbsp;a&nbsp;list&nbsp;with&nbsp;the&nbsp;task's&nbsp;output.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;The&nbsp;task's&nbsp;resource&nbsp;path.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;task&nbsp;=&nbsp;Task(d,&nbsp;"aTask",&nbsp;id=taskId)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;task.checkTask()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;results&nbsp;=&nbsp;task.results</tt></dd>
-</dl>
-<dl><dt><strong>taskResultsId</strong></dt>
-<dd><tt>The&nbsp;taskResultsId&nbsp;get&nbsp;method&nbsp;retrieves&nbsp;the&nbsp;object&nbsp;current&nbsp;value<br>
-for&nbsp;__taskResultsId,&nbsp;which&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;generate&nbsp;a&nbsp;new<br>
-TaskResults&nbsp;object.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;The&nbsp;UUID&nbsp;to&nbsp;the&nbsp;task's&nbsp;results,&nbsp;a&nbsp;file&nbsp;on&nbsp;Cisco&nbsp;DNAC.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;task&nbsp;=&nbsp;Task(d,&nbsp;"aTask",&nbsp;id=taskId)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;task.checkTask()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;results&nbsp;=&nbsp;TaskResults(d,&nbsp;"aName",&nbsp;task.taskResultsId)</tt></dd>
 </dl>
 <hr>
 Data descriptors inherited from <a href="dnacapi.html#DnacApi">dnacapi.DnacApi</a>:<br>
@@ -251,7 +240,7 @@ uses&nbsp;to&nbsp;make&nbsp;RESTful&nbsp;API&nbsp;calls.&nbsp;&nbsp;Use&nbsp;thi
 access&nbsp;the&nbsp;Crud&nbsp;object's&nbsp;get,&nbsp;put,&nbsp;post&nbsp;and&nbsp;delete&nbsp;methods.<br>
 &nbsp;<br>
 Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;none<br>
 &nbsp;<br>
 Return&nbsp;Values:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Crud&nbsp;object:&nbsp;The&nbsp;wrapped&nbsp;Crud&nbsp;object<br>
@@ -268,7 +257,7 @@ Usage:<br>
 stores&nbsp;this&nbsp;object.<br>
 &nbsp;<br>
 Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;none<br>
 &nbsp;<br>
 Return&nbsp;Values:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Dnac&nbsp;object:&nbsp;The&nbsp;Dnac&nbsp;object&nbsp;container.<br>
@@ -283,7 +272,7 @@ Usage:<br>
 this&nbsp;object&nbsp;in&nbsp;Dnac's&nbsp;API&nbsp;store,&nbsp;namely&nbsp;Dnac.api{}<br>
 &nbsp;<br>
 Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;none<br>
 &nbsp;<br>
 Return&nbsp;Values:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;The&nbsp;DnacApi&nbsp;object's&nbsp;name<br>
@@ -299,7 +288,7 @@ Cisco&nbsp;DNAC.&nbsp;&nbsp;In&nbsp;child&nbsp;classes,&nbsp;use&nbsp;this&nbsp;
 appending&nbsp;it&nbsp;to&nbsp;Cisco&nbsp;DNAC's&nbsp;base&nbsp;url,&nbsp;i.e.&nbsp;Dnac.url.<br>
 &nbsp;<br>
 Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;none<br>
 &nbsp;<br>
 Return&nbsp;Values:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;The&nbsp;API&nbsp;call.<br>
@@ -308,7 +297,7 @@ Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;Do&nbsp;not&nbsp;create&nbsp;a&nbsp;DnacApi&nbsp;object;&nbsp;inherit&nbsp;from&nbsp;it&nbsp;instead<br>
 &nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dapi&nbsp;=&nbsp;DnacApi(d,&nbsp;name,&nbsp;resource)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;apicall&nbsp;=&nbsp;d.url&nbsp;+&nbsp;dapi.resource</tt></dd>
+&nbsp;&nbsp;&nbsp;&nbsp;api_call&nbsp;=&nbsp;d.url&nbsp;+&nbsp;dapi.resource</tt></dd>
 </dl>
 <dl><dt><strong>results</strong></dt>
 <dd><tt>The&nbsp;results&nbsp;method&nbsp;is&nbsp;decorated&nbsp;as&nbsp;if&nbsp;it&nbsp;was&nbsp;an&nbsp;attribute&nbsp;of&nbsp;this<br>
@@ -316,7 +305,7 @@ class&nbsp;and&nbsp;can&nbsp;be&nbsp;used&nbsp;accordingly.&nbsp;&nbsp;It&nbsp;r
 stored&nbsp;in&nbsp;the&nbsp;class'&nbsp;Crud&nbsp;object&nbsp;obtained&nbsp;from&nbsp;an&nbsp;API&nbsp;call.<br>
 &nbsp;<br>
 Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;none<br>
 &nbsp;<br>
 Return&nbsp;Values:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;The&nbsp;results&nbsp;of&nbsp;the&nbsp;API&nbsp;call.<br>
@@ -335,7 +324,7 @@ value&nbsp;returned&nbsp;represents&nbsp;the&nbsp;number&nbsp;of&nbsp;seconds&nb
 HTTP&nbsp;server&nbsp;to&nbsp;respond&nbsp;to&nbsp;an&nbsp;API&nbsp;request<br>
 &nbsp;<br>
 Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;none<br>
 &nbsp;<br>
 Return&nbsp;Values:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;int:&nbsp;time&nbsp;to&nbsp;wait&nbsp;in&nbsp;seconds&nbsp;for&nbsp;a&nbsp;response<br>
@@ -345,12 +334,12 @@ Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dapi.timeout</tt></dd>
 </dl>
 <dl><dt><strong>verify</strong></dt>
-<dd><tt>Get&nbsp;method&nbsp;verify&nbsp;returns&nbsp;value&nbsp;of&nbsp;__verify,&nbsp;which&nbsp;is&nbsp;used&nbsp;to&nbsp;<br>
+<dd><tt>Get&nbsp;method&nbsp;verify&nbsp;returns&nbsp;value&nbsp;of&nbsp;__verify,&nbsp;which&nbsp;is&nbsp;used&nbsp;to<br>
 determine&nbsp;whether&nbsp;or&nbsp;not&nbsp;to&nbsp;check&nbsp;Cisco&nbsp;DNAC's&nbsp;certificate&nbsp;upon<br>
 making&nbsp;an&nbsp;API&nbsp;call.<br>
 &nbsp;<br>
 Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;none<br>
 &nbsp;<br>
 Return&nbsp;Values:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;boolean:&nbsp;True&nbsp;to&nbsp;check&nbsp;the&nbsp;cert;&nbsp;otherwise,&nbsp;False<br>
@@ -367,11 +356,13 @@ Usage:<br>
 <font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
     
 <tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><strong>ERROR_MSGS</strong> = {'400': '400 - API request syntax is malformed', '401': '401 - API request has missing or invalid credentials', '403': '403 - API request is unauthorized', '404': '404 - API requested resource does not exist', '409': '409 - API requested resource is in a conflicted state', '415': '415 - API request body is in an unsupported format', '500': '500 - Server could not fulfill the API request', '501': '501 - Server has not implemented the requested function', '503': '503 - Server is unavailable', '504': '504 - Server did not respond before request timed-out'}<br>
-<strong>OK</strong> = '200'<br>
+<td width="100%"><strong>ERROR_MSGS</strong> = {400: '400 - API request syntax is malformed', 401: '401 - API request has missing or invalid credentials', 403: '403 - API request is unauthorized', 404: '404 - API requested resource does not exist', 409: '409 - API requested resource is in a conflicted state', 415: '415 - API request body is in an unsupported format', 500: '500 - Server could not fulfill the API request', 501: '501 - Server has not implemented the requested function', 503: '503 - Server is unavailable', 504: '504 - Server did not respond before request timed-out'}<br>
+<strong>MODULE</strong> = 'task.py'<br>
+<strong>OK</strong> = 200<br>
 <strong>REQUEST_NOT_OK</strong> = 'API request is not OK'<br>
-<strong>SUPPORTED_DNAC_VERSIONS</strong> = ['1.2.8']<br>
+<strong>SUPPORTED_DNAC_VERSIONS</strong> = ['1.2.8', '1.2.10']<br>
 <strong>TASK_CREATION</strong> = 'CLI Runner request creation'<br>
 <strong>TASK_EMPTY</strong> = ''<br>
+<strong>TASK_RESOURCE_PATH</strong> = {'1.2.10': '/dna/intent/api/v1/task', '1.2.8': '/api/v1/task'}<br>
 <strong>UNSUPPORTED_DNAC_VERSION</strong> = 'Unsupported Cisco DNA Center version'</td></tr></table>
 </body></html>

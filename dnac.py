@@ -1,15 +1,15 @@
 #!/usr/bin/env python
 
-from source.xauthtoken import XAuthToken
-from source.basicauth import BasicAuth
-from source.ctype import CType
-from config.dnac_config import DNAC_NAME, \
-                               DNAC_IP, \
-                               DNAC_VERSION, \
-                               DNAC_PORT, \
-                               DNAC_USER, \
-                               DNAC_PASSWD, \
-                               DNAC_CONTENT_TYPE
+from xauthtoken import XAuthToken
+from basicauth import BasicAuth
+from ctype import CType
+from dnac_config import DNAC_NAME, \
+                        DNAC_IP, \
+                        DNAC_VERSION, \
+                        DNAC_PORT, \
+                        DNAC_USER, \
+                        DNAC_PASSWD, \
+                        DNAC_CONTENT_TYPE
 
 # globals
 MODULE = 'dnac.py'

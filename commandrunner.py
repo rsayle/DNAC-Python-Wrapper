@@ -1,15 +1,15 @@
 #!/usr/bin/env python
 
-from source.dnac import DnacError, \
-                        SUPPORTED_DNAC_VERSIONS, \
-                        UNSUPPORTED_DNAC_VERSION
-from source.dnacapi import DnacApi, \
-                           DnacApiError
-from source.crud import ACCEPTED, \
-                        REQUEST_NOT_ACCEPTED, \
-                        ERROR_MSGS
-from source.task import Task, \
-                        TASK_CREATION
+from dnac import DnacError, \
+                 SUPPORTED_DNAC_VERSIONS, \
+                 UNSUPPORTED_DNAC_VERSION
+from dnacapi import DnacApi, \
+                    DnacApiError
+from crud import ACCEPTED, \
+                 REQUEST_NOT_ACCEPTED, \
+                 ERROR_MSGS
+from task import Task, \
+                 TASK_CREATION
 import json
 
 MODULE = 'commandrunner.py'
@@ -378,7 +378,7 @@ class CommandRunner(DnacApi):
 
 if __name__ == '__main__':
 
-    from source.dnac import Dnac
+    from dnac import Dnac
     import time
     import pprint
 

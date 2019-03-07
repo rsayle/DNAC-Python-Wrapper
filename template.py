@@ -1,16 +1,16 @@
 #!/usr/bin/env python
 
-from source.dnac import DnacError, \
-    SUPPORTED_DNAC_VERSIONS, \
-    UNSUPPORTED_DNAC_VERSION
-from source.dnacapi import DnacApi, \
-    DnacApiError
-from source.crud import OK, \
-    REQUEST_NOT_OK, \
-    ACCEPTED, \
-    REQUEST_NOT_ACCEPTED, \
-    ERROR_MSGS
-from source.deployment import Deployment
+from dnac import DnacError, \
+                 SUPPORTED_DNAC_VERSIONS, \
+                 UNSUPPORTED_DNAC_VERSION
+from dnacapi import DnacApi, \
+                    DnacApiError
+from crud import OK, \
+                 REQUEST_NOT_OK, \
+                 ACCEPTED, \
+                 REQUEST_NOT_ACCEPTED, \
+                 ERROR_MSGS
+from deployment import Deployment
 import json
 
 MODULE = 'template.py'

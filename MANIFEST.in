@@ -1,0 +1,5 @@
+include README.md
+include LICENSE
+include HEADER
+include docs/*.html
+include docs/*.pdf

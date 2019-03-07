@@ -1,0 +1,15 @@
+# compiled python modules
+*.pyc
+
+# setuptools distribution folder
+/dist
+
+# setuptools build folder
+/build
+
+# python egg metadata
+/*.egg-info
+
+# pycharm cache
+/.idea
+

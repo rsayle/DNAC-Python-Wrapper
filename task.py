@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
-from source.dnac import DnacError, \
-                        SUPPORTED_DNAC_VERSIONS, \
-                        UNSUPPORTED_DNAC_VERSION
-from source.dnacapi import DnacApi, \
-                           DnacApiError
-from source.crud import OK, \
-                        REQUEST_NOT_OK, \
-                        ERROR_MSGS
-from source.file import File
+from dnac import DnacError, \
+                 SUPPORTED_DNAC_VERSIONS, \
+                 UNSUPPORTED_DNAC_VERSION
+from dnacapi import DnacApi, \
+                    DnacApiError
+from crud import OK, \
+                 REQUEST_NOT_OK, \
+                 ERROR_MSGS
+from file import File
 import json
 
 MODULE = 'task.py'

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from source.crud import Crud
+from crud import Crud
 
 MODULE = 'dnacapi.py'
 
