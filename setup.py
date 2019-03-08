@@ -19,7 +19,7 @@ setuptools.setup(
     include_package_data=True,
     classifiers=[
         'Programming Language :: Python :: 3',
-        'License :: Cisco Sample Code License',
+        'License :: Other/Proprietary License',
         'Operating System :: OS Independent',
         'Topic :: System :: Networking',
         'Topic :: Utilities',
