@@ -14,12 +14,18 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://developer.cisco.com/codeexchange/github/repo/rsayle/DNAC-Python-Wrapper',
-    packages=setuptools.find_packages(),
+    packages=setuptools.find_packages(exclude=['docs', 'examples']),
+    python_requires='>=3',
     include_package_data=True,
     classifiers=[
         'Programming Language :: Python :: 3',
         'License :: Cisco Sample Code License',
-        'Operating System :: OS Independent'
+        'Operating System :: OS Independent',
+        'Topic :: System :: Networking',
+        'Topic :: Utilities',
+        'Intended Audience :: Information Technology',
+        'Intended Audience :: Telecommunications Industry',
+        'Development Status :: 4 - Beta'
     ],
     install_requires=[
         'requests',
