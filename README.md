@@ -20,15 +20,16 @@ This project is licensed by Cisco System's according to the terms stated in the 
 - [crud.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/crud.py): Crud class provides generic GET, PUT, POST and DELETE functions and is wrapped by DnacApi.
 - [dnacapi.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/dnacapi.py): DnacApi virtual class from which all API calls inherit.
 - [networkdevice.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/networkdevice.py): Manages devices in Cisco DNA Center.
-- [networkdevice_example](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/networkdevice_example): An example script that shows how to use a NetworkDevice object.
 - [commandrunner.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/commandrunner.py): Runs read-only, i.e. show commands, on Cisco DNA Center.
-- [commandrunner_example](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/commandrunner_example): An example script showing how to use the CommandRunner class.
 - [task.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/task.py): Manages tasks executing on Cisco DNAC.
-- [taskresults.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/taskresults.py): Retrieves the output created by completed tasks.
+- [file.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/file.py): Retrieves the output created by completed tasks.
 - [template.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/template.py): Manages CLI templates.
-- [template_example](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/template_example): An example script demonstrating how to use the Template class.
 - [deployment.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/deployment.py): Monitors the progress of applying a CLI template to a network device.
 
+# Examples
+- [networkdevice_example.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/examples/networkdevice_example): An example script that shows how to use a NetworkDevice object.
+- [commandrunner_example.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/examples/commandrunner_example): An example script showing how to use the CommandRunner class.
+- [template_example.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/examples/template_example): An example script demonstrating how to use the Template class.
 
 # Documentation
 Detailed documentation for each module, its classes, attributes and functions can be found in this project's HTML files or the docstrings contained within the modules themselves as well as in [Cisco DNA Center References](https://developer.cisco.com/docs/dna-center/#!cisco-dna-center-platform-overview/cisco-dna-center-platform-overview).
@@ -36,8 +37,20 @@ Detailed documentation for each module, its classes, attributes and functions ca
 A summary diagram of the class hierarchy and their inter-relationships can be found in file [Cisco DNAC Wrapper UML](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/Cisco%20DNAC%20Wrapper%20UML.pdf).
 
 # Current State
-v.1.0: 31 Jan 2019
+v.1.2.10.0: 7 Mar 2019
+- Modified version numbering to match Cisco DNA Center release cycle.
+- Most attributes are now protected (read-only) with only a handful being private or public.
+- Changed TaskResults class to File class in order to match Cisco DNAC's schema.
+- Moved documentation and examples into subpackages.
+- Added setuptools structure to support distribution in PyPI as 'cisco-dna-center'.
 
+# Roadmap
+- Move unit test code from being embedded in modules to a test package structure.
+- More enhancements to networkdevice
+- Interface class
+
+# History
+v.1.2.8.0: 31 Jan 2019
 - Added a generic Crud class and wrapped it in DnacApi for use by all children instances
 - Added CLI templates using Template and Deployment classes
 - Created exceptions and applied them throughout
@@ -45,14 +58,7 @@ v.1.0: 31 Jan 2019
 - Provided examples for NetworkDevice, CommandRunner and Template
 - Updated module documentation
 
-# Roadmap
-- More enhancements to networkdevice
-- Interface class
-- Setting attributes as public, protected or private
-
-# History
 v.0.1: 21 Jan 2019
-
 The initial contribution containing the base dnac module with its support for authentication and authorization when communicating with a Cisco DNA Center cluster, namely basicauth and xauthtoken.  In addition, five modules for performing API calls can be found:
   1. dnacapi - API base class
   2. networkdevice - handles network equipment managed by Cisco DNAC
