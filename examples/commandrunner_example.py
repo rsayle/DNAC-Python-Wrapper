@@ -1,7 +1,6 @@
-#!/usr/bin/env python
 
-from __init__.dnac import Dnac
-from __init__.dnac import CommandRunner
+from dnac import Dnac
+from dnac.commandrunner import CommandRunner
 
 MODULE = 'commandrunner_example.py'
 
