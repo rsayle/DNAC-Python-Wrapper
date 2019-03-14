@@ -49,7 +49,7 @@ This project is licensed by Cisco Systems according to the terms stated in the p
 # Examples
 - [networkdevice_example.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.0/examples/networkdevice_example.py): An example script that shows how to use a NetworkDevice object.
 - [commandrunner_example.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.0/examples/commandrunner_example.py): An example script showing how to use the CommandRunner class.
-- [template_example.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/1.2.10.0/example/template_example.py): An example script demonstrating how to use the Template class.
+- [template_example.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/1.2.10.0/examples/template_example.py): An example script demonstrating how to use the Template class.
 
 # Documentation
 Detailed documentation for each module, its classes, attributes and functions can be found in [this project's HTML files](https://github.com/rsayle/DNAC-Python-Wrapper/tree/1.2.10.0/docs) or the docstrings contained within the modules themselves as well as in [Cisco DNA Center References](https://developer.cisco.com/docs/dna-center/#!cisco-dna-center-platform-overview/cisco-dna-center-platform-overview).
