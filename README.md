@@ -30,31 +30,31 @@ After installing the wrapper, import the Dnac class directly from the package bu
 In order to remain consistent with Cisco's DNA Center release cycle, this package follows a similar versioning structure.  Simply stated, the format is _Cisco-DNAC-version.wrapper-version_.  Take for example, release 1.2.10.1 of this package.  1.2.10 refers to the version of Cisco DNA Center which the package was tested against, and .1 indicates the version of the wrapper itself.
 
 # License
-This project is licensed by Cisco Systems according to the terms stated in the project's [LICENSE](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/LICENSE) file.
+This project is licensed by Cisco Systems according to the terms stated in the project's [LICENSE](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.0/LICENSE) file.
 
 # Modules
-- [__init__.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/dnac.py): Contains the base Dnac class and controls the dnac package.
-- [dnac_config.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/dnac_config.py): Configuration file for instantiating a Dnac object.
-- [basicauth.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/basicauth.py): HTTP basic authentication class, BasicAuth, used by Dnac to perform a login.
-- [xauthtoken.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/xauthtoken.py): X-auth-token class, XAuthToken, used by Dnac to authorize commands after a successful login.
-- [crud.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/crud.py): Crud class provides generic GET, PUT, POST and DELETE functions and is wrapped by DnacApi.
-- [dnacapi.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/dnacapi.py): DnacApi virtual class from which all API calls inherit.
-- [networkdevice.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/networkdevice.py): Manages devices in Cisco DNA Center, e.g. routers, switches, WLCs.
-- [commandrunner.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/commandrunner.py): Runs read-only, i.e. show commands, on Cisco DNA Center.
-- [task.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/task.py): Manages tasks executing on Cisco DNAC.
-- [file.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/file.py): Retrieves the output created by completed tasks.
-- [template.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/template.py): Manages CLI templates.
-- [deployment.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/deployment.py): Monitors the progress of applying a CLI template to a network device.
+- [__init__.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.0/dnac/__init__.py): Contains the base Dnac class and controls the dnac package.
+- [dnac_config.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.0/dnac/dnacapi.py): Configuration file for instantiating a Dnac object.
+- [basicauth.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.0/dnac/basicauth.py): HTTP basic authentication class, BasicAuth, used by Dnac to perform a login.
+- [xauthtoken.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.0/dnac/xauthtoken.py): X-auth-token class, XAuthToken, used by Dnac to authorize commands after a successful login.
+- [crud.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.0/dnac/crud.py): Crud class provides generic GET, PUT, POST and DELETE functions and is wrapped by DnacApi.
+- [dnacapi.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.0/dnac/dnacapi.py): DnacApi virtual class from which all API calls inherit.
+- [networkdevice.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.0/dnac/networkdevice.py): Manages devices in Cisco DNA Center, e.g. routers, switches, WLCs.
+- [commandrunner.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.0/dnac/commandrunner.py): Runs read-only, i.e. show commands, on Cisco DNA Center.
+- [task.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.0/dnac/task.py): Manages tasks executing on Cisco DNAC.
+- [file.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.0/dnac/file.py): Retrieves the output created by completed tasks.
+- [template.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.0/dnac/template.py): Manages CLI templates.
+- [deployment.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.0/dnac/deployment.py): Monitors the progress of applying a CLI template to a network device.
 
 # Examples
-- [networkdevice_example.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/examples/networkdevice_example): An example script that shows how to use a NetworkDevice object.
-- [commandrunner_example.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/examples/commandrunner_example): An example script showing how to use the CommandRunner class.
-- [template_example.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/examples/template_example): An example script demonstrating how to use the Template class.
+- [networkdevice_example.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.0/examples/networkdevice_example): An example script that shows how to use a NetworkDevice object.
+- [commandrunner_example.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.0/examples/commandrunner_example): An example script showing how to use the CommandRunner class.
+- [template_example.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/1.2.10.0/template_example): An example script demonstrating how to use the Template class.
 
 # Documentation
-Detailed documentation for each module, its classes, attributes and functions can be found in this project's HTML files or the docstrings contained within the modules themselves as well as in [Cisco DNA Center References](https://developer.cisco.com/docs/dna-center/#!cisco-dna-center-platform-overview/cisco-dna-center-platform-overview).
+Detailed documentation for each module, its classes, attributes and functions can be found in [this project's HTML files](https://github.com/rsayle/DNAC-Python-Wrapper/tree/1.2.10.0/docs) or the docstrings contained within the modules themselves as well as in [Cisco DNA Center References](https://developer.cisco.com/docs/dna-center/#!cisco-dna-center-platform-overview/cisco-dna-center-platform-overview).
 
-A summary diagram of the class hierarchy and their inter-relationships can be found in file [Cisco DNAC Wrapper UML](https://github.com/rsayle/DNAC-Python-Wrapper/blob/master/Cisco%20DNAC%20Wrapper%20UML.pdf).
+A summary diagram of the class hierarchy and their inter-relationships can be found in file [Cisco DNAC Wrapper UML](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.0/docs/Cisco%20DNAC%20Wrapper%20UML.pdf).
 
 # Current State
 v.1.2.10.1: 13 Mar 2019
