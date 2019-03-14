@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 
 import requests
 import json
@@ -352,7 +351,7 @@ class Crud(object):
 
 if __name__ == '__main__':
 
-    from dnac import Dnac
+    from dnac.dnac import Dnac
 
     print('Crud:')
     print()

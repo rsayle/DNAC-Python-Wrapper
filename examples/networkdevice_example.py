@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-from dnac import Dnac
-from networkdevice import NetworkDevice
+from __init__.dnac import Dnac
+from __init__.dnac import NetworkDevice
 
 MODULE = 'networkdevice_example.py'
 

@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 
-from crud import Crud
+from dnac.crud import Crud
 
 MODULE = 'dnacapi.py'
 
@@ -362,7 +361,7 @@ class DnacApi(object):
 
 if __name__ == '__main__':
 
-    from dnac import Dnac
+    from dnac.dnac import Dnac
 
     d = Dnac()
     dapi = DnacApi(d, 'aName', '/a/resource/path')

@@ -1,13 +1,12 @@
-#!/usr/bin/env python
 
 from dnac import DnacError, \
                  SUPPORTED_DNAC_VERSIONS, \
                  UNSUPPORTED_DNAC_VERSION
-from dnacapi import DnacApi, \
-                    DnacApiError
-from crud import OK, \
-                 REQUEST_NOT_OK, \
-                 ERROR_MSGS
+from dnac.dnacapi import DnacApi, \
+                         DnacApiError
+from dnac.crud import OK, \
+                      REQUEST_NOT_OK, \
+                      ERROR_MSGS
 
 MODULE = 'networkdevice.py'
 
@@ -423,7 +422,7 @@ class NetworkDevice(DnacApi):
 
 if __name__ == '__main__':
 
-    from dnac import Dnac
+    from dnac.dnac import Dnac
     import pprint
 
     pp = pprint.PrettyPrinter(indent=4)

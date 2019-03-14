@@ -1,13 +1,12 @@
-#!/usr/bin/env python
 
 from dnac import DnacError, \
                  SUPPORTED_DNAC_VERSIONS, \
                  UNSUPPORTED_DNAC_VERSION
-from dnacapi import DnacApi, \
-                    DnacApiError
-from crud import ACCEPTED, \
-                 REQUEST_NOT_ACCEPTED, \
-                 ERROR_MSGS
+from dnac.dnacapi import DnacApi, \
+                         DnacApiError
+from dnac.crud import ACCEPTED, \
+                      REQUEST_NOT_ACCEPTED, \
+                      ERROR_MSGS
 
 MODULE = 'deployment.py'
 
@@ -250,7 +249,7 @@ class Deployment(DnacApi):
 
 if __name__ == '__main__':
 
-    from dnac import Dnac
+    from dnac.dnac import Dnac
     import pprint
 
     dnac = Dnac()

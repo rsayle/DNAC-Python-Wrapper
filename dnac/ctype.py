@@ -1,4 +1,6 @@
-#!/usr/bin/env python
+
+JSON = 'application/json'
+XML = 'application/xml'
 
 
 class CType(object):
@@ -18,7 +20,7 @@ class CType(object):
             default: {'Content-Type': 'application/json'}
     """
 
-    def __init__(self, content_type='application/json'):
+    def __init__(self, content_type=JSON):
         """
         Method __init__ initializes a CType object.
 

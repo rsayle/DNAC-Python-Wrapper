@@ -1,16 +1,15 @@
-#!/usr/bin/env python
 
 from dnac import DnacError, \
                  SUPPORTED_DNAC_VERSIONS, \
                  UNSUPPORTED_DNAC_VERSION
-from dnacapi import DnacApi, \
-                    DnacApiError
-from crud import OK, \
-                 REQUEST_NOT_OK, \
-                 ACCEPTED, \
-                 REQUEST_NOT_ACCEPTED, \
-                 ERROR_MSGS
-from deployment import Deployment
+from dnac.dnacapi import DnacApi, \
+                         DnacApiError
+from dnac.crud import OK, \
+                      REQUEST_NOT_OK, \
+                      ACCEPTED, \
+                      REQUEST_NOT_ACCEPTED, \
+                      ERROR_MSGS
+from dnac.deployment import Deployment
 import json
 
 MODULE = 'template.py'
@@ -932,7 +931,7 @@ class Template(DnacApi):
 
 if __name__ == '__main__':
 
-    from dnac import Dnac
+    from dnac.dnac import Dnac
     import time
     import pprint
 

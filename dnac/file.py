@@ -1,13 +1,12 @@
-#!/usr/bin/env python
 
 from dnac import DnacError, \
                  SUPPORTED_DNAC_VERSIONS, \
                  UNSUPPORTED_DNAC_VERSION
-from dnacapi import DnacApi, \
-                    DnacApiError
-from crud import OK, \
-                 REQUEST_NOT_OK, \
-                 ERROR_MSGS
+from dnac.dnacapi import DnacApi, \
+                         DnacApiError
+from dnac.crud import OK, \
+                      REQUEST_NOT_OK, \
+                      ERROR_MSGS
 
 MODULE = 'file.py'
 
@@ -189,7 +188,7 @@ class File(DnacApi):
 
 if __name__ == '__main__':
 
-    from dnac import Dnac
+    from dnac.dnac import Dnac
 
     d = Dnac()
 

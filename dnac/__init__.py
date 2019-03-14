@@ -1,18 +1,34 @@
-#!/usr/bin/env python
 
-from xauthtoken import XAuthToken
-from basicauth import BasicAuth
-from ctype import CType
-from dnac_config import DNAC_NAME, \
-                        DNAC_IP, \
-                        DNAC_VERSION, \
-                        DNAC_PORT, \
-                        DNAC_USER, \
-                        DNAC_PASSWD, \
-                        DNAC_CONTENT_TYPE
+from dnac.xauthtoken import XAuthToken
+from dnac.basicauth import BasicAuth
+from dnac.ctype import CType
+from dnac.dnac_config import DNAC_NAME, \
+                             DNAC_IP, \
+                             DNAC_VERSION, \
+                             DNAC_PORT, \
+                             DNAC_USER, \
+                             DNAC_PASSWD, \
+                             DNAC_CONTENT_TYPE
+
+__version__ = '1.2.10.1'
+__author__ = 'Robert Sayle <rsayle@cisco.com>'
+__all__ = [
+    'basicauth',
+    'commandrunner',
+    'crud',
+    'ctype',
+    'deployment',
+    'dnac_config',
+    'dnacapi',
+    'file',
+    'networkdevice',
+    'task',
+    'template',
+    'xauthtoken'
+]
 
 # globals
-MODULE = 'dnac.py'
+MODULE = 'dnac'
 SUPPORTED_DNAC_VERSIONS = ['1.2.8', '1.2.10']
 
 # Dnac errors
@@ -479,7 +495,7 @@ class Dnac(object):
 if __name__ == '__main__':
 
     import pprint
-    from networkdevice import NetworkDevice
+    from dnac.dnac import NetworkDevice
 
     pp = pprint.PrettyPrinter(indent=4)
 

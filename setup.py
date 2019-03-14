@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 
 import setuptools
 
@@ -6,8 +5,8 @@ with open('README.md', 'r') as file:
     long_description = file.read()
 
 setuptools.setup(
-    name='cisco_dna_center',
-    version='1.2.10.0',
+    name='dnac',
+    version='1.2.10.1',
     author='Robert Sayle',
     author_email='rsayle@cisco.com',
     description='A wrapper for using Cisco DNA Center\'s REST API',
@@ -18,17 +17,14 @@ setuptools.setup(
     python_requires='>=3',
     include_package_data=True,
     classifiers=[
+        'Development Status :: 3 - Alpha',
         'Programming Language :: Python :: 3',
         'License :: Other/Proprietary License',
         'Operating System :: OS Independent',
         'Topic :: System :: Networking',
         'Topic :: Utilities',
         'Intended Audience :: Information Technology',
-        'Intended Audience :: Telecommunications Industry',
-        'Development Status :: 4 - Beta'
+        'Intended Audience :: Telecommunications Industry'
     ],
-    install_requires=[
-        'requests',
-        'json'
-    ]
+    install_requires=['requests']
 )

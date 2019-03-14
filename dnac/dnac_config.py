@@ -3,12 +3,12 @@
 # DNAC_NAME: FQDN of a Cisco DNA Center cluster
 #            A Dnac instance prefers this value over an IP address (DNAC_IP)
 #            To use an IP address instead, set this constant = ''
-DNAC_NAME = 'denlab-en-dnac.cisco.com'
+DNAC_NAME = 'dnac.local'
 
 #
 # DNAC_IP: IP address of a Cisco DNA Center cluster
 #
-DNAC_IP = '10.8.10.20'
+DNAC_IP = '169.254.1.1'
 
 #
 # DNAC_VERSION: Used for setting the resource path of API calls based upon
@@ -24,12 +24,12 @@ DNAC_PORT = '443'
 #
 # DNAC_USER: Name of a Cisco DNAC account with administrative privileges
 #
-DNAC_USER = 'admin'
+DNAC_USER = ''
 
 #
 # DNAC_PASSWD: Password for the Cisco DNAC_USER
 #
-DNAC_PASSWD = 'C!sco123'
+DNAC_PASSWD = ''
 
 #
 # DNAC_CONTENT_TYPE: Data format with Cisco DNAC should respond with

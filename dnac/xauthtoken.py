@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 
 import json
 import requests
@@ -356,8 +355,8 @@ class XAuthToken(object):
 
 if __name__ == '__main__':
 
-    from basicauth import BasicAuth
-    from ctype import CType
+    from dnac.dnac import BasicAuth
+    from dnac.dnac import CType
     
     d = 'https://denlab-en-dnac.cisco.com'
     b = BasicAuth('admin', 'C!sco123')

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-from dnac import Dnac
-from template import Template, TARGET_BY_ID
+from __init__.dnac import Dnac
+from __init__.dnac import Template, TARGET_BY_ID
 
 MODULE = 'template_example.py'
 
