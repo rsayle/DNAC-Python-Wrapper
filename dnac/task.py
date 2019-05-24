@@ -12,9 +12,15 @@ import json
 
 MODULE = 'task.py'
 
+#
+# task behavior has changed in 1.2.10
+# templates now use tasks to push CLI templates
+# consider splitting task into subclasses - CommandRunnerTask and TemplateTask
+#
+
 TASK_RESOURCE_PATH = {
                       '1.2.8': '/api/v1/task',
-                      '1.2.10': '/dna/intent/api/v1/task'
+                      '1.2.10': '/api/v1/task'
                      }
 
 # task states

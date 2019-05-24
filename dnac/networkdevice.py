@@ -7,17 +7,30 @@ from dnac.dnacapi import DnacApi, \
 from dnac.crud import OK, \
                       REQUEST_NOT_OK, \
                       ERROR_MSGS
+from dnac.timestamp import TimeStamp
 
 MODULE = 'networkdevice.py'
 
 NETWORK_DEVICE_RESOURCE_PATH = {
-                                '1.2.8': '/dna/intent/api/v1/network-device',
-                                '1.2.10': '/dna/intent/api/v1/network-device'
-                               }
+    '1.2.8': '/dna/intent/api/v1/network-device',
+    '1.2.10': '/dna/intent/api/v1/network-device'
+}
+
+DEVICE_DETAIL_RESOURCE_PATH = {
+    '1.2.10': '/dna/intent/api/v1/device-detail'
+}
+
+DEVICE_DETAIL_IDENTIFIERS = {
+    'mac': 'macAddress',
+    'id': 'uuid',
+    'name': 'nwDeviceName'
+}
 
 # error messages
 NO_DEVICES = 'API response list is empty'
 CHECK_HOSTNAME = 'Check the hostname'
+CHECK_IP = 'Check the management IP address'
+CHECK_REGEX = 'Check the regular expression'
 
 
 class NetworkDevice(DnacApi):
@@ -55,6 +68,10 @@ class NetworkDevice(DnacApi):
             list or dict: The results returned by making an API call.
             default: none
             scope: protected
+        device_detail:
+            dict: A device's detailed configuration, state and health.
+            default: {}
+            scope: protected
         vlans:
             list: The results returned when making an API call that
                   specifically asks for VLAN information from a device.
@@ -86,7 +103,7 @@ class NetworkDevice(DnacApi):
                  timeout=5):
         """
         The __init__ class method instantiates a new NetworkDevice object.
-        Be ceratin that a Dnac object is first created, then pass that
+        Be certain that a Dnac object is first created, then pass that
         object and a user-friendly name for the NetworkDevice instance
         that can be used to access it in the Dnac.api dictionary.
 
@@ -124,8 +141,13 @@ class NetworkDevice(DnacApi):
                 '__init__: %s: %s' %
                 (UNSUPPORTED_DNAC_VERSION, dnac.version)
                            )
+        if dnac.version in DEVICE_DETAIL_RESOURCE_PATH:
+            self.__detail_resource = DEVICE_DETAIL_RESOURCE_PATH[dnac.version]
+        else:
+            self.__detail_resource = None
         self.__devices = None  # API returns list or dict based on the call
         self.__vlans = []
+        self.__device_detail = {}
         super(NetworkDevice, self).__init__(dnac,
                                             name,
                                             resource=path,
@@ -161,7 +183,7 @@ class NetworkDevice(DnacApi):
                                         timeout=self.timeout)
         if status != OK:
             raise DnacApiError(
-                MODULE, 'getAllDevices', REQUEST_NOT_OK, url,
+                MODULE, 'get_all_devices', REQUEST_NOT_OK, url,
                 OK, status, ERROR_MSGS[status], str(devices)
                               )
         self.__devices = devices['response']
@@ -246,6 +268,49 @@ class NetworkDevice(DnacApi):
 
 # end get_device_by_name()
 
+    def get_devices_by_name_with_regex(self, regex):
+        """
+        The get_devices_by_name_with_regex searches through Cisco DNA Center's
+        inventory for all devices whose hostname matches the regular expression
+        it is given.
+
+        Parameters:
+            regex: str
+                default: None
+                required: yes
+
+        Return Values:
+            list: The devices found according to the regular expression search.
+
+        Usage:
+            d = Dnac()
+            nd = NetworkDevice(d, 'network-device')
+            d.api[nd.name] =  nd
+            regex = '.*9300-switch.*'
+            devices = d.api['network-device'].get_devices_by_name_with_regex(regex)
+            pprint.PrettyPrint(devices)
+        """
+        host_filter = '?hostname=' + regex
+        url = self.dnac.url + self.resource + host_filter
+        devices, status = self.crud.get(url,
+                                        headers=self.dnac.hdrs,
+                                        verify=self.verify,
+                                        timeout=self.timeout)
+        if status != OK:
+            raise DnacApiError(
+                MODULE, 'get_devices_by_name_with_regex(', REQUEST_NOT_OK, url,
+                OK, status, ERROR_MSGS[status], str(devices)
+            )
+        if not devices['response']:  # device list is empty
+            raise DnacApiError(
+                MODULE, 'get_devices_by_name_with_regex(', NO_DEVICES, url,
+                '', str(devices['response']), '', CHECK_REGEX
+            )
+        self.__devices = devices['response']
+        return self.__devices
+
+# end get_device_by_name_with_regex
+
     def get_id_by_device_name(self, name):
         """
         Method get_id_by_device_name finds a device in Cisco DNA Center by
@@ -301,10 +366,59 @@ class NetworkDevice(DnacApi):
                 MODULE, 'get_device_by_ip', REQUEST_NOT_OK, url,
                 OK, status, ERROR_MSGS[status], str(devices)
                               )
+        if not devices['response']:  # device list is empty
+            raise DnacApiError(
+                MODULE, 'get_device_by_ip', NO_DEVICES, url,
+                '', str(devices['response']), '', CHECK_IP
+                              )
         self.__devices = devices['response'][0]
         return self.__devices
 
 # end get_device_by_ip()
+
+    def get_devices_by_ip_with_regex(self, regex):
+        """
+        The get_devices_by_ip_with_regex searches through Cisco DNA Center's
+        inventory for all devices whose management IP address matches the
+        regular expression passed.
+
+        Parameters:
+            regex: str
+                default: None
+                required: yes
+
+        Return Values:
+            list: The devices found according to the regular expression search.
+
+        Usage:
+            d = Dnac()
+            nd = NetworkDevice(d, 'network-device')
+            d.api[nd.name] =  nd
+            regex = '192.168.*.*'
+            devices = d.api['network-device'].get_devices_by_ip_with_regex(regex)
+            pprint.PrettyPrint(devices)
+        """
+        url = self.dnac.url + self.resource + \
+              ('?managementIpAddress=%s' % regex)
+        devices, status = self.crud.get(url,
+                                        headers=self.dnac.hdrs,
+                                        verify=self.verify,
+                                        timeout=self.timeout)
+        if status != OK:
+            raise DnacApiError(
+                MODULE, 'get_devices_by_ip_with_regex', REQUEST_NOT_OK, url,
+                OK, status, ERROR_MSGS[status], str(devices)
+            )
+        if not devices['response']:  # device list is empty
+            raise DnacApiError(
+                MODULE, 'get_devices_by_ip_with_regex', NO_DEVICES, url,
+                '', str(devices['response']), '', CHECK_REGEX
+            )
+        self.__devices = devices['response']
+        return self.__devices
+
+
+# end get_devices_by_ip_with_regex()
 
     def get_vlans_by_device_id(self, id):
         """
@@ -415,6 +529,138 @@ class NetworkDevice(DnacApi):
 
 # end get_vlans_by_device_ip()
 
+    def get_device_detail_by_name(self, name):
+        """
+        get_device_detail_by_name searches for a devices using its hostname
+        and returns a detailed listing of its current configuration state
+        and health.
+
+        Parameters:
+            name: str
+                default: None
+                required: yes
+
+        Return Values:
+            dict: A dictionary of the device's current state
+
+        Usage:
+            d = Dnac()
+            nd = NetworkDevice(d, 'network-device')
+            hostname = 'c9407.cisco.com'
+            details = d.api['network-device'].get_device_detail_by_name(hostname)
+            pprint.PrettyPrint(details)
+        """
+        if not self.__detail_resource:
+            raise DnacError(
+                'get_device_detail_by_name: %s: %s' %
+                (UNSUPPORTED_DNAC_VERSION, self.dnac.version)
+            )
+        time = TimeStamp()
+        query = '?timestamp=%s&searchBy=%s&identifier=%s' % \
+                (time, name, DEVICE_DETAIL_IDENTIFIERS['name'])
+        url = self.dnac.url + self.__detail_resource + query
+        detail, status = self.crud.get(url,
+                                       headers=self.dnac.hdrs,
+                                       verify=self.verify,
+                                       timeout=self.timeout)
+        if status != OK:
+            raise DnacApiError(
+                MODULE, 'get_device_detail_by_name', REQUEST_NOT_OK, url,
+                OK, status, ERROR_MSGS[status], str(detail)
+            )
+        self.__device_detail = detail['response']
+        return self.__device_detail
+
+# end get_device_detail_by_name()
+
+    def get_device_detail_by_id(self, id):
+        """
+        get_device_detail_by_id searches for a devices using its uuid
+        and returns a detailed listing of its current configuration state
+        and health.
+
+        Parameters:
+            id: str
+                default: None
+                required: yes
+
+        Return Values:
+            dict: A dictionary of the device's current state
+
+        Usage:
+            d = Dnac()
+            nd = NetworkDevice(d, 'network-device')
+            uuid = '84e4b133-2668-4705-8163-5694c84e78fb'
+            details = d.api['network-device'].get_device_detail_by_id(uuid)
+            pprint.PrettyPrint(details)
+        """
+        if not self.__detail_resource:
+            raise DnacError(
+                'get_device_detail_by_id: %s: %s' %
+                (UNSUPPORTED_DNAC_VERSION, self.dnac.version)
+            )
+        time = TimeStamp()
+        query = '?timestamp=%s&searchBy=%s&identifier=%s' % \
+                (time, id, DEVICE_DETAIL_IDENTIFIERS['id'])
+        url = self.dnac.url + self.__detail_resource + query
+        detail, status = self.crud.get(url,
+                                       headers=self.dnac.hdrs,
+                                       verify=self.verify,
+                                       timeout=self.timeout)
+        if status != OK:
+            raise DnacApiError(
+                MODULE, 'get_device_detail_by_id', REQUEST_NOT_OK, url,
+                OK, status, ERROR_MSGS[status], str(detail)
+            )
+        self.__device_detail = detail['response']
+        return self.__device_detail
+
+# end get_device_detail_by_id()
+
+    def get_device_detail_by_mac(self, mac):
+        """
+        get_device_detail_by_mac searches for a devices using its MAC address
+        and returns a detailed listing of its current configuration state
+        and health.
+
+        Parameters:
+            mac: str
+                default: None
+                required: yes
+
+        Return Values:
+            dict: A dictionary of the device's current state
+
+        Usage:
+            d = Dnac()
+            nd = NetworkDevice(d, 'network-device')
+            mac = 'DE:AD:BE:EF:01:02'
+            details = d.api['network-device'].get_device_detail_by_mac(mac)
+            pprint.PrettyPrint(details)
+        """
+        if not self.__detail_resource:
+            raise DnacError(
+                'get_device_detail_by_mac: %s: %s' %
+                (UNSUPPORTED_DNAC_VERSION, self.dnac.version)
+            )
+        time = TimeStamp()
+        query = '?timestamp=%s&searchBy=%s&identifier=%s' % \
+                (time, mac, DEVICE_DETAIL_IDENTIFIERS['mac'])
+        url = self.dnac.url + self.__detail_resource + query
+        detail, status = self.crud.get(url,
+                                       headers=self.dnac.hdrs,
+                                       verify=self.verify,
+                                       timeout=self.timeout)
+        if status != OK:
+            raise DnacApiError(
+                MODULE, 'get_device_detail_by_mac', REQUEST_NOT_OK, url,
+                OK, status, ERROR_MSGS[status], str(detail)
+            )
+        self.__device_detail = detail['response']
+        return self.__device_detail
+
+# end get_device_detail_by_mac()
+
 # end class NetworkDevice()
 
 # begin unit test
@@ -422,7 +668,7 @@ class NetworkDevice(DnacApi):
 
 if __name__ == '__main__':
 
-    from dnac.dnac import Dnac
+    from dnac import Dnac
     import pprint
 
     pp = pprint.PrettyPrinter(indent=4)
@@ -499,6 +745,42 @@ if __name__ == '__main__':
 
     print('  vlans = ')
     pp.pprint(vlans)
+
+    print()
+    print('Getting device detail by name for DC1-A3850.cisco.com...')
+    print()
+
+    detail = nd.get_device_detail_by_name('DC1-A3850.cisco.com')
+    pp.pprint(detail)
+
+    print()
+    print('Getting device detail by id for %s...' % uuid)
+    print()
+
+    detail = nd.get_device_detail_by_id(uuid)
+    pp.pprint(detail)
+
+    print()
+    print('Getting device detail by mac for 20:37:06:CF:C5:00...')
+    print()
+
+    detail = nd.get_device_detail_by_mac('20:37:06:CF:C5:00')
+    pp.pprint(detail)
+
+    print()
+    print('Getting devices by name with regex .*dc2.* ...')
+    print()
+
+    devices = nd.get_devices_by_name_with_regex('.*dc2.*')
+    pp.pprint(devices)
+
+    print()
+    print('Getting devices by ip with regex 10.255.*.* ...')
+    print()
+
+    devices = nd.get_devices_by_ip_with_regex('10.255.*.*')
+    pp.pprint(devices)
+
     print()
     print('NetworkDevice: unit test complete.')
     print()

@@ -12,7 +12,7 @@ MODULE = 'deployment.py'
 
 DEPLOYMENT_RESOURCE_PATH = {
                             '1.2.8': '/api/v1/template-programmer/template/deploy/status',
-                            '1.2.10': '/dna/intent/api/v1/template-programmer/template/deploy/status'
+                            '1.2.10': '/api/v1/template-programmer/template/deploy/status'
                            }
 
 

@@ -10,10 +10,11 @@ from dnac.dnac_config import DNAC_NAME, \
                              DNAC_PASSWD, \
                              DNAC_CONTENT_TYPE
 
-__version__ = '1.2.10.1'
+__version__ = '1.2.10.2'
 __author__ = 'Robert Sayle <rsayle@cisco.com>'
 __all__ = [
     'basicauth',
+    'client',
     'commandrunner',
     'crud',
     'ctype',
@@ -22,8 +23,10 @@ __all__ = [
     'dnacapi',
     'file',
     'networkdevice',
+    'site',
     'task',
     'template',
+    'timestamp',
     'xauthtoken'
 ]
 
@@ -495,7 +498,7 @@ class Dnac(object):
 if __name__ == '__main__':
 
     import pprint
-    from dnac.dnac import NetworkDevice
+    from dnac.networkdevice import NetworkDevice
 
     pp = pprint.PrettyPrinter(indent=4)
 

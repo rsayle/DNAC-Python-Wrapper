@@ -11,12 +11,13 @@ from dnac.crud import OK, \
                       ERROR_MSGS
 from dnac.deployment import Deployment
 import json
+import time
 
 MODULE = 'template.py'
 
 TEMPLATE_RESOURCE_PATH = {
-    '1.2.8': '/dna/intent/api/v1/template-programmer/template',
-    '1.2.10': '/dna/intent/api/v1/template-programmer/template'
+    '1.2.8': '/api/v1/template-programmer/template',
+    '1.2.10': '/api/v2/template-programmer/template'
 }
 
 # values instructing Cisco DNA Center how to interpret the target ID value
@@ -49,6 +50,10 @@ VALID_DEPLOYMENT_STATES = [
 
 # end globals
 
+# error conditions
+TEMPLATE_ALREADY_DEPLOYED = 'already deployed with same params'
+SUBSTR_NOT_FOUND = -1
+
 # error messages
 
 TEMPLATE_NOT_FOUND = 'Could not find template'
@@ -67,6 +72,8 @@ UNKNOWN_VERSION = 'Unknown template version'
 ILLEGAL_NAME_CHANGE = 'Changing a template\'s name is prohibited'
 ILLEGAL_NAME_CHANGE_RESOLUTION = 'Create a new Template object using a different template\'s name'
 
+# error resolutions
+ALREADY_DEPLOYED_RESOLUTION = 'Change the template\'s parameters to a new value'
 
 # end error messages
 
@@ -791,15 +798,26 @@ class Template(DnacApi):
             d.api['Enable CTS Interfaces'].make_body()
         """
         tgt_info = {
-                    'type': self.__target_type,
-                    'id': self.__target_id,
-                    'params': self.__versioned_template_params
-                   }
+            'type': self.__target_type,
+            'id': self.__target_id,
+            'params': self.__versioned_template_params
+        }
         target_info = [tgt_info]
-        body = {
+        if self.dnac.version == '1.2.8':
+            body = {
                 'template_id': self.__versioned_template_id,
                 'target_info': target_info
-               }
+            }
+        elif self.dnac.version == '1.2.10':
+            body = {
+                'templateId': self.__versioned_template_id,
+                'targetInfo': target_info
+            }
+        else:
+            raise DnacApiError(
+                MODULE, 'make_body', UNSUPPORTED_DNAC_VERSION, '',
+                '', self.dnac.version, '', ''
+            )
         return json.dumps(body)
 
     # end make_body()
@@ -851,12 +869,34 @@ class Template(DnacApi):
                 MODULE, 'check_deployment', REQUEST_NOT_ACCEPTED, url,
                 ACCEPTED, status, ERROR_MSGS[status], str(results)
             )
-        # make a deployment object
-        did = results['deploymentId']
-        elts = did.split()
-        deploy_id = elts[len(elts) - 1]
-        self.__deployment = Deployment(self.dnac,
-                                       deploy_id)
+        # DNAC 1.2.8 references a deploymentId in a string
+        deploy_id = ''
+        if self.dnac.version == '1.2.8':
+            did = results['response']['deploymentId']
+            elts = did.split()
+            deploy_id = elts[len(elts) - 1]
+        # DNAC 1.2.10 uses a task that references a deploymentId in a string
+        elif self.dnac.version == '1.2.10':
+            task = {}
+            taskUrl = '%s%s' % (self.dnac.url, results['response']['url'])
+            task, status = self.crud.get(taskUrl,
+                                         headers=self.dnac.hdrs,
+                                         verify=self.verify,
+                                         timeout=self.timeout)
+            progress = task['response']['progress']
+            progress_elts = progress.split(':')
+            if progress_elts[3].find(TEMPLATE_ALREADY_DEPLOYED) != SUBSTR_NOT_FOUND:
+                raise DnacApiError(
+                    MODULE, 'deploy_sync', ALREADY_DEPLOYED, '',
+                    '', str(body), status, ALREADY_DEPLOYED_RESOLUTION
+                )
+            deploy_id = progress_elts[len(progress_elts) - 1]
+        else:
+            raise DnacApiError(
+                MODULE, 'deploy', UNSUPPORTED_DNAC_VERSION, '',
+                '', self.dnac.version, '', ''
+            )
+        self.__deployment = Deployment(self.dnac, deploy_id)
         return self.__deployment.check_deployment()
 
     # end deploy()
@@ -908,15 +948,43 @@ class Template(DnacApi):
                                          timeout=self.timeout)
         if status != ACCEPTED:
             raise DnacApiError(
-                MODULE, 'check_deployment', REQUEST_NOT_ACCEPTED, url,
+                MODULE, 'deploy_sync', REQUEST_NOT_ACCEPTED, url,
                 ACCEPTED, status, ERROR_MSGS[status], str(results)
             )
-        # make a deployment object
-        did = results['deploymentId']
-        elts = did.split()
-        deploy_id = elts[len(elts) - 1]
-        self.__deployment = Deployment(self.dnac,
-                                       deploy_id)
+        # DNAC 1.2.8 references a deploymentId in a string
+        deploy_id = ''
+        if self.dnac.version == '1.2.8':
+            did = results['response']['deploymentId']
+            elts = did.split()
+            deploy_id = elts[len(elts) - 1]
+        # DNAC 1.2.10 uses a task that references a deploymentId in a string
+        elif self.dnac.version == '1.2.10':
+            task = {}
+            taskUrl = '%s%s' % (self.dnac.url, results['response']['url'])
+            task, status = self.crud.get(taskUrl,
+                                         headers=self.dnac.hdrs,
+                                         verify=self.verify,
+                                         timeout=self.timeout)
+            while 'endTime' not in task['response'].keys():
+                time.sleep(wait)
+                task, status = self.crud.get(taskUrl,
+                                             headers=self.dnac.hdrs,
+                                             verify=self.verify,
+                                             timeout=self.timeout)
+            progress = task['response']['progress']
+            progress_elts = progress.split(':')
+            if progress_elts[3].find(TEMPLATE_ALREADY_DEPLOYED) != SUBSTR_NOT_FOUND:
+                raise DnacApiError(
+                    MODULE, 'deploy_sync', ALREADY_DEPLOYED, '',
+                    '', str(body), status, ALREADY_DEPLOYED_RESOLUTION
+                )
+            deploy_id = progress_elts[len(progress_elts) - 1]
+        else:
+            raise DnacApiError(
+                MODULE, 'deploy_sync', UNSUPPORTED_DNAC_VERSION, '',
+                '', self.dnac.version, '', ''
+            )
+        self.__deployment = Deployment(self.dnac, deploy_id)
         self.__deployment.check_deployment()
         while self.__deployment.status == DEPLOYMENT_INIT:
             time.sleep(wait)
