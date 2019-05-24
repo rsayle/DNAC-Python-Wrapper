@@ -6,7 +6,7 @@ with open('README.md', 'r') as file:
 
 setuptools.setup(
     name='dnac',
-    version='1.2.10.1',
+    version='1.2.10.2',
     author='Robert Sayle',
     author_email='rsayle@cisco.com',
     description='A wrapper for using Cisco DNA Center\'s REST API',
