@@ -93,8 +93,8 @@ v.1.2.8.0: 31 Jan 2019
 
 v.0.1: 21 Jan 2019
 The initial contribution containing the base dnac module with its support for authentication and authorization when communicating with a Cisco DNA Center cluster, namely basicauth and xauthtoken.  In addition, five modules for performing API calls can be found:
-  1. dnacapi - API base class
-  2. networkdevice - handles network equipment managed by Cisco DNAC
-  3. commandrunner - executes read-only commands on devices managed by Cisco DNAC
-  4. task - monitors tasks running on Cisco DNAC
-  5. taskresults - pulls the output created by completed tasks
+- dnacapi - API base class
+- networkdevice - handles network equipment managed by Cisco DNAC
+- commandrunner - executes read-only commands on devices managed by Cisco DNAC
+- task - monitors tasks running on Cisco DNAC
+- taskresults - pulls the output created by completed tasks
