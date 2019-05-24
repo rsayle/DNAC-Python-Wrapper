@@ -1,14 +1,15 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html><head><title>Python: module deployment</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<html><head><title>Python: module dnac.deployment</title>
+<meta charset="utf-8">
 </head><body bgcolor="#f0f0f8">
 
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
 <tr bgcolor="#7799ee">
 <td valign=bottom>&nbsp;<br>
-<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>deployment</strong></big></big></font></td
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="dnac.html"><font color="#ffffff">dnac</font></a>.deployment</strong></big></big></font></td
 ><td align=right valign=bottom
-><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/deployment.py">/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/deployment.py</a></font></td></tr></table>
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/dnac/deployment.py">/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/dnac/deployment.py</a></font></td></tr></table>
     <p></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -18,10 +19,10 @@
     
 <tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><dl>
-<dt><font face="helvetica, arial"><a href="dnacapi.html#DnacApi">dnacapi.DnacApi</a>(<a href="builtins.html#object">builtins.object</a>)
+<dt><font face="helvetica, arial"><a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>(<a href="__builtin__.html#object">__builtin__.object</a>)
 </font></dt><dd>
 <dl>
-<dt><font face="helvetica, arial"><a href="deployment.html#Deployment">Deployment</a>
+<dt><font face="helvetica, arial"><a href="dnac.deployment.html#Deployment">Deployment</a>
 </font></dt></dl>
 </dd>
 </dl>
@@ -29,7 +30,7 @@
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="Deployment">class <strong>Deployment</strong></a>(<a href="dnacapi.html#DnacApi">dnacapi.DnacApi</a>)</font></td></tr>
+<font color="#000000" face="helvetica, arial"><a name="Deployment">class <strong>Deployment</strong></a>(<a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
 <td colspan=2><tt>The&nbsp;<a href="#Deployment">Deployment</a>&nbsp;class&nbsp;monitors&nbsp;Cisco&nbsp;DNA&nbsp;Center's&nbsp;progress&nbsp;when&nbsp;pushing<br>
@@ -83,13 +84,13 @@ Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;d.api['Set&nbsp;VLAN'].deployment.<a href="#Deployment-check_deployment">check_deployment</a>()<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
-<dd><a href="deployment.html#Deployment">Deployment</a></dd>
-<dd><a href="dnacapi.html#DnacApi">dnacapi.DnacApi</a></dd>
-<dd><a href="builtins.html#object">builtins.object</a></dd>
+<dd><a href="dnac.deployment.html#Deployment">Deployment</a></dd>
+<dd><a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
 </dl>
 <hr>
 Methods defined here:<br>
-<dl><dt><a name="Deployment-__init__"><strong>__init__</strong></a>(self, dnac, id, verify=False, timeout=5)</dt><dd><tt><a href="#Deployment">Deployment</a>'s&nbsp;__init__&nbsp;method&nbsp;sets&nbsp;up&nbsp;a&nbsp;new&nbsp;<a href="#Deployment">Deployment</a>&nbsp;object.<br>
+<dl><dt><a name="Deployment-__init__"><strong>__init__</strong></a>(self, dnac, id, verify<font color="#909090">=False</font>, timeout<font color="#909090">=5</font>)</dt><dd><tt><a href="#Deployment">Deployment</a>'s&nbsp;__init__&nbsp;method&nbsp;sets&nbsp;up&nbsp;a&nbsp;new&nbsp;<a href="#Deployment">Deployment</a>&nbsp;object.<br>
 It&nbsp;takes&nbsp;a&nbsp;Dnac&nbsp;object&nbsp;and&nbsp;the&nbsp;deployment&nbsp;UUID&nbsp;and&nbsp;then&nbsp;constructs<br>
 a&nbsp;<a href="#Deployment">Deployment</a>&nbsp;object&nbsp;whose&nbsp;name&nbsp;is&nbsp;'deployment_&lt;UUID&gt;'.<br>
 &nbsp;<br>
@@ -194,7 +195,7 @@ Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;job.url</tt></dd>
 </dl>
 <hr>
-Data descriptors inherited from <a href="dnacapi.html#DnacApi">dnacapi.DnacApi</a>:<br>
+Data descriptors inherited from <a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>:<br>
 <dl><dt><strong>__dict__</strong></dt>
 <dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
 </dl>
@@ -305,7 +306,7 @@ Usage:<br>
     
 <tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><strong>ACCEPTED</strong> = 202<br>
-<strong>DEPLOYMENT_RESOURCE_PATH</strong> = {'1.2.10': '/dna/intent/api/v1/template-programmer/template/deploy/status', '1.2.8': '/api/v1/template-programmer/template/deploy/status'}<br>
+<strong>DEPLOYMENT_RESOURCE_PATH</strong> = {'1.2.10': '/api/v1/template-programmer/template/deploy/status', '1.2.8': '/api/v1/template-programmer/template/deploy/status'}<br>
 <strong>ERROR_MSGS</strong> = {400: '400 - API request syntax is malformed', 401: '401 - API request has missing or invalid credentials', 403: '403 - API request is unauthorized', 404: '404 - API requested resource does not exist', 409: '409 - API requested resource is in a conflicted state', 415: '415 - API request body is in an unsupported format', 500: '500 - Server could not fulfill the API request', 501: '501 - Server has not implemented the requested function', 503: '503 - Server is unavailable', 504: '504 - Server did not respond before request timed-out'}<br>
 <strong>MODULE</strong> = 'deployment.py'<br>
 <strong>REQUEST_NOT_ACCEPTED</strong> = 'API request is not ACCEPTED'<br>

@@ -1,14 +1,15 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html><head><title>Python: module networkdevice</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<html><head><title>Python: module dnac.networkdevice</title>
+<meta charset="utf-8">
 </head><body bgcolor="#f0f0f8">
 
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
 <tr bgcolor="#7799ee">
 <td valign=bottom>&nbsp;<br>
-<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>networkdevice</strong></big></big></font></td
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="dnac.html"><font color="#ffffff">dnac</font></a>.networkdevice</strong></big></big></font></td
 ><td align=right valign=bottom
-><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/networkdevice.py">/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/networkdevice.py</a></font></td></tr></table>
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/dnac/networkdevice.py">/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/dnac/networkdevice.py</a></font></td></tr></table>
     <p></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -18,10 +19,10 @@
     
 <tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><dl>
-<dt><font face="helvetica, arial"><a href="dnacapi.html#DnacApi">dnacapi.DnacApi</a>(<a href="builtins.html#object">builtins.object</a>)
+<dt><font face="helvetica, arial"><a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>(<a href="__builtin__.html#object">__builtin__.object</a>)
 </font></dt><dd>
 <dl>
-<dt><font face="helvetica, arial"><a href="networkdevice.html#NetworkDevice">NetworkDevice</a>
+<dt><font face="helvetica, arial"><a href="dnac.networkdevice.html#NetworkDevice">NetworkDevice</a>
 </font></dt></dl>
 </dd>
 </dl>
@@ -29,11 +30,11 @@
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="NetworkDevice">class <strong>NetworkDevice</strong></a>(<a href="dnacapi.html#DnacApi">dnacapi.DnacApi</a>)</font></td></tr>
+<font color="#000000" face="helvetica, arial"><a name="NetworkDevice">class <strong>NetworkDevice</strong></a>(<a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
 <td colspan=2><tt>The&nbsp;<a href="#NetworkDevice">NetworkDevice</a>&nbsp;class&nbsp;wraps&nbsp;Cisco's&nbsp;DNA&nbsp;Center&nbsp;network-device&nbsp;API<br>
-calls.&nbsp;&nbsp;It&nbsp;inherits&nbsp;from&nbsp;class&nbsp;<a href="dnacapi.html#DnacApi">DnacApi</a>&nbsp;for&nbsp;its&nbsp;attributes,&nbsp;and&nbsp;in&nbsp;its<br>
+calls.&nbsp;&nbsp;It&nbsp;inherits&nbsp;from&nbsp;class&nbsp;<a href="dnac.dnacapi.html#DnacApi">DnacApi</a>&nbsp;for&nbsp;its&nbsp;attributes,&nbsp;and&nbsp;in&nbsp;its<br>
 current&nbsp;form,&nbsp;it&nbsp;does&nbsp;not&nbsp;extend&nbsp;these&nbsp;attributes&nbsp;with&nbsp;any&nbsp;others.<br>
 <a href="#NetworkDevice">NetworkDevice</a>&nbsp;does,&nbsp;however,&nbsp;provide&nbsp;a&nbsp;set&nbsp;of&nbsp;functions&nbsp;that&nbsp;handle<br>
 the&nbsp;details&nbsp;behind&nbsp;the&nbsp;API's&nbsp;various&nbsp;permutations.&nbsp;&nbsp;Use&nbsp;this&nbsp;API<br>
@@ -65,6 +66,10 @@ Attributes:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;list&nbsp;or&nbsp;dict:&nbsp;The&nbsp;results&nbsp;returned&nbsp;by&nbsp;making&nbsp;an&nbsp;API&nbsp;call.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
+&nbsp;&nbsp;&nbsp;&nbsp;device_detail:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;A&nbsp;device's&nbsp;detailed&nbsp;configuration,&nbsp;state&nbsp;and&nbsp;health.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;{}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
 &nbsp;&nbsp;&nbsp;&nbsp;vlans:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;list:&nbsp;The&nbsp;results&nbsp;returned&nbsp;when&nbsp;making&nbsp;an&nbsp;API&nbsp;call&nbsp;that<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;specifically&nbsp;asks&nbsp;for&nbsp;VLAN&nbsp;information&nbsp;from&nbsp;a&nbsp;device.<br>
@@ -90,14 +95,14 @@ Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pprint.PrettyPrint(device['hostname'])<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
-<dd><a href="networkdevice.html#NetworkDevice">NetworkDevice</a></dd>
-<dd><a href="dnacapi.html#DnacApi">dnacapi.DnacApi</a></dd>
-<dd><a href="builtins.html#object">builtins.object</a></dd>
+<dd><a href="dnac.networkdevice.html#NetworkDevice">NetworkDevice</a></dd>
+<dd><a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
 </dl>
 <hr>
 Methods defined here:<br>
-<dl><dt><a name="NetworkDevice-__init__"><strong>__init__</strong></a>(self, dnac, name, verify=False, timeout=5)</dt><dd><tt>The&nbsp;__init__&nbsp;class&nbsp;method&nbsp;instantiates&nbsp;a&nbsp;new&nbsp;<a href="#NetworkDevice">NetworkDevice</a>&nbsp;object.<br>
-Be&nbsp;ceratin&nbsp;that&nbsp;a&nbsp;Dnac&nbsp;object&nbsp;is&nbsp;first&nbsp;created,&nbsp;then&nbsp;pass&nbsp;that<br>
+<dl><dt><a name="NetworkDevice-__init__"><strong>__init__</strong></a>(self, dnac, name, verify<font color="#909090">=False</font>, timeout<font color="#909090">=5</font>)</dt><dd><tt>The&nbsp;__init__&nbsp;class&nbsp;method&nbsp;instantiates&nbsp;a&nbsp;new&nbsp;<a href="#NetworkDevice">NetworkDevice</a>&nbsp;object.<br>
+Be&nbsp;certain&nbsp;that&nbsp;a&nbsp;Dnac&nbsp;object&nbsp;is&nbsp;first&nbsp;created,&nbsp;then&nbsp;pass&nbsp;that<br>
 object&nbsp;and&nbsp;a&nbsp;user-friendly&nbsp;name&nbsp;for&nbsp;the&nbsp;<a href="#NetworkDevice">NetworkDevice</a>&nbsp;instance<br>
 that&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;access&nbsp;it&nbsp;in&nbsp;the&nbsp;Dnac.api&nbsp;dictionary.<br>
 &nbsp;<br>
@@ -200,6 +205,103 @@ Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;device&nbsp;=&nbsp;d.api['network-device'].<a href="#NetworkDevice-get_device_by_name">get_device_by_name</a>(name)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pprint.PrettyPrint(device)</tt></dd></dl>
 
+<dl><dt><a name="NetworkDevice-get_device_detail_by_id"><strong>get_device_detail_by_id</strong></a>(self, id)</dt><dd><tt>get_device_detail_by_id&nbsp;searches&nbsp;for&nbsp;a&nbsp;devices&nbsp;using&nbsp;its&nbsp;uuid<br>
+and&nbsp;returns&nbsp;a&nbsp;detailed&nbsp;listing&nbsp;of&nbsp;its&nbsp;current&nbsp;configuration&nbsp;state<br>
+and&nbsp;health.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;id:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;<br>
+Return&nbsp;Values:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;A&nbsp;dictionary&nbsp;of&nbsp;the&nbsp;device's&nbsp;current&nbsp;state<br>
+&nbsp;<br>
+Usage:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;nd&nbsp;=&nbsp;<a href="#NetworkDevice">NetworkDevice</a>(d,&nbsp;'network-device')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;uuid&nbsp;=&nbsp;'84e4b133-2668-4705-8163-5694c84e78fb'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;details&nbsp;=&nbsp;d.api['network-device'].<a href="#NetworkDevice-get_device_detail_by_id">get_device_detail_by_id</a>(uuid)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pprint.PrettyPrint(details)</tt></dd></dl>
+
+<dl><dt><a name="NetworkDevice-get_device_detail_by_mac"><strong>get_device_detail_by_mac</strong></a>(self, mac)</dt><dd><tt>get_device_detail_by_mac&nbsp;searches&nbsp;for&nbsp;a&nbsp;devices&nbsp;using&nbsp;its&nbsp;MAC&nbsp;address<br>
+and&nbsp;returns&nbsp;a&nbsp;detailed&nbsp;listing&nbsp;of&nbsp;its&nbsp;current&nbsp;configuration&nbsp;state<br>
+and&nbsp;health.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;mac:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;<br>
+Return&nbsp;Values:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;A&nbsp;dictionary&nbsp;of&nbsp;the&nbsp;device's&nbsp;current&nbsp;state<br>
+&nbsp;<br>
+Usage:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;nd&nbsp;=&nbsp;<a href="#NetworkDevice">NetworkDevice</a>(d,&nbsp;'network-device')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;mac&nbsp;=&nbsp;'DE:AD:BE:EF:01:02'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;details&nbsp;=&nbsp;d.api['network-device'].<a href="#NetworkDevice-get_device_detail_by_mac">get_device_detail_by_mac</a>(mac)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pprint.PrettyPrint(details)</tt></dd></dl>
+
+<dl><dt><a name="NetworkDevice-get_device_detail_by_name"><strong>get_device_detail_by_name</strong></a>(self, name)</dt><dd><tt>get_device_detail_by_name&nbsp;searches&nbsp;for&nbsp;a&nbsp;devices&nbsp;using&nbsp;its&nbsp;hostname<br>
+and&nbsp;returns&nbsp;a&nbsp;detailed&nbsp;listing&nbsp;of&nbsp;its&nbsp;current&nbsp;configuration&nbsp;state<br>
+and&nbsp;health.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;name:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;<br>
+Return&nbsp;Values:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;A&nbsp;dictionary&nbsp;of&nbsp;the&nbsp;device's&nbsp;current&nbsp;state<br>
+&nbsp;<br>
+Usage:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;nd&nbsp;=&nbsp;<a href="#NetworkDevice">NetworkDevice</a>(d,&nbsp;'network-device')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;hostname&nbsp;=&nbsp;'c9407.cisco.com'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;details&nbsp;=&nbsp;d.api['network-device'].<a href="#NetworkDevice-get_device_detail_by_name">get_device_detail_by_name</a>(hostname)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pprint.PrettyPrint(details)</tt></dd></dl>
+
+<dl><dt><a name="NetworkDevice-get_devices_by_ip_with_regex"><strong>get_devices_by_ip_with_regex</strong></a>(self, regex)</dt><dd><tt>The&nbsp;get_devices_by_ip_with_regex&nbsp;searches&nbsp;through&nbsp;Cisco&nbsp;DNA&nbsp;Center's<br>
+inventory&nbsp;for&nbsp;all&nbsp;devices&nbsp;whose&nbsp;management&nbsp;IP&nbsp;address&nbsp;matches&nbsp;the<br>
+regular&nbsp;expression&nbsp;passed.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;regex:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;<br>
+Return&nbsp;Values:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;list:&nbsp;The&nbsp;devices&nbsp;found&nbsp;according&nbsp;to&nbsp;the&nbsp;regular&nbsp;expression&nbsp;search.<br>
+&nbsp;<br>
+Usage:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;nd&nbsp;=&nbsp;<a href="#NetworkDevice">NetworkDevice</a>(d,&nbsp;'network-device')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;d.api[nd.name]&nbsp;=&nbsp;&nbsp;nd<br>
+&nbsp;&nbsp;&nbsp;&nbsp;regex&nbsp;=&nbsp;'192.168.*.*'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;devices&nbsp;=&nbsp;d.api['network-device'].<a href="#NetworkDevice-get_devices_by_ip_with_regex">get_devices_by_ip_with_regex</a>(regex)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pprint.PrettyPrint(devices)</tt></dd></dl>
+
+<dl><dt><a name="NetworkDevice-get_devices_by_name_with_regex"><strong>get_devices_by_name_with_regex</strong></a>(self, regex)</dt><dd><tt>The&nbsp;get_devices_by_name_with_regex&nbsp;searches&nbsp;through&nbsp;Cisco&nbsp;DNA&nbsp;Center's<br>
+inventory&nbsp;for&nbsp;all&nbsp;devices&nbsp;whose&nbsp;hostname&nbsp;matches&nbsp;the&nbsp;regular&nbsp;expression<br>
+it&nbsp;is&nbsp;given.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;regex:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;<br>
+Return&nbsp;Values:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;list:&nbsp;The&nbsp;devices&nbsp;found&nbsp;according&nbsp;to&nbsp;the&nbsp;regular&nbsp;expression&nbsp;search.<br>
+&nbsp;<br>
+Usage:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;nd&nbsp;=&nbsp;<a href="#NetworkDevice">NetworkDevice</a>(d,&nbsp;'network-device')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;d.api[nd.name]&nbsp;=&nbsp;&nbsp;nd<br>
+&nbsp;&nbsp;&nbsp;&nbsp;regex&nbsp;=&nbsp;'.*9300-switch.*'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;devices&nbsp;=&nbsp;d.api['network-device'].<a href="#NetworkDevice-get_devices_by_name_with_regex">get_devices_by_name_with_regex</a>(regex)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pprint.PrettyPrint(devices)</tt></dd></dl>
+
 <dl><dt><a name="NetworkDevice-get_id_by_device_name"><strong>get_id_by_device_name</strong></a>(self, name)</dt><dd><tt>Method&nbsp;get_id_by_device_name&nbsp;finds&nbsp;a&nbsp;device&nbsp;in&nbsp;Cisco&nbsp;DNA&nbsp;Center&nbsp;by<br>
 its&nbsp;hostname&nbsp;and&nbsp;returns&nbsp;its&nbsp;UUID.<br>
 &nbsp;<br>
@@ -272,7 +374,7 @@ Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pprint.PrettyPrint(vlans)</tt></dd></dl>
 
 <hr>
-Data descriptors inherited from <a href="dnacapi.html#DnacApi">dnacapi.DnacApi</a>:<br>
+Data descriptors inherited from <a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>:<br>
 <dl><dt><strong>__dict__</strong></dt>
 <dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
 </dl>
@@ -402,6 +504,10 @@ Usage:<br>
     
 <tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><strong>CHECK_HOSTNAME</strong> = 'Check the hostname'<br>
+<strong>CHECK_IP</strong> = 'Check the management IP address'<br>
+<strong>CHECK_REGEX</strong> = 'Check the regular expression'<br>
+<strong>DEVICE_DETAIL_IDENTIFIERS</strong> = {'id': 'uuid', 'mac': 'macAddress', 'name': 'nwDeviceName'}<br>
+<strong>DEVICE_DETAIL_RESOURCE_PATH</strong> = {'1.2.10': '/dna/intent/api/v1/device-detail'}<br>
 <strong>ERROR_MSGS</strong> = {400: '400 - API request syntax is malformed', 401: '401 - API request has missing or invalid credentials', 403: '403 - API request is unauthorized', 404: '404 - API requested resource does not exist', 409: '409 - API requested resource is in a conflicted state', 415: '415 - API request body is in an unsupported format', 500: '500 - Server could not fulfill the API request', 501: '501 - Server has not implemented the requested function', 503: '503 - Server is unavailable', 504: '504 - Server did not respond before request timed-out'}<br>
 <strong>MODULE</strong> = 'networkdevice.py'<br>
 <strong>NETWORK_DEVICE_RESOURCE_PATH</strong> = {'1.2.10': '/dna/intent/api/v1/network-device', '1.2.8': '/dna/intent/api/v1/network-device'}<br>

@@ -1,14 +1,15 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html><head><title>Python: module basicauth</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<html><head><title>Python: module dnac.basicauth</title>
+<meta charset="utf-8">
 </head><body bgcolor="#f0f0f8">
 
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
 <tr bgcolor="#7799ee">
 <td valign=bottom>&nbsp;<br>
-<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>basicauth</strong></big></big></font></td
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="dnac.html"><font color="#ffffff">dnac</font></a>.basicauth</strong></big></big></font></td
 ><td align=right valign=bottom
-><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/basicauth.py">/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/basicauth.py</a></font></td></tr></table>
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/dnac/basicauth.py">/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/dnac/basicauth.py</a></font></td></tr></table>
     <p></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -18,10 +19,10 @@
     
 <tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><dl>
-<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+<dt><font face="helvetica, arial"><a href="__builtin__.html#object">__builtin__.object</a>
 </font></dt><dd>
 <dl>
-<dt><font face="helvetica, arial"><a href="basicauth.html#BasicAuth">BasicAuth</a>
+<dt><font face="helvetica, arial"><a href="dnac.basicauth.html#BasicAuth">BasicAuth</a>
 </font></dt></dl>
 </dd>
 </dl>
@@ -29,7 +30,7 @@
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="BasicAuth">class <strong>BasicAuth</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+<font color="#000000" face="helvetica, arial"><a name="BasicAuth">class <strong>BasicAuth</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
 <td colspan=2><tt>Class&nbsp;<a href="#BasicAuth">BasicAuth</a>&nbsp;stores&nbsp;the&nbsp;username&nbsp;and&nbsp;password&nbsp;for&nbsp;basic&nbsp;authorization<br>
@@ -57,7 +58,7 @@ Attributes:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>
-<dl><dt><a name="BasicAuth-__init__"><strong>__init__</strong></a>(self, user, passwd)</dt><dd><tt>The&nbsp;__init__&nbsp;method&nbsp;initializes&nbsp;a&nbsp;<a href="#BasicAuth">BasicAuth</a>&nbsp;<a href="builtins.html#object">object</a>.&nbsp;&nbsp;It&nbsp;takes&nbsp;in<br>
+<dl><dt><a name="BasicAuth-__init__"><strong>__init__</strong></a>(self, user, passwd)</dt><dd><tt>The&nbsp;__init__&nbsp;method&nbsp;initializes&nbsp;a&nbsp;<a href="#BasicAuth">BasicAuth</a>&nbsp;<a href="__builtin__.html#object">object</a>.&nbsp;&nbsp;It&nbsp;takes&nbsp;in<br>
 a&nbsp;username&nbsp;and&nbsp;password,&nbsp;sets&nbsp;the&nbsp;__user&nbsp;and&nbsp;__passwd,&nbsp;respectively,<br>
 and&nbsp;then&nbsp;uses&nbsp;those&nbsp;values&nbsp;to&nbsp;create&nbsp;a&nbsp;base64&nbsp;encoded&nbsp;string&nbsp;for<br>
 the&nbsp;__creds&nbsp;attribute&nbsp;and&nbsp;a&nbsp;header&nbsp;dictionary&nbsp;for&nbsp;__hdrs.<br>
@@ -73,11 +74,11 @@ Parameters:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;Yes<br>
 &nbsp;<br>
 Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#BasicAuth">BasicAuth</a>&nbsp;<a href="builtins.html#object">object</a>:&nbsp;The&nbsp;newly&nbsp;constructed&nbsp;basic&nbsp;authentication&nbsp;instance.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#BasicAuth">BasicAuth</a>&nbsp;<a href="__builtin__.html#object">object</a>:&nbsp;The&nbsp;newly&nbsp;constructed&nbsp;basic&nbsp;authentication&nbsp;instance.<br>
 &nbsp;<br>
 Usage:&nbsp;b&nbsp;=&nbsp;<a href="#BasicAuth">BasicAuth</a>(user,&nbsp;passwd)</tt></dd></dl>
 
-<dl><dt><a name="BasicAuth-__str__"><strong>__str__</strong></a>(self)</dt><dd><tt>String&nbsp;handler&nbsp;for&nbsp;a&nbsp;<a href="#BasicAuth">BasicAuth</a>&nbsp;<a href="builtins.html#object">object</a>.&nbsp;&nbsp;Returns&nbsp;the&nbsp;base64&nbsp;encoded&nbsp;string&nbsp;"&lt;username&gt;:&lt;password&gt;".</tt></dd></dl>
+<dl><dt><a name="BasicAuth-__str__"><strong>__str__</strong></a>(self)</dt><dd><tt>String&nbsp;handler&nbsp;for&nbsp;a&nbsp;<a href="#BasicAuth">BasicAuth</a>&nbsp;<a href="__builtin__.html#object">object</a>.&nbsp;&nbsp;Returns&nbsp;the&nbsp;base64&nbsp;encoded&nbsp;string&nbsp;"&lt;username&gt;:&lt;password&gt;".</tt></dd></dl>
 
 <dl><dt><a name="BasicAuth-make_creds"><strong>make_creds</strong></a>(self)</dt><dd><tt>Method&nbsp;make_creds&nbsp;builds&nbsp;the&nbsp;base64&nbsp;encoded&nbsp;string&nbsp;&lt;user&gt;:&lt;passwd&gt;&nbsp;for&nbsp;basic&nbsp;authentication&nbsp;to&nbsp;an&nbsp;API&nbsp;server.<br>
 &nbsp;<br>

@@ -1,14 +1,15 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html><head><title>Python: module template</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<html><head><title>Python: module dnac.template</title>
+<meta charset="utf-8">
 </head><body bgcolor="#f0f0f8">
 
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
 <tr bgcolor="#7799ee">
 <td valign=bottom>&nbsp;<br>
-<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>template</strong></big></big></font></td
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="dnac.html"><font color="#ffffff">dnac</font></a>.template</strong></big></big></font></td
 ><td align=right valign=bottom
-><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/template.py">/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/template.py</a></font></td></tr></table>
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/dnac/template.py">/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/dnac/template.py</a></font></td></tr></table>
     <p></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -18,7 +19,8 @@
     
 <tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="json.html">json</a><br>
-</td><td width="25%" valign=top></td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+</td><td width="25%" valign=top><a href="time.html">time</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ee77aa">
 <td colspan=3 valign=bottom>&nbsp;<br>
@@ -26,10 +28,10 @@
     
 <tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><dl>
-<dt><font face="helvetica, arial"><a href="dnacapi.html#DnacApi">dnacapi.DnacApi</a>(<a href="builtins.html#object">builtins.object</a>)
+<dt><font face="helvetica, arial"><a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>(<a href="__builtin__.html#object">__builtin__.object</a>)
 </font></dt><dd>
 <dl>
-<dt><font face="helvetica, arial"><a href="template.html#Template">Template</a>
+<dt><font face="helvetica, arial"><a href="dnac.template.html#Template">Template</a>
 </font></dt></dl>
 </dd>
 </dl>
@@ -37,7 +39,7 @@
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="Template">class <strong>Template</strong></a>(<a href="dnacapi.html#DnacApi">dnacapi.DnacApi</a>)</font></td></tr>
+<font color="#000000" face="helvetica, arial"><a name="Template">class <strong>Template</strong></a>(<a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
 <td colspan=2><tt>Class&nbsp;<a href="#Template">Template</a>&nbsp;provides&nbsp;an&nbsp;abstraction&nbsp;of&nbsp;CLI&nbsp;templates&nbsp;in&nbsp;Cisco's<br>
@@ -161,13 +163,13 @@ Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pprint.PrettyPrint(template.deployment.results)<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
-<dd><a href="template.html#Template">Template</a></dd>
-<dd><a href="dnacapi.html#DnacApi">dnacapi.DnacApi</a></dd>
-<dd><a href="builtins.html#object">builtins.object</a></dd>
+<dd><a href="dnac.template.html#Template">Template</a></dd>
+<dd><a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
 </dl>
 <hr>
 Methods defined here:<br>
-<dl><dt><a name="Template-__init__"><strong>__init__</strong></a>(self, dnac, name, version=0, verify=False, timeout=5)</dt><dd><tt><a href="#Template">Template</a>'s&nbsp;__init__&nbsp;method&nbsp;constructs&nbsp;a&nbsp;new&nbsp;<a href="#Template">Template</a>&nbsp;object.<br>
+<dl><dt><a name="Template-__init__"><strong>__init__</strong></a>(self, dnac, name, version<font color="#909090">=0</font>, verify<font color="#909090">=False</font>, timeout<font color="#909090">=5</font>)</dt><dd><tt><a href="#Template">Template</a>'s&nbsp;__init__&nbsp;method&nbsp;constructs&nbsp;a&nbsp;new&nbsp;<a href="#Template">Template</a>&nbsp;object.<br>
 It&nbsp;automatically&nbsp;searches&nbsp;for&nbsp;the&nbsp;template&nbsp;in&nbsp;Cisco&nbsp;DNA&nbsp;Center<br>
 by&nbsp;the&nbsp;<a href="#Template">Template</a>'s&nbsp;name.&nbsp;&nbsp;If&nbsp;found,&nbsp;then&nbsp;it&nbsp;will&nbsp;search&nbsp;for&nbsp;the<br>
 committed&nbsp;version&nbsp;of&nbsp;the&nbsp;template&nbsp;according&nbsp;to&nbsp;the&nbsp;value&nbsp;passed<br>
@@ -227,7 +229,7 @@ Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;d.api['Create&nbsp;VRF'].target_type&nbsp;=&nbsp;TARGET_BY_ID<br>
 &nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;d.api['Create&nbsp;VRF'].<a href="#Template-deploy">deploy</a>()</tt></dd></dl>
 
-<dl><dt><a name="Template-deploy_sync"><strong>deploy_sync</strong></a>(self, wait=3)</dt><dd><tt>deploy_sync&nbsp;pushes&nbsp;a&nbsp;template&nbsp;to&nbsp;the&nbsp;target&nbsp;device&nbsp;and&nbsp;then&nbsp;waits<br>
+<dl><dt><a name="Template-deploy_sync"><strong>deploy_sync</strong></a>(self, wait<font color="#909090">=3</font>)</dt><dd><tt>deploy_sync&nbsp;pushes&nbsp;a&nbsp;template&nbsp;to&nbsp;the&nbsp;target&nbsp;device&nbsp;and&nbsp;then&nbsp;waits<br>
 for&nbsp;the&nbsp;job&nbsp;to&nbsp;finish.&nbsp;&nbsp;By&nbsp;default,&nbsp;it&nbsp;checks&nbsp;the&nbsp;job&nbsp;every<br>
 three&nbsp;seconds,&nbsp;but&nbsp;this&nbsp;can&nbsp;be&nbsp;set&nbsp;using&nbsp;the&nbsp;wait&nbsp;keyword&nbsp;argument.<br>
 The&nbsp;<a href="#Template">Template</a>'s&nbsp;target&nbsp;information&nbsp;and&nbsp;versioned&nbsp;template&nbsp;data<br>
@@ -303,7 +305,7 @@ Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;template&nbsp;=&nbsp;<a href="#Template">Template</a>(d,&nbsp;'Set&nbsp;VLAN')<br>
 &nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;str(d.api['Set&nbsp;Vlan'].getTemplateByIdByName()</tt></dd></dl>
 
-<dl><dt><a name="Template-get_versioned_template_by_name"><strong>get_versioned_template_by_name</strong></a>(self, name, ver=0)</dt><dd><tt>Class&nbsp;method&nbsp;get_versioned_template_by_name&nbsp;finds&nbsp;a&nbsp;committed&nbsp;template<br>
+<dl><dt><a name="Template-get_versioned_template_by_name"><strong>get_versioned_template_by_name</strong></a>(self, name, ver<font color="#909090">=0</font>)</dt><dd><tt>Class&nbsp;method&nbsp;get_versioned_template_by_name&nbsp;finds&nbsp;a&nbsp;committed&nbsp;template<br>
 by&nbsp;the&nbsp;name&nbsp;and&nbsp;version&nbsp;values&nbsp;passed.&nbsp;&nbsp;It&nbsp;loads&nbsp;all&nbsp;of&nbsp;the&nbsp;template's<br>
 information&nbsp;into&nbsp;the&nbsp;object's&nbsp;versioned_template&nbsp;attributes&nbsp;including<br>
 its&nbsp;UUID,&nbsp;body&nbsp;and&nbsp;parameters.<br>
@@ -474,7 +476,7 @@ Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;d.api['Add&nbsp;Loopback'].versioned_template_params['ip']&nbsp;=&nbsp;10.1.1.1</tt></dd>
 </dl>
 <hr>
-Data descriptors inherited from <a href="dnacapi.html#DnacApi">dnacapi.DnacApi</a>:<br>
+Data descriptors inherited from <a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>:<br>
 <dl><dt><strong>__dict__</strong></dt>
 <dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
 </dl>
@@ -605,6 +607,7 @@ Usage:<br>
 <tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><strong>ACCEPTED</strong> = 202<br>
 <strong>ALREADY_DEPLOYED</strong> = 'Template already deployed'<br>
+<strong>ALREADY_DEPLOYED_RESOLUTION</strong> = "Change the template's parameters to a new value"<br>
 <strong>DEPLOYMENT_FAILURE</strong> = 'FAILURE'<br>
 <strong>DEPLOYMENT_INIT</strong> = 'INIT'<br>
 <strong>DEPLOYMENT_SUCCESS</strong> = 'SUCCESS'<br>
@@ -623,6 +626,7 @@ Usage:<br>
 <strong>OK</strong> = 200<br>
 <strong>REQUEST_NOT_ACCEPTED</strong> = 'API request is not ACCEPTED'<br>
 <strong>REQUEST_NOT_OK</strong> = 'API request is not OK'<br>
+<strong>SUBSTR_NOT_FOUND</strong> = -1<br>
 <strong>SUPPORTED_DNAC_VERSIONS</strong> = ['1.2.8', '1.2.10']<br>
 <strong>TARGET_BY_DEFAULT</strong> = 'DEFAULT'<br>
 <strong>TARGET_BY_HOSTNAME</strong> = 'MANAGED_DEVICE_HOSTNAME'<br>
@@ -630,8 +634,9 @@ Usage:<br>
 <strong>TARGET_BY_IP</strong> = 'MANAGED_DEVICE_IP'<br>
 <strong>TARGET_BY_MAC</strong> = 'PRE_PROVISIONED_SERIAL'<br>
 <strong>TARGET_BY_SERIAL</strong> = 'PRE_PROVISIONED_SERIAL'<br>
+<strong>TEMPLATE_ALREADY_DEPLOYED</strong> = 'already deployed with same params'<br>
 <strong>TEMPLATE_NOT_FOUND</strong> = 'Could not find template'<br>
-<strong>TEMPLATE_RESOURCE_PATH</strong> = {'1.2.10': '/dna/intent/api/v1/template-programmer/template', '1.2.8': '/dna/intent/api/v1/template-programmer/template'}<br>
+<strong>TEMPLATE_RESOURCE_PATH</strong> = {'1.2.10': '/api/v2/template-programmer/template', '1.2.8': '/api/v1/template-programmer/template'}<br>
 <strong>UNKNOWN_DEPLOYMENT_STATUS</strong> = 'Unknown deployment status'<br>
 <strong>UNKNOWN_VERSION</strong> = 'Unknown template version'<br>
 <strong>UNSUPPORTED_DNAC_VERSION</strong> = 'Unsupported Cisco DNA Center version'<br>

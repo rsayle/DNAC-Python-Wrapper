@@ -1,14 +1,15 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html><head><title>Python: module commandrunner</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<html><head><title>Python: module dnac.commandrunner</title>
+<meta charset="utf-8">
 </head><body bgcolor="#f0f0f8">
 
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
 <tr bgcolor="#7799ee">
 <td valign=bottom>&nbsp;<br>
-<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>commandrunner</strong></big></big></font></td
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="dnac.html"><font color="#ffffff">dnac</font></a>.commandrunner</strong></big></big></font></td
 ><td align=right valign=bottom
-><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/commandrunner.py">/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/commandrunner.py</a></font></td></tr></table>
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/dnac/commandrunner.py">/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/dnac/commandrunner.py</a></font></td></tr></table>
     <p></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -26,10 +27,10 @@
     
 <tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><dl>
-<dt><font face="helvetica, arial"><a href="dnacapi.html#DnacApi">dnacapi.DnacApi</a>(<a href="builtins.html#object">builtins.object</a>)
+<dt><font face="helvetica, arial"><a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>(<a href="__builtin__.html#object">__builtin__.object</a>)
 </font></dt><dd>
 <dl>
-<dt><font face="helvetica, arial"><a href="commandrunner.html#CommandRunner">CommandRunner</a>
+<dt><font face="helvetica, arial"><a href="dnac.commandrunner.html#CommandRunner">CommandRunner</a>
 </font></dt></dl>
 </dd>
 </dl>
@@ -37,7 +38,7 @@
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="CommandRunner">class <strong>CommandRunner</strong></a>(<a href="dnacapi.html#DnacApi">dnacapi.DnacApi</a>)</font></td></tr>
+<font color="#000000" face="helvetica, arial"><a name="CommandRunner">class <strong>CommandRunner</strong></a>(<a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
 <td colspan=2><tt>The&nbsp;<a href="#CommandRunner">CommandRunner</a>&nbsp;class&nbsp;provides&nbsp;the&nbsp;interface&nbsp;for&nbsp;running&nbsp;CLI&nbsp;commands<br>
@@ -95,14 +96,14 @@ Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;results&nbsp;=&nbsp;cmd.runSync()<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
-<dd><a href="commandrunner.html#CommandRunner">CommandRunner</a></dd>
-<dd><a href="dnacapi.html#DnacApi">dnacapi.DnacApi</a></dd>
-<dd><a href="builtins.html#object">builtins.object</a></dd>
+<dd><a href="dnac.commandrunner.html#CommandRunner">CommandRunner</a></dd>
+<dd><a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
 </dl>
 <hr>
 Methods defined here:<br>
-<dl><dt><a name="CommandRunner-__init__"><strong>__init__</strong></a>(self, dnac, name, cmds=None, verify=False, timeout=5)</dt><dd><tt>The&nbsp;__init__&nbsp;method&nbsp;creates&nbsp;a&nbsp;<a href="#CommandRunner">CommandRunner</a>&nbsp;object.&nbsp;&nbsp;As&nbsp;with&nbsp;all<br>
-classes&nbsp;that&nbsp;inherit&nbsp;from&nbsp;<a href="dnacapi.html#DnacApi">DnacApi</a>,&nbsp;a&nbsp;minimum&nbsp;of&nbsp;a&nbsp;Dnac&nbsp;container<br>
+<dl><dt><a name="CommandRunner-__init__"><strong>__init__</strong></a>(self, dnac, name, cmds<font color="#909090">=None</font>, verify<font color="#909090">=False</font>, timeout<font color="#909090">=5</font>)</dt><dd><tt>The&nbsp;__init__&nbsp;method&nbsp;creates&nbsp;a&nbsp;<a href="#CommandRunner">CommandRunner</a>&nbsp;object.&nbsp;&nbsp;As&nbsp;with&nbsp;all<br>
+classes&nbsp;that&nbsp;inherit&nbsp;from&nbsp;<a href="dnac.dnacapi.html#DnacApi">DnacApi</a>,&nbsp;a&nbsp;minimum&nbsp;of&nbsp;a&nbsp;Dnac&nbsp;container<br>
 and&nbsp;a&nbsp;name&nbsp;must&nbsp;be&nbsp;given.&nbsp;&nbsp;Optionally,&nbsp;a&nbsp;dictionary&nbsp;of&nbsp;the&nbsp;CLI<br>
 commands&nbsp;to&nbsp;run&nbsp;and&nbsp;the&nbsp;UUIDs&nbsp;of&nbsp;devices&nbsp;to&nbsp;run&nbsp;them&nbsp;on&nbsp;may<br>
 be&nbsp;specified.<br>
@@ -211,7 +212,7 @@ Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;cmd&nbsp;=&nbsp;<a href="#CommandRunner">CommandRunner</a>(d,&nbsp;'aName')<br>
 &nbsp;&nbsp;&nbsp;&nbsp;cmdState&nbsp;=&nbsp;cmd.<a href="#CommandRunner-run">run</a>()</tt></dd></dl>
 
-<dl><dt><a name="CommandRunner-run_sync"><strong>run_sync</strong></a>(self, wait=3)</dt><dd><tt>runSync&nbsp;issues&nbsp;the&nbsp;commands&nbsp;set&nbsp;in&nbsp;the&nbsp;<a href="#CommandRunner">CommandRunner</a>&nbsp;and&nbsp;waits<br>
+<dl><dt><a name="CommandRunner-run_sync"><strong>run_sync</strong></a>(self, wait<font color="#909090">=3</font>)</dt><dd><tt>runSync&nbsp;issues&nbsp;the&nbsp;commands&nbsp;set&nbsp;in&nbsp;the&nbsp;<a href="#CommandRunner">CommandRunner</a>&nbsp;and&nbsp;waits<br>
 for&nbsp;their&nbsp;completion.&nbsp;&nbsp;It&nbsp;performs&nbsp;this&nbsp;action&nbsp;by&nbsp;creating&nbsp;a<br>
 Task&nbsp;object&nbsp;and&nbsp;then&nbsp;checks&nbsp;the&nbsp;task's&nbsp;state&nbsp;periodically<br>
 according&nbsp;to&nbsp;the&nbsp;wait&nbsp;time&nbsp;(seconds)&nbsp;passed&nbsp;as&nbsp;an&nbsp;argument.<br>
@@ -275,7 +276,7 @@ Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;task&nbsp;=&nbsp;cmd.task</tt></dd>
 </dl>
 <hr>
-Data descriptors inherited from <a href="dnacapi.html#DnacApi">dnacapi.DnacApi</a>:<br>
+Data descriptors inherited from <a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>:<br>
 <dl><dt><strong>__dict__</strong></dt>
 <dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
 </dl>

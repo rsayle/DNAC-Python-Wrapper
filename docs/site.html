@@ -1,15 +1,15 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html><head><title>Python: module dnac.file</title>
+<html><head><title>Python: module dnac.site</title>
 <meta charset="utf-8">
 </head><body bgcolor="#f0f0f8">
 
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
 <tr bgcolor="#7799ee">
 <td valign=bottom>&nbsp;<br>
-<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="dnac.html"><font color="#ffffff">dnac</font></a>.file</strong></big></big></font></td
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="dnac.html"><font color="#ffffff">dnac</font></a>.site</strong></big></big></font></td
 ><td align=right valign=bottom
-><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/dnac/file.py">/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/dnac/file.py</a></font></td></tr></table>
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/dnac/site.py">/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/dnac/site.py</a></font></td></tr></table>
     <p></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -22,7 +22,7 @@
 <dt><font face="helvetica, arial"><a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>(<a href="__builtin__.html#object">__builtin__.object</a>)
 </font></dt><dd>
 <dl>
-<dt><font face="helvetica, arial"><a href="dnac.file.html#File">File</a>
+<dt><font face="helvetica, arial"><a href="dnac.site.html#Site">Site</a>
 </font></dt></dl>
 </dd>
 </dl>
@@ -30,127 +30,112 @@
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="File">class <strong>File</strong></a>(<a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>)</font></td></tr>
+<font color="#000000" face="helvetica, arial"><a name="Site">class <strong>Site</strong></a>(<a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>Class&nbsp;<a href="#File">File</a>&nbsp;gets&nbsp;and&nbsp;stores&nbsp;the&nbsp;results&nbsp;from&nbsp;a&nbsp;task&nbsp;run&nbsp;on<br>
-Cisco&nbsp;DNA&nbsp;Center.&nbsp;&nbsp;Cisco&nbsp;DNAC&nbsp;delivers&nbsp;the&nbsp;results&nbsp;from&nbsp;a&nbsp;file&nbsp;whose<br>
-contents&nbsp;are&nbsp;a&nbsp;string,&nbsp;which&nbsp;this&nbsp;class&nbsp;converts&nbsp;to&nbsp;a&nbsp;list.<br>
+<td colspan=2><tt>A&nbsp;<a href="#Site">Site</a>&nbsp;class&nbsp;maps&nbsp;to&nbsp;the&nbsp;objects&nbsp;created&nbsp;in&nbsp;Cisco&nbsp;DNA&nbsp;Center's&nbsp;design&nbsp;site&nbsp;hierarchy.&nbsp;&nbsp;This&nbsp;class&nbsp;allows<br>
+developers&nbsp;to&nbsp;pull&nbsp;site&nbsp;health&nbsp;details&nbsp;and&nbsp;assign&nbsp;devices&nbsp;to&nbsp;sites.<br>
 &nbsp;<br>
-Like&nbsp;all&nbsp;entities&nbsp;in&nbsp;Cisco&nbsp;DNAC,&nbsp;files&nbsp;are&nbsp;referenced&nbsp;via&nbsp;a&nbsp;UUID.&nbsp;&nbsp;Set<br>
-the&nbsp;file&nbsp;UUID&nbsp;either&nbsp;during&nbsp;initialization&nbsp;before&nbsp;attempting&nbsp;to<br>
-retrieve&nbsp;the&nbsp;file's&nbsp;data&nbsp;with&nbsp;the&nbsp;<a href="#File-get_results">get_results</a>()&nbsp;method.<br>
-&nbsp;<br>
-Although&nbsp;this&nbsp;class&nbsp;may&nbsp;be&nbsp;instantiated&nbsp;independently,&nbsp;the&nbsp;Task<br>
-class&nbsp;automatically&nbsp;creates&nbsp;and&nbsp;stores&nbsp;an&nbsp;instance&nbsp;of&nbsp;<a href="#File">File</a>&nbsp;to<br>
-simplify&nbsp;handling&nbsp;tasks.<br>
-&nbsp;<br>
-<a href="#File">File</a>&nbsp;inherits&nbsp;from&nbsp;class&nbsp;<a href="dnac.dnacapi.html#DnacApi">DnacApi</a>&nbsp;for&nbsp;its&nbsp;base&nbsp;attributes&nbsp;and<br>
-for&nbsp;inclusion&nbsp;in&nbsp;a&nbsp;Dnac&nbsp;object's&nbsp;api&nbsp;store.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;task&nbsp;=&nbsp;Task(d,&nbsp;'aTask')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;task.checkTask()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;task.file&nbsp;below&nbsp;is&nbsp;a&nbsp;<a href="#File">File</a>&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;results&nbsp;=&nbsp;task.file.<a href="#File-get_results">get_results</a>()<br>&nbsp;</tt></td></tr>
-<tr><td>&nbsp;</td>
-<td width="100%"><dl><dt>Method resolution order:</dt>
-<dd><a href="dnac.file.html#File">File</a></dd>
-<dd><a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a></dd>
-<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
-</dl>
-<hr>
-Methods defined here:<br>
-<dl><dt><a name="File-__init__"><strong>__init__</strong></a>(self, dnac, id, verify<font color="#909090">=False</font>, timeout<font color="#909090">=5</font>)</dt><dd><tt>Class&nbsp;method&nbsp;__init__&nbsp;creates&nbsp;a&nbsp;new&nbsp;<a href="#File">File</a>&nbsp;instance.&nbsp;&nbsp;When<br>
-making&nbsp;a&nbsp;<a href="#File">File</a>&nbsp;object,&nbsp;pass&nbsp;it&nbsp;a&nbsp;Dnac&nbsp;object&nbsp;and&nbsp;the&nbsp;UUID<br>
-of&nbsp;the&nbsp;file&nbsp;in&nbsp;Cisco&nbsp;DNAC&nbsp;that&nbsp;this&nbsp;object&nbsp;represents.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dnac:&nbsp;A&nbsp;reference&nbsp;to&nbsp;the&nbsp;containing&nbsp;Dnac&nbsp;object.<br>
+Attributes:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dnac:&nbsp;A&nbsp;reference&nbsp;to&nbsp;the&nbsp;Dnac&nbsp;instance&nbsp;that&nbsp;contains&nbsp;a&nbsp;Client&nbsp;object<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;Dnac&nbsp;object<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;id:&nbsp;The&nbsp;UUID&nbsp;of&nbsp;the&nbsp;file&nbsp;in&nbsp;Cisco&nbsp;DNAC&nbsp;this&nbsp;object&nbsp;represents.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;included&nbsp;as&nbsp;part&nbsp;of&nbsp;calling&nbsp;__init__,&nbsp;the&nbsp;new&nbsp;object&nbsp;sets<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;its&nbsp;name&nbsp;and&nbsp;url&nbsp;based&nbsp;on&nbsp;id's&nbsp;value:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;=&nbsp;'task_&lt;id&gt;'<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url&nbsp;=&nbsp;'dnac.url/self.<strong>respath</strong>/&lt;id&gt;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
+&nbsp;&nbsp;&nbsp;&nbsp;name:&nbsp;A&nbsp;user&nbsp;friendly&nbsp;name&nbsp;for&nbsp;the&nbsp;Client&nbsp;object&nbsp;used&nbsp;as&nbsp;a&nbsp;key&nbsp;for&nbsp;finding&nbsp;it&nbsp;in&nbsp;a&nbsp;Dnac.api&nbsp;attribute.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sites:&nbsp;A&nbsp;dictionary&nbsp;containing&nbsp;sites&nbsp;matching&nbsp;a&nbsp;site&nbsp;name&nbsp;search.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;dict<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;{}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
+&nbsp;&nbsp;&nbsp;&nbsp;site_health:&nbsp;The&nbsp;health&nbsp;details&nbsp;for&nbsp;each&nbsp;site.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;dict<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;{}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
 &nbsp;&nbsp;&nbsp;&nbsp;verify:&nbsp;A&nbsp;flag&nbsp;used&nbsp;to&nbsp;check&nbsp;Cisco&nbsp;DNAC's&nbsp;certificate.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;boolean<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;False<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;boolean<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;False<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
 &nbsp;&nbsp;&nbsp;&nbsp;timeout:&nbsp;The&nbsp;number&nbsp;of&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;Cisco&nbsp;DNAC's<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;response.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;5<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
 &nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#File">File</a>&nbsp;object:&nbsp;a&nbsp;new&nbsp;<a href="#File">File</a>&nbsp;instance.<br>
-&nbsp;<br>
 Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;=&nbsp;'&lt;file&nbsp;UUID&gt;'<br>
-&nbsp;&nbsp;&nbsp;&nbsp;results&nbsp;=&nbsp;<a href="#File">File</a>(d,&nbsp;id)</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;all_sites&nbsp;=&nbsp;<a href="#Site">Site</a>(d,&nbsp;'sites')<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="dnac.site.html#Site">Site</a></dd>
+<dd><a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Site-__init__"><strong>__init__</strong></a>(self, dnac, name, site<font color="#909090">={}</font>, verify<font color="#909090">=False</font>, timeout<font color="#909090">=5</font>)</dt></dl>
 
-<dl><dt><a name="File-get_results"><strong>get_results</strong></a>(self)</dt><dd><tt>get_results&nbsp;makes&nbsp;an&nbsp;API&nbsp;call&nbsp;to&nbsp;Cisco&nbsp;DNA&nbsp;Center&nbsp;and&nbsp;retrieves&nbsp;the<br>
-task&nbsp;results&nbsp;contained&nbsp;in&nbsp;the&nbsp;file&nbsp;identified&nbsp;by&nbsp;this&nbsp;object's<br>
-__file_id,&nbsp;i.e.&nbsp;the&nbsp;file's&nbsp;UUID.<br>
+<dl><dt><a name="Site-get_all_sites_health"><strong>get_all_sites_health</strong></a>(self)</dt><dd><tt><a href="#Site">Site</a>&nbsp;class&nbsp;method&nbsp;get_all_sites_health&nbsp;retrieves&nbsp;the&nbsp;current&nbsp;health&nbsp;details&nbsp;for&nbsp;all&nbsp;sites&nbsp;in<br>
+Cisco&nbsp;DNA&nbsp;Center.<br>
 &nbsp;<br>
 Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None<br>
 &nbsp;<br>
 Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;list:&nbsp;The&nbsp;file's&nbsp;or&nbsp;task&nbsp;result's&nbsp;data.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;The&nbsp;health&nbsp;details&nbsp;for&nbsp;all&nbsp;sites.<br>
 &nbsp;<br>
 Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;task&nbsp;=&nbsp;Task(d,&nbsp;'aTask')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;task.checkTask()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;task.file&nbsp;below&nbsp;is&nbsp;a&nbsp;<a href="#File">File</a>&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;results&nbsp;=&nbsp;task.file.<a href="#File-get_results">get_results</a>()</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;all_sites&nbsp;=&nbsp;<a href="#Site">Site</a>(d,&nbsp;'ACME_sites')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pprint.PrettyPrint(d.api['ACME_sites'].<a href="#Site-get_all_sites_health">get_all_sites_health</a>())</tt></dd></dl>
+
+<dl><dt><a name="Site-get_site_health_by_name"><strong>get_site_health_by_name</strong></a>(self, site_name)</dt><dd><tt>The&nbsp;get_site_health_by_name&nbsp;returns&nbsp;the&nbsp;site&nbsp;health&nbsp;information&nbsp;for&nbsp;the&nbsp;named&nbsp;site.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;site_name:&nbsp;The&nbsp;target&nbsp;site's&nbsp;name<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;<br>
+Return&nbsp;Values:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;The&nbsp;site's&nbsp;health&nbsp;details.<br>
+&nbsp;<br>
+Usage:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;all_sites&nbsp;=&nbsp;<a href="#Site">Site</a>(d,&nbsp;'ACME_sites')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;target_site&nbsp;=&nbsp;'AZ&nbsp;Branch'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pprint.PrettyPrint(d.api['ACME_sites'].<a href="#Site-get_site_health_by_name">get_site_health_by_name</a>(target_site))</tt></dd></dl>
 
 <hr>
 Data descriptors defined here:<br>
-<dl><dt><strong>id</strong></dt>
-<dd><tt>Get&nbsp;method&nbsp;id&nbsp;returns&nbsp;__id,&nbsp;the&nbsp;UUID&nbsp;of&nbsp;the&nbsp;file&nbsp;on&nbsp;Cisco&nbsp;DNA&nbsp;Center<br>
-that&nbsp;contains&nbsp;the&nbsp;task's&nbsp;results.<br>
+<dl><dt><strong>site_health</strong></dt>
+<dd><tt>The&nbsp;site_health&nbsp;getter&nbsp;method&nbsp;returns&nbsp;the&nbsp;current&nbsp;value&nbsp;of&nbsp;each&nbsp;site's&nbsp;health&nbsp;in&nbsp;Cisco&nbsp;DNAC.<br>
 &nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
+Paramters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None<br>
 &nbsp;<br>
 Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;The&nbsp;file's&nbsp;UUID&nbsp;with&nbsp;the&nbsp;task&nbsp;results.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;site&nbsp;health&nbsp;state&nbsp;for&nbsp;each&nbsp;site.<br>
 &nbsp;<br>
 Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;task&nbsp;=&nbsp;Task(d,&nbsp;'aTask')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;task.checkTask()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;task.file&nbsp;below&nbsp;is&nbsp;a&nbsp;File&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;=&nbsp;task.file.id</tt></dd>
+&nbsp;&nbsp;&nbsp;&nbsp;all_sites&nbsp;=&nbsp;Site(d,&nbsp;'ACME_sites')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pprint.PrettyPrint(d.api['ACME_sites'].site_health)</tt></dd>
 </dl>
-<dl><dt><strong>results</strong></dt>
-<dd><tt>Get&nbsp;method&nbsp;results&nbsp;returns&nbsp;__results,&nbsp;a&nbsp;list&nbsp;containing&nbsp;the<br>
-task's&nbsp;results&nbsp;stored&nbsp;in&nbsp;the&nbsp;file.<br>
+<dl><dt><strong>sites</strong></dt>
+<dd><tt>The&nbsp;sites&nbsp;getter&nbsp;method&nbsp;returns&nbsp;the&nbsp;current&nbsp;value&nbsp;of&nbsp;the&nbsp;Site&nbsp;class'&nbsp;sites&nbsp;attribute.<br>
 &nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
+Paramters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None<br>
 &nbsp;<br>
 Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;list:&nbsp;The&nbsp;task's&nbsp;results&nbsp;given&nbsp;in&nbsp;the&nbsp;file.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;All&nbsp;sites&nbsp;in&nbsp;Cisco&nbsp;DNAC's&nbsp;site&nbsp;design&nbsp;hierarchy<br>
 &nbsp;<br>
 Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;task&nbsp;=&nbsp;Task(d,&nbsp;'aTask')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;task.checkTask()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;task.file&nbsp;below&nbsp;is&nbsp;a&nbsp;File&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;result&nbsp;in&nbsp;task.file.results<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;each&nbsp;result&nbsp;will&nbsp;be&nbsp;a&nbsp;dict<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pprint.PrettyPrint(result)</tt></dd>
+&nbsp;&nbsp;&nbsp;&nbsp;all_sites&nbsp;=&nbsp;Site(d,&nbsp;'ACME_sites')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pprint.PrettyPrint(d.api['ACME_sites'].sites)</tt></dd>
 </dl>
 <hr>
 Data descriptors inherited from <a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>:<br>
@@ -225,6 +210,25 @@ Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dapi&nbsp;=&nbsp;DnacApi(d,&nbsp;name,&nbsp;resource)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;api_call&nbsp;=&nbsp;d.url&nbsp;+&nbsp;dapi.resource</tt></dd>
 </dl>
+<dl><dt><strong>results</strong></dt>
+<dd><tt>The&nbsp;results&nbsp;method&nbsp;is&nbsp;decorated&nbsp;as&nbsp;if&nbsp;it&nbsp;was&nbsp;an&nbsp;attribute&nbsp;of&nbsp;this<br>
+class&nbsp;and&nbsp;can&nbsp;be&nbsp;used&nbsp;accordingly.&nbsp;&nbsp;It&nbsp;returns&nbsp;the&nbsp;raw&nbsp;results<br>
+stored&nbsp;in&nbsp;the&nbsp;class'&nbsp;Crud&nbsp;object&nbsp;obtained&nbsp;from&nbsp;an&nbsp;API&nbsp;call.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;none<br>
+&nbsp;<br>
+Return&nbsp;Values:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;The&nbsp;results&nbsp;of&nbsp;the&nbsp;API&nbsp;call.<br>
+&nbsp;<br>
+Usage:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;CommandRunner&nbsp;is&nbsp;a&nbsp;DnacApi<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cmd&nbsp;=&nbsp;CommandRunner('running-config')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cmd.formatCmd('&lt;uuid&gt;',&nbsp;'show&nbsp;run')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cmd.runSync()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;str(cmd.results)</tt></dd>
+</dl>
 <dl><dt><strong>timeout</strong></dt>
 <dd><tt>Get&nbsp;method&nbsp;timeout&nbsp;returns&nbsp;the&nbsp;value&nbsp;of&nbsp;attribute&nbsp;__timeout.&nbsp;&nbsp;The<br>
 value&nbsp;returned&nbsp;represents&nbsp;the&nbsp;number&nbsp;of&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;the<br>
@@ -264,10 +268,14 @@ Usage:<br>
     
 <tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><strong>ERROR_MSGS</strong> = {400: '400 - API request syntax is malformed', 401: '401 - API request has missing or invalid credentials', 403: '403 - API request is unauthorized', 404: '404 - API requested resource does not exist', 409: '409 - API requested resource is in a conflicted state', 415: '415 - API request body is in an unsupported format', 500: '500 - Server could not fulfill the API request', 501: '501 - Server has not implemented the requested function', 503: '503 - Server is unavailable', 504: '504 - Server did not respond before request timed-out'}<br>
-<strong>FILE_RESOURCE_PATH</strong> = {'1.2.10': '/dna/intent/api/v1/file', '1.2.8': '/api/v1/file'}<br>
-<strong>MODULE</strong> = 'file.py'<br>
+<strong>MODULE</strong> = 'site.py'<br>
+<strong>NO_SITES</strong> = {}<br>
+<strong>NO_SITE_HEALTH</strong> = {}<br>
 <strong>OK</strong> = 200<br>
 <strong>REQUEST_NOT_OK</strong> = 'API request is not OK'<br>
+<strong>SITE_HEALTH_RESOURCE_PATH</strong> = {'1.2.10': '/dna/intent/api/v1/site-health'}<br>
+<strong>SITE_NOT_FOUND</strong> = 'Unable to find requested site'<br>
+<strong>SITE_NOT_FOUND_RESOLUTION</strong> = "Check the site's name in Design -&gt; Network Hierarchy"<br>
 <strong>SUPPORTED_DNAC_VERSIONS</strong> = ['1.2.8', '1.2.10']<br>
 <strong>UNSUPPORTED_DNAC_VERSION</strong> = 'Unsupported Cisco DNA Center version'</td></tr></table>
 </body></html>
