@@ -33,38 +33,36 @@ In order to remain consistent with Cisco's DNA Center release cycle, this packag
 This project is licensed by Cisco Systems according to the terms stated in the project's [LICENSE](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.2/LICENSE) file.
 
 # Modules
-- [__init__.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.2/dnac/__init__.py): Contains the base Dnac class and controls the dnac package.
-- [dnac_config.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.2/dnac/dnacapi.py): Configuration file for instantiating a Dnac object.
-- [basicauth.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.2/dnac/basicauth.py): HTTP basic authentication class, BasicAuth, used by Dnac to perform a login.
-- [xauthtoken.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.2/dnac/xauthtoken.py): X-auth-token class, XAuthToken, used by Dnac to authorize commands after a successful login.
-- [crud.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.2/dnac/crud.py): Crud class provides generic GET, PUT, POST and DELETE functions and is wrapped by DnacApi.
-- [dnacapi.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.2/dnac/dnacapi.py): DnacApi virtual class from which all API calls inherit.
-- [networkdevice.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.2/dnac/networkdevice.py): Manages devices in Cisco DNA Center, e.g. routers, switches, WLCs.
-- [commandrunner.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.2/dnac/commandrunner.py): Runs read-only, i.e. show commands, on Cisco DNA Center.
-- [task.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.2/dnac/task.py): Manages tasks executing on Cisco DNAC.
-- [file.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.2/dnac/file.py): Retrieves the output created by completed tasks.
-- [template.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.2/dnac/template.py): Manages CLI templates.
-- [deployment.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.2/dnac/deployment.py): Monitors the progress of applying a CLI template to a network device.
-- [client.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.2/dnac/client.py): Retrieves a client's state from Cisco DNAC for the time specified.
-- [site.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.2/dnac/site.py): Pulls a site's state from Cisco DNAC for the time given.
-- [timestamp.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.2/dnac/timestamp.py): Converts the system's time in UTC into milliseconds for pulling client and site state information from Cisco DNA Center.
+- [__init__.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.3/dnac/__init__.py): Contains the base Dnac class and controls the dnac package.
+- [dnac_config.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.3/dnac/dnacapi.py): Configuration file for instantiating a Dnac object.
+- [basicauth.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.3/dnac/basicauth.py): HTTP basic authentication class, BasicAuth, used by Dnac to perform a login.
+- [xauthtoken.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.3/dnac/xauthtoken.py): X-auth-token class, XAuthToken, used by Dnac to authorize commands after a successful login.
+- [crud.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.3/dnac/crud.py): Crud class provides generic GET, PUT, POST and DELETE functions and is wrapped by DnacApi.
+- [dnacapi.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.3/dnac/dnacapi.py): DnacApi virtual class from which all API calls inherit.
+- [networkdevice.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.3/dnac/networkdevice.py): Manages devices in Cisco DNA Center, e.g. routers, switches, WLCs.
+- [commandrunner.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.3/dnac/commandrunner.py): Runs read-only, i.e. show commands, on Cisco DNA Center.
+- [task.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.3/dnac/task.py): Manages tasks executing on Cisco DNAC.
+- [file.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.3/dnac/file.py): Retrieves the output created by completed tasks.
+- [template.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.3/dnac/template.py): Manages CLI templates.
+- [deployment.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.3/dnac/deployment.py): Monitors the progress of applying a CLI template to a network device.
+- [client.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.3/dnac/client.py): Retrieves a client's state from Cisco DNAC for the time specified.
+- [site.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.3/dnac/site.py): Pulls a site's state from Cisco DNAC for the time given.
+- [timestamp.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.3/dnac/timestamp.py): Converts the system's time in UTC into milliseconds for pulling client and site state information from Cisco DNA Center.
 
 
 # Examples
-- [networkdevice_example.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.2/examples/networkdevice_example.py): An example script that shows how to use a NetworkDevice object.
-- [commandrunner_example.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.2/examples/commandrunner_example.py): An example script showing how to use the CommandRunner class.
-- [template_example.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.2/examples/template_example.py): An example script demonstrating how to use the Template class.
+- [networkdevice_example.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.3/examples/networkdevice_example.py): An example script that shows how to use a NetworkDevice object.
+- [commandrunner_example.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.3/examples/commandrunner_example.py): An example script showing how to use the CommandRunner class.
+- [template_example.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.3/examples/template_example.py): An example script demonstrating how to use the Template class.
 
 # Documentation
-Detailed documentation for each module, its classes, attributes and functions can be found in [this project's HTML files](https://github.com/rsayle/DNAC-Python-Wrapper/tree/1.2.10.2/docs) or the docstrings contained within the modules themselves as well as in [Cisco DNA Center References](https://developer.cisco.com/docs/dna-center/#!cisco-dna-center-platform-overview/cisco-dna-center-platform-overview).
+Detailed documentation for each module, its classes, attributes and functions can be found in [this project's HTML files](https://github.com/rsayle/DNAC-Python-Wrapper/tree/1.2.10.3/docs) or the docstrings contained within the modules themselves as well as in [Cisco DNA Center References](https://developer.cisco.com/docs/dna-center/#!cisco-dna-center-platform-overview/cisco-dna-center-platform-overview).
 
-A summary diagram of the class hierarchy and their inter-relationships can be found in file [Cisco DNAC Wrapper UML](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.2/docs/Cisco%20DNAC%20Wrapper%20UML.pdf).
+A summary diagram of the class hierarchy and their inter-relationships can be found in file [Cisco DNAC Wrapper UML](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.3/docs/Cisco%20DNAC%20Wrapper%20UML.pdf).
 
 # Current State
-v.1.2.10.2: 24 May 2019
-- Added client, site, and timestamp classes
-- Fixed various defects
-- Adjusted template class to handle behavior changes from 1.2.8 to 1.2.10
+v.1.2.10.3: 2 Jun 2019
+- Fixed defect in networkdevice module
 
 # Roadmap
 - Move unit test code from being embedded in modules to a test package structure.
@@ -72,6 +70,11 @@ v.1.2.10.2: 24 May 2019
 - Interface class
 
 # History
+v.1.2.10.2: 24 May 2019
+- Added client, site, and timestamp classes
+- Fixed various defects
+- Adjusted template class to handle behavior changes from 1.2.8 to 1.2.10
+
 v.1.2.10.1: 13 Mar 2019
 - Completed packaging for distribution on PiPy and renamed the package to 'dnac'.
 - Updated README.
