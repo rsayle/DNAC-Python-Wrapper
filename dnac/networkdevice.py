@@ -330,7 +330,7 @@ class NetworkDevice(DnacApi):
             id = d.api['network-device'].get_id_by_device_name('R1')
             print id
         """
-        device = self.get_id_by_device_name(name)
+        device = self.get_device_by_name(name)
         return device['id']
 
 # end get_id_by_device_name()
