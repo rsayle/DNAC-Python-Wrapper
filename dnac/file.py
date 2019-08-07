@@ -12,8 +12,10 @@ MODULE = 'file.py'
 
 FILE_RESOURCE_PATH = {
                       '1.2.8': '/api/v1/file',
-                      '1.2.10': '/dna/intent/api/v1/file'
-                     }
+                      '1.2.10': '/dna/intent/api/v1/file',
+                      '1.3.0.2': '/api/v1/file',
+                      '1.3.0.3': '/api/v1/file'
+}
 
 
 class File(DnacApi):
@@ -149,7 +151,7 @@ class File(DnacApi):
 
 # end results getter
 
-    def get_results(self):
+    def get_results(self, is_json=True):
         """
         get_results makes an API call to Cisco DNA Center and retrieves the
         task results contained in the file identified by this object's
@@ -172,7 +174,8 @@ class File(DnacApi):
         results, status = self.crud.get(url,
                                         headers=self.dnac.hdrs,
                                         verify=self.verify,
-                                        timeout=self.timeout)
+                                        timeout=self.timeout,
+                                        is_json=is_json)
         if status != OK:
             raise DnacApiError(
                 MODULE, 'get_results', REQUEST_NOT_OK, url,
@@ -188,7 +191,7 @@ class File(DnacApi):
 
 if __name__ == '__main__':
 
-    from dnac.dnac import Dnac
+    from dnac import Dnac
 
     d = Dnac()
 

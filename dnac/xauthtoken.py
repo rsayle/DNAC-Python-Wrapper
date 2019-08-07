@@ -355,8 +355,8 @@ class XAuthToken(object):
 
 if __name__ == '__main__':
 
-    from dnac.dnac import BasicAuth
-    from dnac.dnac import CType
+    from dnac.basicauth import BasicAuth
+    from dnac.ctype import CType
     
     d = 'https://denlab-en-dnac.cisco.com'
     b = BasicAuth('admin', 'C!sco123')

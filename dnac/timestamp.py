@@ -1,8 +1,12 @@
 from datetime import datetime
+import time
 
 # globals
 
 MODULE = 'timestamp.py'
+
+NO_TIME = -1
+GET_CURRENT_TIME = 0
 
 class TimeStamp(object):
     """
@@ -21,7 +25,7 @@ class TimeStamp(object):
         print(time)
     """
 
-    def __init__(self):
+    def __init__(self, time=GET_CURRENT_TIME):
         """
         The TimeStamp's __init__ method sets its value to the current number of milliseconds in epoch time.
 
@@ -34,7 +38,10 @@ class TimeStamp(object):
         Usage:
             t = TimeStamp()
         """
-        self.__timestamp = int((datetime.utcnow() - datetime(1970, 1, 1)).total_seconds() * 1000)
+        if time == GET_CURRENT_TIME:
+            self.__timestamp = int((datetime.utcnow() - datetime(1970, 1, 1)).total_seconds() * 1000)
+        else:
+            self.__timestamp = time
 
 # end __init__
 
@@ -75,9 +82,30 @@ class TimeStamp(object):
 
 # end timestamp getter
 
+    @timestamp.setter
+    def timestamp(self, time):
+        self.__timestamp = time
+
+# end timestamp setter
+
+    def utc_timestamp(self):
+        t = self.__timestamp / 1000
+        t = time.gmtime(t)
+        return time.strftime('%Y-%m-%d %H:%M:%S', t)
+
+# end utc_timestamp()
+
+    def local_timestamp(self):
+        t = self.__timestamp / 1000
+        t = time.localtime(t)
+        return time.strftime('%Y-%m-%d %H:%M:%S', t)
+
+# end local_timestamp()
+
 # end class TimeStamp()
 
 # begin unit test
+
 
 if __name__ == '__main__':
 
@@ -85,8 +113,21 @@ if __name__ == '__main__':
 
     print('TimeStamp:')
     print()
-    print(' timestamp      = %i' % ts.timestamp)
-    print(' str(timestamp) = %s' % ts)
+    print("Getting the current time...")
+    print('  timestamp      = %i' % ts.timestamp)
+    print('  str(timestamp) = %s' % ts)
+    print('  as UTC time    = %s' % ts.utc_timestamp())
+    print('  as local time  = %s' % ts.local_timestamp())
     print()
+
+    ts = TimeStamp(time=1564780178759)
+
+    print()
+    print('Getting a specific time...')
+    print('  timestamp      = %i' % ts.timestamp)
+    print('  str(timestamp) = %s' % ts)
+    print('  as UTC time    = %s' % ts.utc_timestamp())
+    print('  as local time  = %s' % ts.local_timestamp())
+
     print('TimeStamp: unit test complete')
     print()

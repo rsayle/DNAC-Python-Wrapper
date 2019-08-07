@@ -126,7 +126,7 @@ class Crud(object):
 
 # end results getter
 
-    def get(self, url, headers=None, body="", verify=False, timeout=5):
+    def get(self, url, headers=None, body="", verify=False, timeout=5, is_json=True):
         """
         Crud's get method performs a GET API call, a read request, to a
         server.  It stores the results and also returns them to the user
@@ -174,8 +174,10 @@ class Crud(object):
                                 data=body,
                                 verify=verify,
                                 timeout=timeout)
-        if bool(resp):  # resp is not empty
+        if bool(resp) and is_json is True:  # resp is not empty and is json formatted
             self.__results = json.loads(resp.text)
+        elif bool(resp) and is_json is False:  # resp is not empty and is not json formatted
+            self.__results = resp.text
         return self.__results, resp.status_code
 
 # end get()
@@ -351,7 +353,7 @@ class Crud(object):
 
 if __name__ == '__main__':
 
-    from dnac.dnac import Dnac
+    from dnac import Dnac
 
     print('Crud:')
     print()

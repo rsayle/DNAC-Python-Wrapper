@@ -13,11 +13,15 @@ MODULE = 'networkdevice.py'
 
 NETWORK_DEVICE_RESOURCE_PATH = {
     '1.2.8': '/dna/intent/api/v1/network-device',
-    '1.2.10': '/dna/intent/api/v1/network-device'
+    '1.2.10': '/dna/intent/api/v1/network-device',
+    '1.3.0.2': '/api/v1/network-device',
+    '1.3.0.3': '/api/v1/network-device'
 }
 
 DEVICE_DETAIL_RESOURCE_PATH = {
-    '1.2.10': '/dna/intent/api/v1/device-detail'
+    '1.2.10': '/dna/intent/api/v1/device-detail',
+    '1.3.0.2': '/api/v1/device-detail',
+    '1.3.0.3': '/api/v1/device-detail'
 }
 
 DEVICE_DETAIL_IDENTIFIERS = {
@@ -137,10 +141,7 @@ class NetworkDevice(DnacApi):
         if dnac.version in SUPPORTED_DNAC_VERSIONS:
             path = NETWORK_DEVICE_RESOURCE_PATH[dnac.version]
         else:
-            raise DnacError(
-                '__init__: %s: %s' %
-                (UNSUPPORTED_DNAC_VERSION, dnac.version)
-                           )
+            raise DnacError('%s: __init__: %s: %s' % (MODULE, UNSUPPORTED_DNAC_VERSION, dnac.version))
         if dnac.version in DEVICE_DETAIL_RESOURCE_PATH:
             self.__detail_resource = DEVICE_DETAIL_RESOURCE_PATH[dnac.version]
         else:
@@ -155,6 +156,24 @@ class NetworkDevice(DnacApi):
                                             timeout=timeout)
 
 # end __init__()
+
+    @property
+    def devices(self):
+        return self.__devices
+
+# end devices getter
+
+    @property
+    def vlans(self):
+        return self.__vlans
+
+# end vlans getter
+
+    @property
+    def device_detail(self):
+        return self.__device_detail
+
+# end device_detail getter
 
     def get_all_devices(self):
         """

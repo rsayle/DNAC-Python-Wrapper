@@ -870,14 +870,12 @@ class Template(DnacApi):
                 ACCEPTED, status, ERROR_MSGS[status], str(results)
             )
         # DNAC 1.2.8 references a deploymentId in a string
-        deploy_id = ''
         if self.dnac.version == '1.2.8':
             did = results['response']['deploymentId']
             elts = did.split()
             deploy_id = elts[len(elts) - 1]
         # DNAC 1.2.10 uses a task that references a deploymentId in a string
         elif self.dnac.version == '1.2.10':
-            task = {}
             taskUrl = '%s%s' % (self.dnac.url, results['response']['url'])
             task, status = self.crud.get(taskUrl,
                                          headers=self.dnac.hdrs,
