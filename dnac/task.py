@@ -7,8 +7,6 @@ from dnac.dnacapi import DnacApi, \
 from dnac.crud import OK, \
                       REQUEST_NOT_OK, \
                       ERROR_MSGS
-from dnac.file import File
-import json
 import time
 
 MODULE = 'task.py'

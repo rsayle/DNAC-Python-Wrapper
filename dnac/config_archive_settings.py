@@ -20,12 +20,84 @@ SUCCESSFUL_ARCHIVE_SETTINGS_UPDATE = 'SUCCESS'
 
 
 class ConfigArchiveSettings(DnacApi):
+    """
+    The ConfigArchiveSettings class stores and modifies Cisco DNA Center's archive settings.  Archive settings are
+    global across a given Cisco DNAC cluster.  The available settings are:
+
+        noOfDays - the number of days to keep a device's configuration archive
+        noOfVersion - the maximum number of archive versions for a given device
+        timeout - timeout value for constructing a new device archive
+
+    Cisco DNAC's API uses these as the keys of a dict when returning the existing settings or receiving a request
+    to change the settings.
+
+    Attributes:
+        dnac: A pointer to the Dnac object containing the ConfigArchiveSettings instance.
+            type: Dnac object
+            default: none
+            scope: protected
+        name: A user-friendly name for accessing the ConfigArchiveSettings object in a Dnac.api{}.
+            type: str
+            default: none
+            scope: protected
+        settings: The archive's settings.
+            type: dict
+            default: {}
+            scope: public
+        resource: The URI for running commands within Cisco DNAC.
+            type: str
+            default: Cisco DNA Center version dependent
+            scope: protected
+        verify: A flag indicating whether or not to verify Cisco DNA Center's certificate.
+            type: bool
+            default: False
+            scope: protected
+        timeout: The number of seconds to wait for Cisco DNAC to respond before timing out.
+            type: int
+            default: 5
+            scope: protected
+
+    Usage:
+        d = Dnac()
+        archive_settings = ConfigArchiveSettings(d, d.name)
+        print(archive_settings.settings)
+    """
 
     def __init__(self,
                  dnac,
                  name,
                  verify=False,
                  timeout=5):
+        """
+        The ConfigArchiveSettings __init__ method creates a new object with blank settings.
+
+        Parameters:
+            dnac: A reference to the containing Dnac object.
+                type: Dnac object
+                default: none
+                required: yes
+            name: A user friendly name for finding this object in a Dnac
+                  instance.
+                type: str
+                default: none
+                required: yes
+            verify: A flag used to check Cisco DNAC's certificate.
+                type: boolean
+                default: False
+                required: no
+            timeout: The number of seconds to wait for Cisco DNAC's
+                     response.
+                type: int
+                default: 5
+                required: no
+
+        Return Values:
+            ConfigArchive object: The newly constructed ConfigArchive
+
+        Usage:
+            d = Dnac()
+            archive_settings = ConfigArchiveSettings(d, d.name)
+        """
         if dnac.version in SUPPORTED_DNAC_VERSIONS:
             path = ARCHIVE_SETTINGS_RESOURCE_PATH[dnac.version]
         else:
@@ -44,6 +116,21 @@ class ConfigArchiveSettings(DnacApi):
 
     @property
     def settings(self):
+        """
+        The settings getter method makes a call to the Cisco DNAC cluster, stores the results in the __settings
+        attribute and then returns value to the calling program.
+
+        Parameters:
+            None
+
+        Return Values:
+            dict: the archive's current settings
+
+        Usage:
+            d = Dnac()
+            archive_settings = ConfigArchiveSettings(d, d.name)
+            print(archive_settings.settings)
+        """
         # make a GET call to DNAC for the current settings
         url = self.dnac.url + ARCHIVE_SETTINGS_RESOURCE_PATH[self.dnac.version]
         settings, status = self.crud.get(url,
@@ -62,12 +149,25 @@ class ConfigArchiveSettings(DnacApi):
 
     @settings.setter
     def settings(self, settings):
+        """
+        The settings setter method changes the objects value for its __settings attribute.
+
+        Parameters:
+            settings: The new archive settings for the Cisco DNA Center instance.
+                type: dict
+                default: none
+                required: yes
+
+        Return Values:
+            None
+
+        Usage:
+            d = Dnac()
+            archive_settings = ConfigArchiveSettings(d, d.name)
+            new_settings = new_settings = {'timeout': time, 'noOfDays': days, 'noOfVersion': vers}
+            archive_settings.settings = new_settings
+        """
         self.__settings = settings
-        #new_settings = {'timeout': self.__settings['timeout'],
-        #                'noOfDays': self.__settings['noOfDays'],
-        #                'noOfVersion': self.__settings['noOfVersion']}
-        #new_settings = json.dumps(new_settings)
-        # make a PUT call to DNAC for the new settings
         url = self.dnac.url + ARCHIVE_SETTINGS_RESOURCE_PATH[self.dnac.version]
         result, status = self.crud.post(url,
                                         headers=self.dnac.hdrs,
