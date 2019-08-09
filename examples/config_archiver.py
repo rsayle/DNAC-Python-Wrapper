@@ -64,6 +64,19 @@ def view_config():
     return template('view_config', config=config)
 
 
+@archiver.route('/delete_config', method='POST')
+def delete_config():
+    file_id = request.forms.get('file_id')
+    host = request.forms.get('host')
+    for device_id, device_archive in config_archive.archive.items():
+        for version in device_archive.versions:
+            for file_type, file in version.config_files.items():
+                if file_id == file.id:
+                    target_version = version
+    target_version.delete_config_file(file_id)
+    return template('delete_config', host=host)
+
+
 @archiver.route('/add_device_archive_version', method='POST')
 def add_device_archive_version():
     host = request.forms.get('host')

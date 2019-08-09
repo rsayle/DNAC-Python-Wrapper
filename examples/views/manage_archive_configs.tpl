@@ -11,7 +11,7 @@
 </head>
 <body>
     <h1>
-        Manage Device Archive Versions
+        Manage Device Archive Configs
     </h1>
         <p>
     % if bool(dnac.name):
@@ -42,8 +42,9 @@
                 % end
             </tr>
         % end
+        <input type="hidden" name="host" value="{{host}}">
         <input type="submit" value="View Config">
-        <input type="submit" value="Delete Config" formaction="/delete_config" method="post" disabled>
+        <input type="submit" value="Delete Config" formaction="/delete_config" method="post">
         </form>
         <form action="/manage_archive" method="get">
             <button type="submit">Cancel</button>

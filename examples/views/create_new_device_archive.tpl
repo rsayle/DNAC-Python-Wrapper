@@ -20,7 +20,7 @@
         <input type="checkbox" name="{{host}}_startup" value="startup">Startup Config</input><br>
         <input type="submit" value="Submit">
     </form>
-    <form action="/manage_archive" method="get">
+    <form action="/create_new_archive" method="get">
         <input type="submit" value="Cancel">
     </form>
     </table>

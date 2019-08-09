@@ -17,13 +17,13 @@
                 </form>
             </td>
             <td>
-                <form action="/manage_settings" method="get">
-                    <button type="submit">Manage Settings</button>
+                <form action="/create_new_archive" method="get">
+                    <button type="submit">Create New Archive</button>
                 </form>
             </td>
             <td>
-                <form action="/create_new_archive" method="get">
-                    <button type="submit">Create New Archive</button>
+                <form action="/manage_settings" method="get">
+                    <button type="submit">Manage Archive Settings</button>
                 </form>
             </td>
         <tr>
