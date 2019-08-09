@@ -24,6 +24,12 @@ VERSION_SUB_RESOURCE_PATH = {
     '1.3.0.3': '/version'
 }
 
+CONFIG_FILE_SUB_RESOURCE_PATH = {
+    '1.2.10': '/file',
+    '1.3.0.2': '/file',
+    '1.3.0.3': '/file'
+}
+
 RUNNING_CONFIG = 'RUNNINGCONFIG'
 STARTUP_CONFIG = 'STARTUPCONFIG'
 
@@ -56,7 +62,7 @@ class Version(DnacApi):
             raise DnacError('__init__: %s: %s' % (UNSUPPORTED_DNAC_VERSION, dnac.version))
         self.__id = version_id
         self.__device_id = device_id
-        self.__config_files = {}
+        self.__config_files = {}  # key = fileType, value = File object
         name = 'version_%s' % self.__id
         super(Version, self).__init__(dnac,
                                       name,
@@ -122,7 +128,7 @@ class Version(DnacApi):
         url = self.dnac.url + self.resource
         results, status = self.crud.delete(url, headers=self.dnac.hdrs)
         if status != OK:
-            raise DnacApiError(MODULE, '__init__', REQUEST_NOT_OK, url, OK, status, ERROR_MSGS[status], '')
+            raise DnacApiError(MODULE, 'delete', REQUEST_NOT_OK, url, OK, status, ERROR_MSGS[status], '')
         task = Task(self.dnac, results['response']['taskId'])
         task.get_task_results()
         if task.is_error:
@@ -130,6 +136,25 @@ class Version(DnacApi):
         else:
             del self.dnac.api[self.name]
 
+# end delete()
+
+    def delete_config_file(self, file_id):
+        url = '%s%s/%s/%s' % (self.dnac.url, self.resource, CONFIG_FILE_SUB_RESOURCE_PATH[self.dnac.version], file_id)
+        results, status = self.crud.delete(url, headers=self.dnac.hdrs)
+        if status != OK:
+            raise DnacApiError(MODULE, 'delete_config', REQUEST_NOT_OK, url, OK, status, ERROR_MSGS[status], '')
+        task = Task(self.dnac, results['response']['taskId'])
+        task.get_task_results()
+        if task.is_error:
+            raise DnacApiError(MODULE, 'delete_config', task.progress, '', '', '', task.failure_reason, '')
+        else:
+            for config_file_type, config_file in self.__config_files.items():
+                if file_id == config_file.id:
+                    del self.__config_files[config_file_type]
+                    break
+            del self.dnac.api['file_%s' % file_id]
+
+# end delete_config_file
 
 # end class Version
 
