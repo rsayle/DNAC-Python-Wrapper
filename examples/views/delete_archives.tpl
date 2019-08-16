@@ -2,7 +2,7 @@
 <body>
     Successfully deleted selected archive versions:
     <p>
-    % for version in version_ids:
+    % for version in deleted_versions:
         <em>{{version}}</em><br>
     % end
     <p>

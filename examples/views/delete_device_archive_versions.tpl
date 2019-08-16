@@ -40,7 +40,7 @@
         % end
             </tr>
         % end
-        <input type="submit" value="Submit" disabled>
+        <input type="submit" value="Submit">
         </form>
         <form action="/manage_archive" method="get">
             <button type="submit" value="cancel">Cancel</button>
