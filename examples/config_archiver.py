@@ -4,6 +4,7 @@ from dnac.config_archive import ConfigArchive
 from dnac.config_archive_settings import ConfigArchiveSettings
 from dnac.networkdevice import NetworkDevice
 from dnac.timestamp import TimeStamp
+from dnac.dnacapi import DnacApiError
 from bottle import Bottle, run, template, request
 
 MODULE = 'config_archive.py'
@@ -119,7 +120,7 @@ def delete_device_archive_versions():
 def delete_archives():
     timestamps = request.forms
     hosts = set()
-    target_versions = []
+    deleted_versions = []
     # get the hostname
     for name in timestamps:
         hostname = name.split('_')[0]  # format of name = <hostname>_timestamp_<timestamp>
@@ -137,10 +138,24 @@ def delete_archives():
         for version in host_archive.versions:
             if version.created_time == int(time):
                 # found a version to delete
-
-                target_versions.append(version)
-    print(target_versions) # list of Version objects
-    return template('delete_archives', host=host)
+                #
+                # DNAC versions 1.3.0.1 and prior:
+                # DNAC incorrectly reports a version could not be deleted when in fact it was.  Catch the exception
+                # raised by Version and double-check to see if the Version is gone.
+                #
+                try:
+                    host_archive.delete_version(version)
+                except DnacApiError as error:
+                    error_msg = str(error)
+                    failure_reason = error_msg.split(':')[6]
+                    if failure_reason.find('Failed to delete archives. Internal Error.'):
+                        # double-check that the version was deleted
+                        pass
+                    else:
+                        raise error
+                timestamp.timestamp = time
+                deleted_versions.append(timestamp.local_timestamp())
+    return template('delete_archives', host=host, deleted_versions=deleted_versions)
 
 
 @archiver.route('/create_new_archive', method='GET')
