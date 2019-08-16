@@ -41,7 +41,7 @@ class TimeStamp(object):
         if time == GET_CURRENT_TIME:
             self.__timestamp = int((datetime.utcnow() - datetime(1970, 1, 1)).total_seconds() * 1000)
         else:
-            self.__timestamp = time
+            self.__timestamp = int(time)
 
 # end __init__
 
@@ -84,11 +84,41 @@ class TimeStamp(object):
 
     @timestamp.setter
     def timestamp(self, time):
-        self.__timestamp = time
+        """
+        TimeStamp's timestamp setter method resets its time.  The method automatically converts whatever time is
+        passed to an int.  Use an epoch time in milliseconds.
+
+        Parameters:
+            time: Epoch time in milliseconds
+                type: int or str
+                default: none
+                required: yes
+
+        Return Values:
+            None
+
+        Usage:
+            t = TimeStamp()
+            t.timestamp = newtime
+        """
+        self.__timestamp = int(time)
 
 # end timestamp setter
 
     def utc_timestamp(self):
+        """
+        The utc_timestamp method returns the object's current timestamp value as a formatted string in UTC time.
+
+        Parameters:
+            None
+
+        Return Values:
+            str: the timestamp in UTC time formatted as %Y-%m-%d %H:%M:%S
+
+        Usage:
+            t = TimeStamp()
+            print(t.utc_timestamp())
+        """
         t = self.__timestamp / 1000
         t = time.gmtime(t)
         return time.strftime('%Y-%m-%d %H:%M:%S', t)
@@ -96,6 +126,20 @@ class TimeStamp(object):
 # end utc_timestamp()
 
     def local_timestamp(self):
+        """
+        The local_timestamp method returns the object's current timestamp value as a formatted string in the Cisco
+        DNA Center instance's local timezone.
+
+        Parameters:
+            None
+
+        Return Values:
+            str: the timestamp in local time formatted as %Y-%m-%d %H:%M:%S
+
+        Usage:
+            t = TimeStamp()
+            print(t.local_timestamp())
+        """
         t = self.__timestamp / 1000
         t = time.localtime(t)
         return time.strftime('%Y-%m-%d %H:%M:%S', t)

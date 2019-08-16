@@ -94,6 +94,13 @@ class DeviceArchive(DnacApi):
 
 # end load_versions()
 
+    def delete_version(self, version):
+        self.__versions.remove(version)
+        version.delete()
+
+    def delete_version_by_id(self, version_id):
+        pass
+
     def add_configs_to_archive(self,
                                running=False,
                                startup=False):

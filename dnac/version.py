@@ -134,6 +134,8 @@ class Version(DnacApi):
         if task.is_error:
             raise DnacApiError(MODULE, 'delete', task.progress, '', '', '', task.failure_reason, '')
         else:
+            # remove self from containing DeviceArchive
+            # remove self from Dnac.api{}
             del self.dnac.api[self.name]
 
 # end delete()

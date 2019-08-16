@@ -7,8 +7,7 @@ from dnac.dnacapi import DnacApi, \
 from dnac.crud import ACCEPTED, \
                       REQUEST_NOT_ACCEPTED, \
                       ERROR_MSGS
-from dnac.task import Task, \
-                      TASK_CREATION
+from dnac.task import Task
 import json
 
 MODULE = 'commandrunner.py'
