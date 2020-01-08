@@ -10,35 +10,42 @@ from dnac.dnac_config import DNAC_NAME, \
                              DNAC_PASSWD, \
                              DNAC_CONTENT_TYPE
 
-__version__ = '1.2.10.2'
+__version__ = '1.3.1.3'
 __author__ = 'Robert Sayle <rsayle@cisco.com>'
 __all__ = [
     'basicauth',
     'client',
     'commandrunner',
+    'commandrunner_task',
+    'config_archive',
     'crud',
     'ctype',
     'deployment',
+    'device_archive',
+    'device_archive_task',
     'dnac_config',
     'dnacapi',
     'file',
     'networkdevice',
+    'project',
     'site',
     'task',
     'template',
     'timestamp',
+    'version',
     'xauthtoken'
 ]
 
 # globals
 MODULE = 'dnac'
-SUPPORTED_DNAC_VERSIONS = ['1.2.8', '1.2.10']
+SUPPORTED_DNAC_VERSIONS = ['1.2.8', '1.2.10', '1.3.0.2', '1.3.0.3', '1.3.1.3']
 
 # Dnac errors
 UNKNOWN_ERROR = 'Unknown error'
 UNSUPPORTED_DNAC_VERSION = 'Unsupported Cisco DNA Center version'
-NO_DNAC_PATH = 'No path to the Cisco DNA Center cluster'
-DNAC_PATH = 'Set an FQDN or IP address for Cisco DNA Center in dnac_config.py'
+NO_DNAC_PATH = ''
+NO_DNAC_PATH_ERROR = 'No path to the Cisco DNA Center cluster'
+NO_DNAC_PATH_RESOLUTION = 'Set an FQDN or IP address for Cisco DNA Center in dnac_config.py'
 
 # Dnac exception class - all others inherit from this one
 
@@ -224,9 +231,9 @@ class Dnac(object):
         if version in SUPPORTED_DNAC_VERSIONS:
             self.__version = version
         else:
-            raise DnacError(
-                UNSUPPORTED_DNAC_VERSION + ": %s" % version
-                           )
+            raise DnacError('%s: %s' % (UNSUPPORTED_DNAC_VERSION, version))
+        if name == NO_DNAC_PATH and ip == NO_DNAC_PATH:
+            raise DnacError('%s: %s' % (NO_DNAC_PATH_ERROR, NO_DNAC_PATH_RESOLUTION))
         self.__name = name
         self.__ip = ip
         self.__port = port
@@ -434,9 +441,7 @@ class Dnac(object):
         elif bool(self.ip):  # IP address is set
             return 'https://%s:%s' % (self.ip, self.port)
         else:  # no way to reach DNA Center
-            raise DnacError(
-                '%s: %s: %s: %s' % (MODULE, 'url', NO_DNAC_PATH, DNAC_PATH)
-                           )
+            raise DnacError('%s: %s: %s: %s' % (MODULE, 'url', NO_DNAC_PATH, NO_DNAC_PATH_RESOLUTION))
 
 # end url()
 
@@ -559,8 +564,8 @@ if __name__ == '__main__':
         raise DnacError(msg)
 
     eMsgs = [UNKNOWN_ERROR,
-             NO_DNAC_PATH,
-             DNAC_PATH] 
+             UNSUPPORTED_DNAC_VERSION,
+             NO_DNAC_PATH_ERROR]
     
     for msg in eMsgs:
         try:
