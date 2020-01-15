@@ -24,12 +24,8 @@ for template in templates:
     # save the template
     t.export_template()
 
-    # save the parent template
-    t.export_parent_template()
-
-    # save the latest template
-    t.export_latest_template()
-
-    # save all the template versions
+    # save all the template's versions
     for ver in t.versions:
         t.export_versioned_template(int(ver['version']))
+
+    print('Exported template %s' % t.name)

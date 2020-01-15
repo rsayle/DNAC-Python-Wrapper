@@ -25,3 +25,4 @@ for project in projects:
     # save the project
     p.export_project()
 
+    print("Exported project %s" % project)
