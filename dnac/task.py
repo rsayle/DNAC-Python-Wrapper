@@ -7,101 +7,113 @@ from dnac.dnacapi import DnacApi, \
 from dnac.crud import OK, \
                       REQUEST_NOT_OK, \
                       ERROR_MSGS
-from dnac.file import File
-import json
+import time
 
 MODULE = 'task.py'
 
-#
-# task behavior has changed in 1.2.10
-# templates now use tasks to push CLI templates
-# consider splitting task into subclasses - CommandRunnerTask and TemplateTask
-#
-
 TASK_RESOURCE_PATH = {
                       '1.2.8': '/api/v1/task',
-                      '1.2.10': '/api/v1/task'
-                     }
+                      '1.2.10': '/api/v1/task',
+                      '1.3.0.2': '/api/v1/task',
+                      '1.3.0.3': '/api/v1/task',
+                      '1.3.1.3': '/api/v1/task',
+                      '1.3.1.4': '/api/v1/task'
+}
 
-# task states
-TASK_EMPTY = ''
-TASK_CREATION = 'CLI Runner request creation'
-
+NO_PROGRESS = ''
+NO_TIME = -1
+NO_TASK_RESULTS = {}
+NO_FAILURE_REASON = ''
+PROGRESS_KEY = 'progress'
+END_TIME_KEY = 'endTime'
+START_TIME_KEY = 'startTime'
+IS_ERROR_KEY = 'isError'
+FAILURE_REASON_KEY = 'failureReason'
 
 class Task(DnacApi):
     """
-    The Task class manages a task running on Cisco DNA Center.  Tasks run
-    asynchronously on Cisco DNAC.  In other words, although a task is
-    created, its results may not immediately be available.  Cisco DNA Center
-    provides a task ID for checking a task's status, and this object stores
-    it in its __id attribute.
-
-    Task does not wait for a task running on Cisco DNAC to finish.  Instead,
-    it returns the task's current state contained in the response's
-    "progress" field.  Cisco DNAC provides two states: either the task is
-    being created or it has finished.  During creation, Cisco DNAC sets
-    progress to "CLI Runner request creation", and when it's done, progress
-    is a string that can be converted to a dict that will look like:
-    {fileId: <uuid>}.
-    
-    The task.py module defines two constants that can be used for
-    monitoring a task with check_task().  Use TASK_EMPTY to see if a task
-    has been created, and use TASK_CREATION to detect that Cisco DNA Center
-    is preparing a task to run.  There is no constant for task completion.
-
-    When a task has completed, Cisco DNA Center stores the results in a file
-    and provides the file's ID as the results of making an API call to
-    the task.  Subsequently, when using this class' check_task() method,
-    if the task has completed, Task creates a File instance using
-    the file ID returned.  Task then saves the File object as its
-    __file attribute.  This makes it easy for programmers to
-    quickly and easily retrieve the actual results to be parsed.
+    The Task class manages and monitors Cisco DNA Center jobs.  Many actions Cisco DNAC performs happen asychronously
+    and are scheduled using a Task, for example, running show commands (CommandRunner) or applying templates (Template).
+    A task's state and the format of its results varies by job type.  Consequently, it may be necessary to subtype
+    Task and extend its behavior.  The base class monitors itself by looking for an endTime parameter in its results.
+    Until endTime appears, the Task remains in some form of a running state that is usually reflected in the progress
+    field.  Upon job completion, Task populates the progress, isError and failureReason as well as the endTime.  If
+    the Task's isError field indicates a problem (isError == True), then check the progress and failureReason for
+    fault indicators.  If not, then the Task results should be loaded into the taskResults attribute.  This last action
+    depends upon the task subtype; for example, a CommandRunner task points to a file with the command's output, but
+    a Template job simply ends in success or failure.
 
     Attributes:
-        id: The task's UUID in Cisco DNA Center.
+        dnac: A pointer to the Dnac object containing the ConfigArchive instance.
+            type: Dnac object
+            default: none
+            scope: protected
+        id: The task's UUID.  It also doubles as the task's name for accessing it in a Dnac.api{}, where the name's
+            format is task_<id>.
             type: str
             default: none
             scope: protected
-        progress: The task's current running state.
+        progress: A textual description of the Task's current state.  The progress value is dependent upon the Task
+                  subtype and should not be used to monitor a Task.  Instead, monitor the Task endTime.
+            type: str
+            default: ''
+            scope: protected
+        startTime: The epoch time in milliseconds that the Task began.
+            type: int
+            default: none
+            scope: protected
+        endTime: The epoch time in milliseconds that the Task completed
+            type: int
+            default: none
+            scope: protected
+        isError: Flags whether or not the Task finished with an error.  True if the job experienced an error; False
+                 otherwise.
+            type: bool
+            default: False
+            scope: protected
+        taskResults: Provides the output of the job's task and is implementation dependent upon the type of Task
+                     that was instantiated.
+            type: implementation dependent
+            default: none
+            scope: protected
+        failureReason: Gives a reason why a task failed to execute properly.
             type: str
             default: none
             scope: protected
-        file: A File object containing the task's results.
-            type: File object
-            default: none
-            scope: protected
-        file_id: The UUID of the file with the task's results.
+        resource: The URI for running commands within Cisco DNAC.
             type: str
-            default: none
+            default: Cisco DNA Center version dependent
+            scope: protected
+        verify: A flag indicating whether or not to verify Cisco DNA Center's certificate.
+            type: bool
+            default: False
+            scope: protected
+        timeout: The number of seconds to wait for Cisco DNAC to respond before timing out.
+            type: int
+            default: 5
             scope: protected
 
     Usage:
         d = Dnac()
-        task = Task(d, a_task_id)
-        task.check_task()
-        results = task.file.get_results()
+        t = Task(d, <task_uuid>)
+        results = t.getTaskResults()
     """
-
     def __init__(self,
                  dnac,
                  id,
                  verify=False,
                  timeout=5):
         """
-        __init__ makes a new Task object.  An empty task object may be
-        created by only passing a Dnac object and the task's UUID.
-        The Task instance sets its name as "task_<id>" and the URL for
-        querying the task's progress.
+        The Task class' __init__ method creates a blank Task object.  When creating one, use the task ID provided by
+        the Cisco DNAC cluster as the object's ID, which also serves as the basis of its name in the Dnac.api{}.  The
+        class uses 'task_<UUID>" as its name.
 
         Parameters:
             dnac: A reference to the containing Dnac object.
                 type: Dnac object
                 default: none
                 required: yes
-            id: The UUID of the task running on Cisco DNAC. The new object
-                sets its name and url based on id's value:
-                     name = "task_<id>"
-                     url = "dnac.url/self.resource/<id>"
+            id: The task's UUID as assigned by Dnac.
                 type: str
                 default: none
                 required: yes
@@ -109,33 +121,32 @@ class Task(DnacApi):
                 type: boolean
                 default: False
                 required: no
-            timeout: The number of seconds to wait for Cisco DNAC's response.
+            timeout: The number of seconds to wait for Cisco DNAC's
+                     response.
                 type: int
                 default: 5
                 required: no
 
         Return Values:
-            Task object: a new Task object.
+            Task object: The task instance
 
         Usage:
-            d = Dnac()
-            id = <task ID from Cisco DNAC>
-            task = Task(d, a_task_id)
-            task.check_task()
+           d = Dnac()
+            t = Task(d, <task_uuid>)
         """
         # check Cisco DNA Center's version and set the resource path
         if dnac.version in SUPPORTED_DNAC_VERSIONS:
             path = TASK_RESOURCE_PATH[dnac.version]
         else:
-            raise DnacError(
-                '__init__: %s: %s' %
-                (UNSUPPORTED_DNAC_VERSION, dnac.version)
-                           )
+            raise DnacError('__init__: %s: %s' % (UNSUPPORTED_DNAC_VERSION, dnac.version))
         # setup the attributes
         self.__id = id
-        self.__progress = TASK_EMPTY
-        self.__file = None
-        self.__file_id = ''
+        self.__progress = NO_PROGRESS
+        self.__start_time = NO_TIME
+        self.__end_time = NO_TIME
+        self.__is_error = False
+        self.__task_results = NO_TASK_RESULTS
+        self.__failure_reason = NO_FAILURE_REASON
         super(Task, self).__init__(dnac,
                                    ('task_%s' % self.__id),
                                    resource=path,
@@ -158,7 +169,7 @@ class Task(DnacApi):
         Usage:
             d = Dnac()
             task = Task(d, a_task_id)
-            task.id
+            print(task.id)
         """
         return self.__id
 
@@ -167,18 +178,14 @@ class Task(DnacApi):
     @property 
     def progress(self):
         """
-        Get method progress returns the value of __progress, which 
-        indicates the current stat of the running task.
+        Get method progress returns the value of __progress, which indicates the current state of the running task.
+        This attribute is implementation dependent on the task subtype.
 
         Parameters:
             none
 
         Return Values:
-            str: The task's current state:
-                TASK_EMPTY: no task has been created in Cisco DNAC
-                TASK_CREATION: Cisco DNAC is preparing the task to run
-                <progress>: a string formatted as "{fileId: <id>}".
-                            Use json.loads to convert it to a dict.
+            str: The task's current state
 
         Usage:
             d = Dnac()
@@ -190,76 +197,122 @@ class Task(DnacApi):
 # end progress getter
 
     @property
-    def file(self):
+    def start_time(self):
         """
-        Get method file returns the File object associated
-        with the task referenced by this object.  If the task has not
-        finished, None is returned.
-
-        Rather than using this method, users are encouraged to directly
-        access the File object and call its getResults method,
-        which returns a list with the task's output.
+        Get method start_time returns the epoch time in milliseconds that the task began.
 
         Parameters:
             none
 
         Return Values:
-            str: The task's resource path.
+            int: The task's start time in milliseconds of epoch time.
 
         Usage:
             d = Dnac()
             task = Task(d, a_task_id)
-            task.check_task()
-            results = task.results
+            print(task.start_time)
         """
-        return self.__file
+        return self.__start_time
 
-# end file getter
+# end start_time getter
 
     @property
-    def file_id(self):
+    def end_time(self):
         """
-        The file_id get method retrieves the object current value
-        for __file_id, which can be used to generate a new
-        File object.
+        Get method end_time returns the epoch time in milliseconds that the task completed.
 
         Parameters:
             none
 
         Return Values:
-            str: The UUID to the task's results, a file on Cisco DNAC.
+            int: The task's end time in milliseconds of epoch time.
 
         Usage:
             d = Dnac()
             task = Task(d, a_task_id)
-            task.check_task()
-            results = File(d, task.file_id)
+            print(task.end_time)
         """
-        return self.__file_id
+        return self.__end_time
 
-# end file_id getter
+# end end_time getter
 
-    def check_task(self):
+    @property
+    def task_results(self):
         """
-        Class method check_task issues an API call to Cisco DNA Center and
-        provides the task's results.
-
-        If the task completed its work on Cisco DNAC, this function sets the
-        __file_id value to the file's UUID on Cisco DNAC, and it
-        creates a new File object using the UUID to that the actual
-        results may easily be queried from this object.  The results get
-        saved in __file.
+        The task_results method returns the task's output, which is implementation dependent upon the subtask class.
 
         Parameters:
             none
 
         Return Values:
-            str: The task's results identifier, a file UUID on Cisco DNAC.
+            varies: The task's results.
 
         Usage:
             d = Dnac()
             task = Task(d, a_task_id)
-            task.check_task()
+            print(task.task_results)
+        """
+        return self.__task_results
+
+# end results getter
+
+    @property
+    def is_error(self):
+        """
+        is_error indicates whether or not the task failed (True) or succeeded (False).
+
+        Parameters:
+            none
+
+        Return Values:
+            bool: The task's completion error state.
+
+        Usage:
+            d = Dnac()
+            task = Task(d, a_task_id)
+            if task.is_error == False:
+                print(task.task_results)
+        """
+        return self.__is_error
+
+# end is_error getter
+
+    @property
+    def failure_reason(self):
+        """
+        A task's failure_reason provides an error code indicating why a task failed.  The error code is a string that
+        depends upon the task subclasses implementation.
+
+        Parameters:
+            none
+
+        Return Values:
+            str: A description why the task failed.
+
+        Usage:
+            d = Dnac()
+            task = Task(d, a_task_id)
+            if task.is_error == True:
+                print(task.failure_reason)
+        """
+        return self.__failure_reason
+
+# end failure_reason getter
+
+    def __check_task__(self):
+        """
+        __check_task__ is a hidden method used to make an API call to a Cisco DNAC cluster and monitor its progress.
+        The get_task_results method uses this method to process the results provided by the API call.  Users should
+        use get_task_results instead of calling this method directly.
+
+        Parameters:
+            none
+
+        Return Values:
+            dict: the task's raw results as given by Dnac
+
+        Usage:
+            Do not call this method directly.  Use get_task_results and override it as necessary.
         """
         url = self.dnac.url + self.resource + ('/%s' % self.id)
         results, status = self.crud.get(url,
@@ -268,49 +321,54 @@ class Task(DnacApi):
                                         timeout=self.timeout)
         if status != OK:
             raise DnacApiError(
-                MODULE, 'check_task', REQUEST_NOT_OK, url,
-                OK, status, ERROR_MSGS[status], str(results)
-                              )
-        self.__progress = results['response']['progress']
-        if self.__progress != TASK_CREATION:
-            # task completed - get the fileId in the progress dict
-            self.__progress = json.loads(self.__progress)
-            self.__file_id = self.__progress['fileId']
-            # create the task results
-            self.__file = File(self.dnac, self.__file_id)
-            # retrieve the results, which are automatically saved in
-            # File' __results attribute
-            self.__file.get_results()
-        return self.__progress
-                  
+                MODULE, '__check_task__', REQUEST_NOT_OK, url, OK, status, ERROR_MSGS[status], str(results)
+            )
+        self.__task_results = results['response']
+        if PROGRESS_KEY in self.__task_results:
+            self.__progress = self.__task_results[PROGRESS_KEY]
+        if START_TIME_KEY in self.__task_results:
+            self.__start_time = self.__task_results[START_TIME_KEY]
+        if END_TIME_KEY in self.__task_results:
+            self.__end_time = self.__task_results[END_TIME_KEY]
+        if IS_ERROR_KEY in self.__task_results:
+            self.__is_error = self.__task_results[IS_ERROR_KEY]
+        if FAILURE_REASON_KEY in self.__task_results:
+            self.__failure_reason = self.__task_results[FAILURE_REASON_KEY]
+        return self.__task_results
+
 # end check_task()
+
+    def get_task_results(self, wait=3):
+        """
+        This class' get_task_results method periodically monitors a task's progress by calling the hidden method,
+        __check_task__.  The method loops for the wait time in seconds passed to this function until it detects an
+        end time for the task.  Upon completion, it returns the task's results.
+
+        Parameters:
+            wait: the time to wait in seconds before checking a task's progress.
+                type: int
+                default: 3
+                required: no
+
+        Return values:
+            dict: the task results
+
+        Usage:
+            d = Dnac()
+            task = Task(d, a_task_id)
+            task.get_task_results(wait=5)
+            print(task.task_results)
+        """
+        while END_TIME_KEY not in self.__task_results:
+            time.sleep(wait)
+            self.__check_task__()
+        return self.__task_results
+
+# end get_task_results()
 
 # end class Task()
 
 
 if __name__ == '__main__':
-
-    from dnac.dnac import Dnac
-
-    d = Dnac()
-
-    t = Task(d, 'e749f5ce-ef1c-473f-bee3-aa370411975b')
-
-    print('Task:')
-    print()
-    print('  dnac             = ' + str(type(t.dnac)))
-    print('  name             = ' + t.name)
-    print('  id               = ' + t.id)
-    print('  verify           = ' + str(t.verify))
-    print('  timeout          = ' + str(t.timeout))
-    print('  file_id  = ' + t.file_id)
-    print('  file     = ' + str(t.file))
-    print()
-    print('Checking task e749f5ce-ef1c-473f-bee3-aa370411975b...')
-    print()
-    
-    progress = t.check_task()
-
-    print('Task: unit test complete.')
-    print()
+    pass
 

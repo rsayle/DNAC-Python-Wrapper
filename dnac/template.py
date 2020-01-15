@@ -8,17 +8,40 @@ from dnac.crud import OK, \
                       REQUEST_NOT_OK, \
                       ACCEPTED, \
                       REQUEST_NOT_ACCEPTED, \
-                      ERROR_MSGS
+                      ERROR_MSGS, \
+                      _500_
 from dnac.deployment import Deployment
+from dnac.project import Project, \
+                         PROJECT_RESOURCE_PATH, \
+                         NO_TEMPLATES
+from dnac.task import Task
 import json
-import time
 
 MODULE = 'template.py'
 
 TEMPLATE_RESOURCE_PATH = {
     '1.2.8': '/api/v1/template-programmer/template',
-    '1.2.10': '/api/v2/template-programmer/template'
+    '1.2.10': '/api/v2/template-programmer/template',
+    '1.3.0.2': '/api/v2/template-programmer/template',
+    '1.3.0.3': '/api/v2/template-programmer/template',
+    '1.3.1.3': '/api/v2/template-programmer/template',
+    '1.3.1.4': '/api/v2/template-programmer/template'
 }
+
+POST_1_2_8 = ['1.2.10', '1.3.0.2', '1.3.0.3', '1.3.1.3', '1.3.1.4']
+
+TEMPLATE_VERSION_PATH = {
+    '1.2.8': '/version',
+    '1.2.10': '/version',
+    '1.3.0.2': '/version',
+    '1.3.0.3': '/version',
+    '1.3.1.3': '/version',
+    '1.3.1.4': '/version'
+}
+
+# monikers for importing templates
+NEW_TEMPLATE = 'NEW_TEMPLATE'  # used as the name for an empty template when creating a new one
+TEMPLATE_PARENT_KEY = 'parentTemplateId'  # used to test if a template is at least a parent or a versioned template
 
 # values instructing Cisco DNA Center how to interpret the target ID value
 TARGET_BY_DEFAULT = 'DEFAULT'
@@ -53,6 +76,8 @@ VALID_DEPLOYMENT_STATES = [
 # error conditions
 TEMPLATE_ALREADY_DEPLOYED = 'already deployed with same params'
 SUBSTR_NOT_FOUND = -1
+TEMPLATE_IS_EMPTY = {}
+NO_VERSIONS = {}
 
 # error messages
 
@@ -71,9 +96,14 @@ LEGAL_VERSIONS = \
 UNKNOWN_VERSION = 'Unknown template version'
 ILLEGAL_NAME_CHANGE = 'Changing a template\'s name is prohibited'
 ILLEGAL_NAME_CHANGE_RESOLUTION = 'Create a new Template object using a different template\'s name'
+TEMPLATE_IMPORT_FAILED = 'Failed to import the template into DNA Center'
+TEMPLATE_VERSION_FAILED = 'Failed to create a new version of the template'
+TEMPLATE_CANNOT_BE_IMPORTED = 'Template cannot be imported into DNA Center'
 
 # error resolutions
 ALREADY_DEPLOYED_RESOLUTION = 'Change the template\'s parameters to a new value'
+TEMPLATE_ALREADY_EXISTS = 'Template already exists'
+TEMPLATE_CANNOT_BE_IMPORTED_RESOLUTION = 'Verify that the template is a parent or versioned template'
 
 # end error messages
 
@@ -204,16 +234,16 @@ class Template(DnacApi):
     def __init__(self,
                  dnac,
                  name,
-                 version=0,
                  verify=False,
                  timeout=5):
         """
         Template's __init__ method constructs a new Template object.
         It automatically searches for the template in Cisco DNA Center
-        by the Template's name.  If found, then it will search for the
-        committed version of the template according to the value passed
-        in the version keyword argument.  If no version is selected, it
-        chooses the latest version available.
+        by the Template's name.  If found, it will load the parent
+        template information and all committed versions.  This classes
+        attributes are decorator functions that directly access the
+        template's info, the parent template, or the latest committed
+        version.
 
         Parameters:
             dnac: A reference to the containing Dnac object.
@@ -225,11 +255,6 @@ class Template(DnacApi):
                 type: str
                 default: none
                 required: yes
-            version: The template version that will be deployed.  When set
-                     to zero, Template selects the latest version.
-                type: int
-                default: 0
-                required: no
             verify: A flag used to check Cisco DNAC's certificate.
                 type: boolean
                 default: False
@@ -247,54 +272,233 @@ class Template(DnacApi):
             d = Dnac()
             template = Template(d, 'Enable BGP', version=5)
         """
-        # version is the template's version and must not be negative
-        if version < 0:
-            raise DnacApiError(
-                MODULE, '__init__', ILLEGAL_VERSION, '', '',
-                version, '', LEGAL_VERSIONS
-            )
         # check Cisco DNA Center's version and set the resource path
         if dnac.version in SUPPORTED_DNAC_VERSIONS:
             path = TEMPLATE_RESOURCE_PATH[dnac.version]
         else:
-            raise DnacError(
-                '__init__: %s: %s' %
-                (UNSUPPORTED_DNAC_VERSION, dnac.version)
-            )
-        # setup initial attribute values
-        self.__template_id = ''  # base template ID
-        self.__version = version  # requested template version, 0 = latest
-        self.__versioned_template = {}
-        self.__versioned_template_id = ''  # template that can be deployed
-        self.__versioned_template_params = {}
-        self.__target_id = ''  # where to deploy the template
+            raise DnacError('__init__: %s: %s' % (UNSUPPORTED_DNAC_VERSION, dnac.version))
+
+        # template attributes
+        self.__template = {}  # contents of the template info found by querying all available templates
+        self.__versions = {}  # contents of the template's parent (index=0) and versionsInfo keyed by version number
+
+        # deployment attributes
+        self.__params = {}  # parameters and their values to apply during deployment
+        self.__target_id = ''  # where to deploy the latest committed template
         self.__target_type = TARGET_BY_DEFAULT  # how to find the target
         self.__deployment = ''  # object for monitoring the deployment
+
+        # DnacApi attributes
         super(Template, self).__init__(dnac,
                                        name,
                                        resource=path,
                                        verify=verify,
                                        timeout=timeout)
-        # retrieve the template ID by its name
-        self.__template_id = self.get_template_by_name(self.name)
-        if not self.__template_id:  # template could not be found
-            raise DnacApiError(
-                MODULE, '__init__', TEMPLATE_NOT_FOUND, '',
-                '', self.__template_id, '', ''
-            )
-        # retrieve the versioned template
-        # get_versioned_template_by_name sets self.__versioned_template
-        self.get_versioned_template_by_name(self.name, self.__version)
-        if not bool(self.__versioned_template):  # template is empty
-            # get_versioned_template_by_name should catch this condition, but
-            # just in case, here's another integrity check
-            raise DnacApiError(
-                MODULE, '__init__', UNKNOWN_VERSION, '',
-                '', self.__versioned_template, '',
-                '%s version %i' % (self.name, self.__version)
-            )
+
+        # load the template
+        if self.name != NEW_TEMPLATE:
+            self.load_template(self.name)
 
     # end __init__()
+
+    def __str__(self):
+        return json.dumps(self.__template)
+
+    # end __str__()
+
+    def export_template(self):
+        file = open('%s.tmpl' % self.__template['name'], mode='x')
+        json.dump(self.__template, file, indent=4)
+        file.close()
+
+    # end export_template()
+
+    def export_versioned_template(self, version=0):
+        num_versions = len(self.__versions) - 1
+        if version < 0 or version > num_versions:
+            raise DnacApiError(
+                MODULE, 'export_versioned_template', ILLEGAL_VERSION, '', LEGAL_VERSIONS, version, '', ''
+            )
+        target = self.__versions[version]
+        file = open('%s.%i.tmpl' % (target['name'], version), mode='x')
+        json.dump(target, file, indent=4)
+        file.close()
+
+    # end export_versioned_template()
+
+    def __prepare_template__(self, template):
+        # remove UUIDs and timestamps
+        template.pop('id')
+        template.pop('createTime')
+        template.pop('lastUpdateTime')
+        template.pop('parentTemplateId')
+        # remove tags - future rev should rebuild tags
+        template.pop('tags')
+        # remove UUIDs from parameters list
+        for param in template['templateParams']:
+            param.pop('id')
+            param['selection'].pop('id')
+        # return the prepared template
+        return template
+
+    # end __prepare_template__()
+
+    def __prepare_version__(self, template, parent):
+        # clean the template
+        template = self.__prepare_template__(template)
+        # set the parent template's UUID
+        template['id'] = parent.template_id
+        template['parentTemplateId'] = parent.template_id
+        # return the prepared template
+        return template
+
+    # end __prepare_version__()
+
+    def __is_versioned_template__(self, template):
+        # make sure this is a versioned template
+        if TEMPLATE_PARENT_KEY not in template:
+            raise DnacApiError(
+                MODULE, 'import_template', TEMPLATE_CANNOT_BE_IMPORTED, '', '', '', '',
+                '%s: %s: %s' % (TEMPLATE_CANNOT_BE_IMPORTED_RESOLUTION, template['name'], template['id'])
+            )
+        return True
+
+    # end __is_versioned_template__()
+
+    def __add_new_template__(self, template, project):
+        # ensure the template is correctly formatted
+        self.__is_versioned_template__(template)
+        # prepare the template for import
+        template = self.__prepare_template__(template)
+        # add the template into DNA Center
+        url = '%s%s/%s/template' % (self.dnac.url, PROJECT_RESOURCE_PATH[self.dnac.version], project.project_id)
+        body = json.dumps(template)
+        results, status = self.crud.post(url,
+                                         headers=self.dnac.hdrs,
+                                         body=body,
+                                         verify=self.verify,
+                                         timeout=self.timeout)
+        if status != ACCEPTED:
+            if status == _500_:
+                raise DnacApiError(
+                    MODULE, 'import_template', REQUEST_NOT_ACCEPTED, url,
+                    ACCEPTED, status, ERROR_MSGS[status], TEMPLATE_ALREADY_EXISTS
+                )
+            else:
+                raise DnacApiError(
+                    MODULE, 'import_template', REQUEST_NOT_ACCEPTED, url, ACCEPTED, status, ERROR_MSGS[status], ''
+                )
+        # check the tasks' results
+        task = Task(self.dnac, results['response']['taskId'])
+        task.get_task_results()
+        if task.is_error:
+            raise DnacApiError(MODULE, 'import_template', TEMPLATE_IMPORT_FAILED, '', '', '', '', task.failure_reason)
+        # import succeeded; reload the project and return the new template
+        project.load_project(project.name)
+        return Template(self.dnac, template['name'])
+
+    # end __add_new_template__()
+
+    def __add_version__(self, version):
+        # ensure the template is correctly formatted
+        self.__is_versioned_template__(version)
+        # check if the template associated with the new version is already in Dnac
+        if version['name'] not in self.dnac.api:
+            # if not, create a new Template
+            template = Template(self.dnac, version['name'])
+            # if so, save a pointer to it
+        else:
+            template = self.dnac.api[version['name']]
+        # prepare the new version
+        self.__prepare_version__(version, template)
+        # add the new version to DNAC
+        url = '%s%s' % (self.dnac.url, TEMPLATE_RESOURCE_PATH[self.dnac.version])
+        body = json.dumps(version)
+        results, status = self.crud.put(url,
+                                        headers=self.dnac.hdrs,
+                                        body=body,
+                                        verify=self.verify,
+                                        timeout=self.timeout)
+        if status != ACCEPTED:
+            raise DnacApiError(
+                MODULE, 'import_template', REQUEST_NOT_ACCEPTED, url, ACCEPTED, status, ERROR_MSGS[status], ''
+            )
+        # check the tasks' results
+        task = Task(self.dnac, results['response']['taskId'])
+        task.get_task_results()
+        if task.is_error:
+            raise DnacApiError(MODULE, 'import_template', TEMPLATE_IMPORT_FAILED, '', '', '', '', task.failure_reason)
+        # import succeeded; reload the template
+        return template.load_template(version['name'])
+
+    # end __add_version__()
+
+    def import_template(self, template_file, version_file):
+        # read the template file's contents
+        file = open(template_file, mode='r')
+        template = json.load(file)
+        file.close()
+
+        # read the version file's contents
+        file = open(version_file, mode='r')
+        version = json.load(file)
+        file.close()
+
+        # load the template's project info; check Dnac first
+        if template['projectName'] in self.dnac.api:
+            project = self.dnac.api[template['projectName']]
+        # not in Dnac so load it from DNAC
+        else:
+            # if the project does not exist, an exception will be thrown
+            project = Project(self.dnac, template['projectName'])
+
+        # check to see if the template is in the Project
+        if project.templates == NO_TEMPLATES:
+            # project has no templates; create a new one
+            return self.__add_new_template__(version, project)
+        else:
+            # check the existing templates to see if the template exists or not
+            for tmplt in project.templates:
+                # if template exists, add a new version
+                if tmplt['name'] == template['name']:
+                    return self.__add_version__(version)
+            # template does not exist; add a new template
+            return self.__add_new_template__(template, project)
+
+    # end import_template()
+
+    def commit_template(self, comments=''):
+        body = {
+            'templateId': self.template_id,
+            'comments': comments
+        }
+        url = '%s%s%s' % (self.dnac.url, self.resource, TEMPLATE_VERSION_PATH[self.dnac.version])
+        results, status = self.crud.post(url,
+                                         headers=self.dnac.hdrs,
+                                         body=json.dumps(body),
+                                         verify=self.verify,
+                                         timeout=self.timeout)
+        if status != ACCEPTED:
+            raise DnacApiError(
+                MODULE, 'version_template', REQUEST_NOT_ACCEPTED, url, ACCEPTED, status, ERROR_MSGS[status], ''
+            )
+
+        # check the tasks' results
+        task = Task(self.dnac, results['response']['taskId'])
+        task.get_task_results()
+        if task.is_error:
+            raise DnacApiError(MODULE, 'version_template', TEMPLATE_VERSION_FAILED, '', '', '', '', task.failure_reason)
+
+        # version succeeded - reload the template and its versions
+        return self.load_template(self.name)
+
+    # end version_template
+
+    @property
+    def template(self):
+        return self.__template
+
+    # end template getter
 
     @property
     def template_id(self):
@@ -313,131 +517,50 @@ class Template(DnacApi):
             template = Template(d, 'Add Loopback')
             print (d.api['Add Loopback'].template_id)
         """
-        return self.__template_id
+        return self.__template['templateId']
 
     # end template_id getter
 
     @property
-    def version(self):
-        """
-        The version get method returns the template's version number.
+    def parent(self):
+        return self.__versions[0]
 
-        Parameters:
-            none
-
-        Return Value:
-            int: The template's version number.
-
-        Usage:
-            d = Dnac()
-            template = Template(d, 'Add Loopback')
-            print d.api['Add Loopback'].version
-        """
-        return self.__version
-
-    # end version getter
-
-    @version.setter
-    def version(self, version):
-        """
-        The version set method changes the desired version of the template
-        to be deployed.  This method also updates the versioned template,
-        its UUID and its parameters in this class' respective attributes.
-        See class method get_versioned_template_by_name for details.  If the
-        requested version does not exist, an exception is thrown.
-
-        Parameters:
-            version: The new template version.
-                type: int
-                default: none
-                required: yes
-
-        Return Values:
-            none
-
-        Usage:
-            d = Dnac()
-            template = Template(d, 'Set VLAN')
-            template.version = 5
-        """
-        self.__version = version
-        # reload versioned template info using get_versioned_template_by_name
-        self.get_versioned_template_by_name(self.name, self.__version)
-        # if the version requested does not exist, raise an exception
-        if not bool(self.__versioned_template):  # template is empty
-            # get_versioned_template_by_name should catch this condition, but
-            # just in case, here's another integrity check
-            raise DnacApiError(
-                MODULE, 'version setter', UNKNOWN_VERSION, '',
-                '', self.__versioned_template, '',
-                '%s version %i' % (self.name, version)
-            )
-
-    # end version setter
+    # end parent getter
 
     @property
-    def versioned_template(self):
-        """
-        The versioned_template get method returns the template's contents.
+    def versions(self):
+        return self.__template['versionsInfo']
 
-        Parameters:
-            none
-
-        Return Value:
-            dict: The template's data.
-
-        Usage:
-            d = Dnac()
-            template = Template(d, 'Add Loopback')
-            print str(d.api['Add Loopback'].versioned_template)
-        """
-        return self.__versioned_template
-
-    # end versioned_template getter
+    # end versions getter
 
     @property
-    def versioned_template_id(self):
-        """
-        The versioned_template_id get method returns the UUID for the
-        committed template based upon the object's current template version.
+    def project_name(self):
+        return self.__template['projectName']
 
-        Parameters:
-            none
-
-        Return Value:
-            str: The versioned template's UUID in Cisco DNA Center
-
-        Usage:
-            d = Dnac()
-            template = Template(d, 'Add Loopback')
-            print d.api['Add Loopback'].versioned_template_id
-        """
-        return self.__versioned_template_id
-
-    # end versioned_template_id getter
+    # end project_name getter
 
     @property
-    def versioned_template_params(self):
-        """
-        versioned_template_params returns the template's parameters
-        dictionary.  Values may be updated directly by accessing this
-        attribute.
+    def project_id(self):
+        return self.__template['projectId']
 
-        Parameters:
-            none
+    # end project_id getter
 
-        Return Value:
-            dict: The template's parameters and their current values.
+    @property
+    def params(self):
+        return self.__params
 
-        Usage:
-            d = Dnac()
-            template = Template(d, 'Add Loopback')
-            print str(d.api['Add Loopback'].versioned_template_params)
-            d.api['Add Loopback'].versioned_template_params['ip'] = 10.1.1.1
-        """
-        return self.__versioned_template_params
+    # end params getter
 
-    # end versioned_template_params getter
+    @params.setter
+    def params(self, params):
+        self.__params = params
+
+    # end params setter
+
+    def set_param(self, key, value):
+        self.__params[key] = value
+
+    # end set_param()
 
     @property
     def target_id(self):
@@ -539,6 +662,10 @@ class Template(DnacApi):
             template = Template(d, 'Set VLAN')
             d.api['Set VLAN'].target_type = TARGET_BY_HOSTNAME
         """
+        if target_type not in VALID_TARGET_TYPES:
+            raise DnacApiError(
+                MODULE, 'target_type setter', ILLEGAL_TARGET_TYPE, '', str(VALID_TARGET_TYPES), target_type, '', ''
+            )
         self.__target_type = target_type
 
     # end target_type setter
@@ -582,15 +709,15 @@ class Template(DnacApi):
             template = Template(d, 'Set VLAN')
             print str(d.api['Set Vlan'].getAllTemplates)
         """
-        url = self.dnac.url + self.resource
+        filter = '?unCommitted=true'
+        url = '%s%s%s' % (self.dnac.url, self.resource, filter)
         templates, status = self.crud.get(url,
                                           headers=self.dnac.hdrs,
                                           verify=self.verify,
                                           timeout=self.timeout)
         if status != OK:
             raise DnacApiError(
-                MODULE, 'get_all_templates', REQUEST_NOT_OK, url,
-                OK, status, ERROR_MSGS[status], str(templates)
+                MODULE, 'get_all_templates', REQUEST_NOT_OK, url, OK, status, ERROR_MSGS[status], str(templates)
             )
         return templates
 
@@ -623,17 +750,24 @@ class Template(DnacApi):
                                          timeout=self.timeout)
         if status != OK:
             raise DnacApiError(
-                MODULE, 'get_template_by_id', REQUEST_NOT_OK, url,
-                OK, status, ERROR_MSGS[status], str(template)
+                MODULE, 'get_template_by_id', REQUEST_NOT_OK, url, OK, status, ERROR_MSGS[status], str(template)
             )
         return template
 
     # end get_template_by_id
 
-    def get_template_by_name(self, name):
+    def get_versioned_template(self, version):
+        if version not in self.__versions.keys():
+            raise DnacApiError(
+                MODULE, 'get_versioned_template', ILLEGAL_VERSION, '', '', version, '', ''
+            )
+        return self.__versions[version]
+
+    # end get_versioned_template()
+
+    def load_template(self, name):
         """
-        get_template_by_name finds the base template by its name and
-        saves the value in its __template_id attribute and returns it.
+        load_template finds the base template by its name, saves and returns it.
 
         Parameters:
             name: The template's name, which must match exactly as it
@@ -644,141 +778,44 @@ class Template(DnacApi):
                 required: no
 
         Return Values:
-            str: The template's UUID.
+            dict: The template contents
 
         Usage:
             d = Dnac()
             template = Template(d, 'Set VLAN')
-            print str(d.api['Set Vlan'].getTemplateByIdByName()
+            print str(d.api['Set Vlan'].load_template('Set Vlan'))
         """
-        if not name:  # parameter name was not given a value
-            name = self.__name  # use the Template's name
-        self.__template_id = ''
-        # find the template by name
+        # search all templates for the target
         templates = self.get_all_templates()
         if bool(templates):  # templates is not empty
             for template in templates:
-                # find the template by name, save it and save its ID
+                # find the template by name
                 if template['name'] == name:
-                    self.__template_id = template['templateId']
-                else:  # keep looking for the template by its name
+                    self.__template = template
+                    break
+                else:  # not found - keep looking for the template by its name
                     continue
+            # make sure the template is not empty
+            if self.__template == TEMPLATE_IS_EMPTY:
+                raise DnacApiError(
+                    MODULE, 'load_template', EMPTY_TEMPLATE, '', '', '', '', ''
+                )
         else:
             raise DnacApiError(
-                MODULE, 'get_template_by_name', NO_TEMPLATES_FOUND, '',
-                '', '', '', ''
+                MODULE, 'load_template', NO_TEMPLATES_FOUND, '', '', '', '', ''
             )
-        # all done - return the template's UUID
-        return self.__template_id
+        # load the parent template
+        self.__versions[0] = self.get_template_by_id(self.__template['templateId'])
+        # load all committed versions
+        if bool(self.__template['versionsInfo']):  # at least one committed version exists
+            for version in self.__template['versionsInfo']:
+                self.__versions[int(version['version'])] = self.get_template_by_id(version['id'])
+        # all done - return the template
+        return self
 
-    # end get_template_by_name()
+    # end load_template()
 
-    def get_versioned_template_by_name(self, name, ver=0):
-        """
-        Class method get_versioned_template_by_name finds a committed template
-        by the name and version values passed.  It loads all of the template's
-        information into the object's versioned_template attributes including
-        its UUID, body and parameters.
-
-        Parameters:
-            name: The required template's name entered in Cisco DNAC.
-                type: str
-                default: none
-                required: yes
-            ver: The version of the template to be deployed.
-                type: int
-                default: 0
-                required: yes
-
-        Return Values:
-            str: The requested template's contents.
-
-        Usage:
-            d = Dnac()
-            t = Template(d, 'Set VLAN')
-            d.api['Set VLAN'].getgetVersionedTemplateByName()
-        """
-        if not name:  # parameter name was not given a value
-            name = self.__name  # use the Template's name
-        # version must not be negative
-        if ver < 0:
-            raise DnacApiError(
-                MODULE, 'get_versioned_template_by_name', ILLEGAL_VERSION,
-                '', '', ver, '', LEGAL_VERSIONS
-            )
-        # reset the versioned template information
-        self.__versioned_template = {}
-        self.__versioned_template_id = ''
-        self.__versioned_template_params = {}
-        # find the versioned template by name
-        templates = self.get_all_templates()
-        if bool(templates):  # templates is not empty
-            for template in templates:
-                # find the versioned template by name and save its UUID
-                if template['name'] == name:
-                    versions = template['versionsInfo']
-                    if ver > 0:
-                        # get the version requested
-                        for version in versions:
-                            # DNAC uses a string for the version
-                            if ver == int(version['version']):
-                                # got it - set the versioned template id
-                                # and move on
-                                self.__versioned_template_id = version['id']
-                                break
-                            else:
-                                # haven't found it - continue searching
-                                continue
-                        if not self.__versioned_template_id:
-                            # version is greater than any versions
-                            raise DnacApiError(
-                                MODULE, 'get_versioned_template_by_name',
-                                UNKNOWN_VERSION, '', '',
-                                self.__versioned_template_id, '',
-                                '%s version %i' % (name, ver)
-                            )
-                    elif ver == 0:
-                        # get the latest version
-                        latest = versions[0]
-                        for version in versions:
-                            if version['version'] <= latest['version']:
-                                # not the latest version - keep going
-                                continue
-                            else:
-                                # more recent version - save and continue
-                                latest = version
-                                continue
-                        # got the latest version - save it
-                        self.__version = latest['version']
-                        self.__versioned_template_id = latest['id']
-                else:  # keep looking for the template by its name
-                    continue
-            # get the versioned template using its id
-            self.__versioned_template = \
-                self.get_template_by_id(self.__versioned_template_id)
-            # collect the template's parameters
-            if bool(self.__versioned_template):  # template not empty
-                params = self.__versioned_template['templateParams']
-                if bool(params):  # parameter list is not empty
-                    for param in params:
-                        self.__versioned_template_params[param['parameterName']] = param['defaultValue']
-                # otherwise there are no parameters - keep going
-            else:
-                raise DnacApiError(
-                    MODULE, 'get_versioned_template_by_name', EMPTY_TEMPLATE,
-                    '', '', str(self.__versioned_template), '',
-                    '%s version %i' % (name, self.__versioned_template_id)
-                )
-        else:  # getAllTemplate failed to return any data
-            raise DnacApiError(
-                MODULE, 'get_versioned_template_by_name', NO_TEMPLATES_FOUND,
-                '', '', str(templates), '', name
-            )
-        return self.__versioned_template
-
-    # end get_versioned_template_by_name()
-
-    def make_body(self):
+    def __make_body__(self):
         """
         The make_body method converts the Template object's target and
         versioned template information into a JSON encoded string used
@@ -800,17 +837,17 @@ class Template(DnacApi):
         tgt_info = {
             'type': self.__target_type,
             'id': self.__target_id,
-            'params': self.__versioned_template_params
+            'params': self.__params
         }
         target_info = [tgt_info]
         if self.dnac.version == '1.2.8':
             body = {
-                'template_id': self.__versioned_template_id,
+                'template_id': self.parent['id'],
                 'target_info': target_info
             }
-        elif self.dnac.version == '1.2.10':
+        elif self.dnac.version in POST_1_2_8:
             body = {
-                'templateId': self.__versioned_template_id,
+                'templateId': self.parent['id'],
                 'targetInfo': target_info
             }
         else:
@@ -848,8 +885,7 @@ class Template(DnacApi):
         url = self.dnac.url + self.resource + '/deploy'
         if not self.__target_id:  # target_id is not set
             raise DnacApiError(
-                MODULE, 'deploy', EMPTY_TEMPLATE, url,
-                '', self.__target_id, '', NO_TEMPLATE_ID
+                MODULE, 'deploy', EMPTY_TEMPLATE, url, '', self.__target_id, '', NO_TEMPLATE_ID
             )
         if self.__target_type not in VALID_TARGET_TYPES:
             raise DnacApiError(
@@ -858,7 +894,7 @@ class Template(DnacApi):
                 '%s is not one of %s' % (self.__target_type,
                                          str(VALID_TARGET_TYPES))
             )
-        body = self.make_body()
+        body = self.__make_body__()
         results, status = self.crud.post(url,
                                          headers=self.dnac.hdrs,
                                          body=body,
@@ -870,14 +906,12 @@ class Template(DnacApi):
                 ACCEPTED, status, ERROR_MSGS[status], str(results)
             )
         # DNAC 1.2.8 references a deploymentId in a string
-        deploy_id = ''
         if self.dnac.version == '1.2.8':
             did = results['response']['deploymentId']
             elts = did.split()
             deploy_id = elts[len(elts) - 1]
         # DNAC 1.2.10 uses a task that references a deploymentId in a string
-        elif self.dnac.version == '1.2.10':
-            task = {}
+        elif self.dnac.version in POST_1_2_8:
             taskUrl = '%s%s' % (self.dnac.url, results['response']['url'])
             task, status = self.crud.get(taskUrl,
                                          headers=self.dnac.hdrs,
@@ -887,8 +921,7 @@ class Template(DnacApi):
             progress_elts = progress.split(':')
             if progress_elts[3].find(TEMPLATE_ALREADY_DEPLOYED) != SUBSTR_NOT_FOUND:
                 raise DnacApiError(
-                    MODULE, 'deploy_sync', ALREADY_DEPLOYED, '',
-                    '', str(body), status, ALREADY_DEPLOYED_RESOLUTION
+                    MODULE, 'deploy_sync', ALREADY_DEPLOYED, '', '', str(body), status, ALREADY_DEPLOYED_RESOLUTION
                 )
             deploy_id = progress_elts[len(progress_elts) - 1]
         else:
@@ -930,8 +963,7 @@ class Template(DnacApi):
         url = self.dnac.url + self.resource + '/deploy'
         if not self.__target_id:  # target_id is not set
             raise DnacApiError(
-                MODULE, 'deploy_sync', EMPTY_TEMPLATE, url,
-                '', self.__target_id, '', NO_TEMPLATE_ID
+                MODULE, 'deploy_sync', EMPTY_TEMPLATE, url, '', self.__target_id, '', NO_TEMPLATE_ID
             )
         if self.__target_type not in VALID_TARGET_TYPES:
             raise DnacApiError(
@@ -940,7 +972,7 @@ class Template(DnacApi):
                 '%s is not one of %s' % (self.__target_type,
                                          str(VALID_TARGET_TYPES))
             )
-        body = self.make_body()
+        body = self.__make_body__()
         results, status = self.crud.post(url,
                                          headers=self.dnac.hdrs,
                                          body=body,
@@ -948,18 +980,15 @@ class Template(DnacApi):
                                          timeout=self.timeout)
         if status != ACCEPTED:
             raise DnacApiError(
-                MODULE, 'deploy_sync', REQUEST_NOT_ACCEPTED, url,
-                ACCEPTED, status, ERROR_MSGS[status], str(results)
+                MODULE, 'deploy_sync', REQUEST_NOT_ACCEPTED, url, ACCEPTED, status, ERROR_MSGS[status], str(results)
             )
         # DNAC 1.2.8 references a deploymentId in a string
-        deploy_id = ''
         if self.dnac.version == '1.2.8':
             did = results['response']['deploymentId']
             elts = did.split()
             deploy_id = elts[len(elts) - 1]
         # DNAC 1.2.10 uses a task that references a deploymentId in a string
-        elif self.dnac.version == '1.2.10':
-            task = {}
+        elif self.dnac.version in POST_1_2_8:
             taskUrl = '%s%s' % (self.dnac.url, results['response']['url'])
             task, status = self.crud.get(taskUrl,
                                          headers=self.dnac.hdrs,
@@ -975,14 +1004,12 @@ class Template(DnacApi):
             progress_elts = progress.split(':')
             if progress_elts[3].find(TEMPLATE_ALREADY_DEPLOYED) != SUBSTR_NOT_FOUND:
                 raise DnacApiError(
-                    MODULE, 'deploy_sync', ALREADY_DEPLOYED, '',
-                    '', str(body), status, ALREADY_DEPLOYED_RESOLUTION
+                    MODULE, 'deploy_sync', ALREADY_DEPLOYED, '', '', str(body), status, ALREADY_DEPLOYED_RESOLUTION
                 )
             deploy_id = progress_elts[len(progress_elts) - 1]
         else:
             raise DnacApiError(
-                MODULE, 'deploy_sync', UNSUPPORTED_DNAC_VERSION, '',
-                '', self.dnac.version, '', ''
+                MODULE, 'deploy_sync', UNSUPPORTED_DNAC_VERSION, '', '', self.dnac.version, '', ''
             )
         self.__deployment = Deployment(self.dnac, deploy_id)
         self.__deployment.check_deployment()
@@ -999,7 +1026,7 @@ class Template(DnacApi):
 
 if __name__ == '__main__':
 
-    from dnac.dnac import Dnac
+    from dnac import Dnac
     import time
     import pprint
 
@@ -1009,48 +1036,9 @@ if __name__ == '__main__':
 
     print('Template:')
     print()
-    print(' type(t)                   = ' + str(type(t)))
-    print(' name                      = ' + t.name)
-    print(' resource                  = ' + t.resource)
-    print(' template_id               = ' + t.template_id)
-    print(' version                   = ' + str(t.version))
-    print(' versioned_template        = ' + str(t.versioned_template))
-    print(' versioned_template_id     = ' + t.versioned_template_id)
-    print(' versioned_template_params = ' + str(t.versioned_template_params))
-    print(' target_id                 = ' + t.target_id)
-    print(' target_type               = ' + t.target_type)
-    print(' deployment                = ' + t.deployment)
-    print()
 
-    # print 'Attempting to chance the template's name...'
-    #
-    # t.name = 'Throw an exception'
-    #
-    # sys.exit(0)
 
-    print('Trying an earlier version of the template...')
-
-    t = Template(d, 'MGM Set VLAN', version=1)
-
-    print()
-    print(' type(t)                   = ' + str(type(t)))
-    print(' name                      = ' + t.name)
-    print(' resource                  = ' + t.resource)
-    print(' template_id               = ' + t.template_id)
-    print(' version                   = ' + str(t.version))
-    print(' versioned_template        = ' + str(t.versioned_template))
-    print(' versioned_template_id     = ' + t.versioned_template_id)
-    print(' versioned_template_params = ' + str(t.versioned_template_params))
-    print(' target_id                 = ' + t.target_id)
-    print(' target_type               = ' + t.target_type)
-    print(' deployment                = ' + t.deployment)
-    print()
-
-    print('Resetting the template to the latest...')
-    print()
-
-    t = Template(d, 'MGM Set VLAN')
-
+'''
     print('Setting the versioned template\'s parameters...')
     print()
     print(' version                   = ' + str(t.version))
@@ -1102,3 +1090,4 @@ if __name__ == '__main__':
     print()
     print('Template: unit test complete.')
     print()
+'''

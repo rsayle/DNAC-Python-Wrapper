@@ -14,7 +14,8 @@ from dnac.timestamp import TimeStamp
 MODULE = 'site.py'
 
 SITE_HEALTH_RESOURCE_PATH = {
-    '1.2.10': '/dna/intent/api/v1/site-health'
+    '1.2.10': '/dna/intent/api/v1/site-health',
+    '1.3.0.2': '/dna/intent/api/v1/site-health'
 }
 
 NO_SITES = {}
