@@ -42,6 +42,8 @@ TEMPLATE_VERSION_PATH = {
 # monikers for importing templates
 NEW_TEMPLATE = 'NEW_TEMPLATE'  # used as the name for an empty template when creating a new one
 TEMPLATE_PARENT_KEY = 'parentTemplateId'  # used to test if a template is at least a parent or a versioned template
+PARAM_SELECTION_KEY = 'selection'  # used to test if a parameter has a selection
+PARAM_RANGE_KEY = 'range'  # used to test if a parameter has a range
 
 # values instructing Cisco DNA Center how to interpret the target ID value
 TARGET_BY_DEFAULT = 'DEFAULT'
@@ -337,7 +339,11 @@ class Template(DnacApi):
         # remove UUIDs from parameters list
         for param in template['templateParams']:
             param.pop('id')
-            param['selection'].pop('id')
+            if PARAM_SELECTION_KEY in param.keys():
+                param['selection'].pop('id')
+            if PARAM_RANGE_KEY in param.keys():
+                for range in param['range']:
+                    range.pop('id')
         # return the prepared template
         return template
 
@@ -463,7 +469,7 @@ class Template(DnacApi):
                 if tmplt['name'] == template['name']:
                     return self.__add_version__(version)
             # template does not exist; add a new template
-            return self.__add_new_template__(template, project)
+            return self.__add_new_template__(version, project)
 
     # end import_template()
 
