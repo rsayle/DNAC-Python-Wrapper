@@ -9,6 +9,8 @@ from dnac.crud import OK, \
                       ERROR_MSGS
 import time
 
+# globals
+
 MODULE = 'task.py'
 
 TASK_RESOURCE_PATH = {
@@ -20,15 +22,18 @@ TASK_RESOURCE_PATH = {
                       '1.3.1.4': '/api/v1/task'
 }
 
-NO_PROGRESS = ''
-NO_TIME = -1
-NO_TASK_RESULTS = {}
-NO_FAILURE_REASON = ''
 PROGRESS_KEY = 'progress'
 END_TIME_KEY = 'endTime'
 START_TIME_KEY = 'startTime'
 IS_ERROR_KEY = 'isError'
 FAILURE_REASON_KEY = 'failureReason'
+
+# error conditions
+
+NO_PROGRESS = ''
+NO_TIME = -1
+NO_TASK_RESULTS = {}
+NO_FAILURE_REASON = ''
 
 class Task(DnacApi):
     """
@@ -153,7 +158,7 @@ class Task(DnacApi):
                                    verify=verify,
                                    timeout=timeout)
 
-# end __init__()
+    # end __init__()
 
     @property
     def id(self):
@@ -173,7 +178,7 @@ class Task(DnacApi):
         """
         return self.__id
 
-# end id getter
+    # end id getter
 
     @property 
     def progress(self):
@@ -194,7 +199,7 @@ class Task(DnacApi):
         """
         return self.__progress
 
-# end progress getter
+    # end progress getter
 
     @property
     def start_time(self):
@@ -214,7 +219,7 @@ class Task(DnacApi):
         """
         return self.__start_time
 
-# end start_time getter
+    # end start_time getter
 
     @property
     def end_time(self):
@@ -234,7 +239,7 @@ class Task(DnacApi):
         """
         return self.__end_time
 
-# end end_time getter
+    # end end_time getter
 
     @property
     def task_results(self):
@@ -254,7 +259,7 @@ class Task(DnacApi):
         """
         return self.__task_results
 
-# end results getter
+    # end results getter
 
     @property
     def is_error(self):
@@ -275,7 +280,7 @@ class Task(DnacApi):
         """
         return self.__is_error
 
-# end is_error getter
+    # end is_error getter
 
     @property
     def failure_reason(self):
@@ -297,7 +302,7 @@ class Task(DnacApi):
         """
         return self.__failure_reason
 
-# end failure_reason getter
+    # end failure_reason getter
 
     def __check_task__(self):
         """
@@ -336,7 +341,7 @@ class Task(DnacApi):
             self.__failure_reason = self.__task_results[FAILURE_REASON_KEY]
         return self.__task_results
 
-# end check_task()
+    # end check_task()
 
     def get_task_results(self, wait=3):
         """
@@ -364,11 +369,7 @@ class Task(DnacApi):
             self.__check_task__()
         return self.__task_results
 
-# end get_task_results()
+    # end get_task_results()
 
 # end class Task()
-
-
-if __name__ == '__main__':
-    pass
 

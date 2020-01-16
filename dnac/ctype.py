@@ -1,4 +1,6 @@
 
+# globals
+
 JSON = 'application/json'
 XML = 'application/xml'
 

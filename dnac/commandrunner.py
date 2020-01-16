@@ -13,9 +13,13 @@ import json
 MODULE = 'commandrunner.py'
 
 COMMANDRUNNER_RESOURCE_PATH = {
-                               '1.2.8': '/api/v1/network-device-poller/cli/read-request',
-                               '1.2.10': '/dna/intent/api/v1/network-device-poller/cli/read-request'
-                              }
+    '1.2.8': '/api/v1/network-device-poller/cli/read-request',
+    '1.2.10': '/dna/intent/api/v1/network-device-poller/cli/read-request',
+    '1.3.0.2': '/dna/intent/api/v1/network-device-poller/cli/read-request',
+    '1.3.0.3': '/dna/intent/api/v1/network-device-poller/cli/read-request',
+    '1.3.1.3': '/dna/intent/api/v1/network-device-poller/cli/read-request',
+    '1.3.1.4': '/dna/intent/api/v1/network-device-poller/cli/read-request'
+}
 
 
 class CommandRunner(DnacApi):
@@ -319,7 +323,7 @@ class CommandRunner(DnacApi):
                                str(results))
         task_id = results['response']['taskId']
         self.__task = Task(self.dnac, task_id)
-        return self.__task.check_task()
+        return self.__task.get_task_results()
 
 # end run()
 
@@ -361,10 +365,10 @@ class CommandRunner(DnacApi):
                          ACCEPTED, status, ERROR_MSGS[status], str(results))
         task_id = results['response']['taskId']
         self.__task = Task(self.dnac, task_id)
-        self.__task.check_task()
+        self.__task.get_task_results()
         while self.__task.progress == TASK_CREATION:
             time.sleep(wait)
-            self.__task.check_task()
+            self.__task.get_task_results()
         return self.__task.file.results
 
 # end runSync()
@@ -376,7 +380,7 @@ class CommandRunner(DnacApi):
 
 if __name__ == '__main__':
 
-    from dnac.dnac import Dnac
+    from dnac import Dnac
     import time
     import pprint
 

@@ -15,13 +15,17 @@ NETWORK_DEVICE_RESOURCE_PATH = {
     '1.2.8': '/dna/intent/api/v1/network-device',
     '1.2.10': '/dna/intent/api/v1/network-device',
     '1.3.0.2': '/api/v1/network-device',
-    '1.3.0.3': '/api/v1/network-device'
+    '1.3.0.3': '/api/v1/network-device',
+    '1.3.1.3': '/api/v1/network-device',
+    '1.3.1.4': '/api/v1/network-device'
 }
 
 DEVICE_DETAIL_RESOURCE_PATH = {
     '1.2.10': '/dna/intent/api/v1/device-detail',
     '1.3.0.2': '/api/v1/device-detail',
-    '1.3.0.3': '/api/v1/device-detail'
+    '1.3.0.3': '/api/v1/device-detail',
+    '1.3.1.3': '/api/v1/device-detail',
+    '1.3.1.4': '/api/v1/device-detail'
 }
 
 DEVICE_DETAIL_IDENTIFIERS = {
@@ -155,25 +159,37 @@ class NetworkDevice(DnacApi):
                                             verify=verify,
                                             timeout=timeout)
 
-# end __init__()
+    # end __init__()
 
     @property
     def devices(self):
+        """
+        Get method for the device list stored in the NetworkDevice instance
+        :return: list
+        """
         return self.__devices
 
-# end devices getter
+    # end devices getter
 
     @property
     def vlans(self):
+        """
+        Get method for the VLANs on the device represented by the NetworkDevice object.
+        :return: list
+        """
         return self.__vlans
 
-# end vlans getter
+    # end vlans getter
 
     @property
     def device_detail(self):
+        """
+        Provides the device's details as retrieved from Cisco DNA Center.
+        :return: dict
+        """
         return self.__device_detail
 
-# end device_detail getter
+    # end device_detail getter
 
     def get_all_devices(self):
         """
@@ -208,7 +224,7 @@ class NetworkDevice(DnacApi):
         self.__devices = devices['response']
         return self.__devices
 
-# end get_all_devices()
+    # end get_all_devices()
 
     def get_device_by_id(self, id):
         """
@@ -244,7 +260,7 @@ class NetworkDevice(DnacApi):
         self.__devices = devices['response']
         return self.__devices
 
-# end det_device_by_id()
+    # end det_device_by_id()
 
     def get_device_by_name(self, name):
         """
@@ -285,7 +301,7 @@ class NetworkDevice(DnacApi):
         self.__devices = devices['response'][0]
         return self.__devices
 
-# end get_device_by_name()
+    # end get_device_by_name()
 
     def get_devices_by_name_with_regex(self, regex):
         """
@@ -328,7 +344,7 @@ class NetworkDevice(DnacApi):
         self.__devices = devices['response']
         return self.__devices
 
-# end get_device_by_name_with_regex
+    # end get_device_by_name_with_regex
 
     def get_id_by_device_name(self, name):
         """
@@ -352,7 +368,7 @@ class NetworkDevice(DnacApi):
         device = self.get_device_by_name(name)
         return device['id']
 
-# end get_id_by_device_name()
+    # end get_id_by_device_name()
 
     def get_device_by_ip(self, ip):
         """
@@ -393,7 +409,7 @@ class NetworkDevice(DnacApi):
         self.__devices = devices['response'][0]
         return self.__devices
 
-# end get_device_by_ip()
+    # end get_device_by_ip()
 
     def get_devices_by_ip_with_regex(self, regex):
         """
@@ -437,7 +453,7 @@ class NetworkDevice(DnacApi):
         return self.__devices
 
 
-# end get_devices_by_ip_with_regex()
+    # end get_devices_by_ip_with_regex()
 
     def get_vlans_by_device_id(self, id):
         """
@@ -472,7 +488,7 @@ class NetworkDevice(DnacApi):
         self.__vlans = vlans['response']
         return self.__vlans
 
-# end get_vlans_by_device_id()
+    # end get_vlans_by_device_id()
 
     def get_vlans_by_device_name(self, name):
         """
@@ -509,7 +525,7 @@ class NetworkDevice(DnacApi):
         self.__vlans = vlans['response']
         return self.__vlans
 
-# end get_vlans_by_device_name()
+    # end get_vlans_by_device_name()
 
     def get_vlans_by_device_ip(self, ip):
         """
@@ -546,7 +562,7 @@ class NetworkDevice(DnacApi):
         self.__vlans = vlans['response']
         return self.__vlans
 
-# end get_vlans_by_device_ip()
+    # end get_vlans_by_device_ip()
 
     def get_device_detail_by_name(self, name):
         """
@@ -590,7 +606,7 @@ class NetworkDevice(DnacApi):
         self.__device_detail = detail['response']
         return self.__device_detail
 
-# end get_device_detail_by_name()
+    # end get_device_detail_by_name()
 
     def get_device_detail_by_id(self, id):
         """
@@ -634,7 +650,7 @@ class NetworkDevice(DnacApi):
         self.__device_detail = detail['response']
         return self.__device_detail
 
-# end get_device_detail_by_id()
+    # end get_device_detail_by_id()
 
     def get_device_detail_by_mac(self, mac):
         """
@@ -678,7 +694,7 @@ class NetworkDevice(DnacApi):
         self.__device_detail = detail['response']
         return self.__device_detail
 
-# end get_device_detail_by_mac()
+    # end get_device_detail_by_mac()
 
 # end class NetworkDevice()
 

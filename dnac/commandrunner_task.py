@@ -4,17 +4,49 @@ import json
 
 MODULE = 'commandrunner_task.py'
 
+# globals
+
 NO_FILE = None
 NO_FILE_ID = ''
 
 
 class CommandRunnerTask(Task):
+    """
+    CommandRunnerTask extends the Task class by providing the means to monitor the task and return the results that
+    Cisco DNAC stores in a file.  A CommandRunner instance automatically manages the use of a CommandRunnerTask.
+    It is unnecessary for users to create objects from this class.
 
+    ROADMAP: This class may eventually be generalized to any task that produces a file for the task's results.
+
+    Usage:
+            d = Dnac()
+            task = CommandRunnerTask(d, a_task_id)
+            pprint.PrettyPrinter(task.get_task_results())
+    """
     def __init__(self,
                  dnac,
                  id,
                  verify=False,
                  timeout=5):
+        """
+        Instantiates a new CommandRunnerTask object.
+        :param dnac: A reference to the master Dnac object.
+            type: Dnac object
+            required: yes
+            default: None
+        :param id: The object's UUID from Cisco DNA Center.
+            type: str
+            required: yes
+            default: None
+        :param verify: A flag that determines whether or not Cisco DNAC's certificate should be authenticated.
+            type: bool
+            required: no
+            default: None
+        :param timeout: The number of seconds to wait for a response from Cisco DNAC.
+            type: int
+            required: no
+            default: 5
+        """
         super(CommandRunnerTask, self).__init__(dnac,
                                                 'commandrunner_task_%s' % id,
                                                 verify=verify,
@@ -22,59 +54,40 @@ class CommandRunnerTask(Task):
         self.__file = NO_FILE
         self.__file_id = NO_FILE_ID
 
-# end __init__()
+    # end __init__()
 
     @property
     def file(self):
         """
-        Get method file returns the File object associated
-        with the task referenced by this object.  If the task has not
+        Get method file returns the File object associated with the task referenced by this object.  If the task has not
         finished, None is returned.
-
-        Rather than using this method, users are encouraged to directly
-        access the File object and call its getResults method,
-        which returns a list with the task's output.
-
-        Parameters:
-            none
-
-        Return Values:
-            str: The task's resource path.
-
-        Usage:
-            d = Dnac()
-            task = Task(d, a_task_id)
-            task.check_task()
-            results = task.results
+        :return: File object
         """
         return self.__file
 
-# end file getter
+    # end file getter
 
     @property
     def file_id(self):
         """
-        The file_id get method retrieves the object current value
-        for __file_id, which can be used to generate a new
+        The file_id get method retrieves the object current value for __file_id, which can be used to generate a new
         File object.
-
-        Parameters:
-            none
-
-        Return Values:
-            str: The UUID to the task's results, a file on Cisco DNAC.
-
-        Usage:
-            d = Dnac()
-            task = Task(d, a_task_id)
-            task.check_task()
-            results = File(d, task.file_id)
+        :return: str
         """
         return self.__file_id
 
-# end file_id getter
+    # end file_id getter
 
     def get_task_results(self, wait=3):
+        """
+        Retrieves the command runner task's results from the file where Cisco DNAC stores the CLI output."
+        :param wait: Number of seconds to wait for Cisco DNAC to finish the command.
+            type: int
+            required: no
+            default: 3
+        :return: dict
+        """
+        # run the CLI command
         super(CommandRunnerTask, self).get_task_results(wait)
         # task completed - get the fileId in the progress dict
         self.__progress = json.loads(self.__progress)
@@ -86,11 +99,7 @@ class CommandRunnerTask(Task):
         self.__file.get_results()
         return self.task_results
                   
-# end get_task_results()
+    # end get_task_results()
 
 # end class CommandrunnerTask()
-
-
-if __name__ == '__main__':
-    pass
 

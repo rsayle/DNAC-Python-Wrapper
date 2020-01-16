@@ -43,7 +43,7 @@ class TimeStamp(object):
         else:
             self.__timestamp = int(time)
 
-# end __init__
+    # end __init__
 
     def __str__(self):
         """
@@ -61,7 +61,7 @@ class TimeStamp(object):
         """
         return str(self.__timestamp)
 
-# end __str__
+    # end __str__
 
     @property
     def timestamp(self):
@@ -80,7 +80,7 @@ class TimeStamp(object):
         """
         return self.__timestamp
 
-# end timestamp getter
+    # end timestamp getter
 
     @timestamp.setter
     def timestamp(self, time):
@@ -103,7 +103,7 @@ class TimeStamp(object):
         """
         self.__timestamp = int(time)
 
-# end timestamp setter
+    # end timestamp setter
 
     def utc_timestamp(self):
         """
@@ -123,7 +123,7 @@ class TimeStamp(object):
         t = time.gmtime(t)
         return time.strftime('%Y-%m-%d %H:%M:%S', t)
 
-# end utc_timestamp()
+    # end utc_timestamp()
 
     def local_timestamp(self):
         """
@@ -144,7 +144,7 @@ class TimeStamp(object):
         t = time.localtime(t)
         return time.strftime('%Y-%m-%d %H:%M:%S', t)
 
-# end local_timestamp()
+    # end local_timestamp()
 
 # end class TimeStamp()
 

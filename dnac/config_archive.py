@@ -13,8 +13,12 @@ MODULE = 'config_archive.py'
 ARCHIVE_RESOURCE_PATH = {
     '1.2.10': '/api/v1/archive-config',
     '1.3.0.2': '/api/v1/archive-config',
-    '1.3.0.3': '/api/v1/archive-config'
+    '1.3.0.3': '/api/v1/archive-config',
+    '1.3.1.3': '/api/v1/archive-config',
+    '1.3.1.4': '/api/v1/archive-config'
 }
+
+# globals
 
 ARCHIVE_ALREADY_EXISTS_ERROR = 'A device archive already exists for the requested host'
 
@@ -105,7 +109,7 @@ class ConfigArchive(DnacApi):
                                             verify=verify,
                                             timeout=timeout)
 
-# end __init__()
+    # end __init__()
 
     @property
     def archive(self):
@@ -126,7 +130,7 @@ class ConfigArchive(DnacApi):
         """
         return self.__archive
 
-# end archive getter
+    # end archive getter
 
     def load_all_archives(self):
         """
@@ -160,7 +164,7 @@ class ConfigArchive(DnacApi):
             self.__archive[archive['deviceId']] = device_archive
         return self.__archive
 
-# end load_all_archives()
+    # end load_all_archives()
 
     def load_device_archive(self, device):
         """
@@ -190,7 +194,7 @@ class ConfigArchive(DnacApi):
         self.__archive[device] = device_archive
         return self.__archive[device]
 
-# end load_device_archive
+    # end load_device_archive
 
     def add_new_archive(self, device):
         """
@@ -219,7 +223,7 @@ class ConfigArchive(DnacApi):
         self.__archive[device] = new_archive
         return new_archive
 
-# end add_new_device_archive()
+    # end add_new_device_archive()
 
 # end class ConfigArchive()
 

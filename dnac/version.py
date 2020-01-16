@@ -9,6 +9,8 @@ from dnac.crud import OK, \
 from dnac.file import File
 from dnac.task import Task
 
+# globals
+
 MODULE = 'version.py'
 
 VERSION_RESOURCE_PATH = {
@@ -40,21 +42,52 @@ CONFIG_FILE_TYPES = [
     STARTUP_CONFIG
 ]
 
-ILLEGAL_CONFIG_FILE_TYPE = 'Illegal config file type'
+# error conditions
+
 NO_SYNC = ''
 NO_CONFIG = {}
+
+# error messages and resolutions
+
+ILLEGAL_CONFIG_FILE_TYPE = 'Illegal config file type'
 VERSION_DELETE_FAILED = 'Version deletion failed'
 
 
 class Version(DnacApi):
-
+    """
+    The Version class represents a configuration archive version created in Cisco DNA Center.  A DeviceArchive wraps
+    Version instances, and in turn, ConfigArchive objects wrap DeviceArchives.  It is unnecessary for users to manage
+    their own Version instances.
+    """
     def __init__(self,
                  dnac,
                  device_id,
                  version_id,
                  verify=False,
                  timeout=5):
-
+        """
+        Instantiates a new Version object.
+        :param dnac: A reference to the master script's Dnac object.
+            type: Dnac object
+            required: yes
+            default: None
+        :param device_id: The UUID for the device whose archive is being managed.
+            type: str
+            required: yes
+            default: none
+        :param version_id: The UUID of the version being queried.
+            type: str
+            required: yes
+            default: None
+        :param verify: A flag that determines whether or not Cisco DNA Center's certificate should be authenticated.
+            type: bool
+            required: no
+            default: False
+        :param timeout: The number of seconds to wait for Cisco DNAC to respond to a query.
+            type: int
+            required: no
+            default: 5
+        """
         if dnac.version in SUPPORTED_DNAC_VERSIONS:
             path = '%s/%s%s/%s' % (VERSION_RESOURCE_PATH[dnac.version],
                                   device_id,
@@ -94,39 +127,64 @@ class Version(DnacApi):
             config_file.get_results(is_json=False)
             self.__config_files[file['fileType']] = config_file
 
-# end __init__()
+    # end __init__()
 
     @property
     def id(self):
+        """
+        The id get method returns the version's UUID.
+        :return: str
+        """
         return self.__id
 
-# end id getter
+    # end id getter
 
     @property
     def device_id(self):
+        """
+        Provides the device's UUID being queried.
+        :return: str
+        """
         return self.__device_id
 
-# end device_id getter
+    # end device_id getter
 
     @property
     def created_time(self):
+        """
+        Returns the epoch time the version was created.
+        :return: int
+        """
         return self.__created_time
 
-# end created_time getter
+    # end created_time getter
 
     @property
     def sync_status(self):
+        """
+        Indicates whether or not the device's running config has been sychronized with the startup config for this
+        version.
+        :return: bool
+        """
         return self.__sync_status
 
-# end sync_status getter
+    # end sync_status getter
 
     @property
     def config_files(self):
+        """
+        Returns the configuration files associated with the Version object.
+        :return: dict
+        """
         return self.__config_files
 
-# end config_files getter
+    # end config_files getter
 
     def delete(self):
+        """
+        Removes the Version object from Cisco DNA Center as well as from the program's Dnac object.
+        :return: None
+        """
         url = self.dnac.url + self.resource
         results, status = self.crud.delete(url, headers=self.dnac.hdrs)
         if status != OK:
@@ -139,9 +197,14 @@ class Version(DnacApi):
             # remove self from Dnac.api{}
             del self.dnac.api[self.name]
 
-# end delete()
+    # end delete()
 
     def delete_config_file(self, file_id):
+        """
+        Removes the specified file, given by its UUID, from Cisco DNAC and from the Version instance.
+        :param file_id: str
+        :return: None
+        """
         url = '%s%s/%s/%s' % (self.dnac.url, self.resource, CONFIG_FILE_SUB_RESOURCE_PATH[self.dnac.version], file_id)
         results, status = self.crud.delete(url, headers=self.dnac.hdrs)
         if status != OK:
@@ -157,7 +220,7 @@ class Version(DnacApi):
                     break
             del self.dnac.api['file_%s' % file_id]
 
-# end delete_config_file
+    # end delete_config_file
 
 # end class Version
 

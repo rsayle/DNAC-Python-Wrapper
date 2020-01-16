@@ -15,13 +15,18 @@ MODULE = 'site.py'
 
 SITE_HEALTH_RESOURCE_PATH = {
     '1.2.10': '/dna/intent/api/v1/site-health',
-    '1.3.0.2': '/dna/intent/api/v1/site-health'
+    '1.3.0.2': '/dna/intent/api/v1/site-health',
+    '1.3.0.3': '/dna/intent/api/v1/site-health',
+    '1.3.1.3': '/dna/intent/api/v1/site-health',
+    '1.3.1.4': '/dna/intent/api/v1/site-health'
 }
+
+# error conditions
 
 NO_SITES = {}
 NO_SITE_HEALTH = {}
 
-# error messages
+# error and resolution messages
 SITE_NOT_FOUND = 'Unable to find requested site'
 SITE_NOT_FOUND_RESOLUTION = 'Check the site\'s name in Design -> Network Hierarchy'
 
@@ -85,7 +90,7 @@ class Site(DnacApi):
                                    verify=verify,
                                    timeout=timeout)
 
-# end __init__()
+    # end __init__()
 
     @property
     def sites(self):
@@ -105,7 +110,7 @@ class Site(DnacApi):
         """
         return self.__sites
 
-# end sites getter
+    # end sites getter
 
     @property
     def site_health(self):
@@ -125,7 +130,7 @@ class Site(DnacApi):
         """
         return self.__site_health
 
-# end site_health getter
+    # end site_health getter
 
     def get_all_sites_health(self):
         """
@@ -158,7 +163,7 @@ class Site(DnacApi):
         self.__site_health = health['response']
         return self.__site_health
 
-# end get_all_sites_health()
+    # end get_all_sites_health()
 
     def get_site_health_by_name(self, site_name):
         """
@@ -195,7 +200,7 @@ class Site(DnacApi):
         self.__site_health = target_site_health
         return self.__site_health
 
-# end get_site_health_by_name
+    # end get_site_health_by_name
 
 # end class Site()
 

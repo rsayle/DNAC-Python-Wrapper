@@ -10,7 +10,7 @@ from dnac.dnac_config import DNAC_NAME, \
                              DNAC_PASSWD, \
                              DNAC_CONTENT_TYPE
 
-__version__ = '1.3.1.3'
+__version__ = '1.3.1.4'
 __author__ = 'Robert Sayle <rsayle@cisco.com>'
 __all__ = [
     'basicauth',
@@ -38,7 +38,7 @@ __all__ = [
 
 # globals
 MODULE = 'dnac'
-SUPPORTED_DNAC_VERSIONS = ['1.2.8', '1.2.10', '1.3.0.2', '1.3.0.3', '1.3.1.3']
+SUPPORTED_DNAC_VERSIONS = ['1.2.8', '1.2.10', '1.3.0.2', '1.3.0.3', '1.3.1.3', '1.3.1.4']
 
 # Dnac errors
 UNKNOWN_ERROR = 'Unknown error'

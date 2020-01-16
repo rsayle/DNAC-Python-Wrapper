@@ -13,8 +13,12 @@ MODULE = 'config_archive_settings.py'
 ARCHIVE_SETTINGS_RESOURCE_PATH = {
     '1.2.10': '/api/v1/archive-config/setting',
     '1.3.0.2': '/api/v1/archive-config/setting',
-    '1.3.0.3': '/api/v1/archive-config/setting'
+    '1.3.0.3': '/api/v1/archive-config/setting',
+    '1.3.1.3': '/api/v1/archive-config/setting',
+    '1.3.1.4': '/api/v1/archive-config/setting'
 }
+
+# globals
 
 SUCCESSFUL_ARCHIVE_SETTINGS_UPDATE = 'SUCCESS'
 
@@ -112,7 +116,7 @@ class ConfigArchiveSettings(DnacApi):
                                                     verify=verify,
                                                     timeout=timeout)
 
-# end __init__()
+    # end __init__()
 
     @property
     def settings(self):
@@ -145,7 +149,7 @@ class ConfigArchiveSettings(DnacApi):
         self.__settings = settings
         return self.__settings
 
-# end settings getter
+    # end settings getter
 
     @settings.setter
     def settings(self, settings):
@@ -182,7 +186,7 @@ class ConfigArchiveSettings(DnacApi):
         if result['status'] != SUCCESSFUL_ARCHIVE_SETTINGS_UPDATE:
             print('Did not work')
 
-# end settings setter
+    # end settings setter
 
 # end class ConfigArchiveSettings
 

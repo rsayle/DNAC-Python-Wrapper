@@ -15,7 +15,10 @@ MODULE = 'client.py'
 
 CLIENT_RESOURCE_PATH = {
     '1.2.10': '/dna/intent/api/v1/client-detail',
-    '1.3.0.2': '/dna/intent/api/v1/client-detail'
+    '1.3.0.2': '/dna/intent/api/v1/client-detail',
+    '1.3.0.3': '/dna/intent/api/v1/client-detail',
+    '1.3.1.3': '/dna/intent/api/v1/client-detail',
+    '1.3.1.4': '/dna/intent/api/v1/client-detail'
 }
 
 NULL_MAC = '00:00:00:00:00:00'
@@ -74,7 +77,29 @@ class Client(DnacApi):
                  mac=NULL_MAC,
                  verify=False,
                  timeout=5):
-
+        """
+        Creates a new client object.
+        :param dnac: A reference to the program's Dnac instance.
+            type: Dnac object
+            required: yes
+            default: None
+        :param name: The client's name.
+            type: str
+            required: yes
+            default: None
+        :param mac: The client's MAC address
+            type: str
+            required: no
+            default: NULL_MAC (00:00:00:00:00:00)
+        :param verify: A flag to determine whether or not to verify Cisco DNA Center's certificate.
+            type: bool
+            required: no
+            default: False
+        :param timeout: The time in seconds to wait for Cisco DNAC's response.
+            type: int
+            required: no
+            default: 5
+        """
         if dnac.version in SUPPORTED_DNAC_VERSIONS:
             path = CLIENT_RESOURCE_PATH[dnac.version]
         else:

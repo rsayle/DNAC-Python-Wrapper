@@ -361,7 +361,7 @@ class DnacApi(object):
 
 if __name__ == '__main__':
 
-    from dnac.dnac import Dnac
+    from dnac import Dnac
 
     d = Dnac()
     dapi = DnacApi(d, 'aName', '/a/resource/path')

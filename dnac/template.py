@@ -508,21 +508,6 @@ class Template(DnacApi):
 
     @property
     def template_id(self):
-        """
-        Get method template_id returns the base template's UUID from Cisco
-        DNA Center.
-
-        Parameters:
-            none
-
-        Return Values:
-            str: The template's UUID.
-
-        Usage:
-            d = Dnac()
-            template = Template(d, 'Add Loopback')
-            print (d.api['Add Loopback'].template_id)
-        """
         return self.__template['templateId']
 
     # end template_id getter

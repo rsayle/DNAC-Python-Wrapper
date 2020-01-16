@@ -149,6 +149,8 @@ class XAuthToken(object):
         self.__timeout = timeout
         self.__hdrs = {}
 
+    # end __init__()
+
     def __str__(self):
         """
         String handler for an XAuthToken object.  Returns the current
@@ -165,6 +167,8 @@ class XAuthToken(object):
             str(x)
         """
         return self.__token
+
+    # end __str__
 
     @property
     def url(self):
@@ -184,6 +188,8 @@ class XAuthToken(object):
         """
         return self.__url
 
+    # end url getter
+
     @property
     def bauth(self):
         """
@@ -202,6 +208,8 @@ class XAuthToken(object):
             x.bauth
         """
         return self.__bauth
+
+    # end bauth getter
 
     @property
     def ctype(self):
@@ -223,6 +231,8 @@ class XAuthToken(object):
         """
         return self.__ctype
 
+    # end ctype getter
+
     @property
     def resource(self):
         """
@@ -240,6 +250,8 @@ class XAuthToken(object):
             x.resource
         """
         return self.__resource
+
+    # end resource getter
 
     @property
     def verify(self):
@@ -260,6 +272,8 @@ class XAuthToken(object):
         """
         return self.__verify
 
+    # end verify getter
+
     @property
     def timeout(self):
         """
@@ -279,6 +293,8 @@ class XAuthToken(object):
         """
         return self.__timeout
 
+    # end timeout getter
+
     @property
     def token(self):
         """
@@ -297,6 +313,8 @@ class XAuthToken(object):
             x.token
         """
         return self.__token
+
+    # end token getter
 
     def get_token(self):
         """
@@ -335,6 +353,8 @@ class XAuthToken(object):
         self.__hdrs['X-Auth-Token'] = self.__token
         return self.__token
 
+    # end get_token()
+
     @property
     def hdrs(self):
         """
@@ -347,6 +367,8 @@ class XAuthToken(object):
             x.hdrs
         """
         return self.__hdrs
+
+    # end hdrs getter
 
 # end class XAuthToken()
 

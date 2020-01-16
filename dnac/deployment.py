@@ -10,10 +10,16 @@ from dnac.crud import ACCEPTED, \
 
 MODULE = 'deployment.py'
 
+# globals
+
 DEPLOYMENT_RESOURCE_PATH = {
-                            '1.2.8': '/api/v1/template-programmer/template/deploy/status',
-                            '1.2.10': '/api/v1/template-programmer/template/deploy/status'
-                           }
+    '1.2.8': '/api/v1/template-programmer/template/deploy/status',
+    '1.2.10': '/api/v1/template-programmer/template/deploy/status',
+    '1.3.0.2': '/api/v1/template-programmer/template/deploy/status',
+    '1.3.0.3': '/api/v1/template-programmer/template/deploy/status',
+    '1.3.1.3': '/api/v1/template-programmer/template/deploy/status',
+    '1.3.1.4': '/api/v1/template-programmer/template/deploy/status'
+}
 
 
 class Deployment(DnacApi):
@@ -121,7 +127,7 @@ class Deployment(DnacApi):
                                          verify=verify,
                                          timeout=timeout)
 
-# end __init__()
+    # end __init__()
 
     @property
     def id(self):
@@ -141,7 +147,7 @@ class Deployment(DnacApi):
         """
         return self.__id
 
-# end id getter
+    # end id getter
 
     @property
     def url(self):
@@ -161,7 +167,7 @@ class Deployment(DnacApi):
         """
         return self.__url
 
-# end url getter
+    # end url getter
 
     @property
     def status(self):
@@ -181,7 +187,7 @@ class Deployment(DnacApi):
         """
         return self.__status
 
-# end status getter
+    # end status getter
 
     @property
     def results(self):
@@ -202,7 +208,7 @@ class Deployment(DnacApi):
 
         return self.__results
 
-# end results getter
+    # end results getter
 
     def check_deployment(self):
         """
@@ -240,7 +246,7 @@ class Deployment(DnacApi):
         self.__status = self.__results['status']
         return self.__status
 
-# end check_deployment()
+    # end check_deployment()
 
 # end class Deployment()
 
@@ -249,7 +255,7 @@ class Deployment(DnacApi):
 
 if __name__ == '__main__':
 
-    from dnac.dnac import Dnac
+    from dnac import Dnac
     import pprint
 
     dnac = Dnac()

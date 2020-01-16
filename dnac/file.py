@@ -11,10 +11,12 @@ from dnac.crud import OK, \
 MODULE = 'file.py'
 
 FILE_RESOURCE_PATH = {
-                      '1.2.8': '/api/v1/file',
-                      '1.2.10': '/dna/intent/api/v1/file',
-                      '1.3.0.2': '/api/v1/file',
-                      '1.3.0.3': '/api/v1/file'
+    '1.2.8': '/api/v1/file',
+    '1.2.10': '/dna/intent/api/v1/file',
+    '1.3.0.2': '/api/v1/file',
+    '1.3.0.3': '/api/v1/file',
+    '1.3.1.3': '/api/v1/file',
+    '1.3.1.4': '/api/v1/file'
 }
 
 
@@ -101,7 +103,7 @@ class File(DnacApi):
                                    verify=verify,
                                    timeout=timeout)
 
-# end __init__()
+    # end __init__()
 
     @property
     def id(self):
@@ -124,7 +126,7 @@ class File(DnacApi):
         """
         return self.__id
 
-# end id getter
+    # end id getter
 
     @property
     def results(self):
@@ -149,7 +151,7 @@ class File(DnacApi):
         """
         return self.__results
 
-# end results getter
+    # end results getter
 
     def get_results(self, is_json=True):
         """
@@ -184,7 +186,7 @@ class File(DnacApi):
         self.__results = results
         return self.__results
 
-# end get_results()
+    # end get_results()
 
 # end class File()
 
