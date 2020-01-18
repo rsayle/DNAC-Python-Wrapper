@@ -1,15 +1,15 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html><head><title>Python: module dnac.site</title>
+<html><head><title>Python: module dnac.config_archive</title>
 <meta charset="utf-8">
 </head><body bgcolor="#f0f0f8">
 
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
 <tr bgcolor="#7799ee">
 <td valign=bottom>&nbsp;<br>
-<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="dnac.html"><font color="#ffffff">dnac</font></a>.site</strong></big></big></font></td
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="dnac.html"><font color="#ffffff">dnac</font></a>.config_archive</strong></big></big></font></td
 ><td align=right valign=bottom
-><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/dnac/site.py">/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/dnac/site.py</a></font></td></tr></table>
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/dnac/config_archive.py">/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/dnac/config_archive.py</a></font></td></tr></table>
     <p></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -22,7 +22,7 @@
 <dt><font face="helvetica, arial"><a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>(<a href="__builtin__.html#object">__builtin__.object</a>)
 </font></dt><dd>
 <dl>
-<dt><font face="helvetica, arial"><a href="dnac.site.html#Site">Site</a>
+<dt><font face="helvetica, arial"><a href="dnac.config_archive.html#ConfigArchive">ConfigArchive</a>
 </font></dt></dl>
 </dd>
 </dl>
@@ -30,112 +30,148 @@
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="Site">class <strong>Site</strong></a>(<a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>)</font></td></tr>
+<font color="#000000" face="helvetica, arial"><a name="ConfigArchive">class <strong>ConfigArchive</strong></a>(<a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>A&nbsp;<a href="#Site">Site</a>&nbsp;class&nbsp;maps&nbsp;to&nbsp;the&nbsp;objects&nbsp;created&nbsp;in&nbsp;Cisco&nbsp;DNA&nbsp;Center's&nbsp;design&nbsp;site&nbsp;hierarchy.&nbsp;&nbsp;This&nbsp;class&nbsp;allows<br>
-developers&nbsp;to&nbsp;pull&nbsp;site&nbsp;health&nbsp;details&nbsp;and&nbsp;assign&nbsp;devices&nbsp;to&nbsp;sites.<br>
+<td colspan=2><tt>The&nbsp;<a href="#ConfigArchive">ConfigArchive</a>&nbsp;class&nbsp;represents&nbsp;the&nbsp;device&nbsp;configuration&nbsp;archive&nbsp;in&nbsp;Cisco&nbsp;DNA&nbsp;Center.&nbsp;&nbsp;For&nbsp;any&nbsp;given&nbsp;Cisco&nbsp;DNAC<br>
+cluster,&nbsp;there&nbsp;is&nbsp;one&nbsp;and&nbsp;only&nbsp;one&nbsp;configuration&nbsp;archive.&nbsp;&nbsp;For&nbsp;this&nbsp;implementation,&nbsp;<a href="#ConfigArchive">ConfigArchive</a>&nbsp;is&nbsp;a&nbsp;container<br>
+that&nbsp;holds&nbsp;a&nbsp;set&nbsp;of&nbsp;DeviceArchive&nbsp;objects.<br>
 &nbsp;<br>
 Attributes:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dnac:&nbsp;A&nbsp;reference&nbsp;to&nbsp;the&nbsp;Dnac&nbsp;instance&nbsp;that&nbsp;contains&nbsp;a&nbsp;Client&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dnac:&nbsp;A&nbsp;pointer&nbsp;to&nbsp;the&nbsp;Dnac&nbsp;object&nbsp;containing&nbsp;the&nbsp;<a href="#ConfigArchive">ConfigArchive</a>&nbsp;instance.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;Dnac&nbsp;object<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
-&nbsp;&nbsp;&nbsp;&nbsp;name:&nbsp;A&nbsp;user&nbsp;friendly&nbsp;name&nbsp;for&nbsp;the&nbsp;Client&nbsp;object&nbsp;used&nbsp;as&nbsp;a&nbsp;key&nbsp;for&nbsp;finding&nbsp;it&nbsp;in&nbsp;a&nbsp;Dnac.api&nbsp;attribute.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;name:&nbsp;A&nbsp;user-friendly&nbsp;name&nbsp;for&nbsp;accessing&nbsp;the&nbsp;<a href="#ConfigArchive">ConfigArchive</a>&nbsp;object&nbsp;in&nbsp;a&nbsp;Dnac.api{}.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
-&nbsp;&nbsp;&nbsp;&nbsp;sites:&nbsp;A&nbsp;dictionary&nbsp;containing&nbsp;sites&nbsp;matching&nbsp;a&nbsp;site&nbsp;name&nbsp;search.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;archive:&nbsp;a&nbsp;dict&nbsp;that&nbsp;holds&nbsp;DeviceArchive&nbsp;instances.&nbsp;&nbsp;Use&nbsp;a&nbsp;device's&nbsp;UUID&nbsp;as&nbsp;the&nbsp;key&nbsp;to&nbsp;access&nbsp;it's<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;associated&nbsp;DeviceArchive.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;dict<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;{}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
-&nbsp;&nbsp;&nbsp;&nbsp;site_health:&nbsp;The&nbsp;health&nbsp;details&nbsp;for&nbsp;each&nbsp;site.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;dict<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;{}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;resource:&nbsp;The&nbsp;URI&nbsp;for&nbsp;running&nbsp;commands&nbsp;within&nbsp;Cisco&nbsp;DNAC.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;Cisco&nbsp;DNA&nbsp;Center&nbsp;version&nbsp;dependent<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verify:&nbsp;A&nbsp;flag&nbsp;indicating&nbsp;whether&nbsp;or&nbsp;not&nbsp;to&nbsp;verify&nbsp;Cisco&nbsp;DNA&nbsp;Center's&nbsp;certificate.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;bool<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;False<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
+&nbsp;&nbsp;&nbsp;&nbsp;timeout:&nbsp;The&nbsp;number&nbsp;of&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;Cisco&nbsp;DNAC&nbsp;to&nbsp;respond&nbsp;before&nbsp;timing&nbsp;out.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;5<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
+&nbsp;<br>
+Usage:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dnac_archive&nbsp;=&nbsp;<a href="#ConfigArchive">ConfigArchive</a>(d,&nbsp;'archive')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dnac_archive.<a href="#ConfigArchive-load_all_archives">load_all_archives</a>()<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="dnac.config_archive.html#ConfigArchive">ConfigArchive</a></dd>
+<dd><a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="ConfigArchive-__init__"><strong>__init__</strong></a>(self, dnac, name, verify<font color="#909090">=False</font>, timeout<font color="#909090">=5</font>)</dt><dd><tt><a href="#ConfigArchive">ConfigArchive</a>'s&nbsp;__init__&nbsp;method&nbsp;initializes&nbsp;the&nbsp;object&nbsp;with&nbsp;an&nbsp;empty&nbsp;archive.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dnac:&nbsp;A&nbsp;reference&nbsp;to&nbsp;the&nbsp;containing&nbsp;Dnac&nbsp;object.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;Dnac&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;name:&nbsp;A&nbsp;user&nbsp;friendly&nbsp;name&nbsp;for&nbsp;finding&nbsp;this&nbsp;object&nbsp;in&nbsp;a&nbsp;Dnac<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;instance.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;verify:&nbsp;A&nbsp;flag&nbsp;used&nbsp;to&nbsp;check&nbsp;Cisco&nbsp;DNAC's&nbsp;certificate.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;boolean<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;False<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;boolean<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;False<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
 &nbsp;&nbsp;&nbsp;&nbsp;timeout:&nbsp;The&nbsp;number&nbsp;of&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;Cisco&nbsp;DNAC's<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;response.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;5<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
 &nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;all_sites&nbsp;=&nbsp;<a href="#Site">Site</a>(d,&nbsp;'sites')<br>&nbsp;</tt></td></tr>
-<tr><td>&nbsp;</td>
-<td width="100%"><dl><dt>Method resolution order:</dt>
-<dd><a href="dnac.site.html#Site">Site</a></dd>
-<dd><a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a></dd>
-<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
-</dl>
-<hr>
-Methods defined here:<br>
-<dl><dt><a name="Site-__init__"><strong>__init__</strong></a>(self, dnac, name, site<font color="#909090">={}</font>, verify<font color="#909090">=False</font>, timeout<font color="#909090">=5</font>)</dt></dl>
-
-<dl><dt><a name="Site-get_all_sites_health"><strong>get_all_sites_health</strong></a>(self)</dt><dd><tt><a href="#Site">Site</a>&nbsp;class&nbsp;method&nbsp;get_all_sites_health&nbsp;retrieves&nbsp;the&nbsp;current&nbsp;health&nbsp;details&nbsp;for&nbsp;all&nbsp;sites&nbsp;in<br>
-Cisco&nbsp;DNA&nbsp;Center.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
-&nbsp;<br>
 Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;The&nbsp;health&nbsp;details&nbsp;for&nbsp;all&nbsp;sites.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ConfigArchive">ConfigArchive</a>&nbsp;object:&nbsp;The&nbsp;newly&nbsp;constructed&nbsp;<a href="#ConfigArchive">ConfigArchive</a><br>
 &nbsp;<br>
 Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;all_sites&nbsp;=&nbsp;<a href="#Site">Site</a>(d,&nbsp;'ACME_sites')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pprint.PrettyPrint(d.api['ACME_sites'].<a href="#Site-get_all_sites_health">get_all_sites_health</a>())</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;dnac_archive&nbsp;=&nbsp;<a href="#ConfigArchive">ConfigArchive</a>(d,&nbsp;'archive')</tt></dd></dl>
 
-<dl><dt><a name="Site-get_site_health_by_name"><strong>get_site_health_by_name</strong></a>(self, site_name)</dt><dd><tt>The&nbsp;get_site_health_by_name&nbsp;returns&nbsp;the&nbsp;site&nbsp;health&nbsp;information&nbsp;for&nbsp;the&nbsp;named&nbsp;site.<br>
+<dl><dt><a name="ConfigArchive-add_new_archive"><strong>add_new_archive</strong></a>(self, device)</dt><dd><tt>The&nbsp;add_new_archive&nbsp;method&nbsp;creates&nbsp;a&nbsp;new&nbsp;DeviceArchive&nbsp;from&nbsp;a&nbsp;device's&nbsp;UUID&nbsp;and&nbsp;then&nbsp;stores&nbsp;it&nbsp;in&nbsp;the<br>
+<a href="#ConfigArchive">ConfigArchive</a>'s&nbsp;archive&nbsp;attribute.<br>
 &nbsp;<br>
 Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;site_name:&nbsp;The&nbsp;target&nbsp;site's&nbsp;name<br>
+&nbsp;&nbsp;&nbsp;&nbsp;device:&nbsp;A&nbsp;device's&nbsp;UUID<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
 &nbsp;<br>
 Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;The&nbsp;site's&nbsp;health&nbsp;details.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;A&nbsp;new&nbsp;DeviceArchive&nbsp;object<br>
 &nbsp;<br>
 Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;all_sites&nbsp;=&nbsp;<a href="#Site">Site</a>(d,&nbsp;'ACME_sites')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;target_site&nbsp;=&nbsp;'AZ&nbsp;Branch'<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pprint.PrettyPrint(d.api['ACME_sites'].<a href="#Site-get_site_health_by_name">get_site_health_by_name</a>(target_site))</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;device&nbsp;=&nbsp;NetworkDevice(d,&nbsp;'device')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dnac_archive&nbsp;=&nbsp;<a href="#ConfigArchive">ConfigArchive</a>(d,&nbsp;'archive')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;device_archive&nbsp;=&nbsp;dnac_archive.add_new_device_archive(device.get_device_by_name('aHostName')['id'])</tt></dd></dl>
+
+<dl><dt><a name="ConfigArchive-load_all_archives"><strong>load_all_archives</strong></a>(self)</dt><dd><tt><a href="#ConfigArchive">ConfigArchive</a>&nbsp;uses&nbsp;its&nbsp;load_all_archives&nbsp;method&nbsp;to&nbsp;retrieve&nbsp;the&nbsp;entire&nbsp;configuration&nbsp;archive&nbsp;from&nbsp;a&nbsp;Cisco<br>
+DNA&nbsp;Center&nbsp;cluster.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;<br>
+Return&nbsp;Values:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;the&nbsp;device&nbsp;archive<br>
+&nbsp;<br>
+Usage:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dnac_archive&nbsp;=&nbsp;<a href="#ConfigArchive">ConfigArchive</a>(d,&nbsp;'archive')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dnac_archive.<a href="#ConfigArchive-load_all_archives">load_all_archives</a>()</tt></dd></dl>
+
+<dl><dt><a name="ConfigArchive-load_device_archive"><strong>load_device_archive</strong></a>(self, device)</dt><dd><tt>The&nbsp;load_device_archive&nbsp;instructs&nbsp;a&nbsp;<a href="#ConfigArchive">ConfigArchive</a>&nbsp;to&nbsp;pull&nbsp;the&nbsp;configuration&nbsp;archive&nbsp;of&nbsp;a&nbsp;single&nbsp;device.<br>
+If&nbsp;the&nbsp;archive&nbsp;already&nbsp;contains&nbsp;the&nbsp;device's&nbsp;config,&nbsp;<a href="#ConfigArchive">ConfigArchive</a>&nbsp;first&nbsp;deletes&nbsp;the&nbsp;existing&nbsp;archive&nbsp;and<br>
+then&nbsp;it&nbsp;reloads&nbsp;the&nbsp;information&nbsp;from&nbsp;Cisco&nbsp;DNA&nbsp;Center.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;device:&nbsp;the&nbsp;target&nbsp;device's&nbsp;UUID<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;<br>
+Return&nbsp;Values:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;reference&nbsp;to&nbsp;the&nbsp;newly&nbsp;loaded&nbsp;device&nbsp;archive<br>
+&nbsp;<br>
+Usage:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;device&nbsp;=&nbsp;NetworkDevice(d,&nbsp;'device')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dnac_archive&nbsp;=&nbsp;<a href="#ConfigArchive">ConfigArchive</a>(d,&nbsp;'archive')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;device_archive&nbsp;=&nbsp;dnac_archive.<a href="#ConfigArchive-load_device_archive">load_device_archive</a>(device.get_device_by_name('aHostName')['id'])</tt></dd></dl>
 
 <hr>
 Data descriptors defined here:<br>
-<dl><dt><strong>site_health</strong></dt>
-<dd><tt>The&nbsp;site_health&nbsp;getter&nbsp;method&nbsp;returns&nbsp;the&nbsp;current&nbsp;value&nbsp;of&nbsp;each&nbsp;site's&nbsp;health&nbsp;in&nbsp;Cisco&nbsp;DNAC.<br>
+<dl><dt><strong>archive</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;archive&nbsp;returns&nbsp;the&nbsp;__archive&nbsp;dictionary.<br>
 &nbsp;<br>
-Paramters:<br>
+Parameters:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;None<br>
 &nbsp;<br>
 Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;site&nbsp;health&nbsp;state&nbsp;for&nbsp;each&nbsp;site.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;The&nbsp;DeviceArchives&nbsp;keyed&nbsp;by&nbsp;a&nbsp;device's&nbsp;UUID.<br>
 &nbsp;<br>
 Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;all_sites&nbsp;=&nbsp;Site(d,&nbsp;'ACME_sites')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pprint.PrettyPrint(d.api['ACME_sites'].site_health)</tt></dd>
-</dl>
-<dl><dt><strong>sites</strong></dt>
-<dd><tt>The&nbsp;sites&nbsp;getter&nbsp;method&nbsp;returns&nbsp;the&nbsp;current&nbsp;value&nbsp;of&nbsp;the&nbsp;Site&nbsp;class'&nbsp;sites&nbsp;attribute.<br>
-&nbsp;<br>
-Paramters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;All&nbsp;sites&nbsp;in&nbsp;Cisco&nbsp;DNAC's&nbsp;site&nbsp;design&nbsp;hierarchy<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;all_sites&nbsp;=&nbsp;Site(d,&nbsp;'ACME_sites')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pprint.PrettyPrint(d.api['ACME_sites'].sites)</tt></dd>
+&nbsp;&nbsp;&nbsp;&nbsp;dnac_archive&nbsp;=&nbsp;ConfigArchive(d,&nbsp;'archive')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dnac_archive.load_all_archives()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;a_device_archive&nbsp;=&nbsp;dnac_archive.archive[&lt;a_device_uuid&gt;]</tt></dd>
 </dl>
 <hr>
 Data descriptors inherited from <a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>:<br>
@@ -267,15 +303,12 @@ Usage:<br>
 <font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
     
 <tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><strong>ERROR_MSGS</strong> = {400: '400 - API request syntax is malformed', 401: '401 - API request has missing or invalid credentials', 403: '403 - API request is unauthorized', 404: '404 - API requested resource does not exist', 409: '409 - API requested resource is in a conflicted state', 415: '415 - API request body is in an unsupported format', 500: '500 - Server could not fulfill the API request', 501: '501 - Server has not implemented the requested function', 503: '503 - Server is unavailable', 504: '504 - Server did not respond before request timed-out'}<br>
-<strong>MODULE</strong> = 'site.py'<br>
-<strong>NO_SITES</strong> = {}<br>
-<strong>NO_SITE_HEALTH</strong> = {}<br>
+<td width="100%"><strong>ARCHIVE_ALREADY_EXISTS_ERROR</strong> = 'A device archive already exists for the requested host'<br>
+<strong>ARCHIVE_RESOURCE_PATH</strong> = {'1.2.10': '/api/v1/archive-config', '1.3.0.2': '/api/v1/archive-config', '1.3.0.3': '/api/v1/archive-config', '1.3.1.3': '/api/v1/archive-config', '1.3.1.4': '/api/v1/archive-config'}<br>
+<strong>ERROR_MSGS</strong> = {400: '400 - API request syntax is malformed', 401: '401 - API request has missing or invalid credentials', 403: '403 - API request is unauthorized', 404: '404 - API requested resource does not exist', 409: '409 - API requested resource is in a conflicted state', 415: '415 - API request body is in an unsupported format', 500: '500 - Server could not fulfill the API request', 501: '501 - Server has not implemented the requested function', 503: '503 - Server is unavailable', 504: '504 - Server did not respond before request timed-out'}<br>
+<strong>MODULE</strong> = 'config_archive.py'<br>
 <strong>OK</strong> = 200<br>
 <strong>REQUEST_NOT_OK</strong> = 'API request is not OK'<br>
-<strong>SITE_HEALTH_RESOURCE_PATH</strong> = {'1.2.10': '/dna/intent/api/v1/site-health', '1.3.0.2': '/dna/intent/api/v1/site-health', '1.3.0.3': '/dna/intent/api/v1/site-health', '1.3.1.3': '/dna/intent/api/v1/site-health', '1.3.1.4': '/dna/intent/api/v1/site-health'}<br>
-<strong>SITE_NOT_FOUND</strong> = 'Unable to find requested site'<br>
-<strong>SITE_NOT_FOUND_RESOLUTION</strong> = "Check the site's name in Design -&gt; Network Hierarchy"<br>
 <strong>SUPPORTED_DNAC_VERSIONS</strong> = ['1.2.8', '1.2.10', '1.3.0.2', '1.3.0.3', '1.3.1.3', '1.3.1.4']<br>
 <strong>UNSUPPORTED_DNAC_VERSION</strong> = 'Unsupported Cisco DNA Center version'</td></tr></table>
 </body></html>

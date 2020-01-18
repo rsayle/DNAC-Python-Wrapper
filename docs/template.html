@@ -19,8 +19,7 @@
     
 <tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="json.html">json</a><br>
-</td><td width="25%" valign=top><a href="time.html">time</a><br>
-</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ee77aa">
 <td colspan=3 valign=bottom>&nbsp;<br>
@@ -42,123 +41,36 @@
 <font color="#000000" face="helvetica, arial"><a name="Template">class <strong>Template</strong></a>(<a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>Class&nbsp;<a href="#Template">Template</a>&nbsp;provides&nbsp;an&nbsp;abstraction&nbsp;of&nbsp;CLI&nbsp;templates&nbsp;in&nbsp;Cisco's<br>
-DNA&nbsp;Center.&nbsp;&nbsp;Once&nbsp;a&nbsp;network&nbsp;device&nbsp;has&nbsp;first&nbsp;been&nbsp;provisioned&nbsp;in<br>
-Cisco&nbsp;DNAC,&nbsp;it's&nbsp;configuration&nbsp;can&nbsp;be&nbsp;updated&nbsp;with&nbsp;a&nbsp;CLI&nbsp;template.<br>
-This&nbsp;class&nbsp;encapsulates&nbsp;the&nbsp;API&nbsp;calls&nbsp;and&nbsp;tools&nbsp;required&nbsp;to&nbsp;deploy<br>
-a&nbsp;configuration&nbsp;template.<br>
+<td colspan=2><tt>Class&nbsp;<a href="#Template">Template</a>&nbsp;provides&nbsp;an&nbsp;abstraction&nbsp;of&nbsp;CLI&nbsp;templates&nbsp;in&nbsp;Cisco's&nbsp;DNA&nbsp;Center.&nbsp;&nbsp;Once&nbsp;a&nbsp;network&nbsp;device&nbsp;has&nbsp;first<br>
+been&nbsp;provisioned&nbsp;in&nbsp;Cisco&nbsp;DNAC,&nbsp;it's&nbsp;configuration&nbsp;can&nbsp;be&nbsp;updated&nbsp;with&nbsp;a&nbsp;CLI&nbsp;template.&nbsp;This&nbsp;class&nbsp;encapsulates&nbsp;the<br>
+API&nbsp;calls&nbsp;and&nbsp;tools&nbsp;required&nbsp;to&nbsp;deploy&nbsp;a&nbsp;configuration&nbsp;template.<br>
 &nbsp;<br>
-A&nbsp;<a href="#Template">Template</a>&nbsp;object's&nbsp;name&nbsp;must&nbsp;match&nbsp;the&nbsp;name&nbsp;it&nbsp;is&nbsp;given&nbsp;in&nbsp;a&nbsp;Cisco<br>
-DNAC&nbsp;cluster.&nbsp;&nbsp;You&nbsp;do&nbsp;not&nbsp;necessarily&nbsp;need&nbsp;to&nbsp;know&nbsp;in&nbsp;which&nbsp;project<br>
-it&nbsp;is&nbsp;listed,&nbsp;but&nbsp;the&nbsp;name&nbsp;must&nbsp;be&nbsp;the&nbsp;same.&nbsp;&nbsp;Be&nbsp;careful:&nbsp;template<br>
-names&nbsp;in&nbsp;Cisco&nbsp;DNA&nbsp;Center&nbsp;are&nbsp;case&nbsp;sensitive.<br>
+A&nbsp;<a href="#Template">Template</a>&nbsp;object's&nbsp;name&nbsp;must&nbsp;match&nbsp;the&nbsp;name&nbsp;it&nbsp;is&nbsp;given&nbsp;in&nbsp;a&nbsp;Cisco&nbsp;DNAC&nbsp;cluster.&nbsp;&nbsp;You&nbsp;do&nbsp;not&nbsp;necessarily&nbsp;need&nbsp;to<br>
+know&nbsp;in&nbsp;which&nbsp;project&nbsp;it&nbsp;is&nbsp;listed,&nbsp;but&nbsp;the&nbsp;name&nbsp;must&nbsp;be&nbsp;the&nbsp;same.&nbsp;&nbsp;Be&nbsp;careful:&nbsp;template&nbsp;names&nbsp;in&nbsp;Cisco&nbsp;DNA&nbsp;Center<br>
+are&nbsp;case&nbsp;sensitive.<br>
 &nbsp;<br>
-The&nbsp;power&nbsp;in&nbsp;using&nbsp;CLI&nbsp;templates&nbsp;is&nbsp;the&nbsp;ability&nbsp;to&nbsp;parameterize&nbsp;values<br>
-that&nbsp;should&nbsp;be&nbsp;different&nbsp;across&nbsp;networking&nbsp;equipment.&nbsp;&nbsp;For&nbsp;example,<br>
-every&nbsp;router&nbsp;and&nbsp;switch&nbsp;could&nbsp;have&nbsp;a&nbsp;loopback&nbsp;interface&nbsp;for&nbsp;management,<br>
-but&nbsp;they'll&nbsp;need&nbsp;to&nbsp;be&nbsp;assigned&nbsp;different&nbsp;IP&nbsp;addresses,&nbsp;naturally.&nbsp;&nbsp;The<br>
-<a href="#Template">Template</a>&nbsp;class&nbsp;handles&nbsp;a&nbsp;template's&nbsp;parameters&nbsp;as&nbsp;a&nbsp;dictionary&nbsp;making<br>
-it&nbsp;easy&nbsp;for&nbsp;programmers&nbsp;to&nbsp;update&nbsp;parameter&nbsp;values.<br>
+The&nbsp;power&nbsp;in&nbsp;using&nbsp;CLI&nbsp;templates&nbsp;is&nbsp;the&nbsp;ability&nbsp;to&nbsp;parameterize&nbsp;values&nbsp;that&nbsp;should&nbsp;be&nbsp;different&nbsp;across&nbsp;networking<br>
+equipment.&nbsp;&nbsp;For&nbsp;example,&nbsp;every&nbsp;router&nbsp;and&nbsp;switch&nbsp;could&nbsp;have&nbsp;a&nbsp;loopback&nbsp;interface&nbsp;for&nbsp;management,&nbsp;but&nbsp;they'll&nbsp;need<br>
+to&nbsp;be&nbsp;assigned&nbsp;different&nbsp;IP&nbsp;addresses,&nbsp;naturally.&nbsp;&nbsp;The&nbsp;<a href="#Template">Template</a>&nbsp;class&nbsp;handles&nbsp;a&nbsp;template's&nbsp;parameters&nbsp;as&nbsp;a<br>
+dictionary&nbsp;making&nbsp;it&nbsp;easy&nbsp;for&nbsp;programmers&nbsp;to&nbsp;update&nbsp;parameter&nbsp;values.<br>
 &nbsp;<br>
-Cisco&nbsp;DNA&nbsp;Center&nbsp;will&nbsp;not&nbsp;apply&nbsp;a&nbsp;template&nbsp;unless&nbsp;it&nbsp;is&nbsp;versioned.&nbsp;&nbsp;In<br>
-the&nbsp;Cisco&nbsp;DNA&nbsp;Center&nbsp;GUI,&nbsp;this&nbsp;amounts&nbsp;to&nbsp;having&nbsp;committed&nbsp;the<br>
-template.&nbsp;&nbsp;Stated&nbsp;differently,&nbsp;every&nbsp;template&nbsp;has&nbsp;a&nbsp;base&nbsp;instantiation<br>
-in&nbsp;Cisco&nbsp;DNAC,&nbsp;but&nbsp;the&nbsp;base&nbsp;template&nbsp;cannot&nbsp;be&nbsp;deployed.&nbsp;&nbsp;Instead,<br>
-users&nbsp;must&nbsp;access&nbsp;a&nbsp;committed&nbsp;version&nbsp;of&nbsp;the&nbsp;template.&nbsp;&nbsp;The&nbsp;<a href="#Template">Template</a><br>
-class&nbsp;stores&nbsp;the&nbsp;base&nbsp;template&nbsp;in&nbsp;its&nbsp;template&nbsp;attribute&nbsp;and&nbsp;then<br>
-allows&nbsp;the&nbsp;selection&nbsp;of&nbsp;a&nbsp;particular&nbsp;version&nbsp;of&nbsp;the&nbsp;template&nbsp;using<br>
-its&nbsp;version&nbsp;attribute.&nbsp;&nbsp;To&nbsp;use&nbsp;the&nbsp;latest&nbsp;version,&nbsp;simply&nbsp;set&nbsp;version's<br>
-value&nbsp;to&nbsp;zero,&nbsp;which&nbsp;is&nbsp;the&nbsp;default&nbsp;setting.<br>
+Cisco&nbsp;DNA&nbsp;Center&nbsp;will&nbsp;not&nbsp;apply&nbsp;a&nbsp;template&nbsp;unless&nbsp;it&nbsp;is&nbsp;versioned.&nbsp;&nbsp;In&nbsp;the&nbsp;Cisco&nbsp;DNA&nbsp;Center&nbsp;GUI,&nbsp;this&nbsp;amounts&nbsp;to<br>
+having&nbsp;committed&nbsp;the&nbsp;template.&nbsp;&nbsp;Stated&nbsp;differently,&nbsp;every&nbsp;template&nbsp;has&nbsp;a&nbsp;base&nbsp;instantiation&nbsp;in&nbsp;Cisco&nbsp;DNAC.&nbsp;&nbsp;In&nbsp;the<br>
+GUI,&nbsp;it's&nbsp;shown&nbsp;as&nbsp;the&nbsp;Local&nbsp;template&nbsp;and&nbsp;is&nbsp;the&nbsp;only&nbsp;one&nbsp;editable.&nbsp;&nbsp;In&nbsp;the&nbsp;API,&nbsp;the&nbsp;base&nbsp;template&nbsp;is&nbsp;called&nbsp;the<br>
+parent&nbsp;template&nbsp;and&nbsp;all&nbsp;versions&nbsp;reference&nbsp;the&nbsp;parent.&nbsp;&nbsp;In&nbsp;the&nbsp;<a href="#Template">Template</a>&nbsp;class,&nbsp;the&nbsp;parent&nbsp;template&nbsp;is&nbsp;referenced<br>
+as&nbsp;version&nbsp;0&nbsp;and&nbsp;all&nbsp;other&nbsp;versions&nbsp;are&nbsp;referenced&nbsp;by&nbsp;their&nbsp;version&nbsp;number.<br>
 &nbsp;<br>
-Pushing&nbsp;a&nbsp;template&nbsp;causes&nbsp;Cisco&nbsp;DNA&nbsp;to&nbsp;create&nbsp;a&nbsp;deployment&nbsp;job.<br>
-Depending&nbsp;upon&nbsp;the&nbsp;number&nbsp;of&nbsp;commands&nbsp;within&nbsp;a&nbsp;template&nbsp;as&nbsp;well&nbsp;as&nbsp;the<br>
-list&nbsp;of&nbsp;target&nbsp;devices&nbsp;upon&nbsp;which&nbsp;to&nbsp;apply&nbsp;it,&nbsp;deployment&nbsp;jobs&nbsp;take<br>
-a&nbsp;while&nbsp;to&nbsp;complete&nbsp;their&nbsp;tasks.&nbsp;&nbsp;The&nbsp;<a href="#Template">Template</a>&nbsp;class&nbsp;creates&nbsp;and&nbsp;holds<br>
-a&nbsp;Deployment&nbsp;object&nbsp;for&nbsp;monitoring&nbsp;the&nbsp;job's&nbsp;status.&nbsp;&nbsp;This&nbsp;happens<br>
-automatically&nbsp;whenever&nbsp;the&nbsp;<a href="#Template-deploy">deploy</a>()&nbsp;or&nbsp;<a href="#Template-deploy_sync">deploy_sync</a>()&nbsp;methods&nbsp;are&nbsp;called.<br>
+Pushing&nbsp;a&nbsp;template&nbsp;causes&nbsp;Cisco&nbsp;DNA&nbsp;to&nbsp;create&nbsp;a&nbsp;deployment&nbsp;job.&nbsp;Depending&nbsp;upon&nbsp;the&nbsp;number&nbsp;of&nbsp;commands&nbsp;within&nbsp;a<br>
+template&nbsp;as&nbsp;well&nbsp;as&nbsp;the&nbsp;list&nbsp;of&nbsp;target&nbsp;devices&nbsp;upon&nbsp;which&nbsp;to&nbsp;apply&nbsp;it,&nbsp;deployment&nbsp;jobs&nbsp;take&nbsp;a&nbsp;while&nbsp;to&nbsp;complete<br>
+their&nbsp;tasks.&nbsp;&nbsp;The&nbsp;<a href="#Template">Template</a>&nbsp;class&nbsp;creates&nbsp;and&nbsp;holds&nbsp;a&nbsp;Deployment&nbsp;object&nbsp;for&nbsp;monitoring&nbsp;the&nbsp;job's&nbsp;status.&nbsp;&nbsp;This<br>
+happens&nbsp;automatically&nbsp;whenever&nbsp;the&nbsp;<a href="#Template-deploy">deploy</a>()&nbsp;or&nbsp;<a href="#Template-deploy_sync">deploy_sync</a>()&nbsp;methods&nbsp;are&nbsp;called.<br>
 &nbsp;<br>
-Attributes:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dnac:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dnac&nbsp;object:&nbsp;A&nbsp;reference&nbsp;to&nbsp;the&nbsp;Dnac&nbsp;instance&nbsp;that&nbsp;contains<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;<a href="#Template">Template</a>&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
-&nbsp;&nbsp;&nbsp;&nbsp;name:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;A&nbsp;user&nbsp;friendly&nbsp;name&nbsp;for&nbsp;the&nbsp;<a href="#Template">Template</a>&nbsp;object&nbsp;that&nbsp;is<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;used&nbsp;both&nbsp;as&nbsp;a&nbsp;key&nbsp;for&nbsp;finding&nbsp;it&nbsp;in&nbsp;a&nbsp;Dnac.api&nbsp;attribute<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;for&nbsp;locating&nbsp;the&nbsp;real&nbsp;CLI&nbsp;template&nbsp;in&nbsp;Cisco&nbsp;DNAC.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;template&nbsp;name&nbsp;must&nbsp;match&nbsp;its&nbsp;name&nbsp;in&nbsp;Cisco&nbsp;DNAC<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exactly&nbsp;including&nbsp;its&nbsp;case.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
-&nbsp;&nbsp;&nbsp;&nbsp;version:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int:&nbsp;The&nbsp;version&nbsp;of&nbsp;a&nbsp;template&nbsp;to&nbsp;be&nbsp;deployed.&nbsp;&nbsp;Setting&nbsp;the<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;version&nbsp;to&nbsp;zero&nbsp;signals&nbsp;the&nbsp;<a href="#Template">Template</a>&nbsp;object&nbsp;to&nbsp;use<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;whatever&nbsp;the&nbsp;latest&nbsp;version&nbsp;may&nbsp;be.<br>
-&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Changing&nbsp;a&nbsp;<a href="#Template">Template</a>'s&nbsp;version&nbsp;causes&nbsp;the&nbsp;object&nbsp;to<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;search&nbsp;for&nbsp;and&nbsp;load&nbsp;the&nbsp;requested&nbsp;versioned&nbsp;template<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;according&nbsp;to&nbsp;the&nbsp;<a href="#Template">Template</a>'s&nbsp;name.&nbsp;&nbsp;If&nbsp;the&nbsp;requested<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;version&nbsp;does&nbsp;not&nbsp;exist,&nbsp;<a href="#Template">Template</a>&nbsp;throws&nbsp;an&nbsp;exception.<br>
-&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;When&nbsp;switching&nbsp;to&nbsp;a&nbsp;different&nbsp;template&nbsp;in&nbsp;Cisco&nbsp;DNA<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Center&nbsp;either&nbsp;create&nbsp;a&nbsp;new&nbsp;<a href="#Template">Template</a>&nbsp;object&nbsp;altogether<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;first&nbsp;change&nbsp;the&nbsp;<a href="#Template">Template</a>'s&nbsp;name,&nbsp;which&nbsp;will&nbsp;trigger<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;object&nbsp;to&nbsp;load&nbsp;the&nbsp;latest&nbsp;version,&nbsp;and&nbsp;then&nbsp;update<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;version&nbsp;attribute&nbsp;so&nbsp;that&nbsp;the&nbsp;<a href="#Template">Template</a>&nbsp;instance<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loads&nbsp;the&nbsp;correct&nbsp;one.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;0<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;public<br>
-&nbsp;&nbsp;&nbsp;&nbsp;template_id:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;The&nbsp;UUID&nbsp;in&nbsp;Cisco&nbsp;DNAC&nbsp;of&nbsp;the&nbsp;base&nbsp;template.&nbsp;&nbsp;A&nbsp;base<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;template&nbsp;cannot&nbsp;be&nbsp;deployed&nbsp;on&nbsp;any&nbsp;equipment.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
-&nbsp;&nbsp;&nbsp;&nbsp;versioned_template:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;The&nbsp;CLI&nbsp;template&nbsp;as&nbsp;represented&nbsp;in&nbsp;Cisco&nbsp;DNA&nbsp;Center.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
-&nbsp;&nbsp;&nbsp;&nbsp;versioned_template_id:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;The&nbsp;UUID&nbsp;in&nbsp;Cisco&nbsp;DNAC&nbsp;of&nbsp;committed&nbsp;template,&nbsp;which&nbsp;can<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;be&nbsp;deployed.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
-&nbsp;&nbsp;&nbsp;&nbsp;versioned_template_params:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;A&nbsp;dictionary&nbsp;whose&nbsp;keys&nbsp;are&nbsp;the&nbsp;template's&nbsp;parameter<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;names.&nbsp;&nbsp;Their&nbsp;values&nbsp;can&nbsp;each&nbsp;be&nbsp;set&nbsp;directly&nbsp;through<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;accessing&nbsp;this&nbsp;dictionary.&nbsp;&nbsp;See&nbsp;the&nbsp;example&nbsp;below&nbsp;in<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;Usage&nbsp;section.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
-&nbsp;&nbsp;&nbsp;&nbsp;target_id:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;The&nbsp;UUID&nbsp;of&nbsp;a&nbsp;network&nbsp;device&nbsp;to&nbsp;which&nbsp;the&nbsp;template<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;will&nbsp;be&nbsp;applied.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;public<br>
-&nbsp;&nbsp;&nbsp;&nbsp;target_type:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;An&nbsp;enumerated&nbsp;value&nbsp;that&nbsp;instructs&nbsp;Cisco&nbsp;DNA&nbsp;Center&nbsp;how<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;find&nbsp;the&nbsp;device&nbsp;so&nbsp;that&nbsp;the&nbsp;template&nbsp;can&nbsp;be&nbsp;applied.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Legal&nbsp;values&nbsp;for&nbsp;target_type&nbsp;are&nbsp;kept&nbsp;in&nbsp;the&nbsp;global<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;list:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VALID_TARGET_TYPES=[TARGET_BY_DEFAULT,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TARGET_BY_ID,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TARGET_BY_HOSTNAME,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TARGET_BY_IP,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TARGET_BY_SERIAL,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TARGET_BY_MAC]<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;TARGET_BY_DEFAULT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;public<br>
-&nbsp;&nbsp;&nbsp;&nbsp;deployment:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Deployment&nbsp;object:&nbsp;A&nbsp;Deployment&nbsp;instance&nbsp;that&nbsp;provides&nbsp;the<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;deploy&nbsp;job's&nbsp;status&nbsp;and&nbsp;the&nbsp;job's&nbsp;results.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
 Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
 &nbsp;&nbsp;&nbsp;&nbsp;template&nbsp;=&nbsp;<a href="#Template">Template</a>(d,&nbsp;'Set&nbsp;VLAN')<br>
 &nbsp;&nbsp;&nbsp;&nbsp;d.api['Set&nbsp;VLAN'].target_id&nbsp;=&nbsp;&lt;switch_uuid&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d.api['Set&nbsp;VLAN'].versioned_template_params['interface']&nbsp;=&nbsp;'gig1/0/1'<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d.api['Set&nbsp;VLAN'].versioned_template_params['vlan']&nbsp;=&nbsp;10<br>
+&nbsp;&nbsp;&nbsp;&nbsp;d.api['Set&nbsp;VLAN'].<a href="#Template-set_param">set_param</a>('interface',&nbsp;'gig1/0/1')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;d.api['Set&nbsp;VLAN'].<a href="#Template-set_param">set_param</a>('vlan',&nbsp;10)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;d.api['Set&nbsp;VLAN'].<a href="#Template-deploy_sync">deploy_sync</a>()<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pprint.PrettyPrint(template.deployment.results)<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
@@ -169,311 +81,222 @@ Usage:<br>
 </dl>
 <hr>
 Methods defined here:<br>
-<dl><dt><a name="Template-__init__"><strong>__init__</strong></a>(self, dnac, name, version<font color="#909090">=0</font>, verify<font color="#909090">=False</font>, timeout<font color="#909090">=5</font>)</dt><dd><tt><a href="#Template">Template</a>'s&nbsp;__init__&nbsp;method&nbsp;constructs&nbsp;a&nbsp;new&nbsp;<a href="#Template">Template</a>&nbsp;object.<br>
-It&nbsp;automatically&nbsp;searches&nbsp;for&nbsp;the&nbsp;template&nbsp;in&nbsp;Cisco&nbsp;DNA&nbsp;Center<br>
-by&nbsp;the&nbsp;<a href="#Template">Template</a>'s&nbsp;name.&nbsp;&nbsp;If&nbsp;found,&nbsp;then&nbsp;it&nbsp;will&nbsp;search&nbsp;for&nbsp;the<br>
-committed&nbsp;version&nbsp;of&nbsp;the&nbsp;template&nbsp;according&nbsp;to&nbsp;the&nbsp;value&nbsp;passed<br>
-in&nbsp;the&nbsp;version&nbsp;keyword&nbsp;argument.&nbsp;&nbsp;If&nbsp;no&nbsp;version&nbsp;is&nbsp;selected,&nbsp;it<br>
-chooses&nbsp;the&nbsp;latest&nbsp;version&nbsp;available.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dnac:&nbsp;A&nbsp;reference&nbsp;to&nbsp;the&nbsp;containing&nbsp;Dnac&nbsp;object.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;Dnac&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;name:&nbsp;The&nbsp;template's&nbsp;exact&nbsp;name,&nbsp;including&nbsp;its&nbsp;case,&nbsp;in<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cisco&nbsp;DNA&nbsp;Center.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;version:&nbsp;The&nbsp;template&nbsp;version&nbsp;that&nbsp;will&nbsp;be&nbsp;deployed.&nbsp;&nbsp;When&nbsp;set<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;zero,&nbsp;<a href="#Template">Template</a>&nbsp;selects&nbsp;the&nbsp;latest&nbsp;version.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;0<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
-&nbsp;&nbsp;&nbsp;&nbsp;verify:&nbsp;A&nbsp;flag&nbsp;used&nbsp;to&nbsp;check&nbsp;Cisco&nbsp;DNAC's&nbsp;certificate.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;boolean<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;False<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
-&nbsp;&nbsp;&nbsp;&nbsp;timeout:&nbsp;The&nbsp;number&nbsp;of&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;Cisco&nbsp;DNAC's<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;response.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;5<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Template">Template</a>&nbsp;object:&nbsp;a&nbsp;newly&nbsp;build&nbsp;<a href="#Template">Template</a>&nbsp;instance.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;template&nbsp;=&nbsp;<a href="#Template">Template</a>(d,&nbsp;'Enable&nbsp;BGP',&nbsp;version=5)</tt></dd></dl>
+<dl><dt><a name="Template-__add_new_template__"><strong>__add_new_template__</strong></a>(self, template, project)</dt><dd><tt>This&nbsp;hidden&nbsp;method&nbsp;creates&nbsp;a&nbsp;new&nbsp;template&nbsp;in&nbsp;Cisco&nbsp;DNA&nbsp;Center&nbsp;and&nbsp;assigns&nbsp;it&nbsp;to&nbsp;the&nbsp;project&nbsp;provided.<br>
+:param&nbsp;template:&nbsp;A&nbsp;reference&nbsp;to&nbsp;a&nbsp;<a href="#Template">Template</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;<a href="#Template">Template</a>&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
+:param&nbsp;project:&nbsp;A&nbsp;reference&nbsp;to&nbsp;the&nbsp;project&nbsp;to&nbsp;which&nbsp;the&nbsp;template&nbsp;should&nbsp;be&nbsp;assigned<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;Project&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
+:return:&nbsp;<a href="#Template">Template</a>&nbsp;object</tt></dd></dl>
 
-<dl><dt><a name="Template-deploy"><strong>deploy</strong></a>(self)</dt><dd><tt>The&nbsp;deploy&nbsp;method&nbsp;asynchronously&nbsp;applies&nbsp;a&nbsp;template&nbsp;to&nbsp;a&nbsp;device.<br>
-The&nbsp;<a href="#Template">Template</a>'s&nbsp;target&nbsp;information&nbsp;and&nbsp;versioned&nbsp;template&nbsp;data<br>
-must&nbsp;be&nbsp;set&nbsp;prior&nbsp;to&nbsp;issuing&nbsp;this&nbsp;command.&nbsp;&nbsp;The&nbsp;function&nbsp;creates<br>
-a&nbsp;Deployment&nbsp;object,&nbsp;saves&nbsp;it,&nbsp;and&nbsp;then&nbsp;instructs&nbsp;it&nbsp;to&nbsp;perform<br>
-a&nbsp;progress&nbsp;check&nbsp;on&nbsp;itself&nbsp;and&nbsp;then&nbsp;returns&nbsp;whatever&nbsp;Cisco&nbsp;DNA<br>
-Center&nbsp;responds&nbsp;with.&nbsp;&nbsp;Developers&nbsp;can&nbsp;then&nbsp;use&nbsp;the&nbsp;deployment<br>
-instance&nbsp;to&nbsp;further&nbsp;monitor&nbsp;the&nbsp;job's&nbsp;success&nbsp;or&nbsp;failure.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;The&nbsp;deployment&nbsp;job's&nbsp;current&nbsp;state.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;template&nbsp;=&nbsp;<a href="#Template">Template</a>(d,&nbsp;'Create&nbsp;VRF')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d.api['Create&nbsp;VRF'].target_id&nbsp;=&nbsp;'&lt;router_uuid&gt;'<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d.api['Create&nbsp;VRF'].target_type&nbsp;=&nbsp;TARGET_BY_ID<br>
-&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;d.api['Create&nbsp;VRF'].<a href="#Template-deploy">deploy</a>()</tt></dd></dl>
+<dl><dt><a name="Template-__add_version__"><strong>__add_version__</strong></a>(self, version)</dt><dd><tt>This&nbsp;hidden&nbsp;method&nbsp;creates&nbsp;a&nbsp;new&nbsp;version&nbsp;of&nbsp;an&nbsp;existing&nbsp;template.<br>
+:param&nbsp;version:&nbsp;The&nbsp;new&nbsp;version&nbsp;to&nbsp;be&nbsp;added&nbsp;to&nbsp;Cisco&nbsp;DNAC<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;<a href="#Template">Template</a>&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
+:return:&nbsp;<a href="#Template">Template</a>&nbsp;object</tt></dd></dl>
 
-<dl><dt><a name="Template-deploy_sync"><strong>deploy_sync</strong></a>(self, wait<font color="#909090">=3</font>)</dt><dd><tt>deploy_sync&nbsp;pushes&nbsp;a&nbsp;template&nbsp;to&nbsp;the&nbsp;target&nbsp;device&nbsp;and&nbsp;then&nbsp;waits<br>
-for&nbsp;the&nbsp;job&nbsp;to&nbsp;finish.&nbsp;&nbsp;By&nbsp;default,&nbsp;it&nbsp;checks&nbsp;the&nbsp;job&nbsp;every<br>
-three&nbsp;seconds,&nbsp;but&nbsp;this&nbsp;can&nbsp;be&nbsp;set&nbsp;using&nbsp;the&nbsp;wait&nbsp;keyword&nbsp;argument.<br>
-The&nbsp;<a href="#Template">Template</a>'s&nbsp;target&nbsp;information&nbsp;and&nbsp;versioned&nbsp;template&nbsp;data<br>
-must&nbsp;be&nbsp;set&nbsp;prior&nbsp;to&nbsp;issuing&nbsp;this&nbsp;command.&nbsp;&nbsp;deploy_sync&nbsp;creates<br>
-a&nbsp;deployment&nbsp;object,&nbsp;saves&nbsp;it,&nbsp;and&nbsp;uses&nbsp;it&nbsp;to&nbsp;monitor&nbsp;the&nbsp;job's<br>
-progress.&nbsp;&nbsp;Upon&nbsp;completion,&nbsp;deploy_sync&nbsp;returns&nbsp;the&nbsp;job's&nbsp;status.<br>
+<dl><dt><a name="Template-__init__"><strong>__init__</strong></a>(self, dnac, name, verify<font color="#909090">=False</font>, timeout<font color="#909090">=5</font>)</dt><dd><tt><a href="#Template">Template</a>'s&nbsp;__init__&nbsp;method&nbsp;constructs&nbsp;a&nbsp;new&nbsp;<a href="#Template">Template</a>&nbsp;object.&nbsp;It&nbsp;automatically&nbsp;searches&nbsp;for&nbsp;the&nbsp;template&nbsp;in<br>
+Cisco&nbsp;DNA&nbsp;Center&nbsp;by&nbsp;the&nbsp;<a href="#Template">Template</a>'s&nbsp;name.&nbsp;&nbsp;If&nbsp;found,&nbsp;it&nbsp;will&nbsp;load&nbsp;the&nbsp;parent&nbsp;template&nbsp;information&nbsp;and&nbsp;all<br>
+committed&nbsp;versions.&nbsp;&nbsp;This&nbsp;class'&nbsp;attributes&nbsp;are&nbsp;decorator&nbsp;functions&nbsp;that&nbsp;directly&nbsp;access&nbsp;the&nbsp;template's&nbsp;info,<br>
+the&nbsp;parent&nbsp;template,&nbsp;and&nbsp;all&nbsp;available&nbsp;versions.<br>
 &nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;wait:&nbsp;The&nbsp;number&nbsp;of&nbsp;seconds&nbsp;before&nbsp;timing&nbsp;out&nbsp;Cisco&nbsp;DNAC's&nbsp;response.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;3<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;The&nbsp;deployment&nbsp;job's&nbsp;current&nbsp;state.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;template&nbsp;=&nbsp;<a href="#Template">Template</a>(d,&nbsp;'Create&nbsp;VRF')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d.api['Create&nbsp;VRF'].target_id&nbsp;=&nbsp;'&lt;router_uuid&gt;'<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d.api['Create&nbsp;VRF'].target_type&nbsp;=&nbsp;TARGET_BY_ID<br>
-&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;d.api['Create&nbsp;VRF'].<a href="#Template-deploy_sync">deploy_sync</a>()</tt></dd></dl>
+:param&nbsp;dnac:&nbsp;A&nbsp;reference&nbsp;to&nbsp;the&nbsp;master&nbsp;Dnac&nbsp;instance.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;Dnac&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
+:param&nbsp;name:&nbsp;The&nbsp;template's&nbsp;name&nbsp;as&nbsp;listed&nbsp;in&nbsp;Cisco&nbsp;DNA&nbsp;Center.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
+:param&nbsp;verify:&nbsp;A&nbsp;flag&nbsp;that&nbsp;sets&nbsp;whether&nbsp;or&nbsp;not&nbsp;Cisco&nbsp;DNA&nbsp;Center's&nbsp;certificated&nbsp;should&nbsp;be&nbsp;authenticated.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;bool<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;False<br>
+:param&nbsp;timeout:&nbsp;The&nbsp;number&nbsp;of&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;a&nbsp;response&nbsp;from&nbsp;Cisco&nbsp;DNAC.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;5</tt></dd></dl>
 
-<dl><dt><a name="Template-get_all_templates"><strong>get_all_templates</strong></a>(self)</dt><dd><tt>Class&nbsp;method&nbsp;getAllTemplates&nbsp;queries&nbsp;the&nbsp;Cisco&nbsp;DNA&nbsp;Center&nbsp;cluster<br>
-for&nbsp;a&nbsp;listing&nbsp;of&nbsp;every&nbsp;template&nbsp;it&nbsp;has.&nbsp;&nbsp;The&nbsp;listing&nbsp;includes<br>
-the&nbsp;base&nbsp;templates&nbsp;and&nbsp;all&nbsp;of&nbsp;its&nbsp;versions.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;list:&nbsp;A&nbsp;listing&nbsp;of&nbsp;all&nbsp;available&nbsp;templates.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;template&nbsp;=&nbsp;<a href="#Template">Template</a>(d,&nbsp;'Set&nbsp;VLAN')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;str(d.api['Set&nbsp;Vlan'].getAllTemplates)</tt></dd></dl>
+<dl><dt><a name="Template-__is_versioned_template__"><strong>__is_versioned_template__</strong></a>(self, template)</dt><dd><tt>A&nbsp;utility&nbsp;function&nbsp;to&nbsp;check&nbsp;that&nbsp;the&nbsp;template&nbsp;is&nbsp;formatted&nbsp;correctly&nbsp;for&nbsp;versioning.&nbsp;&nbsp;If&nbsp;it&nbsp;is&nbsp;not,&nbsp;this<br>
+method&nbsp;throws&nbsp;a&nbsp;DnacApiError;&nbsp;otherwise,&nbsp;it&nbsp;returns&nbsp;True.<br>
+:param&nbsp;template:&nbsp;A&nbsp;reference&nbsp;to&nbsp;a&nbsp;template<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;dict<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
+:return:&nbsp;bool</tt></dd></dl>
 
-<dl><dt><a name="Template-get_template_by_id"><strong>get_template_by_id</strong></a>(self, id)</dt><dd><tt>get_template_by_id&nbsp;pulls&nbsp;the&nbsp;template&nbsp;information&nbsp;for&nbsp;the&nbsp;one<br>
-specified&nbsp;by&nbsp;the&nbsp;UUID&nbsp;passed&nbsp;to&nbsp;the&nbsp;function.&nbsp;&nbsp;Either&nbsp;base&nbsp;or<br>
-versioned&nbsp;templates&nbsp;may&nbsp;be&nbsp;queried.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;id:&nbsp;The&nbsp;UUID&nbsp;of&nbsp;a&nbsp;template.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;The&nbsp;template's&nbsp;data.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;template&nbsp;=&nbsp;<a href="#Template">Template</a>(d,&nbsp;'Set&nbsp;VLAN')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;str(d.api['Set&nbsp;Vlan'].<a href="#Template-get_template_by_id">get_template_by_id</a>('&lt;template_uuid&gt;')</tt></dd></dl>
+<dl><dt><a name="Template-__make_body__"><strong>__make_body__</strong></a>(self)</dt><dd><tt>The&nbsp;__make_body__&nbsp;method&nbsp;converts&nbsp;the&nbsp;<a href="#Template">Template</a>&nbsp;object's&nbsp;target&nbsp;and&nbsp;versioned&nbsp;template&nbsp;information&nbsp;into&nbsp;a&nbsp;JSON<br>
+encoded&nbsp;string&nbsp;used&nbsp;as&nbsp;the&nbsp;payload&nbsp;of&nbsp;a&nbsp;POST&nbsp;request&nbsp;to&nbsp;Cisco&nbsp;DNA&nbsp;Center.&nbsp;&nbsp;Both&nbsp;<a href="#Template-deploy">deploy</a>()&nbsp;and&nbsp;<a href="#Template-deploy_sync">deploy_sync</a>()<br>
+automatically&nbsp;call&nbsp;this&nbsp;function.<br>
+:return:&nbsp;json&nbsp;encoded&nbsp;str</tt></dd></dl>
 
-<dl><dt><a name="Template-get_template_by_name"><strong>get_template_by_name</strong></a>(self, name)</dt><dd><tt>get_template_by_name&nbsp;finds&nbsp;the&nbsp;base&nbsp;template&nbsp;by&nbsp;its&nbsp;name&nbsp;and<br>
-saves&nbsp;the&nbsp;value&nbsp;in&nbsp;its&nbsp;__template_id&nbsp;attribute&nbsp;and&nbsp;returns&nbsp;it.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;name:&nbsp;The&nbsp;template's&nbsp;name,&nbsp;which&nbsp;must&nbsp;match&nbsp;exactly&nbsp;as&nbsp;it<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;entered&nbsp;in&nbsp;Cisco&nbsp;DNA&nbsp;Center.&nbsp;&nbsp;If&nbsp;no&nbsp;name&nbsp;is&nbsp;given,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;method&nbsp;defaults&nbsp;to&nbsp;the&nbsp;<a href="#Template">Template</a>&nbsp;object's&nbsp;own&nbsp;name.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;The&nbsp;template's&nbsp;UUID.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;template&nbsp;=&nbsp;<a href="#Template">Template</a>(d,&nbsp;'Set&nbsp;VLAN')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;str(d.api['Set&nbsp;Vlan'].getTemplateByIdByName()</tt></dd></dl>
+<dl><dt><a name="Template-__prepare_template__"><strong>__prepare_template__</strong></a>(self, template)</dt><dd><tt>A&nbsp;hidden&nbsp;method&nbsp;that&nbsp;scrubs&nbsp;a&nbsp;template&nbsp;of&nbsp;all&nbsp;UUIDs&nbsp;and&nbsp;timestamps&nbsp;so&nbsp;that&nbsp;it&nbsp;can&nbsp;be&nbsp;safely&nbsp;imported&nbsp;into<br>
+Cisco&nbsp;DNA&nbsp;Center.<br>
+:param&nbsp;template:&nbsp;A&nbsp;reference&nbsp;to&nbsp;a&nbsp;template<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;dict<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
+:return:&nbsp;dict</tt></dd></dl>
 
-<dl><dt><a name="Template-get_versioned_template_by_name"><strong>get_versioned_template_by_name</strong></a>(self, name, ver<font color="#909090">=0</font>)</dt><dd><tt>Class&nbsp;method&nbsp;get_versioned_template_by_name&nbsp;finds&nbsp;a&nbsp;committed&nbsp;template<br>
-by&nbsp;the&nbsp;name&nbsp;and&nbsp;version&nbsp;values&nbsp;passed.&nbsp;&nbsp;It&nbsp;loads&nbsp;all&nbsp;of&nbsp;the&nbsp;template's<br>
-information&nbsp;into&nbsp;the&nbsp;object's&nbsp;versioned_template&nbsp;attributes&nbsp;including<br>
-its&nbsp;UUID,&nbsp;body&nbsp;and&nbsp;parameters.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;name:&nbsp;The&nbsp;required&nbsp;template's&nbsp;name&nbsp;entered&nbsp;in&nbsp;Cisco&nbsp;DNAC.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ver:&nbsp;The&nbsp;version&nbsp;of&nbsp;the&nbsp;template&nbsp;to&nbsp;be&nbsp;deployed.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;0<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;The&nbsp;requested&nbsp;template's&nbsp;contents.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;t&nbsp;=&nbsp;<a href="#Template">Template</a>(d,&nbsp;'Set&nbsp;VLAN')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d.api['Set&nbsp;VLAN'].getgetVersionedTemplateByName()</tt></dd></dl>
+<dl><dt><a name="Template-__prepare_version__"><strong>__prepare_version__</strong></a>(self, template, parent)</dt><dd><tt>This&nbsp;hidden&nbsp;function&nbsp;first&nbsp;scrubs&nbsp;the&nbsp;template&nbsp;with&nbsp;__prepare_template__&nbsp;and&nbsp;then&nbsp;modifies&nbsp;the&nbsp;template's<br>
+id&nbsp;and&nbsp;parentTemplateId&nbsp;fields&nbsp;to&nbsp;point&nbsp;to&nbsp;the&nbsp;parent&nbsp;template&nbsp;so&nbsp;a&nbsp;new&nbsp;version&nbsp;can&nbsp;be&nbsp;committed.<br>
+:param&nbsp;template:&nbsp;A&nbsp;reference&nbsp;to&nbsp;a&nbsp;template<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;dict<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
+:param&nbsp;parent:&nbsp;A&nbsp;reference&nbsp;to&nbsp;the&nbsp;parent&nbsp;template<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;dict<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
+:return:&nbsp;dict</tt></dd></dl>
 
-<dl><dt><a name="Template-make_body"><strong>make_body</strong></a>(self)</dt><dd><tt>The&nbsp;make_body&nbsp;method&nbsp;converts&nbsp;the&nbsp;<a href="#Template">Template</a>&nbsp;object's&nbsp;target&nbsp;and<br>
-versioned&nbsp;template&nbsp;information&nbsp;into&nbsp;a&nbsp;JSON&nbsp;encoded&nbsp;string&nbsp;used<br>
-as&nbsp;the&nbsp;payload&nbsp;of&nbsp;a&nbsp;POST&nbsp;request&nbsp;to&nbsp;Cisco&nbsp;DNA&nbsp;Center.&nbsp;&nbsp;Both<br>
-<a href="#Template-deploy">deploy</a>()&nbsp;and&nbsp;<a href="#Template-deploy_sync">deploy_sync</a>()&nbsp;already&nbsp;call&nbsp;this&nbsp;function.&nbsp;&nbsp;It&nbsp;is<br>
-unnecessary&nbsp;to&nbsp;use&nbsp;this&nbsp;method&nbsp;for&nbsp;pushing&nbsp;a&nbsp;template.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;A&nbsp;JSON&nbsp;encoded&nbsp;string&nbsp;for&nbsp;deploying&nbsp;a&nbsp;CLI&nbsp;template.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;template&nbsp;=&nbsp;<a href="#Template">Template</a>(d,&nbsp;'Enable&nbsp;CTS&nbsp;Interfaces')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d.api['Enable&nbsp;CTS&nbsp;Interfaces'].<a href="#Template-make_body">make_body</a>()</tt></dd></dl>
+<dl><dt><a name="Template-__str__"><strong>__str__</strong></a>(self)</dt><dd><tt>Returns&nbsp;a&nbsp;json&nbsp;formatted&nbsp;string&nbsp;of&nbsp;the&nbsp;template's&nbsp;base&nbsp;information.<br>
+:return:&nbsp;str</tt></dd></dl>
+
+<dl><dt><a name="Template-commit_template"><strong>commit_template</strong></a>(self, comments<font color="#909090">=''</font>)</dt><dd><tt>The&nbsp;commit_template&nbsp;updates&nbsp;the&nbsp;parent&nbsp;template&nbsp;to&nbsp;its&nbsp;next&nbsp;version.&nbsp;&nbsp;Once&nbsp;completed,&nbsp;the&nbsp;actual&nbsp;template<br>
+can&nbsp;be&nbsp;deployed&nbsp;in&nbsp;Cisco&nbsp;DNA&nbsp;Center.<br>
+:param&nbsp;comments:&nbsp;Comments&nbsp;for&nbsp;the&nbsp;commit&nbsp;action<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;''<br>
+:return:&nbsp;<a href="#Template">Template</a>&nbsp;object</tt></dd></dl>
+
+<dl><dt><a name="Template-deploy"><strong>deploy</strong></a>(self)</dt><dd><tt>The&nbsp;deploy&nbsp;method&nbsp;asynchronously&nbsp;applies&nbsp;a&nbsp;template&nbsp;to&nbsp;a&nbsp;device.&nbsp;The&nbsp;<a href="#Template">Template</a>'s&nbsp;target&nbsp;information&nbsp;and<br>
+versioned&nbsp;template&nbsp;data&nbsp;must&nbsp;be&nbsp;set&nbsp;prior&nbsp;to&nbsp;issuing&nbsp;this&nbsp;command.&nbsp;&nbsp;The&nbsp;function&nbsp;creates&nbsp;a&nbsp;Deployment&nbsp;object,<br>
+saves&nbsp;it,&nbsp;and&nbsp;then&nbsp;instructs&nbsp;it&nbsp;to&nbsp;perform&nbsp;a&nbsp;progress&nbsp;check&nbsp;on&nbsp;itself&nbsp;and&nbsp;then&nbsp;returns&nbsp;whatever&nbsp;Cisco&nbsp;DNA<br>
+Center&nbsp;responds&nbsp;with.&nbsp;&nbsp;Developers&nbsp;can&nbsp;then&nbsp;use&nbsp;the&nbsp;deployment&nbsp;instance&nbsp;to&nbsp;further&nbsp;monitor&nbsp;the&nbsp;job's&nbsp;success<br>
+or&nbsp;failure.<br>
+:return:&nbsp;str</tt></dd></dl>
+
+<dl><dt><a name="Template-deploy_sync"><strong>deploy_sync</strong></a>(self, wait<font color="#909090">=3</font>)</dt><dd><tt>deploy_sync&nbsp;pushes&nbsp;a&nbsp;template&nbsp;to&nbsp;the&nbsp;target&nbsp;device&nbsp;and&nbsp;then&nbsp;waits&nbsp;for&nbsp;the&nbsp;job&nbsp;to&nbsp;finish.&nbsp;&nbsp;By&nbsp;default,&nbsp;it&nbsp;checks<br>
+the&nbsp;job&nbsp;every&nbsp;three&nbsp;seconds,&nbsp;but&nbsp;this&nbsp;can&nbsp;be&nbsp;set&nbsp;using&nbsp;the&nbsp;wait&nbsp;keyword&nbsp;argument.&nbsp;The&nbsp;<a href="#Template">Template</a>'s&nbsp;target<br>
+information&nbsp;and&nbsp;versioned&nbsp;template&nbsp;data&nbsp;must&nbsp;be&nbsp;set&nbsp;prior&nbsp;to&nbsp;issuing&nbsp;this&nbsp;command.&nbsp;&nbsp;deploy_sync&nbsp;creates<br>
+a&nbsp;deployment&nbsp;object,&nbsp;saves&nbsp;it,&nbsp;and&nbsp;uses&nbsp;it&nbsp;to&nbsp;monitor&nbsp;the&nbsp;job's&nbsp;progress.&nbsp;&nbsp;Upon&nbsp;completion,&nbsp;deploy_sync&nbsp;returns<br>
+the&nbsp;job's&nbsp;status.<br>
+:param&nbsp;wait:&nbsp;The&nbsp;time&nbsp;to&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;before&nbsp;checking&nbsp;the&nbsp;deployment&nbsp;job<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;3<br>
+:return:&nbsp;str</tt></dd></dl>
+
+<dl><dt><a name="Template-export_template"><strong>export_template</strong></a>(self)</dt><dd><tt>Writes&nbsp;the&nbsp;base&nbsp;template&nbsp;information&nbsp;in&nbsp;json&nbsp;format&nbsp;to&nbsp;the&nbsp;file:&nbsp;&lt;template_name&gt;.tmpl<br>
+:return:&nbsp;file</tt></dd></dl>
+
+<dl><dt><a name="Template-export_versioned_template"><strong>export_versioned_template</strong></a>(self, version<font color="#909090">=0</font>)</dt><dd><tt>Writes&nbsp;the&nbsp;versioned&nbsp;template&nbsp;given&nbsp;by&nbsp;the&nbsp;version&nbsp;parameter&nbsp;in&nbsp;json&nbsp;format&nbsp;to&nbsp;the&nbsp;file:<br>
+&lt;template_name&gt;.&lt;version&gt;.tmpl<br>
+:param&nbsp;version:&nbsp;The&nbsp;version&nbsp;to&nbsp;be&nbsp;exported&nbsp;to&nbsp;a&nbsp;file.&nbsp;&nbsp;If&nbsp;no&nbsp;version&nbsp;is&nbsp;given,&nbsp;this&nbsp;method&nbsp;defaults&nbsp;to&nbsp;the<br>
+parent&nbsp;template:&nbsp;version=0.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;0<br>
+:return:&nbsp;file</tt></dd></dl>
+
+<dl><dt><a name="Template-get_all_templates"><strong>get_all_templates</strong></a>(self)</dt><dd><tt>Class&nbsp;method&nbsp;getAllTemplates&nbsp;queries&nbsp;the&nbsp;Cisco&nbsp;DNA&nbsp;Center&nbsp;cluster&nbsp;for&nbsp;a&nbsp;listing&nbsp;of&nbsp;every&nbsp;template&nbsp;it&nbsp;has.<br>
+The&nbsp;listing&nbsp;includes&nbsp;the&nbsp;base&nbsp;templates&nbsp;and&nbsp;all&nbsp;of&nbsp;its&nbsp;versions.<br>
+:return:&nbsp;list</tt></dd></dl>
+
+<dl><dt><a name="Template-get_template_by_id"><strong>get_template_by_id</strong></a>(self, id)</dt><dd><tt>get_template_by_id&nbsp;pulls&nbsp;the&nbsp;template&nbsp;information&nbsp;from&nbsp;Cisco&nbsp;DNA&nbsp;Center&nbsp;specified&nbsp;by&nbsp;the&nbsp;UUID&nbsp;provided.<br>
+Either&nbsp;base&nbsp;or&nbsp;versioned&nbsp;templates&nbsp;may&nbsp;be&nbsp;queried.<br>
+:param&nbsp;id:&nbsp;The&nbsp;template's&nbsp;UUID<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
+:return:&nbsp;dict</tt></dd></dl>
+
+<dl><dt><a name="Template-get_versioned_template"><strong>get_versioned_template</strong></a>(self, version)</dt><dd><tt>get_versioned_template&nbsp;searches&nbsp;the&nbsp;<a href="#Template">Template</a>&nbsp;object's&nbsp;versions&nbsp;for&nbsp;the&nbsp;version&nbsp;requested&nbsp;and&nbsp;returns&nbsp;it.&nbsp;&nbsp;Use<br>
+version&nbsp;=&nbsp;0&nbsp;to&nbsp;retrieve&nbsp;the&nbsp;parent&nbsp;template.<br>
+:param&nbsp;version:&nbsp;The&nbsp;desired&nbsp;template&nbsp;version<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
+:return:&nbsp;dict</tt></dd></dl>
+
+<dl><dt><a name="Template-import_template"><strong>import_template</strong></a>(self, template_file, version_file)</dt><dd><tt>The&nbsp;import_template&nbsp;method&nbsp;adds&nbsp;a&nbsp;template&nbsp;version&nbsp;to&nbsp;Cisco&nbsp;DNA&nbsp;Center.&nbsp;&nbsp;It&nbsp;handles&nbsp;the&nbsp;work&nbsp;of&nbsp;determining<br>
+if&nbsp;a&nbsp;new&nbsp;template&nbsp;is&nbsp;being&nbsp;created&nbsp;or&nbsp;if&nbsp;an&nbsp;existing&nbsp;template&nbsp;is&nbsp;being&nbsp;versioned.<br>
+:param&nbsp;template_file:&nbsp;The&nbsp;file&nbsp;that&nbsp;contains&nbsp;the&nbsp;base&nbsp;template&nbsp;information&nbsp;(e.g.&nbsp;&lt;template_name&gt;.tmpl)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
+:param&nbsp;version_file:&nbsp;The&nbsp;file&nbsp;that&nbsp;contains&nbsp;the&nbsp;versioned&nbsp;template&nbsp;(e.g.&nbsp;&lt;template_name&gt;.&lt;version&gt;.tmpl)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
+:return:&nbsp;<a href="#Template">Template</a>&nbsp;object</tt></dd></dl>
+
+<dl><dt><a name="Template-load_template"><strong>load_template</strong></a>(self, name)</dt><dd><tt>The&nbsp;load_template&nbsp;method&nbsp;searches&nbsp;Cisco&nbsp;DNA&nbsp;Center&nbsp;for&nbsp;the&nbsp;template&nbsp;named.&nbsp;&nbsp;If&nbsp;found,&nbsp;it&nbsp;loads&nbsp;the&nbsp;base<br>
+template&nbsp;information&nbsp;and&nbsp;all&nbsp;available&nbsp;versions.&nbsp;&nbsp;Use&nbsp;this&nbsp;function&nbsp;to&nbsp;prepare&nbsp;new&nbsp;<a href="#Template">Template</a>&nbsp;objects&nbsp;or&nbsp;to<br>
+refresh&nbsp;existing&nbsp;ones&nbsp;when&nbsp;they&nbsp;have&nbsp;changed.&nbsp;&nbsp;Many&nbsp;methods&nbsp;in&nbsp;the&nbsp;<a href="#Template">Template</a>&nbsp;class&nbsp;automatically&nbsp;call&nbsp;this<br>
+function.&nbsp;&nbsp;It&nbsp;should&nbsp;be&nbsp;rare&nbsp;for&nbsp;a&nbsp;user&nbsp;to&nbsp;have&nbsp;to&nbsp;call&nbsp;this&nbsp;method.<br>
+:param&nbsp;name:&nbsp;The&nbsp;template's&nbsp;name&nbsp;as&nbsp;given&nbsp;in&nbsp;Cisco&nbsp;DNAC<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
+:return:&nbsp;<a href="#Template">Template</a>&nbsp;object</tt></dd></dl>
+
+<dl><dt><a name="Template-set_param"><strong>set_param</strong></a>(self, key, value)</dt><dd><tt>Adds&nbsp;a&nbsp;parameter&nbsp;and&nbsp;its&nbsp;value&nbsp;to&nbsp;the&nbsp;<a href="#Template">Template</a>&nbsp;object's&nbsp;params&nbsp;dictionary.<br>
+:param&nbsp;key:&nbsp;The&nbsp;parameter's&nbsp;name<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
+:param&nbsp;value:&nbsp;The&nbsp;parameter's&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
+:return:&nbsp;None</tt></dd></dl>
 
 <hr>
 Data descriptors defined here:<br>
 <dl><dt><strong>deployment</strong></dt>
-<dd><tt>The&nbsp;deployment&nbsp;get&nbsp;method&nbsp;returns&nbsp;a&nbsp;reference&nbsp;to&nbsp;the&nbsp;Template's<br>
-deploy&nbsp;job.&nbsp;&nbsp;Use&nbsp;this&nbsp;attribute&nbsp;to&nbsp;monitor&nbsp;the&nbsp;job's&nbsp;status&nbsp;and<br>
-get&nbsp;its&nbsp;results.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Deployment&nbsp;object:&nbsp;The&nbsp;job&nbsp;for&nbsp;the&nbsp;deployed&nbsp;template.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;template&nbsp;=&nbsp;Template(d,&nbsp;'Set&nbsp;VLAN')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;str(d.api['Set&nbsp;Vlan'].deployment.results)</tt></dd>
+<dd><tt>The&nbsp;deployment&nbsp;get&nbsp;method&nbsp;returns&nbsp;a&nbsp;reference&nbsp;to&nbsp;the&nbsp;Template's&nbsp;deploy&nbsp;job.&nbsp;&nbsp;Use&nbsp;this&nbsp;attribute&nbsp;to&nbsp;monitor&nbsp;the<br>
+job's&nbsp;status&nbsp;and&nbsp;get&nbsp;its&nbsp;results.<br>
+:return:&nbsp;Deployment&nbsp;object</tt></dd>
+</dl>
+<dl><dt><strong>params</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;for&nbsp;retrieving&nbsp;the&nbsp;template's&nbsp;parameters.<br>
+:return:&nbsp;list</tt></dd>
+</dl>
+<dl><dt><strong>parent</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;that&nbsp;returns&nbsp;the&nbsp;parent&nbsp;template's&nbsp;information.<br>
+:return:&nbsp;dict</tt></dd>
+</dl>
+<dl><dt><strong>project_id</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;that&nbsp;provides&nbsp;the&nbsp;project's&nbsp;UUID&nbsp;to&nbsp;which&nbsp;the&nbsp;template&nbsp;is&nbsp;assigned.<br>
+:return:&nbsp;str</tt></dd>
+</dl>
+<dl><dt><strong>project_name</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;that&nbsp;provides&nbsp;the&nbsp;project&nbsp;to&nbsp;which&nbsp;the&nbsp;template&nbsp;is&nbsp;assigned.<br>
+:return:&nbsp;str</tt></dd>
 </dl>
 <dl><dt><strong>target_id</strong></dt>
-<dd><tt>Template's&nbsp;target_id&nbsp;get&nbsp;method&nbsp;returns&nbsp;the&nbsp;UUID&nbsp;of&nbsp;the&nbsp;managed<br>
-device&nbsp;where&nbsp;the&nbsp;template&nbsp;will&nbsp;be&nbsp;applied.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;A&nbsp;Cisco&nbsp;DNAC&nbsp;managed&nbsp;device's&nbsp;UUID.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;template&nbsp;=&nbsp;Template(d,&nbsp;'Add&nbsp;Loopback')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;d.api['Add&nbsp;Loopback'].target_id</tt></dd>
+<dd><tt>Template's&nbsp;target_id&nbsp;get&nbsp;method&nbsp;returns&nbsp;the&nbsp;UUID&nbsp;of&nbsp;the&nbsp;managed&nbsp;device&nbsp;where&nbsp;the&nbsp;template&nbsp;will&nbsp;be&nbsp;applied.<br>
+:return:&nbsp;str</tt></dd>
 </dl>
 <dl><dt><strong>target_type</strong></dt>
-<dd><tt>Template's&nbsp;target_type&nbsp;get&nbsp;method&nbsp;returns&nbsp;the&nbsp;value&nbsp;used&nbsp;to&nbsp;instruct<br>
-Cisco&nbsp;DNAC&nbsp;how&nbsp;to&nbsp;find&nbsp;targeted&nbsp;device&nbsp;in&nbsp;it&nbsp;inventory&nbsp;when<br>
-applying&nbsp;a&nbsp;CLI&nbsp;template.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;One&nbsp;of&nbsp;the&nbsp;following&nbsp;enumerated&nbsp;values:<br>
+<dd><tt>Template's&nbsp;target_type&nbsp;get&nbsp;method&nbsp;returns&nbsp;the&nbsp;value&nbsp;used&nbsp;to&nbsp;instruct&nbsp;Cisco&nbsp;DNAC&nbsp;how&nbsp;to&nbsp;find&nbsp;targeted&nbsp;device&nbsp;in<br>
+it&nbsp;inventory&nbsp;when&nbsp;applying&nbsp;a&nbsp;CLI&nbsp;template.<br>
+:return:&nbsp;str:&nbsp;One&nbsp;of&nbsp;the&nbsp;following&nbsp;enumerated&nbsp;values:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TARGET_BY_DEFAULT='DEFAULT'<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TARGET_BY_ID='MANAGED_DEVICE_UUID'<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TARGET_BY_HOSTNAME='MANAGED_DEVICE_HOSTNAME'<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TARGET_BY_IP='MANAGED_DEVICE_IP'<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TARGET_BY_SERIAL='PRE_PROVISIONED_SERIAL'<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TARGET_BY_MAC='PRE_PROVISIONED_SERIAL'<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;template&nbsp;=&nbsp;Template(d,&nbsp;'Set&nbsp;VLAN')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;d.api['Set&nbsp;VLAN'].target_type</tt></dd>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TARGET_BY_MAC='PRE_PROVISIONED_SERIAL'</tt></dd>
+</dl>
+<dl><dt><strong>template</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;that&nbsp;returns&nbsp;the&nbsp;base&nbsp;template&nbsp;information.<br>
+:return:&nbsp;dict</tt></dd>
 </dl>
 <dl><dt><strong>template_id</strong></dt>
-<dd><tt>Get&nbsp;method&nbsp;template_id&nbsp;returns&nbsp;the&nbsp;base&nbsp;template's&nbsp;UUID&nbsp;from&nbsp;Cisco<br>
-DNA&nbsp;Center.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;The&nbsp;template's&nbsp;UUID.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;template&nbsp;=&nbsp;Template(d,&nbsp;'Add&nbsp;Loopback')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;(d.api['Add&nbsp;Loopback'].template_id)</tt></dd>
+<dd><tt>Get&nbsp;method&nbsp;that&nbsp;returns&nbsp;the&nbsp;base&nbsp;template's&nbsp;UUID.<br>
+:return:&nbsp;str</tt></dd>
 </dl>
-<dl><dt><strong>version</strong></dt>
-<dd><tt>The&nbsp;version&nbsp;get&nbsp;method&nbsp;returns&nbsp;the&nbsp;template's&nbsp;version&nbsp;number.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
-&nbsp;<br>
-Return&nbsp;Value:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;int:&nbsp;The&nbsp;template's&nbsp;version&nbsp;number.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;template&nbsp;=&nbsp;Template(d,&nbsp;'Add&nbsp;Loopback')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;d.api['Add&nbsp;Loopback'].version</tt></dd>
-</dl>
-<dl><dt><strong>versioned_template</strong></dt>
-<dd><tt>The&nbsp;versioned_template&nbsp;get&nbsp;method&nbsp;returns&nbsp;the&nbsp;template's&nbsp;contents.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
-&nbsp;<br>
-Return&nbsp;Value:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;The&nbsp;template's&nbsp;data.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;template&nbsp;=&nbsp;Template(d,&nbsp;'Add&nbsp;Loopback')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;str(d.api['Add&nbsp;Loopback'].versioned_template)</tt></dd>
-</dl>
-<dl><dt><strong>versioned_template_id</strong></dt>
-<dd><tt>The&nbsp;versioned_template_id&nbsp;get&nbsp;method&nbsp;returns&nbsp;the&nbsp;UUID&nbsp;for&nbsp;the<br>
-committed&nbsp;template&nbsp;based&nbsp;upon&nbsp;the&nbsp;object's&nbsp;current&nbsp;template&nbsp;version.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
-&nbsp;<br>
-Return&nbsp;Value:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;The&nbsp;versioned&nbsp;template's&nbsp;UUID&nbsp;in&nbsp;Cisco&nbsp;DNA&nbsp;Center<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;template&nbsp;=&nbsp;Template(d,&nbsp;'Add&nbsp;Loopback')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;d.api['Add&nbsp;Loopback'].versioned_template_id</tt></dd>
-</dl>
-<dl><dt><strong>versioned_template_params</strong></dt>
-<dd><tt>versioned_template_params&nbsp;returns&nbsp;the&nbsp;template's&nbsp;parameters<br>
-dictionary.&nbsp;&nbsp;Values&nbsp;may&nbsp;be&nbsp;updated&nbsp;directly&nbsp;by&nbsp;accessing&nbsp;this<br>
-attribute.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
-&nbsp;<br>
-Return&nbsp;Value:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;The&nbsp;template's&nbsp;parameters&nbsp;and&nbsp;their&nbsp;current&nbsp;values.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;template&nbsp;=&nbsp;Template(d,&nbsp;'Add&nbsp;Loopback')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;str(d.api['Add&nbsp;Loopback'].versioned_template_params)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d.api['Add&nbsp;Loopback'].versioned_template_params['ip']&nbsp;=&nbsp;10.1.1.1</tt></dd>
+<dl><dt><strong>versions</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;for&nbsp;retrieving&nbsp;all&nbsp;of&nbsp;the&nbsp;template's&nbsp;versions.<br>
+:return:&nbsp;list</tt></dd>
 </dl>
 <hr>
 Data descriptors inherited from <a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>:<br>
@@ -621,13 +444,20 @@ Usage:<br>
 <strong>INVALID_RESPONSE</strong> = 'Invalid response to API call'<br>
 <strong>LEGAL_VERSIONS</strong> = 'Template version must be 0 or greater. Use 0 to ... wrapper to use the latest version automatically.'<br>
 <strong>MODULE</strong> = 'template.py'<br>
+<strong>NEW_TEMPLATE</strong> = 'NEW_TEMPLATE'<br>
+<strong>NO_TEMPLATES</strong> = []<br>
 <strong>NO_TEMPLATES_FOUND</strong> = 'Could not retrieve any templates'<br>
 <strong>NO_TEMPLATE_ID</strong> = 'The template ID is empty or does not exist'<br>
+<strong>NO_VERSIONS</strong> = {}<br>
 <strong>OK</strong> = 200<br>
+<strong>PARAM_RANGE_KEY</strong> = 'range'<br>
+<strong>PARAM_SELECTION_KEY</strong> = 'selection'<br>
+<strong>POST_1_2_8</strong> = ['1.2.10', '1.3.0.2', '1.3.0.3', '1.3.1.3', '1.3.1.4']<br>
+<strong>PROJECT_RESOURCE_PATH</strong> = {'1.3.1.3': '/api/v2/template-programmer/project', '1.3.1.4': '/api/v2/template-programmer/project'}<br>
 <strong>REQUEST_NOT_ACCEPTED</strong> = 'API request is not ACCEPTED'<br>
 <strong>REQUEST_NOT_OK</strong> = 'API request is not OK'<br>
 <strong>SUBSTR_NOT_FOUND</strong> = -1<br>
-<strong>SUPPORTED_DNAC_VERSIONS</strong> = ['1.2.8', '1.2.10']<br>
+<strong>SUPPORTED_DNAC_VERSIONS</strong> = ['1.2.8', '1.2.10', '1.3.0.2', '1.3.0.3', '1.3.1.3', '1.3.1.4']<br>
 <strong>TARGET_BY_DEFAULT</strong> = 'DEFAULT'<br>
 <strong>TARGET_BY_HOSTNAME</strong> = 'MANAGED_DEVICE_HOSTNAME'<br>
 <strong>TARGET_BY_ID</strong> = 'MANAGED_DEVICE_UUID'<br>
@@ -635,8 +465,16 @@ Usage:<br>
 <strong>TARGET_BY_MAC</strong> = 'PRE_PROVISIONED_SERIAL'<br>
 <strong>TARGET_BY_SERIAL</strong> = 'PRE_PROVISIONED_SERIAL'<br>
 <strong>TEMPLATE_ALREADY_DEPLOYED</strong> = 'already deployed with same params'<br>
+<strong>TEMPLATE_ALREADY_EXISTS</strong> = 'Template already exists'<br>
+<strong>TEMPLATE_CANNOT_BE_IMPORTED</strong> = 'Template cannot be imported into DNA Center'<br>
+<strong>TEMPLATE_CANNOT_BE_IMPORTED_RESOLUTION</strong> = 'Verify that the template is a parent or versioned template'<br>
+<strong>TEMPLATE_IMPORT_FAILED</strong> = 'Failed to import the template into DNA Center'<br>
+<strong>TEMPLATE_IS_EMPTY</strong> = {}<br>
 <strong>TEMPLATE_NOT_FOUND</strong> = 'Could not find template'<br>
-<strong>TEMPLATE_RESOURCE_PATH</strong> = {'1.2.10': '/api/v2/template-programmer/template', '1.2.8': '/api/v1/template-programmer/template'}<br>
+<strong>TEMPLATE_PARENT_KEY</strong> = 'parentTemplateId'<br>
+<strong>TEMPLATE_RESOURCE_PATH</strong> = {'1.2.10': '/api/v2/template-programmer/template', '1.2.8': '/api/v1/template-programmer/template', '1.3.0.2': '/api/v2/template-programmer/template', '1.3.0.3': '/api/v2/template-programmer/template', '1.3.1.3': '/api/v2/template-programmer/template', '1.3.1.4': '/api/v2/template-programmer/template'}<br>
+<strong>TEMPLATE_VERSION_FAILED</strong> = 'Failed to create a new version of the template'<br>
+<strong>TEMPLATE_VERSION_PATH</strong> = {'1.2.10': '/version', '1.2.8': '/version', '1.3.0.2': '/version', '1.3.0.3': '/version', '1.3.1.3': '/version', '1.3.1.4': '/version'}<br>
 <strong>UNKNOWN_DEPLOYMENT_STATUS</strong> = 'Unknown deployment status'<br>
 <strong>UNKNOWN_VERSION</strong> = 'Unknown template version'<br>
 <strong>UNSUPPORTED_DNAC_VERSION</strong> = 'Unsupported Cisco DNA Center version'<br>

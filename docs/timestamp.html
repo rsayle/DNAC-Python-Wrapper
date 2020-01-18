@@ -13,6 +13,14 @@
     <p></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="time.html">time</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ee77aa">
 <td colspan=3 valign=bottom>&nbsp;<br>
 <font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
@@ -48,7 +56,7 @@ Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;print(time)<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>
-<dl><dt><a name="TimeStamp-__init__"><strong>__init__</strong></a>(self)</dt><dd><tt>The&nbsp;<a href="#TimeStamp">TimeStamp</a>'s&nbsp;__init__&nbsp;method&nbsp;sets&nbsp;its&nbsp;value&nbsp;to&nbsp;the&nbsp;current&nbsp;number&nbsp;of&nbsp;milliseconds&nbsp;in&nbsp;epoch&nbsp;time.<br>
+<dl><dt><a name="TimeStamp-__init__"><strong>__init__</strong></a>(self, time<font color="#909090">=0</font>)</dt><dd><tt>The&nbsp;<a href="#TimeStamp">TimeStamp</a>'s&nbsp;__init__&nbsp;method&nbsp;sets&nbsp;its&nbsp;value&nbsp;to&nbsp;the&nbsp;current&nbsp;number&nbsp;of&nbsp;milliseconds&nbsp;in&nbsp;epoch&nbsp;time.<br>
 &nbsp;<br>
 Parameters:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;None<br>
@@ -70,6 +78,31 @@ Return&nbsp;Values:<br>
 Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;t&nbsp;=&nbsp;<a href="#TimeStamp">TimeStamp</a>()<br>
 &nbsp;&nbsp;&nbsp;&nbsp;print(t)</tt></dd></dl>
+
+<dl><dt><a name="TimeStamp-local_timestamp"><strong>local_timestamp</strong></a>(self)</dt><dd><tt>The&nbsp;local_timestamp&nbsp;method&nbsp;returns&nbsp;the&nbsp;<a href="__builtin__.html#object">object</a>'s&nbsp;current&nbsp;timestamp&nbsp;value&nbsp;as&nbsp;a&nbsp;formatted&nbsp;string&nbsp;in&nbsp;the&nbsp;Cisco<br>
+DNA&nbsp;Center&nbsp;instance's&nbsp;local&nbsp;timezone.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;<br>
+Return&nbsp;Values:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;the&nbsp;timestamp&nbsp;in&nbsp;local&nbsp;time&nbsp;formatted&nbsp;as&nbsp;%Y-%m-%d&nbsp;%H:%M:%S<br>
+&nbsp;<br>
+Usage:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;t&nbsp;=&nbsp;<a href="#TimeStamp">TimeStamp</a>()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;print(t.<a href="#TimeStamp-local_timestamp">local_timestamp</a>())</tt></dd></dl>
+
+<dl><dt><a name="TimeStamp-utc_timestamp"><strong>utc_timestamp</strong></a>(self)</dt><dd><tt>The&nbsp;utc_timestamp&nbsp;method&nbsp;returns&nbsp;the&nbsp;<a href="__builtin__.html#object">object</a>'s&nbsp;current&nbsp;timestamp&nbsp;value&nbsp;as&nbsp;a&nbsp;formatted&nbsp;string&nbsp;in&nbsp;UTC&nbsp;time.<br>
+&nbsp;<br>
+Parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;<br>
+Return&nbsp;Values:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;the&nbsp;timestamp&nbsp;in&nbsp;UTC&nbsp;time&nbsp;formatted&nbsp;as&nbsp;%Y-%m-%d&nbsp;%H:%M:%S<br>
+&nbsp;<br>
+Usage:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;t&nbsp;=&nbsp;<a href="#TimeStamp">TimeStamp</a>()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;print(t.<a href="#TimeStamp-utc_timestamp">utc_timestamp</a>())</tt></dd></dl>
 
 <hr>
 Data descriptors defined here:<br>
@@ -99,5 +132,7 @@ Usage:<br>
 <font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
     
 <tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><strong>MODULE</strong> = 'timestamp.py'</td></tr></table>
+<td width="100%"><strong>GET_CURRENT_TIME</strong> = 0<br>
+<strong>MODULE</strong> = 'timestamp.py'<br>
+<strong>NO_TIME</strong> = -1</td></tr></table>
 </body></html>

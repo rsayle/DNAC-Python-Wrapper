@@ -1,0 +1,29 @@
+#!/usr/bin/sh
+
+# move to the module root dir
+cd ../
+
+# collect the list of modules
+cd dnac/
+modules=`ls *.py`
+cd ../
+
+# create the module pydocs
+for module in $modules
+do
+	if [ $module != "__init__.py" ]; then
+		target=`echo $module | sed 's/\.py//'`
+		pydoc -w dnac.$target
+		mv dnac.$target.html docs/$target.html
+	fi
+done
+
+# create docs from __init__.py
+pydoc -w dnac.Dnac
+mv dnac.Dnac.html docs/Dnac.html
+pydoc -w dnac.DnacError
+mv dnac.DnacError.html docs/DnacError.html
+
+# return to the docs dir
+cd docs/
+

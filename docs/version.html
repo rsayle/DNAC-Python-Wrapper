@@ -1,15 +1,15 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html><head><title>Python: module dnac.site</title>
+<html><head><title>Python: module dnac.version</title>
 <meta charset="utf-8">
 </head><body bgcolor="#f0f0f8">
 
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
 <tr bgcolor="#7799ee">
 <td valign=bottom>&nbsp;<br>
-<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="dnac.html"><font color="#ffffff">dnac</font></a>.site</strong></big></big></font></td
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="dnac.html"><font color="#ffffff">dnac</font></a>.version</strong></big></big></font></td
 ><td align=right valign=bottom
-><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/dnac/site.py">/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/dnac/site.py</a></font></td></tr></table>
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/dnac/version.py">/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/dnac/version.py</a></font></td></tr></table>
     <p></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -22,7 +22,7 @@
 <dt><font face="helvetica, arial"><a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>(<a href="__builtin__.html#object">__builtin__.object</a>)
 </font></dt><dd>
 <dl>
-<dt><font face="helvetica, arial"><a href="dnac.site.html#Site">Site</a>
+<dt><font face="helvetica, arial"><a href="dnac.version.html#Version">Version</a>
 </font></dt></dl>
 </dd>
 </dl>
@@ -30,112 +30,71 @@
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="Site">class <strong>Site</strong></a>(<a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>)</font></td></tr>
+<font color="#000000" face="helvetica, arial"><a name="Version">class <strong>Version</strong></a>(<a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>A&nbsp;<a href="#Site">Site</a>&nbsp;class&nbsp;maps&nbsp;to&nbsp;the&nbsp;objects&nbsp;created&nbsp;in&nbsp;Cisco&nbsp;DNA&nbsp;Center's&nbsp;design&nbsp;site&nbsp;hierarchy.&nbsp;&nbsp;This&nbsp;class&nbsp;allows<br>
-developers&nbsp;to&nbsp;pull&nbsp;site&nbsp;health&nbsp;details&nbsp;and&nbsp;assign&nbsp;devices&nbsp;to&nbsp;sites.<br>
-&nbsp;<br>
-Attributes:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dnac:&nbsp;A&nbsp;reference&nbsp;to&nbsp;the&nbsp;Dnac&nbsp;instance&nbsp;that&nbsp;contains&nbsp;a&nbsp;Client&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;Dnac&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
-&nbsp;&nbsp;&nbsp;&nbsp;name:&nbsp;A&nbsp;user&nbsp;friendly&nbsp;name&nbsp;for&nbsp;the&nbsp;Client&nbsp;object&nbsp;used&nbsp;as&nbsp;a&nbsp;key&nbsp;for&nbsp;finding&nbsp;it&nbsp;in&nbsp;a&nbsp;Dnac.api&nbsp;attribute.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
-&nbsp;&nbsp;&nbsp;&nbsp;sites:&nbsp;A&nbsp;dictionary&nbsp;containing&nbsp;sites&nbsp;matching&nbsp;a&nbsp;site&nbsp;name&nbsp;search.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;dict<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;{}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
-&nbsp;&nbsp;&nbsp;&nbsp;site_health:&nbsp;The&nbsp;health&nbsp;details&nbsp;for&nbsp;each&nbsp;site.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;dict<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;{}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
-&nbsp;&nbsp;&nbsp;&nbsp;verify:&nbsp;A&nbsp;flag&nbsp;used&nbsp;to&nbsp;check&nbsp;Cisco&nbsp;DNAC's&nbsp;certificate.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;boolean<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;False<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
-&nbsp;&nbsp;&nbsp;&nbsp;timeout:&nbsp;The&nbsp;number&nbsp;of&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;Cisco&nbsp;DNAC's<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;response.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;5<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;all_sites&nbsp;=&nbsp;<a href="#Site">Site</a>(d,&nbsp;'sites')<br>&nbsp;</tt></td></tr>
+<td colspan=2><tt>The&nbsp;<a href="#Version">Version</a>&nbsp;class&nbsp;represents&nbsp;a&nbsp;configuration&nbsp;archive&nbsp;version&nbsp;created&nbsp;in&nbsp;Cisco&nbsp;DNA&nbsp;Center.&nbsp;&nbsp;A&nbsp;DeviceArchive&nbsp;wraps<br>
+<a href="#Version">Version</a>&nbsp;instances,&nbsp;and&nbsp;in&nbsp;turn,&nbsp;ConfigArchive&nbsp;objects&nbsp;wrap&nbsp;DeviceArchives.&nbsp;&nbsp;It&nbsp;is&nbsp;unnecessary&nbsp;for&nbsp;users&nbsp;to&nbsp;manage<br>
+their&nbsp;own&nbsp;<a href="#Version">Version</a>&nbsp;instances.<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
-<dd><a href="dnac.site.html#Site">Site</a></dd>
+<dd><a href="dnac.version.html#Version">Version</a></dd>
 <dd><a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a></dd>
 <dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
 </dl>
 <hr>
 Methods defined here:<br>
-<dl><dt><a name="Site-__init__"><strong>__init__</strong></a>(self, dnac, name, site<font color="#909090">={}</font>, verify<font color="#909090">=False</font>, timeout<font color="#909090">=5</font>)</dt></dl>
+<dl><dt><a name="Version-__init__"><strong>__init__</strong></a>(self, dnac, device_id, version_id, verify<font color="#909090">=False</font>, timeout<font color="#909090">=5</font>)</dt><dd><tt>Instantiates&nbsp;a&nbsp;new&nbsp;<a href="#Version">Version</a>&nbsp;object.<br>
+:param&nbsp;dnac:&nbsp;A&nbsp;reference&nbsp;to&nbsp;the&nbsp;master&nbsp;script's&nbsp;Dnac&nbsp;object.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;Dnac&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
+:param&nbsp;device_id:&nbsp;The&nbsp;UUID&nbsp;for&nbsp;the&nbsp;device&nbsp;whose&nbsp;archive&nbsp;is&nbsp;being&nbsp;managed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
+:param&nbsp;version_id:&nbsp;The&nbsp;UUID&nbsp;of&nbsp;the&nbsp;version&nbsp;being&nbsp;queried.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
+:param&nbsp;verify:&nbsp;A&nbsp;flag&nbsp;that&nbsp;determines&nbsp;whether&nbsp;or&nbsp;not&nbsp;Cisco&nbsp;DNA&nbsp;Center's&nbsp;certificate&nbsp;should&nbsp;be&nbsp;authenticated.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;bool<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;False<br>
+:param&nbsp;timeout:&nbsp;The&nbsp;number&nbsp;of&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;Cisco&nbsp;DNAC&nbsp;to&nbsp;respond&nbsp;to&nbsp;a&nbsp;query.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;5</tt></dd></dl>
 
-<dl><dt><a name="Site-get_all_sites_health"><strong>get_all_sites_health</strong></a>(self)</dt><dd><tt><a href="#Site">Site</a>&nbsp;class&nbsp;method&nbsp;get_all_sites_health&nbsp;retrieves&nbsp;the&nbsp;current&nbsp;health&nbsp;details&nbsp;for&nbsp;all&nbsp;sites&nbsp;in<br>
-Cisco&nbsp;DNA&nbsp;Center.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;The&nbsp;health&nbsp;details&nbsp;for&nbsp;all&nbsp;sites.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;all_sites&nbsp;=&nbsp;<a href="#Site">Site</a>(d,&nbsp;'ACME_sites')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pprint.PrettyPrint(d.api['ACME_sites'].<a href="#Site-get_all_sites_health">get_all_sites_health</a>())</tt></dd></dl>
+<dl><dt><a name="Version-delete"><strong>delete</strong></a>(self)</dt><dd><tt>Removes&nbsp;the&nbsp;<a href="#Version">Version</a>&nbsp;object&nbsp;from&nbsp;Cisco&nbsp;DNA&nbsp;Center&nbsp;as&nbsp;well&nbsp;as&nbsp;from&nbsp;the&nbsp;program's&nbsp;Dnac&nbsp;object.<br>
+:return:&nbsp;None</tt></dd></dl>
 
-<dl><dt><a name="Site-get_site_health_by_name"><strong>get_site_health_by_name</strong></a>(self, site_name)</dt><dd><tt>The&nbsp;get_site_health_by_name&nbsp;returns&nbsp;the&nbsp;site&nbsp;health&nbsp;information&nbsp;for&nbsp;the&nbsp;named&nbsp;site.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;site_name:&nbsp;The&nbsp;target&nbsp;site's&nbsp;name<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;The&nbsp;site's&nbsp;health&nbsp;details.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;all_sites&nbsp;=&nbsp;<a href="#Site">Site</a>(d,&nbsp;'ACME_sites')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;target_site&nbsp;=&nbsp;'AZ&nbsp;Branch'<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pprint.PrettyPrint(d.api['ACME_sites'].<a href="#Site-get_site_health_by_name">get_site_health_by_name</a>(target_site))</tt></dd></dl>
+<dl><dt><a name="Version-delete_config_file"><strong>delete_config_file</strong></a>(self, file_id)</dt><dd><tt>Removes&nbsp;the&nbsp;specified&nbsp;file,&nbsp;given&nbsp;by&nbsp;its&nbsp;UUID,&nbsp;from&nbsp;Cisco&nbsp;DNAC&nbsp;and&nbsp;from&nbsp;the&nbsp;<a href="#Version">Version</a>&nbsp;instance.<br>
+:param&nbsp;file_id:&nbsp;str<br>
+:return:&nbsp;None</tt></dd></dl>
 
 <hr>
 Data descriptors defined here:<br>
-<dl><dt><strong>site_health</strong></dt>
-<dd><tt>The&nbsp;site_health&nbsp;getter&nbsp;method&nbsp;returns&nbsp;the&nbsp;current&nbsp;value&nbsp;of&nbsp;each&nbsp;site's&nbsp;health&nbsp;in&nbsp;Cisco&nbsp;DNAC.<br>
-&nbsp;<br>
-Paramters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;site&nbsp;health&nbsp;state&nbsp;for&nbsp;each&nbsp;site.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;all_sites&nbsp;=&nbsp;Site(d,&nbsp;'ACME_sites')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pprint.PrettyPrint(d.api['ACME_sites'].site_health)</tt></dd>
+<dl><dt><strong>config_files</strong></dt>
+<dd><tt>Returns&nbsp;the&nbsp;configuration&nbsp;files&nbsp;associated&nbsp;with&nbsp;the&nbsp;Version&nbsp;object.<br>
+:return:&nbsp;dict</tt></dd>
 </dl>
-<dl><dt><strong>sites</strong></dt>
-<dd><tt>The&nbsp;sites&nbsp;getter&nbsp;method&nbsp;returns&nbsp;the&nbsp;current&nbsp;value&nbsp;of&nbsp;the&nbsp;Site&nbsp;class'&nbsp;sites&nbsp;attribute.<br>
-&nbsp;<br>
-Paramters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;All&nbsp;sites&nbsp;in&nbsp;Cisco&nbsp;DNAC's&nbsp;site&nbsp;design&nbsp;hierarchy<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;all_sites&nbsp;=&nbsp;Site(d,&nbsp;'ACME_sites')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pprint.PrettyPrint(d.api['ACME_sites'].sites)</tt></dd>
+<dl><dt><strong>created_time</strong></dt>
+<dd><tt>Returns&nbsp;the&nbsp;epoch&nbsp;time&nbsp;the&nbsp;version&nbsp;was&nbsp;created.<br>
+:return:&nbsp;int</tt></dd>
+</dl>
+<dl><dt><strong>device_id</strong></dt>
+<dd><tt>Provides&nbsp;the&nbsp;device's&nbsp;UUID&nbsp;being&nbsp;queried.<br>
+:return:&nbsp;str</tt></dd>
+</dl>
+<dl><dt><strong>id</strong></dt>
+<dd><tt>The&nbsp;id&nbsp;get&nbsp;method&nbsp;returns&nbsp;the&nbsp;version's&nbsp;UUID.<br>
+:return:&nbsp;str</tt></dd>
+</dl>
+<dl><dt><strong>sync_status</strong></dt>
+<dd><tt>Indicates&nbsp;whether&nbsp;or&nbsp;not&nbsp;the&nbsp;device's&nbsp;running&nbsp;config&nbsp;has&nbsp;been&nbsp;sychronized&nbsp;with&nbsp;the&nbsp;startup&nbsp;config&nbsp;for&nbsp;this<br>
+version.<br>
+:return:&nbsp;bool</tt></dd>
 </dl>
 <hr>
 Data descriptors inherited from <a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>:<br>
@@ -267,15 +226,20 @@ Usage:<br>
 <font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
     
 <tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><strong>ERROR_MSGS</strong> = {400: '400 - API request syntax is malformed', 401: '401 - API request has missing or invalid credentials', 403: '403 - API request is unauthorized', 404: '404 - API requested resource does not exist', 409: '409 - API requested resource is in a conflicted state', 415: '415 - API request body is in an unsupported format', 500: '500 - Server could not fulfill the API request', 501: '501 - Server has not implemented the requested function', 503: '503 - Server is unavailable', 504: '504 - Server did not respond before request timed-out'}<br>
-<strong>MODULE</strong> = 'site.py'<br>
-<strong>NO_SITES</strong> = {}<br>
-<strong>NO_SITE_HEALTH</strong> = {}<br>
+<td width="100%"><strong>CONFIG_FILE_SUB_RESOURCE_PATH</strong> = {'1.2.10': '/file', '1.3.0.2': '/file', '1.3.0.3': '/file', '1.3.1.3': '/file'}<br>
+<strong>CONFIG_FILE_TYPES</strong> = ['RUNNINGCONFIG', 'STARTUPCONFIG']<br>
+<strong>ERROR_MSGS</strong> = {400: '400 - API request syntax is malformed', 401: '401 - API request has missing or invalid credentials', 403: '403 - API request is unauthorized', 404: '404 - API requested resource does not exist', 409: '409 - API requested resource is in a conflicted state', 415: '415 - API request body is in an unsupported format', 500: '500 - Server could not fulfill the API request', 501: '501 - Server has not implemented the requested function', 503: '503 - Server is unavailable', 504: '504 - Server did not respond before request timed-out'}<br>
+<strong>ILLEGAL_CONFIG_FILE_TYPE</strong> = 'Illegal config file type'<br>
+<strong>MODULE</strong> = 'version.py'<br>
+<strong>NO_CONFIG</strong> = {}<br>
+<strong>NO_SYNC</strong> = ''<br>
 <strong>OK</strong> = 200<br>
 <strong>REQUEST_NOT_OK</strong> = 'API request is not OK'<br>
-<strong>SITE_HEALTH_RESOURCE_PATH</strong> = {'1.2.10': '/dna/intent/api/v1/site-health', '1.3.0.2': '/dna/intent/api/v1/site-health', '1.3.0.3': '/dna/intent/api/v1/site-health', '1.3.1.3': '/dna/intent/api/v1/site-health', '1.3.1.4': '/dna/intent/api/v1/site-health'}<br>
-<strong>SITE_NOT_FOUND</strong> = 'Unable to find requested site'<br>
-<strong>SITE_NOT_FOUND_RESOLUTION</strong> = "Check the site's name in Design -&gt; Network Hierarchy"<br>
+<strong>RUNNING_CONFIG</strong> = 'RUNNINGCONFIG'<br>
+<strong>STARTUP_CONFIG</strong> = 'STARTUPCONFIG'<br>
 <strong>SUPPORTED_DNAC_VERSIONS</strong> = ['1.2.8', '1.2.10', '1.3.0.2', '1.3.0.3', '1.3.1.3', '1.3.1.4']<br>
-<strong>UNSUPPORTED_DNAC_VERSION</strong> = 'Unsupported Cisco DNA Center version'</td></tr></table>
+<strong>UNSUPPORTED_DNAC_VERSION</strong> = 'Unsupported Cisco DNA Center version'<br>
+<strong>VERSION_DELETE_FAILED</strong> = 'Version deletion failed'<br>
+<strong>VERSION_RESOURCE_PATH</strong> = {'1.2.10': '/api/v1/archive-config/network-device', '1.3.0.2': '/api/v1/archive-config/network-device', '1.3.0.3': '/api/v1/archive-config/network-device', '1.3.1.3': '/api/v1/archive-config/network-device'}<br>
+<strong>VERSION_SUB_RESOURCE_PATH</strong> = {'1.2.10': '/version', '1.3.0.2': '/version', '1.3.0.3': '/version', '1.3.1.3': '/version'}</td></tr></table>
 </body></html>

@@ -374,6 +374,20 @@ Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pprint.PrettyPrint(vlans)</tt></dd></dl>
 
 <hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>device_detail</strong></dt>
+<dd><tt>Provides&nbsp;the&nbsp;device's&nbsp;details&nbsp;as&nbsp;retrieved&nbsp;from&nbsp;Cisco&nbsp;DNA&nbsp;Center.<br>
+:return:&nbsp;dict</tt></dd>
+</dl>
+<dl><dt><strong>devices</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;for&nbsp;the&nbsp;device&nbsp;list&nbsp;stored&nbsp;in&nbsp;the&nbsp;NetworkDevice&nbsp;instance<br>
+:return:&nbsp;list</tt></dd>
+</dl>
+<dl><dt><strong>vlans</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;for&nbsp;the&nbsp;VLANs&nbsp;on&nbsp;the&nbsp;device&nbsp;represented&nbsp;by&nbsp;the&nbsp;NetworkDevice&nbsp;object.<br>
+:return:&nbsp;list</tt></dd>
+</dl>
+<hr>
 Data descriptors inherited from <a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>:<br>
 <dl><dt><strong>__dict__</strong></dt>
 <dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
@@ -507,13 +521,13 @@ Usage:<br>
 <strong>CHECK_IP</strong> = 'Check the management IP address'<br>
 <strong>CHECK_REGEX</strong> = 'Check the regular expression'<br>
 <strong>DEVICE_DETAIL_IDENTIFIERS</strong> = {'id': 'uuid', 'mac': 'macAddress', 'name': 'nwDeviceName'}<br>
-<strong>DEVICE_DETAIL_RESOURCE_PATH</strong> = {'1.2.10': '/dna/intent/api/v1/device-detail'}<br>
+<strong>DEVICE_DETAIL_RESOURCE_PATH</strong> = {'1.2.10': '/dna/intent/api/v1/device-detail', '1.3.0.2': '/api/v1/device-detail', '1.3.0.3': '/api/v1/device-detail', '1.3.1.3': '/api/v1/device-detail', '1.3.1.4': '/api/v1/device-detail'}<br>
 <strong>ERROR_MSGS</strong> = {400: '400 - API request syntax is malformed', 401: '401 - API request has missing or invalid credentials', 403: '403 - API request is unauthorized', 404: '404 - API requested resource does not exist', 409: '409 - API requested resource is in a conflicted state', 415: '415 - API request body is in an unsupported format', 500: '500 - Server could not fulfill the API request', 501: '501 - Server has not implemented the requested function', 503: '503 - Server is unavailable', 504: '504 - Server did not respond before request timed-out'}<br>
 <strong>MODULE</strong> = 'networkdevice.py'<br>
-<strong>NETWORK_DEVICE_RESOURCE_PATH</strong> = {'1.2.10': '/dna/intent/api/v1/network-device', '1.2.8': '/dna/intent/api/v1/network-device'}<br>
+<strong>NETWORK_DEVICE_RESOURCE_PATH</strong> = {'1.2.10': '/dna/intent/api/v1/network-device', '1.2.8': '/dna/intent/api/v1/network-device', '1.3.0.2': '/api/v1/network-device', '1.3.0.3': '/api/v1/network-device', '1.3.1.3': '/api/v1/network-device', '1.3.1.4': '/api/v1/network-device'}<br>
 <strong>NO_DEVICES</strong> = 'API response list is empty'<br>
 <strong>OK</strong> = 200<br>
 <strong>REQUEST_NOT_OK</strong> = 'API request is not OK'<br>
-<strong>SUPPORTED_DNAC_VERSIONS</strong> = ['1.2.8', '1.2.10']<br>
+<strong>SUPPORTED_DNAC_VERSIONS</strong> = ['1.2.8', '1.2.10', '1.3.0.2', '1.3.0.3', '1.3.1.3', '1.3.1.4']<br>
 <strong>UNSUPPORTED_DNAC_VERSION</strong> = 'Unsupported Cisco DNA Center version'</td></tr></table>
 </body></html>
