@@ -112,123 +112,36 @@ TEMPLATE_CANNOT_BE_IMPORTED_RESOLUTION = 'Verify that the template is a parent o
 
 class Template(DnacApi):
     """
-    Class Template provides an abstraction of CLI templates in Cisco's
-    DNA Center.  Once a network device has first been provisioned in
-    Cisco DNAC, it's configuration can be updated with a CLI template.
-    This class encapsulates the API calls and tools required to deploy
-    a configuration template.
+    Class Template provides an abstraction of CLI templates in Cisco's DNA Center.  Once a network device has first
+    been provisioned in Cisco DNAC, it's configuration can be updated with a CLI template. This class encapsulates the
+    API calls and tools required to deploy a configuration template.
 
-    A Template object's name must match the name it is given in a Cisco
-    DNAC cluster.  You do not necessarily need to know in which project
-    it is listed, but the name must be the same.  Be careful: template
-    names in Cisco DNA Center are case sensitive.
+    A Template object's name must match the name it is given in a Cisco DNAC cluster.  You do not necessarily need to
+    know in which project it is listed, but the name must be the same.  Be careful: template names in Cisco DNA Center
+    are case sensitive.
 
-    The power in using CLI templates is the ability to parameterize values
-    that should be different across networking equipment.  For example,
-    every router and switch could have a loopback interface for management,
-    but they'll need to be assigned different IP addresses, naturally.  The
-    Template class handles a template's parameters as a dictionary making
-    it easy for programmers to update parameter values.
+    The power in using CLI templates is the ability to parameterize values that should be different across networking
+    equipment.  For example, every router and switch could have a loopback interface for management, but they'll need
+    to be assigned different IP addresses, naturally.  The Template class handles a template's parameters as a
+    dictionary making it easy for programmers to update parameter values.
 
-    Cisco DNA Center will not apply a template unless it is versioned.  In
-    the Cisco DNA Center GUI, this amounts to having committed the
-    template.  Stated differently, every template has a base instantiation
-    in Cisco DNAC, but the base template cannot be deployed.  Instead,
-    users must access a committed version of the template.  The Template
-    class stores the base template in its template attribute and then
-    allows the selection of a particular version of the template using
-    its version attribute.  To use the latest version, simply set version's
-    value to zero, which is the default setting.
+    Cisco DNA Center will not apply a template unless it is versioned.  In the Cisco DNA Center GUI, this amounts to
+    having committed the template.  Stated differently, every template has a base instantiation in Cisco DNAC.  In the
+    GUI, it's shown as the Local template and is the only one editable.  In the API, the base template is called the
+    parent template and all versions reference the parent.  In the Template class, the parent template is referenced
+    as version 0 and all other versions are referenced by their version number.
 
-    Pushing a template causes Cisco DNA to create a deployment job.
-    Depending upon the number of commands within a template as well as the
-    list of target devices upon which to apply it, deployment jobs take
-    a while to complete their tasks.  The Template class creates and holds
-    a Deployment object for monitoring the job's status.  This happens
-    automatically whenever the deploy() or deploy_sync() methods are called.
+    Pushing a template causes Cisco DNA to create a deployment job. Depending upon the number of commands within a
+    template as well as the list of target devices upon which to apply it, deployment jobs take a while to complete
+    their tasks.  The Template class creates and holds a Deployment object for monitoring the job's status.  This
+    happens automatically whenever the deploy() or deploy_sync() methods are called.
 
-    Attributes:
-        dnac:
-            Dnac object: A reference to the Dnac instance that contains
-                         the Template object
-            default: none
-            scope: protected
-        name:
-            str: A user friendly name for the Template object that is
-                 used both as a key for finding it in a Dnac.api attribute
-                 and for locating the real CLI template in Cisco DNAC.
-                 The template name must match its name in Cisco DNAC
-                 exactly including its case.
-            default: none
-            scope: protected
-        version:
-            int: The version of a template to be deployed.  Setting the
-                 version to zero signals the Template object to use
-                 whatever the latest version may be.
-
-                 Changing a Template's version causes the object to
-                 search for and load the requested versioned template
-                 according to the Template's name.  If the requested
-                 version does not exist, Template throws an exception.
-
-                 When switching to a different template in Cisco DNA
-                 Center either create a new Template object altogether
-                 or first change the Template's name, which will trigger
-                 the object to load the latest version, and then update
-                 the version attribute so that the Template instance
-                 loads the correct one.
-            default: 0
-            scope: public
-        template_id:
-            str: The UUID in Cisco DNAC of the base template.  A base
-                 template cannot be deployed on any equipment.
-            default: none
-            scope: protected
-        versioned_template:
-            dict: The CLI template as represented in Cisco DNA Center.
-            default: none
-            scope: protected
-        versioned_template_id:
-            str: The UUID in Cisco DNAC of committed template, which can
-                 be deployed.
-            default: none
-            scope: protected
-        versioned_template_params:
-            dict: A dictionary whose keys are the template's parameter
-                  names.  Their values can each be set directly through
-                  accessing this dictionary.  See the example below in
-                  the Usage section.
-            default: none
-            scope: protected
-        target_id:
-            str: The UUID of a network device to which the template
-                 will be applied.
-            default: none
-            scope: public
-        target_type:
-            str: An enumerated value that instructs Cisco DNA Center how
-                 to find the device so that the template can be applied.
-                 Legal values for target_type are kept in the global
-                 list:
-                    VALID_TARGET_TYPES=[TARGET_BY_DEFAULT,
-                                        TARGET_BY_ID,
-                                        TARGET_BY_HOSTNAME,
-                                        TARGET_BY_IP,
-                                        TARGET_BY_SERIAL,
-                                        TARGET_BY_MAC]
-            default: TARGET_BY_DEFAULT
-            scope: public
-        deployment:
-            Deployment object: A Deployment instance that provides the
-                               deploy job's status and the job's results.
-            default: none
-            scope: protected
     Usage:
         d = Dnac()
         template = Template(d, 'Set VLAN')
         d.api['Set VLAN'].target_id = <switch_uuid>
-        d.api['Set VLAN'].versioned_template_params['interface'] = 'gig1/0/1'
-        d.api['Set VLAN'].versioned_template_params['vlan'] = 10
+        d.api['Set VLAN'].set_param('interface', 'gig1/0/1')
+        d.api['Set VLAN'].set_param('vlan', 10)
         d.api['Set VLAN'].deploy_sync()
         pprint.PrettyPrint(template.deployment.results)
     """
@@ -239,40 +152,27 @@ class Template(DnacApi):
                  verify=False,
                  timeout=5):
         """
-        Template's __init__ method constructs a new Template object.
-        It automatically searches for the template in Cisco DNA Center
-        by the Template's name.  If found, it will load the parent
-        template information and all committed versions.  This classes
-        attributes are decorator functions that directly access the
-        template's info, the parent template, or the latest committed
-        version.
+        Template's __init__ method constructs a new Template object. It automatically searches for the template in
+        Cisco DNA Center by the Template's name.  If found, it will load the parent template information and all
+        committed versions.  This class' attributes are decorator functions that directly access the template's info,
+        the parent template, and all available versions.
 
-        Parameters:
-            dnac: A reference to the containing Dnac object.
-                type: Dnac object
-                default: none
-                required: yes
-            name: The template's exact name, including its case, in
-                  Cisco DNA Center.
-                type: str
-                default: none
-                required: yes
-            verify: A flag used to check Cisco DNAC's certificate.
-                type: boolean
-                default: False
-                required: no
-            timeout: The number of seconds to wait for Cisco DNAC's
-                     response.
-                type: int
-                default: 5
-                required: no
-
-        Return Values:
-            Template object: a newly build Template instance.
-
-        Usage:
-            d = Dnac()
-            template = Template(d, 'Enable BGP', version=5)
+        :param dnac: A reference to the master Dnac instance.
+            type: Dnac object
+            required: yes
+            default: None
+        :param name: The template's name as listed in Cisco DNA Center.
+            type: str
+            required: yes
+            default: None
+        :param verify: A flag that sets whether or not Cisco DNA Center's certificated should be authenticated.
+            type: bool
+            required: no
+            default: False
+        :param timeout: The number of seconds to wait for a response from Cisco DNAC.
+            type: int
+            required: no
+            default: 5
         """
         # check Cisco DNA Center's version and set the resource path
         if dnac.version in SUPPORTED_DNAC_VERSIONS:
@@ -304,11 +204,19 @@ class Template(DnacApi):
     # end __init__()
 
     def __str__(self):
+        """
+        Returns a json formatted string of the template's base information.
+        :return: str
+        """
         return json.dumps(self.__template)
 
     # end __str__()
 
     def export_template(self):
+        """
+        Writes the base template information in json format to the file: <template_name>.tmpl
+        :return: file
+        """
         file = open('%s.tmpl' % self.__template['name'], mode='x')
         json.dump(self.__template, file, indent=4)
         file.close()
@@ -316,6 +224,16 @@ class Template(DnacApi):
     # end export_template()
 
     def export_versioned_template(self, version=0):
+        """
+        Writes the versioned template given by the version parameter in json format to the file:
+        <template_name>.<version>.tmpl
+        :param version: The version to be exported to a file.  If no version is given, this method defaults to the
+        parent template: version=0.
+            type: int
+            required: no
+            default: 0
+        :return: file
+        """
         num_versions = len(self.__versions) - 1
         if version < 0 or version > num_versions:
             raise DnacApiError(
@@ -329,6 +247,15 @@ class Template(DnacApi):
     # end export_versioned_template()
 
     def __prepare_template__(self, template):
+        """
+        A hidden method that scrubs a template of all UUIDs and timestamps so that it can be safely imported into
+        Cisco DNA Center.
+        :param template: A reference to a template
+            type: dict
+            required: yes
+            default: none
+        :return: dict
+        """
         # remove UUIDs and timestamps
         template.pop('id')
         template.pop('createTime')
@@ -350,6 +277,19 @@ class Template(DnacApi):
     # end __prepare_template__()
 
     def __prepare_version__(self, template, parent):
+        """
+        This hidden function first scrubs the template with __prepare_template__ and then modifies the template's
+        id and parentTemplateId fields to point to the parent template so a new version can be committed.
+        :param template: A reference to a template
+            type: dict
+            required: yes
+            default: None
+        :param parent: A reference to the parent template
+            type: dict
+            required: yes
+            default: None
+        :return: dict
+        """
         # clean the template
         template = self.__prepare_template__(template)
         # set the parent template's UUID
@@ -361,6 +301,15 @@ class Template(DnacApi):
     # end __prepare_version__()
 
     def __is_versioned_template__(self, template):
+        """
+        A utility function to check that the template is formatted correctly for versioning.  If it is not, this
+        method throws a DnacApiError; otherwise, it returns True.
+        :param template: A reference to a template
+            type: dict
+            required: yes
+            default: None
+        :return: bool
+        """
         # make sure this is a versioned template
         if TEMPLATE_PARENT_KEY not in template:
             raise DnacApiError(
@@ -372,6 +321,18 @@ class Template(DnacApi):
     # end __is_versioned_template__()
 
     def __add_new_template__(self, template, project):
+        """
+        This hidden method creates a new template in Cisco DNA Center and assigns it to the project provided.
+        :param template: A reference to a Template
+            type: Template object
+            required: yes
+            default: None
+        :param project: A reference to the project to which the template should be assigned
+            type: Project object
+            required: yes
+            default: None
+        :return: Template object
+        """
         # ensure the template is correctly formatted
         self.__is_versioned_template__(template)
         # prepare the template for import
@@ -406,6 +367,14 @@ class Template(DnacApi):
     # end __add_new_template__()
 
     def __add_version__(self, version):
+        """
+        This hidden method creates a new version of an existing template.
+        :param version: The new version to be added to Cisco DNAC
+            type: Template object
+            required: yes
+            default: None
+        :return: Template object
+        """
         # ensure the template is correctly formatted
         self.__is_versioned_template__(version)
         # check if the template associated with the new version is already in Dnac
@@ -440,6 +409,19 @@ class Template(DnacApi):
     # end __add_version__()
 
     def import_template(self, template_file, version_file):
+        """
+        The import_template method adds a template version to Cisco DNA Center.  It handles the work of determining
+        if a new template is being created or if an existing template is being versioned.
+        :param template_file: The file that contains the base template information (e.g. <template_name>.tmpl)
+            type: str
+            required: yes
+            default: None
+        :param version_file: The file that contains the versioned template (e.g. <template_name>.<version>.tmpl)
+            type: str
+            required: yes
+            default: None
+        :return: Template object
+        """
         # read the template file's contents
         file = open(template_file, mode='r')
         template = json.load(file)
@@ -474,6 +456,15 @@ class Template(DnacApi):
     # end import_template()
 
     def commit_template(self, comments=''):
+        """
+        The commit_template updates the parent template to its next version.  Once completed, the actual template
+        can be deployed in Cisco DNA Center.
+        :param comments: Comments for the commit action
+            type: str
+            required: no
+            default: ''
+        :return: Template object
+        """
         body = {
             'templateId': self.template_id,
             'comments': comments
@@ -502,53 +493,101 @@ class Template(DnacApi):
 
     @property
     def template(self):
+        """
+        Get method that returns the base template information.
+        :return: dict
+        """
         return self.__template
 
     # end template getter
 
     @property
     def template_id(self):
+        """
+        Get method that returns the base template's UUID.
+        :return: str
+        """
         return self.__template['templateId']
 
     # end template_id getter
 
     @property
     def parent(self):
+        """
+        Get method that returns the parent template's information.
+        :return: dict
+        """
         return self.__versions[0]
 
     # end parent getter
 
     @property
     def versions(self):
+        """
+        Get method for retrieving all of the template's versions.
+        :return: list
+        """
         return self.__template['versionsInfo']
 
     # end versions getter
 
     @property
     def project_name(self):
+        """
+        Get method that provides the project to which the template is assigned.
+        :return: str
+        """
         return self.__template['projectName']
 
     # end project_name getter
 
     @property
     def project_id(self):
+        """
+        Get method that provides the project's UUID to which the template is assigned.
+        :return: str
+        """
         return self.__template['projectId']
 
     # end project_id getter
 
     @property
     def params(self):
+        """
+        Get method for retrieving the template's parameters.
+        :return: list
+        """
         return self.__params
 
     # end params getter
 
     @params.setter
     def params(self, params):
+        """
+        Set method for assigning a template's parameter list.
+        :param params: The list of parameters and their values.
+            type: list of dict
+            required: yes
+            default: None
+        :return: None
+        """
         self.__params = params
 
     # end params setter
 
     def set_param(self, key, value):
+        """
+        Adds a parameter and its value to the Template object's params dictionary.
+        :param key: The parameter's name
+            type: str
+            required: yes
+            default: None
+        :param value: The parameter's value
+            type: str
+            required: yes
+            default: None
+        :return: None
+        """
         self.__params[key] = value
 
     # end set_param()
@@ -556,19 +595,8 @@ class Template(DnacApi):
     @property
     def target_id(self):
         """
-        Template's target_id get method returns the UUID of the managed
-        device where the template will be applied.
-
-        Parameters:
-            none
-
-        Return Values:
-            str: A Cisco DNAC managed device's UUID.
-
-        Usage:
-            d = Dnac()
-            template = Template(d, 'Add Loopback')
-            print d.api['Add Loopback'].target_id
+        Template's target_id get method returns the UUID of the managed device where the template will be applied.
+        :return: str
         """
         return self.__target_id
 
@@ -577,22 +605,12 @@ class Template(DnacApi):
     @target_id.setter
     def target_id(self, target_id):
         """
-        Method target_id sets the value to the UUID of the network device
-        where the template will be applied.
-
-        Parameters:
-            target_id:
-                type: str
-                default: none
-                required: yes
-
-        Return Values:
-            None
-
-        Usage:
-            d = Dnac()
-            template = Template(d, 'Enable EIGRP')
-            d.api['Enable EIGRP'].target_id = '<router_UUID>'
+        Method target_id sets the value to the UUID of the network device where the template will be applied.
+        :param target_id: The UUID of the device to which the template will be deployed.
+            type: str
+            required: yes
+            default: None
+        :return:
         """
         self.__target_id = target_id
 
@@ -601,26 +619,15 @@ class Template(DnacApi):
     @property
     def target_type(self):
         """
-        Template's target_type get method returns the value used to instruct
-        Cisco DNAC how to find targeted device in it inventory when
-        applying a CLI template.
-
-        Parameters:
-            none
-
-        Return Values:
-            str: One of the following enumerated values:
+        Template's target_type get method returns the value used to instruct Cisco DNAC how to find targeted device in
+        it inventory when applying a CLI template.
+        :return: str: One of the following enumerated values:
                 TARGET_BY_DEFAULT='DEFAULT'
                 TARGET_BY_ID='MANAGED_DEVICE_UUID'
                 TARGET_BY_HOSTNAME='MANAGED_DEVICE_HOSTNAME'
                 TARGET_BY_IP='MANAGED_DEVICE_IP'
                 TARGET_BY_SERIAL='PRE_PROVISIONED_SERIAL'
                 TARGET_BY_MAC='PRE_PROVISIONED_SERIAL'
-
-        Usage:
-            d = Dnac()
-            template = Template(d, 'Set VLAN')
-            print d.api['Set VLAN'].target_type
         """
         return self.__target_type
 
@@ -629,29 +636,19 @@ class Template(DnacApi):
     @target_type.setter
     def target_type(self, target_type):
         """
-        Set method target_type changes the desired method that Cisco DNA
-        Center uses to find a device in its inventory in order to apply
-        the template.
-
-        Paramters:
-            target_type:
-                str: one of the following enumerated values:
+        Set method target_type changes the desired method that Cisco DNA Center uses to find a device in its inventory
+        in order to apply the template.
+        :param target_type: one of the following enumerated values:
                     TARGET_BY_DEFAULT='DEFAULT'
                     TARGET_BY_ID='MANAGED_DEVICE_UUID'
                     TARGET_BY_HOSTNAME='MANAGED_DEVICE_HOSTNAME'
                     TARGET_BY_IP='MANAGED_DEVICE_IP'
                     TARGET_BY_SERIAL='PRE_PROVISIONED_SERIAL'
                     TARGET_BY_MAC='PRE_PROVISIONED_SERIAL'
-                default: none
-                required: yes
-
-        Return Values:
-            none
-
-        Usage:
-            d = Dnac()
-            template = Template(d, 'Set VLAN')
-            d.api['Set VLAN'].target_type = TARGET_BY_HOSTNAME
+            type: str
+            required: yes
+            default: None
+        :return: None
         """
         if target_type not in VALID_TARGET_TYPES:
             raise DnacApiError(
@@ -664,20 +661,9 @@ class Template(DnacApi):
     @property
     def deployment(self):
         """
-        The deployment get method returns a reference to the Template's
-        deploy job.  Use this attribute to monitor the job's status and
-        get its results.
-
-        Parameters:
-            none
-
-        Return Values:
-            Deployment object: The job for the deployed template.
-
-        Usage:
-            d = Dnac()
-            template = Template(d, 'Set VLAN')
-            print str(d.api['Set Vlan'].deployment.results)
+        The deployment get method returns a reference to the Template's deploy job.  Use this attribute to monitor the
+        job's status and get its results.
+        :return: Deployment object
         """
         return self.__deployment
 
@@ -685,20 +671,9 @@ class Template(DnacApi):
 
     def get_all_templates(self):
         """
-        Class method getAllTemplates queries the Cisco DNA Center cluster
-        for a listing of every template it has.  The listing includes
-        the base templates and all of its versions.
-
-        Parameters:
-            none
-
-        Return Values:
-            list: A listing of all available templates.
-
-        Usage:
-            d = Dnac()
-            template = Template(d, 'Set VLAN')
-            print str(d.api['Set Vlan'].getAllTemplates)
+        Class method getAllTemplates queries the Cisco DNA Center cluster for a listing of every template it has.
+        The listing includes the base templates and all of its versions.
+        :return: list
         """
         filter = '?unCommitted=true'
         url = '%s%s%s' % (self.dnac.url, self.resource, filter)
@@ -716,23 +691,13 @@ class Template(DnacApi):
 
     def get_template_by_id(self, id):
         """
-        get_template_by_id pulls the template information for the one
-        specified by the UUID passed to the function.  Either base or
-        versioned templates may be queried.
-
-        Parameters:
-            id: The UUID of a template.
-                type: str
-                default: none
-                required: yes
-
-        Return Values:
-            dict: The template's data.
-
-        Usage:
-            d = Dnac()
-            template = Template(d, 'Set VLAN')
-            print str(d.api['Set Vlan'].get_template_by_id('<template_uuid>')
+        get_template_by_id pulls the template information from Cisco DNA Center specified by the UUID provided.
+        Either base or versioned templates may be queried.
+        :param id: The template's UUID
+            type: str
+            required: yes
+            default: None
+        :return: dict
         """
         url = self.dnac.url + self.resource + '/' + id
         template, status = self.crud.get(url,
@@ -748,6 +713,15 @@ class Template(DnacApi):
     # end get_template_by_id
 
     def get_versioned_template(self, version):
+        """
+        get_versioned_template searches the Template object's versions for the version requested and returns it.  Use
+        version = 0 to retrieve the parent template.
+        :param version: The desired template version
+            type: int
+            required: yes
+            default: None
+        :return: dict
+        """
         if version not in self.__versions.keys():
             raise DnacApiError(
                 MODULE, 'get_versioned_template', ILLEGAL_VERSION, '', '', version, '', ''
@@ -758,23 +732,15 @@ class Template(DnacApi):
 
     def load_template(self, name):
         """
-        load_template finds the base template by its name, saves and returns it.
-
-        Parameters:
-            name: The template's name, which must match exactly as it
-                  is entered in Cisco DNA Center.  If no name is given,
-                  the method defaults to the Template object's own name.
-                type: str
-                default: none
-                required: no
-
-        Return Values:
-            dict: The template contents
-
-        Usage:
-            d = Dnac()
-            template = Template(d, 'Set VLAN')
-            print str(d.api['Set Vlan'].load_template('Set Vlan'))
+        The load_template method searches Cisco DNA Center for the template named.  If found, it loads the base
+        template information and all available versions.  Use this function to prepare new Template objects or to
+        refresh existing ones when they have changed.  Many methods in the Template class automatically call this
+        function.  It should be rare for a user to have to call this method.
+        :param name: The template's name as given in Cisco DNAC
+            type: str
+            required: yes
+            default: None
+        :return: Template object
         """
         # search all templates for the target
         templates = self.get_all_templates()
@@ -808,22 +774,10 @@ class Template(DnacApi):
 
     def __make_body__(self):
         """
-        The make_body method converts the Template object's target and
-        versioned template information into a JSON encoded string used
-        as the payload of a POST request to Cisco DNA Center.  Both
-        deploy() and deploy_sync() already call this function.  It is
-        unnecessary to use this method for pushing a template.
-
-        Parameters:
-            none
-
-        Return Values:
-            str: A JSON encoded string for deploying a CLI template.
-
-        Usage:
-            d = Dnac()
-            template = Template(d, 'Enable CTS Interfaces')
-            d.api['Enable CTS Interfaces'].make_body()
+        The __make_body__ method converts the Template object's target and versioned template information into a JSON
+        encoded string used as the payload of a POST request to Cisco DNA Center.  Both deploy() and deploy_sync()
+        automatically call this function.
+        :return: json encoded str
         """
         tgt_info = {
             'type': self.__target_type,
@@ -852,26 +806,12 @@ class Template(DnacApi):
 
     def deploy(self):
         """
-        The deploy method asynchronously applies a template to a device.
-        The Template's target information and versioned template data
-        must be set prior to issuing this command.  The function creates
-        a Deployment object, saves it, and then instructs it to perform
-        a progress check on itself and then returns whatever Cisco DNA
-        Center responds with.  Developers can then use the deployment
-        instance to further monitor the job's success or failure.
-
-        Parameters:
-            none
-
-        Return Values:
-            str: The deployment job's current state.
-
-        Usage:
-            d = Dnac()
-            template = Template(d, 'Create VRF')
-            d.api['Create VRF'].target_id = '<router_uuid>'
-            d.api['Create VRF'].target_type = TARGET_BY_ID
-            print d.api['Create VRF'].deploy()
+        The deploy method asynchronously applies a template to a device. The Template's target information and
+        versioned template data must be set prior to issuing this command.  The function creates a Deployment object,
+        saves it, and then instructs it to perform a progress check on itself and then returns whatever Cisco DNA
+        Center responds with.  Developers can then use the deployment instance to further monitor the job's success
+        or failure.
+        :return: str
         """
         url = self.dnac.url + self.resource + '/deploy'
         if not self.__target_id:  # target_id is not set
@@ -927,29 +867,16 @@ class Template(DnacApi):
 
     def deploy_sync(self, wait=3):
         """
-        deploy_sync pushes a template to the target device and then waits
-        for the job to finish.  By default, it checks the job every
-        three seconds, but this can be set using the wait keyword argument.
-        The Template's target information and versioned template data
-        must be set prior to issuing this command.  deploy_sync creates
-        a deployment object, saves it, and uses it to monitor the job's
-        progress.  Upon completion, deploy_sync returns the job's status.
-
-        Parameters:
-            wait: The number of seconds before timing out Cisco DNAC's response.
-                type: int
-                default: 3
-                required: no
-
-        Return Values:
-            str: The deployment job's current state.
-
-        Usage:
-            d = Dnac()
-            template = Template(d, 'Create VRF')
-            d.api['Create VRF'].target_id = '<router_uuid>'
-            d.api['Create VRF'].target_type = TARGET_BY_ID
-            print d.api['Create VRF'].deploy_sync()
+        deploy_sync pushes a template to the target device and then waits for the job to finish.  By default, it checks
+        the job every three seconds, but this can be set using the wait keyword argument. The Template's target
+        information and versioned template data must be set prior to issuing this command.  deploy_sync creates
+        a deployment object, saves it, and uses it to monitor the job's progress.  Upon completion, deploy_sync returns
+        the job's status.
+        :param wait: The time to seconds to wait before checking the deployment job
+            type: int
+            required: no
+            default: 3
+        :return: str
         """
         url = self.dnac.url + self.resource + '/deploy'
         if not self.__target_id:  # target_id is not set
@@ -1009,6 +936,7 @@ class Template(DnacApi):
             self.__deployment.check_deployment()
         return self.__deployment.status
 
+    # end deploy_sync()
 
 # end class Template()
 
