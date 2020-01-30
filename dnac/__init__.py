@@ -23,6 +23,8 @@ __all__ = [
     'deployment',
     'device_archive',
     'device_archive_task',
+    'Dnac',
+    'DnacError',
     'dnac_config',
     'dnacapi',
     'file',

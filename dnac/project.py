@@ -20,7 +20,7 @@ PROJECT_RESOURCE_PATH = {
 
 # globals
 
-NEW_PROJECT = 'NEW_PROJECT'
+STUB_PROJECT = 'STUB_PROJECT'
 
 # error conditions
 NO_PROJECT = [[], {}]
@@ -94,7 +94,7 @@ class Project(DnacApi):
                                       timeout=timeout)
 
         # retrieve the project
-        if self.name != NEW_PROJECT:
+        if self.name != STUB_PROJECT:
             self.load_project(self.name)
 
     # end __init__()
@@ -191,6 +191,42 @@ class Project(DnacApi):
 
     # end export_project
 
+    def __clean_project__(self, project):
+        project.pop('id')
+        project.pop('templates')
+        return project
+
+    # end __clean_project__()
+
+    def add_project(self, project):
+        """
+        Adds a project to Cisco DNA Center
+        :param project: The project data represented as a dict
+        :return: Project object
+        """
+        # add the project to Cisco DNA Center
+        url = '%s%s' % (self.dnac.url, self.resource)
+        self.__clean_project__(project)
+        body = json.dumps(project)
+        results, status = self.crud.post(url,
+                                         headers=self.dnac.hdrs,
+                                         body=body,
+                                         verify=self.verify,
+                                         timeout=self.timeout)
+        if status != ACCEPTED:
+            raise DnacApiError(
+                MODULE, 'import_project', REQUEST_NOT_ACCEPTED, url, ACCEPTED, status, ERROR_MSGS[status], ''
+            )
+        # check the tasks' results
+        task = Task(self.dnac, results['response']['taskId'])
+        task.get_task_results()
+        if task.is_error:
+            raise DnacApiError(MODULE, 'import_project', PROJECT_IMPORT_FAILED, '', '', '', '', task.failure_reason)
+        # import succeeded; create a new Project object, add it to Dnac and return it
+        return Project(self.dnac, project['name'])
+
+    # end add_project()
+
     def import_project(self, project):
         """
         Creates a new project from a file.
@@ -207,25 +243,7 @@ class Project(DnacApi):
             raise DnacApiError(
                 MODULE, 'import_project', PROJECT_ALREADY_EXISTS, '', '', data['name'], '', USE_UNIQUE_PROJECT_NAME
             )
-        # import the project into Cisco DNA Center
-        url = '%s%s' % (self.dnac.url, self.resource)
-        body = json.dumps(data)
-        results, status = self.crud.post(url,
-                                         headers=self.dnac.hdrs,
-                                         body=body,
-                                         verify=self.verify,
-                                         timeout=self.timeout)
-        if status != ACCEPTED:
-            raise DnacApiError(
-                MODULE, 'import_project', REQUEST_NOT_ACCEPTED, url, ACCEPTED, status, ERROR_MSGS[status], ''
-            )
-        # check the tasks' results
-        task = Task(self.dnac, results['response']['taskId'])
-        task.get_task_results()
-        if task.is_error:
-            raise DnacApiError(MODULE, 'import_project', PROJECT_IMPORT_FAILED, '', '', '', '', task.failure_reason)
-        # import succeeded; create a new Project object, add it to Dnac and return it
-        return Project(self.dnac, data['name'])
+        return self.add_project(data)
 
     # end import_project
 
@@ -243,6 +261,7 @@ class Project(DnacApi):
                 MODULE, 'load_project', PROJECT_NOT_FOUND, '',
                 name, str(self.__project), '', CHECK_OR_CREATE_PROJECT
             )
+        # load all templates associated with the project
         return self
 
     # end load_project()

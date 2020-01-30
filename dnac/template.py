@@ -40,7 +40,7 @@ TEMPLATE_VERSION_PATH = {
 }
 
 # monikers for importing templates
-NEW_TEMPLATE = 'NEW_TEMPLATE'  # used as the name for an empty template when creating a new one
+STUB_TEMPLATE = 'STUB_TEMPLATE'  # used as the name for an empty template when creating a new one
 TEMPLATE_PARENT_KEY = 'parentTemplateId'  # used to test if a template is at least a parent or a versioned template
 PARAM_SELECTION_KEY = 'selection'  # used to test if a parameter has a selection
 PARAM_RANGE_KEY = 'range'  # used to test if a parameter has a range
@@ -106,6 +106,7 @@ TEMPLATE_CANNOT_BE_IMPORTED = 'Template cannot be imported into DNA Center'
 ALREADY_DEPLOYED_RESOLUTION = 'Change the template\'s parameters to a new value'
 TEMPLATE_ALREADY_EXISTS = 'Template already exists'
 TEMPLATE_CANNOT_BE_IMPORTED_RESOLUTION = 'Verify that the template is a parent or versioned template'
+CALL_ADD_NEW_TEMPLATE = 'Use add_new_template before trying to add more versions to the Template'
 
 # end error messages
 
@@ -198,7 +199,7 @@ class Template(DnacApi):
                                        timeout=timeout)
 
         # load the template
-        if self.name != NEW_TEMPLATE:
+        if self.name != STUB_TEMPLATE:
             self.load_template(self.name)
 
     # end __init__()
@@ -320,11 +321,11 @@ class Template(DnacApi):
 
     # end __is_versioned_template__()
 
-    def __add_new_template__(self, template, project):
+    def add_new_template(self, template, project):
         """
-        This hidden method creates a new template in Cisco DNA Center and assigns it to the project provided.
-        :param template: A reference to a Template
-            type: Template object
+        Creates a new template in Cisco DNA Center and assigns it to the project provided.
+        :param template: The template information constructed from a json formatted string
+            type: dict
             required: yes
             default: None
         :param project: A reference to the project to which the template should be assigned
@@ -348,29 +349,29 @@ class Template(DnacApi):
         if status != ACCEPTED:
             if status == _500_:
                 raise DnacApiError(
-                    MODULE, 'import_template', REQUEST_NOT_ACCEPTED, url,
+                    MODULE, 'add_new_template', REQUEST_NOT_ACCEPTED, url,
                     ACCEPTED, status, ERROR_MSGS[status], TEMPLATE_ALREADY_EXISTS
                 )
             else:
                 raise DnacApiError(
-                    MODULE, 'import_template', REQUEST_NOT_ACCEPTED, url, ACCEPTED, status, ERROR_MSGS[status], ''
+                    MODULE, 'add_new_template', REQUEST_NOT_ACCEPTED, url, ACCEPTED, status, ERROR_MSGS[status], ''
                 )
         # check the tasks' results
         task = Task(self.dnac, results['response']['taskId'])
         task.get_task_results()
         if task.is_error:
-            raise DnacApiError(MODULE, 'import_template', TEMPLATE_IMPORT_FAILED, '', '', '', '', task.failure_reason)
+            raise DnacApiError(MODULE, 'add_new_template', TEMPLATE_IMPORT_FAILED, '', '', '', '', task.failure_reason)
         # import succeeded; reload the project and return the new template
         project.load_project(project.name)
         return Template(self.dnac, template['name'])
 
-    # end __add_new_template__()
+    # end add_new_template()
 
-    def __add_version__(self, version):
+    def add_version(self, version):
         """
-        This hidden method creates a new version of an existing template.
+        Creates a new version of an existing template.
         :param version: The new version to be added to Cisco DNAC
-            type: Template object
+            type: dict constructed from a json formatted file
             required: yes
             default: None
         :return: Template object
@@ -379,10 +380,11 @@ class Template(DnacApi):
         self.__is_versioned_template__(version)
         # check if the template associated with the new version is already in Dnac
         if version['name'] not in self.dnac.api:
-            # if not, create a new Template
-            template = Template(self.dnac, version['name'])
-            # if so, save a pointer to it
+            # if not, throw an error
+            raise DnacApiError(MODULE, 'add_version', '%s %s' % (TEMPLATE_NOT_FOUND, version['name']), '',
+                               '', '', '', CALL_ADD_NEW_TEMPLATE)
         else:
+            # if so, save a pointer to it
             template = self.dnac.api[version['name']]
         # prepare the new version
         self.__prepare_version__(version, template)
@@ -396,17 +398,17 @@ class Template(DnacApi):
                                         timeout=self.timeout)
         if status != ACCEPTED:
             raise DnacApiError(
-                MODULE, 'import_template', REQUEST_NOT_ACCEPTED, url, ACCEPTED, status, ERROR_MSGS[status], ''
+                MODULE, 'add_version', REQUEST_NOT_ACCEPTED, url, ACCEPTED, status, ERROR_MSGS[status], ''
             )
         # check the tasks' results
         task = Task(self.dnac, results['response']['taskId'])
         task.get_task_results()
         if task.is_error:
-            raise DnacApiError(MODULE, 'import_template', TEMPLATE_IMPORT_FAILED, '', '', '', '', task.failure_reason)
+            raise DnacApiError(MODULE, 'add_version', TEMPLATE_IMPORT_FAILED, '', '', '', '', task.failure_reason)
         # import succeeded; reload the template
         return template.load_template(version['name'])
 
-    # end __add_version__()
+    # end add_version()
 
     def import_template(self, template_file, version_file):
         """
@@ -443,15 +445,15 @@ class Template(DnacApi):
         # check to see if the template is in the Project
         if project.templates == NO_TEMPLATES:
             # project has no templates; create a new one
-            return self.__add_new_template__(version, project)
+            return self.add_new_template(version, project)
         else:
             # check the existing templates to see if the template exists or not
             for tmplt in project.templates:
                 # if template exists, add a new version
                 if tmplt['name'] == template['name']:
-                    return self.__add_version__(version)
+                    return self.add_version(version)
             # template does not exist; add a new template
-            return self.__add_new_template__(version, project)
+            return self.add_new_template(version, project)
 
     # end import_template()
 
@@ -527,7 +529,7 @@ class Template(DnacApi):
         Get method for retrieving all of the template's versions.
         :return: list
         """
-        return self.__template['versionsInfo']
+        return self.__versions
 
     # end versions getter
 
