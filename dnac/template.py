@@ -321,7 +321,7 @@ class Template(DnacApi):
 
     # end __is_versioned_template__()
 
-    def add_new_template(self, template, project):
+    def add_new_template(self, template, project, timeout=5):
         """
         Creates a new template in Cisco DNA Center and assigns it to the project provided.
         :param template: The template information constructed from a json formatted string
@@ -345,7 +345,7 @@ class Template(DnacApi):
                                          headers=self.dnac.hdrs,
                                          body=body,
                                          verify=self.verify,
-                                         timeout=self.timeout)
+                                         timeout=timeout)
         if status != ACCEPTED:
             if status == _500_:
                 raise DnacApiError(
@@ -367,7 +367,7 @@ class Template(DnacApi):
 
     # end add_new_template()
 
-    def add_version(self, version):
+    def add_version(self, version, timeout=5):
         """
         Creates a new version of an existing template.
         :param version: The new version to be added to Cisco DNAC
@@ -395,7 +395,7 @@ class Template(DnacApi):
                                         headers=self.dnac.hdrs,
                                         body=body,
                                         verify=self.verify,
-                                        timeout=self.timeout)
+                                        timeout=timeout)
         if status != ACCEPTED:
             raise DnacApiError(
                 MODULE, 'add_version', REQUEST_NOT_ACCEPTED, url, ACCEPTED, status, ERROR_MSGS[status], ''
@@ -457,7 +457,7 @@ class Template(DnacApi):
 
     # end import_template()
 
-    def commit_template(self, comments=''):
+    def commit_template(self, comments='', timeout=5):
         """
         The commit_template updates the parent template to its next version.  Once completed, the actual template
         can be deployed in Cisco DNA Center.
@@ -476,7 +476,7 @@ class Template(DnacApi):
                                          headers=self.dnac.hdrs,
                                          body=json.dumps(body),
                                          verify=self.verify,
-                                         timeout=self.timeout)
+                                         timeout=timeout)
         if status != ACCEPTED:
             raise DnacApiError(
                 MODULE, 'version_template', REQUEST_NOT_ACCEPTED, url, ACCEPTED, status, ERROR_MSGS[status], ''
