@@ -35,4 +35,9 @@
             <input type="submit" value="Select Templates" formaction="/select_templates">
         </center>
     </form>
+    <form method="post" action="/select_clusters">
+        <center>
+            <input type="submit" value="Cancel">
+        </center>
+    </form>
 </html>

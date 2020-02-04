@@ -5,12 +5,12 @@
         {{result}}<br>
     % end
     <p>
+    <center>
     <form action="/select_projects" method="post">
         <input type="hidden" name="source" value="{{source}}">
         <input type="hidden" name="target" value="{{target}}">
         <input type="submit" value="Replicate More Projects or Templates from the Same Clusters">
+        <input type="submit" value="Select New Clusters" formaction="/select_clusters">
     </form>
-    <form action="/select_clusters" method="get">
-        <input type="submit" value="Select New Clusters">
-    </form>
+    </center>
 </html>

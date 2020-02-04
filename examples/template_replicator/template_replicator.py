@@ -8,7 +8,7 @@ import json
 
 MODULE = 'template_replicator.py'
 
-clusters_from_config_file = {}
+#clusters_from_config_file = {}
 clusters = []
 replicator = Bottle()
 
@@ -31,7 +31,7 @@ def get_cluster(cluster_id):
 
 @replicator.route('/', method='GET')
 @replicator.route('/index', method='GET')
-@replicator.route('/select_clusters', method='GET')
+@replicator.route('/select_clusters', method='POST')
 def select_clusters():
     """
     Passes the list of all clusters loaded during project initialization to the home page.
@@ -53,11 +53,7 @@ def select_projects():
             '%s: select_projects_for_replication: Source and target DNAC clusters cannot be the same' % MODULE
         )
     source_cluster = get_cluster(source)
-    if STUB_PROJECT not in source_cluster.api.keys():
-        Project(source_cluster, STUB_PROJECT)
     target_cluster = get_cluster(target)
-    if STUB_PROJECT not in target_cluster.api.keys():
-        Project(target_cluster, STUB_PROJECT)
     source_projects = {}
     target_projects = {}
     for project in source_cluster.api[STUB_PROJECT].get_all_projects():
@@ -148,7 +144,7 @@ def copy_project(project, source, target, source_cluster, target_cluster, result
                 # search for the project in the physical target cluster, and if found, load it
                 if p['name'] == project:
                     Project(target_cluster, project)
-                    results.append('Found %s in %s.  Replicating templates.' % (project, target))
+                    results.append('Found %s in %s.  Loading its data.' % (project, target))
                     break
             # if it doesn't exist in the physical cluster, create it now
             if project not in target_cluster.api.keys():
@@ -160,7 +156,7 @@ def copy_project(project, source, target, source_cluster, target_cluster, result
         else:
             # if the Project does exist in the target cluster Dnac - refresh its data
             target_cluster.api[project].load_project(project)
-            results.append('Found %s in %s.  Replicating templates.' % (project, target))
+            results.append('Found %s in %s.  Refreshing its data.' % (project, target))
     except Exception as error:
         results.append('Failed replicating project %s from %s to %s: %s'
                        'Aborting attempts to add its templates'
@@ -230,10 +226,10 @@ def copy_template(template, project, source, target, source_cluster, target_clus
         try:
             if template['name'] not in target_cluster.api.keys():
                 # if the template does not yet exist on the target cluster, create it with first version
-                target_cluster.api[STUB_TEMPLATE].add_new_template(version, target_cluster.api[project])
+                target_cluster.api[STUB_TEMPLATE].add_new_template(version, target_cluster.api[project], timeout=10)
             else:
                 # if the template does exist, add the next version
-                target_cluster.api[template['name']].add_version(version)
+                target_cluster.api[template['name']].add_version(version, timeout=10)
             results.append('Successfully replicated version %i of template %s from %s to %s'
                            % (ver, template['name'], source, target))
             # clean up the copy of the source template
@@ -249,7 +245,9 @@ def copy_template(template, project, source, target, source_cluster, target_clus
             break
         # commit the template
         try:
-            target_cluster.api[template['name']].commit_template('Committed version %i by %s' % (ver, MODULE))
+            target_cluster.api[template['name']].commit_template(
+                'Committed version %i by %s' % (ver, MODULE), timeout=10
+            )
             results.append('Successfully commited version %i of template %s from %s to %s'
                            % (ver, template['name'], source, target))
             # success - increment the version counter and proceed with the next template if available
@@ -281,28 +279,78 @@ def replicate_projects_and_templates():
 
 @replicator.route('/select_templates', method='POST')
 def select_templates():
-    #
-    # projects are already selected at this point
-    # this function should render a page showing all of source's selected projects with their templates
-    #   source templates should be selectable via checkbox
-    # it should also show the target's current projects and their templates
-    #
+    """
+    Prepares the list of templates for each project selected by the end-user.  Only supports projects that exist on
+    both the source and target clusters.
+    :return: Bottle template
+    """
     source, target, source_cluster, target_cluster = get_source_and_target(request)
     if source_cluster == target_cluster:
         raise Exception('Source and target DNAC clusters cannot be the same')
-    for project in request.forms:
-        # only show projects that exist in both clusters
-        #
-        # this is probably a poor way to check each cluster....
-        # can we assume the cluster Dnac objects have each project loaded?
-        #
-        if source_cluster.api[STUB_PROJECT].get_project_by_name[project]['name'] == \
-           target_cluster.api[STUB_PROJECT].get_project_by_name[project]['name']:
-            pass
-        for template in project:
-            pass
-    return template('select_templates', source=source, target=target, project=project)
 
+    #
+    # templates data structure -  {project_name :  [template_name]}
+    #
+    source_templates = {}
+    target_templates = {}
+    existing_target_projects = target_cluster.api[STUB_PROJECT].get_all_projects()
+    missing_target_projects = []  # used if a project was selected that does not yet exist on the target cluster
+
+    for project in request.forms:
+        # ensure the project exists on the target cluster before listing its templates
+        for p in existing_target_projects:
+            if p['name'] == project:
+                if project not in target_cluster.api.keys():
+                    Project(target_cluster, project)
+                break
+        # if it's not on the target, log the error and move on to the next project
+        if project not in target_cluster.api.keys():
+            missing_target_projects.append(
+                'Project %s does not exist on the target cluster.  Create it first.  Skipping for now.' % project
+            )
+            request.forms.pop(project)
+            break
+        # build the source templates list for the project
+        if project not in source_cluster.api.keys():
+            Project(source_cluster, project)
+        else:
+            source_cluster.api[project].load_project()
+        src_t_list = []
+        for t in source_cluster.api[project].templates:
+            src_t_list.append(t['name'])
+        src_t_list.sort()
+        source_templates[project] = copy.deepcopy(src_t_list)
+        # build the target templates list for the project
+        tgt_t_list = []
+        for t in target_cluster.api[project].templates:
+            tgt_t_list.append(t['name'])
+        tgt_t_list.sort()
+        target_templates[project] = copy.deepcopy(tgt_t_list)
+    # render the select_templates page
+    return template('select_templates', source=source, target=target, projects=request.forms,
+                    source_templates=source_templates, target_templates=target_templates,
+                    missing_target_projects=missing_target_projects)
+
+@replicator.route('/replicate_templates', method='POST')
+def replicate_templates():
+    """
+    Replicates the templates selected from the select_clusters page.
+    :return: Bottle template
+    """
+    source, target, source_cluster, target_cluster = get_source_and_target(request)
+    results = []
+    for selection in request.forms:
+        # get the project and template names - separator is a % char
+        project = selection.split('%')[0]
+        tmplt_name = selection.split('%')[1]
+        # get the template from the source_cluster Dnac
+        for t in source_cluster.api[project].templates:
+            if t['name'] == tmplt_name:
+                tmplt = copy.deepcopy(t)
+                break
+        copy_template(tmplt, project, source, target, source_cluster, target_cluster, results)
+        del tmplt
+    return template('replicate_templates', source=source, target=target, results=results)
 
 # Main Program ########################################################################################################
 
