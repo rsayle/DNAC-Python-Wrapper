@@ -67,6 +67,7 @@ This project is licensed by Cisco Systems according to the terms stated in the p
 - [import_template.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.3.1.4/examples/import_template.py): Imports a configuration template and all its versions from files.
 - [networkdevice_example.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.3.1.4/examples/networkdevice_example.py): An example script that shows how to use a NetworkDevice object.
 - [template_example.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.3.1.4/examples/template_example.py): An example script demonstrating how to use the Template class.
+- [template_replicator.py](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.3.1.4/examples/template_replicator.py): An HTTP server for replicating configuration templates and projects.
 
 # Documentation
 Detailed documentation for each module, its classes, attributes and functions can be found in [this project's HTML files](https://github.com/rsayle/DNAC-Python-Wrapper/tree/1.3.1.4/docs) or the docstrings contained within the modules themselves as well as in [Cisco DNA Center References](https://developer.cisco.com/docs/dna-center/#!cisco-dna-center-platform-overview/cisco-dna-center-platform-overview).
