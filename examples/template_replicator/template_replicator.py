@@ -8,7 +8,6 @@ import json
 
 MODULE = 'template_replicator.py'
 
-#clusters_from_config_file = {}
 clusters = []
 replicator = Bottle()
 
@@ -220,6 +219,13 @@ def copy_template(template, project, source, target, source_cluster, target_clus
     # replicate the templates from the source cluster to the target cluster
     ver = 1  # ignore the parent template
     while ver <= len(source_cluster.api[template['name']].versions) - 1:
+
+        #
+        # check that the version does not exist in the physical target cluster
+        # if it does, continue on to the next version
+        # if not, then go ahead and add it
+        #
+
         # make a copy of each version so as not to clobber the source cluster Project's templates
         version = copy.deepcopy(source_cluster.api[template['name']].versions[ver])
         # add the template
@@ -246,9 +252,9 @@ def copy_template(template, project, source, target, source_cluster, target_clus
         # commit the template
         try:
             target_cluster.api[template['name']].commit_template(
-                'Committed version %i by %s' % (ver, MODULE), timeout=10
+                'Committed version %i by %s' % (ver, MODULE), timeout=30
             )
-            results.append('Successfully commited version %i of template %s from %s to %s'
+            results.append('Successfully committed version %i of template %s from %s to %s'
                            % (ver, template['name'], source, target))
             # success - increment the version counter and proceed with the next template if available
             ver = ver + 1
@@ -261,6 +267,7 @@ def copy_template(template, project, source, target, source_cluster, target_clus
             )
             break
     return results
+
 
 @replicator.route('/replicate_projects_and_templates', method='POST')
 def replicate_projects_and_templates():
@@ -314,7 +321,7 @@ def select_templates():
         if project not in source_cluster.api.keys():
             Project(source_cluster, project)
         else:
-            source_cluster.api[project].load_project()
+            source_cluster.api[project].load_project(project)
         src_t_list = []
         for t in source_cluster.api[project].templates:
             src_t_list.append(t['name'])
@@ -330,6 +337,7 @@ def select_templates():
     return template('select_templates', source=source, target=target, projects=request.forms,
                     source_templates=source_templates, target_templates=target_templates,
                     missing_target_projects=missing_target_projects)
+
 
 @replicator.route('/replicate_templates', method='POST')
 def replicate_templates():
@@ -354,7 +362,11 @@ def replicate_templates():
 
 # Main Program ########################################################################################################
 
+
 if __name__ == '__main__':
+    """
+    usage: template_replicator <clusters_file>
+    """
 
     # read the json encoded config file passed from the CLI
     clusters_file = open(sys.argv[1], mode='r')
