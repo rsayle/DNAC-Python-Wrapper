@@ -27,7 +27,7 @@ After installing the wrapper, import the Dnac class directly from the package bu
     switch = NetworkDevice(d, "mySwitch")
 
 # Versioning
-In order to remain consistent with Cisco's DNA Center release cycle, this package follows a similar versioning structure.  Simply stated, the format is _Cisco-DNAC-version.wrapper-version_.  Take for example, release 1.3.1.4.a of this package.  1.3.1.4 refers to the version of Cisco DNA Center which the package was tested against, and .a indicates the version of the wrapper itself.
+In order to remain consistent with Cisco's DNA Center release cycle, this package follows DNAC's versioning.  In order for PyPi to treat this as the latest release, no more subversioning can be given; hence subversions will be listed in this readme.  The current subversion is 1.3.1.4.b.
 
 # License
 This project is licensed by Cisco Systems according to the terms stated in the project's [LICENSE](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.2.10.2/LICENSE) file.
@@ -75,6 +75,10 @@ Detailed documentation for each module, its classes, attributes and functions ca
 A summary diagram of the class hierarchy and their inter-relationships can be found in file [Cisco DNAC Wrapper UML](https://github.com/rsayle/DNAC-Python-Wrapper/blob/1.3.1.4/docs/Cisco%20DNAC%20Wrapper%20UML.pdf).
 
 # Current State
+v.1.3.1.4.b: 7 Mar 2020
+- Overhauled Task and Deployment classes
+- Fixed bugs in Template class
+
 v.1.3.1.4.a: 17 Jan 2020
 - Overhauled Template class and added methods to export, import and commit templates
 - New modules for managing device configuration archives: config_archive, config_archive_settings, device_archive, device_archive_task
