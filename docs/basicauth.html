@@ -33,64 +33,30 @@
 <font color="#000000" face="helvetica, arial"><a name="BasicAuth">class <strong>BasicAuth</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>Class&nbsp;<a href="#BasicAuth">BasicAuth</a>&nbsp;stores&nbsp;the&nbsp;username&nbsp;and&nbsp;password&nbsp;for&nbsp;basic&nbsp;authorization<br>
-of&nbsp;an&nbsp;HTTP&nbsp;request&nbsp;and&nbsp;then&nbsp;encodes&nbsp;it&nbsp;as&nbsp;"username:password"&nbsp;in<br>
-base64&nbsp;format.&nbsp;&nbsp;The&nbsp;encoded&nbsp;string&nbsp;is&nbsp;used&nbsp;to&nbsp;authenticate&nbsp;connections&nbsp;to<br>
-an&nbsp;API&nbsp;server.<br>
-&nbsp;<br>
-Attributes:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;user:&nbsp;The&nbsp;username&nbsp;for&nbsp;logging&nbsp;into&nbsp;the&nbsp;server.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;private<br>
-&nbsp;&nbsp;&nbsp;&nbsp;passwd:&nbsp;The&nbsp;user's&nbsp;password&nbsp;for&nbsp;logging&nbsp;into&nbsp;the&nbsp;server.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;private<br>
-&nbsp;&nbsp;&nbsp;&nbsp;creds:&nbsp;The&nbsp;Base64&nbsp;encoded&nbsp;string&nbsp;"username:password"&nbsp;that&nbsp;is<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;transmitted&nbsp;to&nbsp;the&nbsp;server&nbsp;for&nbsp;logging&nbsp;into&nbsp;it.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;base64&nbsp;encoded&nbsp;string<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;base64&nbsp;encoded&nbsp;string&nbsp;"user:passwd"<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
-&nbsp;&nbsp;&nbsp;&nbsp;hdrs:&nbsp;a&nbsp;dict&nbsp;for&nbsp;constructing&nbsp;CRUD&nbsp;request&nbsp;headers.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;dict<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;{'Authorization'&nbsp;:&nbsp;'Basic&nbsp;&lt;base64&nbsp;encoded&nbsp;string&gt;'}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>&nbsp;</tt></td></tr>
+<td colspan=2><tt>Class&nbsp;<a href="#BasicAuth">BasicAuth</a>&nbsp;stores&nbsp;the&nbsp;username&nbsp;and&nbsp;password&nbsp;for&nbsp;basic&nbsp;authorization&nbsp;of&nbsp;an&nbsp;HTTP&nbsp;request&nbsp;and&nbsp;then&nbsp;encodes&nbsp;it&nbsp;as<br>
+"username:password"&nbsp;in&nbsp;base64&nbsp;format.&nbsp;&nbsp;The&nbsp;encoded&nbsp;string&nbsp;is&nbsp;used&nbsp;to&nbsp;authenticate&nbsp;connections&nbsp;to&nbsp;an&nbsp;API&nbsp;server.<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>
-<dl><dt><a name="BasicAuth-__init__"><strong>__init__</strong></a>(self, user, passwd)</dt><dd><tt>The&nbsp;__init__&nbsp;method&nbsp;initializes&nbsp;a&nbsp;<a href="#BasicAuth">BasicAuth</a>&nbsp;<a href="__builtin__.html#object">object</a>.&nbsp;&nbsp;It&nbsp;takes&nbsp;in<br>
-a&nbsp;username&nbsp;and&nbsp;password,&nbsp;sets&nbsp;the&nbsp;__user&nbsp;and&nbsp;__passwd,&nbsp;respectively,<br>
-and&nbsp;then&nbsp;uses&nbsp;those&nbsp;values&nbsp;to&nbsp;create&nbsp;a&nbsp;base64&nbsp;encoded&nbsp;string&nbsp;for<br>
-the&nbsp;__creds&nbsp;attribute&nbsp;and&nbsp;a&nbsp;header&nbsp;dictionary&nbsp;for&nbsp;__hdrs.<br>
+<dl><dt><a name="BasicAuth-__init__"><strong>__init__</strong></a>(self, user, passwd)</dt><dd><tt>The&nbsp;__init__&nbsp;method&nbsp;initializes&nbsp;a&nbsp;<a href="#BasicAuth">BasicAuth</a>&nbsp;<a href="__builtin__.html#object">object</a>.&nbsp;&nbsp;It&nbsp;takes&nbsp;in&nbsp;a&nbsp;username&nbsp;and&nbsp;password,&nbsp;sets&nbsp;the&nbsp;__user&nbsp;and<br>
+__passwd,&nbsp;respectively,&nbsp;and&nbsp;then&nbsp;uses&nbsp;those&nbsp;values&nbsp;to&nbsp;create&nbsp;a&nbsp;base64&nbsp;encoded&nbsp;string&nbsp;for&nbsp;the&nbsp;__creds&nbsp;attribute<br>
+and&nbsp;a&nbsp;header&nbsp;dictionary&nbsp;for&nbsp;__hdrs.<br>
 &nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;user:&nbsp;The&nbsp;username&nbsp;for&nbsp;logging&nbsp;into&nbsp;an&nbsp;HTTP&nbsp;server.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;Yes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;passwd:&nbsp;The&nbsp;password&nbsp;for&nbsp;logging&nbsp;into&nbsp;an&nbsp;HTTP&nbsp;server.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;Yes<br>
+Usage:&nbsp;b&nbsp;=&nbsp;<a href="#BasicAuth">BasicAuth</a>(user,&nbsp;passwd)<br>
 &nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#BasicAuth">BasicAuth</a>&nbsp;<a href="__builtin__.html#object">object</a>:&nbsp;The&nbsp;newly&nbsp;constructed&nbsp;basic&nbsp;authentication&nbsp;instance.<br>
-&nbsp;<br>
-Usage:&nbsp;b&nbsp;=&nbsp;<a href="#BasicAuth">BasicAuth</a>(user,&nbsp;passwd)</tt></dd></dl>
+:param&nbsp;user:&nbsp;The&nbsp;username&nbsp;for&nbsp;logging&nbsp;into&nbsp;an&nbsp;HTTP&nbsp;server<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
+:param&nbsp;passwd:&nbsp;The&nbsp;password&nbsp;for&nbsp;logging&nbsp;into&nbsp;an&nbsp;HTTP&nbsp;server<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none</tt></dd></dl>
 
-<dl><dt><a name="BasicAuth-__str__"><strong>__str__</strong></a>(self)</dt><dd><tt>String&nbsp;handler&nbsp;for&nbsp;a&nbsp;<a href="#BasicAuth">BasicAuth</a>&nbsp;<a href="__builtin__.html#object">object</a>.&nbsp;&nbsp;Returns&nbsp;the&nbsp;base64&nbsp;encoded&nbsp;string&nbsp;"&lt;username&gt;:&lt;password&gt;".</tt></dd></dl>
+<dl><dt><a name="BasicAuth-__str__"><strong>__str__</strong></a>(self)</dt><dd><tt>String&nbsp;handler&nbsp;for&nbsp;a&nbsp;<a href="#BasicAuth">BasicAuth</a>&nbsp;<a href="__builtin__.html#object">object</a>.<br>
+:return:&nbsp;base64&nbsp;encoded&nbsp;string&nbsp;"&lt;username&gt;:&lt;password&gt;"</tt></dd></dl>
 
-<dl><dt><a name="BasicAuth-make_creds"><strong>make_creds</strong></a>(self)</dt><dd><tt>Method&nbsp;make_creds&nbsp;builds&nbsp;the&nbsp;base64&nbsp;encoded&nbsp;string&nbsp;&lt;user&gt;:&lt;passwd&gt;&nbsp;for&nbsp;basic&nbsp;authentication&nbsp;to&nbsp;an&nbsp;API&nbsp;server.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;The&nbsp;base64&nbsp;encoded&nbsp;string&nbsp;"&lt;username&gt;:&lt;passwd&gt;"<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;b&nbsp;=&nbsp;<a href="#BasicAuth">BasicAuth</a>(user,&nbsp;passwd)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;b.<a href="#BasicAuth-make_creds">make_creds</a>()</tt></dd></dl>
+<dl><dt><a name="BasicAuth-make_creds"><strong>make_creds</strong></a>(self)</dt><dd><tt>Builds&nbsp;the&nbsp;base64&nbsp;encoded&nbsp;string&nbsp;&lt;username&gt;:&lt;password&gt;&nbsp;for&nbsp;basic&nbsp;authentication&nbsp;to&nbsp;an&nbsp;API&nbsp;server.<br>
+:return:&nbsp;base64&nbsp;encoded&nbsp;str</tt></dd></dl>
 
 <hr>
 Data descriptors defined here:<br>
@@ -101,32 +67,12 @@ Data descriptors defined here:<br>
 <dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
 </dl>
 <dl><dt><strong>creds</strong></dt>
-<dd><tt>Get&nbsp;method&nbsp;creds&nbsp;returns&nbsp;the&nbsp;value&nbsp;of&nbsp;attribute&nbsp;__creds.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;The&nbsp;base64&nbsp;encoded&nbsp;string&nbsp;"&lt;username&gt;:&lt;password&gt;"<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;b&nbsp;=&nbsp;BasicAuth(user,&nbsp;passwd)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;b.creds</tt></dd>
+<dd><tt>Getter&nbsp;method&nbsp;to&nbsp;retrieve&nbsp;the&nbsp;credentials&nbsp;stored&nbsp;in&nbsp;the&nbsp;object&nbsp;instance.<br>
+:return:&nbsp;base64&nbsp;encoded&nbsp;string</tt></dd>
 </dl>
 <dl><dt><strong>hdrs</strong></dt>
-<dd><tt>Get&nbsp;method&nbsp;hdrs&nbsp;returns&nbsp;the&nbsp;value&nbsp;of&nbsp;attribute&nbsp;__hdrs.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;A&nbsp;dictionary&nbsp;containing&nbsp;the&nbsp;base64&nbsp;formatted&nbsp;credentials<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;that&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;make&nbsp;CRUD&nbsp;requests.&nbsp;&nbsp;The&nbsp;format&nbsp;looks<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;like&nbsp;{'Authorization':&nbsp;'Basic&nbsp;&lt;base64&nbsp;encoded&nbsp;string&gt;'}<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;b&nbsp;=&nbsp;BasicAuth(user,&nbsp;passwd)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;b.hdrs</tt></dd>
+<dd><tt>Getter&nbsp;method&nbsp;that&nbsp;returns&nbsp;the&nbsp;format&nbsp;of&nbsp;a&nbsp;basic&nbsp;auth&nbsp;request&nbsp;for&nbsp;an&nbsp;API&nbsp;request.<br>
+:return:&nbsp;dict&nbsp;of&nbsp;the&nbsp;form&nbsp;{'Authorization':&nbsp;'Basic&nbsp;&lt;base64&nbsp;encoded&nbsp;credentials&gt;'</tt></dd>
 </dl>
 </td></tr></table></td></tr></table>
 </body></html>
