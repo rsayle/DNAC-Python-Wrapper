@@ -182,7 +182,7 @@ class File(DnacApi):
             raise DnacApiError(
                 MODULE, 'get_results', REQUEST_NOT_OK, url,
                 OK, status, ERROR_MSGS[status], str(results)
-                              )
+            )
         self.__results = results
         return self.__results
 

@@ -1,4 +1,3 @@
-
 from dnac import DnacError, \
                  SUPPORTED_DNAC_VERSIONS, \
                  UNSUPPORTED_DNAC_VERSION
@@ -16,6 +15,7 @@ from dnac.project import Project, \
                          NO_TEMPLATES
 from dnac.task import Task
 import json
+import time
 
 MODULE = 'template.py'
 
@@ -25,7 +25,7 @@ TEMPLATE_RESOURCE_PATH = {
     '1.3.0.2': '/api/v2/template-programmer/template',
     '1.3.0.3': '/api/v2/template-programmer/template',
     '1.3.1.3': '/api/v2/template-programmer/template',
-    '1.3.1.4': '/api/v2/template-programmer/template'
+    '1.3.1.4': '/dna/intent/api/v1/template-programmer/template'
 }
 
 POST_1_2_8 = ['1.2.10', '1.3.0.2', '1.3.0.3', '1.3.1.3', '1.3.1.4']
@@ -851,7 +851,7 @@ class Template(DnacApi):
                                          verify=self.verify,
                                          timeout=self.timeout)
             progress = task['response']['progress']
-            progress_elts = progress.split(':')
+            progress_elts = progress.split(': ')
             if progress_elts[3].find(TEMPLATE_ALREADY_DEPLOYED) != SUBSTR_NOT_FOUND:
                 raise DnacApiError(
                     MODULE, 'deploy_sync', ALREADY_DEPLOYED, '', '', str(body), status, ALREADY_DEPLOYED_RESOLUTION
@@ -921,7 +921,7 @@ class Template(DnacApi):
                                              verify=self.verify,
                                              timeout=self.timeout)
             progress = task['response']['progress']
-            progress_elts = progress.split(':')
+            progress_elts = progress.split(': ')
             if progress_elts[3].find(TEMPLATE_ALREADY_DEPLOYED) != SUBSTR_NOT_FOUND:
                 raise DnacApiError(
                     MODULE, 'deploy_sync', ALREADY_DEPLOYED, '', '', str(body), status, ALREADY_DEPLOYED_RESOLUTION
@@ -942,73 +942,3 @@ class Template(DnacApi):
 
 # end class Template()
 
-# begin unit test
-
-
-if __name__ == '__main__':
-
-    from dnac import Dnac
-    import time
-    import pprint
-
-    d = Dnac()
-    pp = pprint.PrettyPrinter()
-    t = Template(d, 'MGM Set VLAN')
-
-    print('Template:')
-    print()
-
-
-'''
-    print('Setting the versioned template\'s parameters...')
-    print()
-    print(' version                   = ' + str(t.version))
-    print(' versioned_template        = ' + str(t.versioned_template))
-    print(' versioned_template_id     = ' + t.versioned_template_id)
-    print(' versioned_template_params = ')
-    pp.pprint(t.versioned_template_params)
-    print()
-
-    t.versioned_template_params['interface'] = 'gig1/0/1'
-    t.versioned_template_params['description'] = 'Configured by template.py'
-    t.versioned_template_params['vlan'] = 60
-
-    print(' interface   = ' + t.versioned_template_params['interface'])
-    print(' description = ' + t.versioned_template_params['description'])
-    print(' vlan        = ' + str(t.versioned_template_params['vlan']))
-    print()
-    print('Build the request body...')
-    print()
-
-    t.target_id = 'a0116157-3a02-4b8d-ad89-45f45ecad5da'
-    t.target_type = TARGET_BY_ID
-    body = t.make_body()
-
-    print(' body = ')
-    pp.pprint(body)
-    print()
-    print('Deploying the template asynchronously...')
-    print()
-
-    status = t.deploy()
-
-    print(' status           = ' + str(status))
-    print(' type(deployment) = ' + str(t.deployment))
-    print(' deployment.name  = ' + t.deployment.name)
-    print(' deployment.id    = ' + t.deployment.id)
-    print()
-    print('Checking deployment...')
-
-    while status == DEPLOYMENT_INIT:
-        print(' status = ' + status)
-        time.sleep(1)
-        status = t.deployment.check_deployment()
-
-    print(' status          = ' + status)
-    print(' results[status] = ' + t.deployment.results['status'])
-    print(' results         = ')
-    pp.pprint(t.deployment.results)
-    print()
-    print('Template: unit test complete.')
-    print()
-'''

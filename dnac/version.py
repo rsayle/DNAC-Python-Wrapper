@@ -36,6 +36,7 @@ CONFIG_FILE_SUB_RESOURCE_PATH = {
 
 RUNNING_CONFIG = 'RUNNINGCONFIG'
 STARTUP_CONFIG = 'STARTUPCONFIG'
+VLAN = 'VLAN'
 
 CONFIG_FILE_TYPES = [
     RUNNING_CONFIG,
@@ -119,10 +120,13 @@ class Version(DnacApi):
         for file in version['versions'][0]['files']:
             # iterate through all the archive's versions and load the config files
             if file['fileType'] not in CONFIG_FILE_TYPES:
-                    raise DnacApiError(
-                        MODULE, '__init__', ILLEGAL_CONFIG_FILE_TYPE, '',
-                        str(CONFIG_FILE_TYPES), '', file['fileType'], ''
-                                      )
+                # ignore VLAN data files
+                if file['fileType'] == VLAN:
+                    continue
+                raise DnacApiError(
+                    MODULE, '__init__', ILLEGAL_CONFIG_FILE_TYPE, '',
+                    str(CONFIG_FILE_TYPES), '', file['fileType'], ''
+                )
             config_file = File(dnac, file['fileId'])
             config_file.get_results(is_json=False)
             self.__config_files[file['fileType']] = config_file

@@ -49,6 +49,8 @@ _409_ = 409
 _409_RESOURCE_CONFLICT_ = '409 - API requested resource is in a conflicted state'
 _415_ = 415
 _415_UNSUPPORTED_BODY_FORMAT_ = '415 - API request body is in an unsupported format'
+_417_ = 417
+_417_EXPECTATION_FAILED_ = '417 - The server cannot meet the requirements of the Expect request-header field'
 _500_ = 500
 _500_SERVER_REQUEST_FAILED_ = '500 - Server could not fulfill the API request'
 _501_ = 501
@@ -65,6 +67,7 @@ ERROR_MSGS = {
               _404_: _404_RESOURCE_DOES_NOT_EXIST_,
               _409_: _409_RESOURCE_CONFLICT_,
               _415_: _415_UNSUPPORTED_BODY_FORMAT_,
+              _417_: _417_EXPECTATION_FAILED_,
               _500_: _500_SERVER_REQUEST_FAILED_,
               _501_: _501_SERVER_NO_FUNCTION_,
               _503_: _503_SERVER_UNAVAILABLE_,
