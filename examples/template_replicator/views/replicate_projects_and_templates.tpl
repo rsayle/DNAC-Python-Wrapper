@@ -1,5 +1,5 @@
 <html>
-    <h1 align="center>Replicate Projects and Templates Results</h1>
+    <h1 align="center">Replicate Projects and Templates Results</h1>
     <p>
     % for result in results:
         {{result}}<br>
