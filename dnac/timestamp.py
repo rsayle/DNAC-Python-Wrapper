@@ -39,7 +39,7 @@ class TimeStamp(object):
             t = TimeStamp()
         """
         if time == GET_CURRENT_TIME:
-            self.__timestamp = int((datetime.utcnow() - datetime(1970, 1, 1)).total_seconds() * 1000)
+            self.get_current_time()
         else:
             self.__timestamp = int(time)
 
@@ -146,32 +146,16 @@ class TimeStamp(object):
 
     # end local_timestamp()
 
+    def sleep(self, seconds):
+        time.sleep(seconds)
+
+    # end sleep()
+
+    def get_current_time(self):
+        self.__timestamp = int((datetime.utcnow() - datetime(1970, 1, 1)).total_seconds() * 1000)
+        return self.__timestamp
+
+    # end get_current_time()
+
 # end class TimeStamp()
 
-# begin unit test
-
-
-if __name__ == '__main__':
-
-    ts = TimeStamp()
-
-    print('TimeStamp:')
-    print()
-    print("Getting the current time...")
-    print('  timestamp      = %i' % ts.timestamp)
-    print('  str(timestamp) = %s' % ts)
-    print('  as UTC time    = %s' % ts.utc_timestamp())
-    print('  as local time  = %s' % ts.local_timestamp())
-    print()
-
-    ts = TimeStamp(time=1564780178759)
-
-    print()
-    print('Getting a specific time...')
-    print('  timestamp      = %i' % ts.timestamp)
-    print('  str(timestamp) = %s' % ts)
-    print('  as UTC time    = %s' % ts.utc_timestamp())
-    print('  as local time  = %s' % ts.local_timestamp())
-
-    print('TimeStamp: unit test complete')
-    print()

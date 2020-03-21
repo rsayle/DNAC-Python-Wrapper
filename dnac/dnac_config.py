@@ -14,7 +14,7 @@ DNAC_IP = ''
 # DNAC_VERSION: Used for setting the resource path of API calls based upon
 #               the version of the Cisco DNAC cluster.
 #
-DNAC_VERSION = '1.3.0.3'
+DNAC_VERSION = '1.3.1.4'
 
 #
 # DNAC_PORT: TCP port used to communicate with Cisco DNAC's API

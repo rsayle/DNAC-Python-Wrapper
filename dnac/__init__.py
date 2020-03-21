@@ -23,14 +23,14 @@ __all__ = [
     'deployment',
     'device_archive',
     'device_archive_task',
-    'Dnac',
-    'DnacError',
     'dnac_config',
     'dnacapi',
     'file',
+    '__init__',
     'networkdevice',
     'project',
     'site',
+    'site_hierarchy',
     'task',
     'template',
     'timestamp',
@@ -250,6 +250,8 @@ class Dnac(object):
         self.__xauth.get_token()
         # create the store for all API instances
         self.__api = {}
+        # add a placeholder for the site hierarchy
+        self.__site_hierarchy = None
 
 # end __init__()
 
@@ -445,7 +447,7 @@ class Dnac(object):
         else:  # no way to reach DNA Center
             raise DnacError('%s: %s: %s: %s' % (MODULE, 'url', NO_DNAC_PATH, NO_DNAC_PATH_RESOLUTION))
 
-# end url()
+# end url getter
 
     def get_new_token(self):
         """
