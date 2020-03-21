@@ -87,87 +87,60 @@ class Crud(object):
             type: dict
             default: none
             scope: protected
+
+    Usage:
+        rest_api = Crud()
     """
 
     def __init__(self):
         """
-        Crud's __init__ method sets up its results attribute as an empty
-        dictionary and then returns the newly created Crud object.
-
-        Parameters:
-            none
-
-        Return Values:
-            Crud object: The new Crud instance
-
-        Usage:
-            rest_api = Crud()
+        Crud's __init__ method sets up its results attribute as an empty dictionary and then returns the newly created
+        Crud object.
         """
         self.__results = {}
 
-# end __init__
+    # end __init__
 
     @property
     def results(self):
         """
-        Crud's results get method returns the value of its __results
-        attribute, which contains the response from the RESTful server
-
-        Parameters:
-            none
-
-        Return Values:
-            dict: The server's response to an API call
-
-        Usage:
-            rest_api = Crud()
-            url = "https://server/resource/path"
-            rest_api.get(url, headers=hdrs)
-            print str(rest_api.results)
+        Crud's results get method returns the value of its __results attribute, which contains the response from the
+        RESTful server.
+        :return: dict
         """
         return self.__results
 
-# end results getter
+    # end results getter
 
     def get(self, url, headers=None, body="", verify=False, timeout=5, is_json=True):
         """
-        Crud's get method performs a GET API call, a read request, to a
-        server.  It stores the results and also returns them to the user
-        along with the request's status code.
-
-        Parameters:
-            url: The path to the server's API resource.
+        Crud's get method performs a GET API call, a read request, to a server.  It stores the results and also returns
+        them to the user along with the request's status code.
+        :param url: The path to the server's API resource.
                 type: str
                 default: none
                 required: yes
-            headers: The headers for placing an API call.
+        :param headers: headers: The headers for placing an API call.
                 type: dict
                 default: none
                 required: yes, as a keyword argument
-            body: Any data elements required for the API call.
+        :param body: Any data elements required for the API call.
                 type: str
                 default: none
                 required: no
-            verify: A flag indicating if the server's certificate should
-                    be authenticated.
+        :param verify: A flag indicating if the server's certificate should be authenticated.
                 type: bool
                 default: False
                 required: no
-            timeout: Time in seconds to wait for the server's response
-                     before abandoning the API call.
+        :param timeout: Time in seconds to wait for the server's response before abandoning the API call.
                 type: int
                 default: 5
                 required: no
-
-        Return Values:
-            dict: The API response data.
-            str: The API response code.
-
-        Usage:
-            rest_api = Crud()
-            url = "https://server/resource/path"
-            hdrs = {'content-type': 'application/json'}
-            results, status = rest_api.get(url, headers=hdrs)
+        :param is_json: A flag indicating if the response is given in JSON format.
+                type = bool
+                default: False
+                required: no
+        :return: dict, str
         """
         if headers is None:
             headers = {}
@@ -183,48 +156,33 @@ class Crud(object):
             self.__results = resp.text
         return self.__results, resp.status_code
 
-# end get()
+    # end get()
 
     def put(self, url, headers=None, body="", verify=False, timeout=5):
         """
-        Crud's put method performs a PUT API call, an update request, to a
-        server.  It stores the results and also returns them to the user
-        along with the request's status code.
-
-        Parameters:
-            url: The path to the server's API resource.
+        Crud's put method performs a PUT API call, an update request, to a server.  It stores the results and also
+        returns them to the user along with the request's status code.
+        :param url: he path to the server's API resource.
                 type: str
                 default: none
                 required: yes
-            headers: The headers for placing an API call.
+        :param headers: The headers for placing an API call.
                 type: dict
                 default: none
                 required: yes, as a keyword argument
-            body: Any data elements required for the API call.
+        :param body: Any data elements required for the API call.
                 type: str
                 default: none
                 required: no
-            verify: A flag indicating if the server's certificate should
-                    be authenticated.
+        :param verify: A flag indicating if the server's certificate should be authenticated.
                 type: bool
                 default: False
                 required: no
-            timeout: Time in seconds to wait for the server's response
-                     before abandoning the API call.
+        :param timeout: Time in seconds to wait for the server's response before abandoning the API call.
                 type: int
                 default: 5
                 required: no
-
-        Return Values:
-            dict: The API response data.
-            str: The API response code.
-
-        Usage:
-            rest_api = Crud()
-            url = "https://server/resource/path"
-            body = "\{'parameter' : 'newValue'\}"
-            hdrs = {'content-type': 'application/json'}
-            results, status = rest_api.put(url, headers=hdrs, body=body)
+        :return: dict, str
         """
         if headers is None:
             headers = {}
@@ -238,48 +196,33 @@ class Crud(object):
             self.__results = json.loads(resp.text)
         return self.__results, resp.status_code
 
-# end put()
+    # end put()
 
     def post(self, url, headers=None, body="", verify=False, timeout=5):
         """
-        Crud's post method performs a POST API call, a create request, to
-        a server.  It stores the results and also returns them to the user
-        along with the request's status code.
-
-        Parameters:
-            url: The path to the server's API resource.
+        Crud's post method performs a POST API call, a create request, to a server.  It stores the results and also
+        returns them to the user along with the request's status code.
+        :param url: he path to the server's API resource.
                 type: str
                 default: none
                 required: yes
-            headers: The headers for placing an API call.
+        :param headers: The headers for placing an API call.
                 type: dict
                 default: none
                 required: yes, as a keyword argument
-            body: Any data elements required for the API call.
+        :param body: Any data elements required for the API call.
                 type: str
                 default: none
                 required: no
-            verify: A flag indicating if the server's certificate should
-                    be authenticated.
+        :param verify: A flag indicating if the server's certificate should be authenticated.
                 type: bool
                 default: False
                 required: no
-            timeout: Time in seconds to wait for the server's response
-                     before abandoning the API call.
+        :param timeout: Time in seconds to wait for the server's response before abandoning the API call.
                 type: int
                 default: 5
                 required: no
-
-        Return Values:
-            dict: The API response data.
-            str: The API response code.
-
-        Usage:
-            rest_api = Crud()
-            url = "https://server/resource/path"
-            body = "\{'parameter' : 'value'\}"
-            hdrs = {'content-type': 'application/json'}
-            results, status = rest_api.post(url, headers=hdrs, body=body)
+        :return: dict, str
         """
         if headers is None:
             headers = {}
@@ -293,47 +236,32 @@ class Crud(object):
             self.__results = json.loads(resp.text)
         return self.__results, resp.status_code
 
-# end post()
+    # end post()
 
     def delete(self, url, headers=None, body="", verify=False, timeout=5):
         """
-        Crud's delete method performs a DELETE API call, a delete request,
-        to a server.  It stores the results and also returns them to the
-        user along with the request's status code.
-
-        Parameters:
-            url: The path to the server's API resource.
+        Crud's delete method performs a DELETE API call, a delete request, to a server.  It stores the results and also
+        returns them to the user along with the request's status code.
+        :param url: he path to the server's API resource.
                 type: str
                 default: none
                 required: yes
-            headers: The headers for placing an API call.
+        :param headers: The headers for placing an API call.
                 type: dict
                 default: none
                 required: yes, as a keyword argument
-            body: Any data elements required for the API call.
+        :param body: Any data elements required for the API call.
                 type: str
                 default: none
                 required: no
-            verify: A flag indicating if the server's certificate should
-                    be authenticated.
+        :param verify: A flag indicating if the server's certificate should be authenticated.
                 type: bool
                 default: False
                 required: no
-            timeout: Time in seconds to wait for the server's response
-                     before abandoning the API call.
+        :param timeout: Time in seconds to wait for the server's response before abandoning the API call.
                 type: int
                 default: 5
                 required: no
-
-        Return Values:
-            dict: The API response data.
-            str: The API response code.
-
-        Usage:
-            rest_api = Crud()
-            url = "https://server/resource/path"
-            hdrs = {'content-type': 'application/json'}
-            results, status = rest_api.delete(url, headers=hdrs, body=body)
         """
         if headers is None:
             headers = {}
@@ -347,41 +275,7 @@ class Crud(object):
             self.__results = json.loads(resp.text)
         return self.__results, resp.status_code
 
-# end delete()
+    # end delete()
 
 # end class Crud
 
-# begin unit test
-
-
-if __name__ == '__main__':
-
-    from dnac import Dnac
-
-    print('Crud:')
-    print()
-    print('Setting up test...')
-    print()
-
-    # target server + object handles login, auth token and headers
-    d = Dnac()
-    # target resource - returns a single switch from Dnac
-    res = '/api/v1/network-device/a0116157-3a02-4b8d-ad89-45f45ecad5da'
-    # target URL
-    u = d.url + res
-    # class under test
-    c = Crud()
-
-    print('  url =  ' + u)
-    print('  hdrs = ' + str(d.hdrs))
-    print()
-    print('Getting (reading) a resource from a server...')
-    print()
-
-    results, status = c.get(u, headers=d.hdrs)
-
-    print('  status    = ' + str(status))
-    print('  results   = ' + str(results))
-    print('  c.results = ' + str(c.results))
-    print()
-    print('Crud unit test complete.')
