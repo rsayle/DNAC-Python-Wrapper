@@ -97,7 +97,7 @@ class CommandRunnerTask(Task):
         # retrieve the results, which are automatically saved in
         # File's __results attribute
         self.__file.get_results()
-        return self.task_results
+        return self.__task_results
                   
     # end get_task_results()
 

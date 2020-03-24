@@ -164,14 +164,6 @@ class DeviceArchive(DnacApi):
 
     # end delete_version()
 
-    def delete_version_by_id(self, version_id):
-        """
-        NOT IMPLEMENTED
-        """
-        pass
-
-    # end delete_version_by_id()
-
     def add_configs_to_archive(self,
                                running=False,
                                startup=False):
@@ -223,55 +215,4 @@ class DeviceArchive(DnacApi):
     # end add_configs_to_archive()
 
 # end class DeviceArchive()
-
-# begin unit test
-
-
-if __name__ == '__main__':
-
-    from dnac import Dnac
-    from dnac.timestamp import TimeStamp
-
-    d = Dnac()
-    da = DeviceArchive(d, '84e4b133-2668-4705-8163-5694c84e78fb')
-
-    print('DeviceArchive:')
-    print()
-    print('  name     = ', da.name)
-    print('  device   = ', da.device)
-    print('  versions = ', str(da.versions))
-    print()
-
-    print()
-    print('  name     = ', da.name)
-    print('  device   = ', da.device)
-    print('  versions = ', str(da.versions))
-    print()
-
-    print('DeviceArchive: adding current configs to archive:')
-
-    da.add_configs_to_archive(running=True, startup=True)
-
-    print()
-    print('  name     = ', da.name)
-    print('  device   = ', da.device)
-    print('  versions = ', str(da.versions))
-    print()
-    print('DeviceArchive: printing the archive:')
-    print()
-
-    for version in da.versions:
-        print('  name    = ', version.name)
-        print('  device   = ', da.device)
-        print('  version = ', version.id)
-        t = TimeStamp(version.created_time)
-        print('  created time = ', t.local_timestamp())
-        print('  sync status  = ', version.sync_status)
-        keys = version.config_files.keys()
-        for key in keys:
-            print('  config file type = ', key)
-            print('  contents = ')
-            print(version.config_files[key].results)
-            print()
-            print()
 

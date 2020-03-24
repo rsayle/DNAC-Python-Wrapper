@@ -64,18 +64,3 @@ class BasicAuth(object):
 
 # end class BasicAuth()
 
-# begin unit test
-
-
-if __name__ == '__main__':
-
-    b = BasicAuth('admin', 'C!sco123')
-
-    print('BasicAuth:')
-    print()
-    print('  creds          = ' + b.creds)
-    print('  str(basicauth) = ' + str(b))
-    print('  basicauth.hdrs = ' + str(b.hdrs))
-    print()
-    print('BasicAuth unit test complete.')
-

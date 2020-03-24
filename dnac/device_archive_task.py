@@ -48,42 +48,29 @@ class DeviceArchiveTask(Task):
         """
         The __init__ method creates a new device archive task instance.  Use the task ID returned by Cisco DNA Center
         as the id for the new object.
-
-        Parameters:
-            dnac: A reference to the containing Dnac object.
-                type: Dnac object
-                default: none
-                required: yes
-            id: The UUID for monitoring the task in Cisco DNAC.
-                type: str
-                default: none
-                required: yes
-            verify: A flag used to check Cisco DNAC's certificate.
-                type: boolean
-                default: False
-                required: no
-            timeout: The number of seconds to wait for Cisco DNAC's
-                     response.
-                type: int
-                default: 5
-                required: no
-
-        Return Values:
-            DeviceArchiveTask: the device archive task
-
-        Usage:
-        d = Dnac()
-        device_archive_task = DeviceArchiveTask(d, <task_uuid>)
+        :param dnac: A reference to the containing Dnac object.
+            type: Dnac object
+            default: none
+            required: yes
+        :param id: The UUID for monitoring the task in Cisco DNAC.
+            type: str
+            default: none
+            required: yes
+        :param verify: A flag used to check Cisco DNAC's certificate.
+            type: boolean
+            default: False
+            required: no
+        :param timeout: The number of seconds to wait for Cisco DNAC's response.
+            type: int
+            default: 5
+            required: no
         """
         super(DeviceArchiveTask, self).__init__(dnac,
                                                 id=id,
                                                 verify=verify,
                                                 timeout=timeout)
 
-# end __init__()
+    # end __init__()
 
 # end class Task()
 
-
-if __name__ == '__main__':
-    pass

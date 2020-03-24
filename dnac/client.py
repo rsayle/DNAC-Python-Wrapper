@@ -115,86 +115,47 @@ class Client(DnacApi):
                                      verify=verify,
                                      timeout=timeout)
 
-# end __init__()
+    # end __init__()
 
     @property
     def mac(self):
         """
         Get method mac return's the Client's assigned MAC address.
-
-        Parameters:
-            None
-
-        Return Values:
-            str: the Client's MAC address
-
-        Usage:
-            d = Dnac()
-            host = Client(d, 'myPC', mac='a1:b2:c3:d4:e5:f6')
-            print(d.api['myPC'].mac)
+        :return: str
         """
         return self.__mac
 
-# end mac getter
+    # end mac getter
 
     @mac.setter
     def mac(self, mac):
         """
         Set method mac changes the Client object's mac attribute.
-
-        Parameters:
-            mac: The new MAC address
-                type: str
-                default: none
-                required: yes
-
-        Return Values:
-            None
-
-        Usage:
-            d = Dnac()
-            host = Client(d, 'myPC', mac='a1:b2:c3:d4:e5:f6')
-            d.api['myPC'].mac = 'de:ad:be:ef:00:00'
+        :param mac: The new MAC address.
+            type: str
+            default: none
+            required yes
+        :return:
         """
         self.__mac = mac
 
-# end mac setter
+    # end mac setter
 
     @property
     def client_detail(self):
         """
         Get method client_detail return's the Client's state information
-
-        Parameters:
-            None
-
-        Return Values:
-            dict: the Client's detailed state
-
-        Usage:
-            d = Dnac()
-            host = Client(d, 'myPC', mac='a1:b2:c3:d4:e5:f6')
-            pprint.PrettyPrint(d.api['myPC'].client_detail)
+        :return: dict
         """
         return self.__client_detail
 
-# end client_detail getter
+    # end client_detail getter
 
     def get_client_detail(self):
         """
-        Get method get_client_detail makes a call to Cisco DNAC, retrieves the Client's state information,
-        stores it in the client_detail attribute, and also returns the results for further processing.
-
-        Parameters:
-            None
-
-        Return Values:
-            dict: the Client's detailed state
-
-        Usage:
-            d = Dnac()
-            host = Client(d, 'myPC', mac='a1:b2:c3:d4:e5:f6')
-            pprint.PrettyPrint(d.api['myPC'].get_client_detail)
+        Get method get_client_detail makes a call to Cisco DNAC, retrieves the Client's state information, stores it in
+        the client_detail attribute, and also returns the results for further processing.
+        :return: dict
         """
         if self.__mac in ILLEGAL_MAC_ADDRS:
             raise DnacApiError(
@@ -216,32 +177,7 @@ class Client(DnacApi):
         self.__client_detail = detail
         return self.__client_detail
 
-# end get_client_detail()
+    # end get_client_detail()
 
 # end class Client()
-
-# begin unit test
-
-
-if __name__ == '__main__':
-
-    from dnac import Dnac
-    import pprint
-
-    pp = pprint.PrettyPrinter(indent=4)
-    d = Dnac()
-    c = Client(d, 'aClient', '00:50:56:8F:A9:A4')
-
-    print('Client:')
-    print()
-    print('Getting client detail...')
-    print()
-
-    c.get_client_detail()
-
-    pp.pprint(c.client_detail)
-
-    print()
-    print('Client: end unit test')
-    print()
 

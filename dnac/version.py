@@ -228,38 +228,3 @@ class Version(DnacApi):
 
 # end class Version
 
-# begin unit test
-
-
-if __name__ == '__main__':
-
-    from dnac import Dnac
-
-    d = Dnac()
-
-    dev_id = '84e4b133-2668-4705-8163-5694c84e78fb'
-    ver_id = 'f5a320d7-3cd5-463d-967e-a49a4b83c33f'
-
-    v = Version(d, dev_id, ver_id)
-
-    print('Version:')
-    print()
-
-    print('  id = ', v.id)
-    print('  created_time = ', v.created_time)
-    print('  sync_status = ', v.sync_status)
-    print('  config_files = ', v.config_files)
-    print('  type(config_files) = ', str(type(v.config_files)))
-    print()
-
-    print('Version: printing config files associated with the version:')
-    print()
-
-    print('  startup config:')
-    print(v.config_files[STARTUP_CONFIG].results)
-    print()
-    print('  running config:')
-    print(v.config_files[RUNNING_CONFIG].results)
-    print()
-
-    print('Version: unit test complete')

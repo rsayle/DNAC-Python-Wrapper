@@ -43,23 +43,18 @@ CHECK_REGEX = 'Check the regular expression'
 
 class NetworkDevice(DnacApi):
     """
-    The NetworkDevice class wraps Cisco's DNA Center network-device API
-    calls.  It inherits from class DnacApi for its attributes, and in its
-    current form, it does not extend these attributes with any others.
-    NetworkDevice does, however, provide a set of functions that handle
-    the details behind the API's various permutations.  Use this API
-    to retrieve information about network equipment under Cisco DNAC's
-    management.
+    The NetworkDevice class wraps Cisco's DNA Center network-device API calls.  It inherits from class DnacApi for its
+    attributes, and in its current form, it does not extend these attributes with any others.  NetworkDevice does,
+    however, provide a set of functions that handle the details behind the API's various permutations.  Use this API
+    to retrieve information about network equipment under Cisco DNAC's management.
 
-    NetworkDevice automatically sets the resource path for the network-
-    device API call based upon the version of Cisco DNA Center indicated
-    in the Dnac object.  Edit the configuration file dnac_config.py and
-    set DNAC_VERSION to the version of Cisco DNA Center being used.
+    NetworkDevice automatically sets the resource path for the network- device API call based upon the version of Cisco
+    DNA Center indicated in the Dnac object.  Edit the configuration file dnac_config.py and set DNAC_VERSION to the
+    version of Cisco DNA Center being used.
 
-    To use this class, instantiate a new object with a pointer to a Dnac
-    object and a name for the NetworkDevice object used to access it
-    in a Dnac object's API store (Dnac.api{}).  To make API calls with it,
-    reference it from the API store and execute one of its functions.
+    To use this class, instantiate a new object with a pointer to a Dnac object and a name for the NetworkDevice object
+    used to access it in a Dnac object's API store (Dnac.api{}).  To make API calls with it, reference it from the API
+    store and execute one of its functions.
 
     Attributes:
         dnac:
@@ -110,37 +105,25 @@ class NetworkDevice(DnacApi):
                  verify=False,
                  timeout=5):
         """
-        The __init__ class method instantiates a new NetworkDevice object.
-        Be certain that a Dnac object is first created, then pass that
-        object and a user-friendly name for the NetworkDevice instance
-        that can be used to access it in the Dnac.api dictionary.
-
-        Parameters:
-            dnac: A reference to the containing Dnac object.
-                type: Dnac object
-                default: none
-                required: Yes
-            name: A user friendly name for find this object in a Dnac
-                  instance.
-                type: str
-                default: none
-                required: yes
-            verify: A flag used to check Cisco DNAC's certificate.
-                type: boolean
-                default: False
-                required: no
-            timeout: The number of seconds to wait for Cisco DNAC's
-                     response.
-                type: int
-                default: 5
-                required: no
-
-        Return Values:
-            NetworkDevice object: a new NetworkDevice object.
-
-        Usage:
-            d = Dnac()
-            nd = NetworkDevice(d, 'network-device')
+        The __init__ class method instantiates a new NetworkDevice object. Be certain that a Dnac object is first
+        created, then pass that object and a user-friendly name for the NetworkDevice instance that can be used to
+        access it in the Dnac.api dictionary.
+        :param dnac: A reference to the containing Dnac object.
+            type: Dnac object
+            default: none
+            required: Yes
+        :param name: A user friendly name for find this object in a Dnac instance.
+            type: str
+            default: none
+            required: yes
+        :param verify: A flag used to check Cisco DNAC's certificate.
+            type: boolean
+            default: False
+            required: no
+        :param timeout: The number of seconds to wait for Cisco DNAC's response.
+            type: int
+            default: 5
+            required: no
         """
         if dnac.version in SUPPORTED_DNAC_VERSIONS:
             path = NETWORK_DEVICE_RESOURCE_PATH[dnac.version]
@@ -193,23 +176,8 @@ class NetworkDevice(DnacApi):
 
     def get_all_devices(self):
         """
-        The get_all_devices method returns every network device managed
-        by Cisco DNA Center.
-
-        Parameters:
-            none
-
-        Return Values:
-            list: A list of dictionaries.  Each dictionary contains the
-                  attributes of a single device managed by Cisco DNAC.
-
-        Usage:
-            d = Dnac()
-            nd = NetworkDevice(d, 'network-device')
-            d.api[nd.name] = nd
-            devices = d.api['network-device'].get_all_devices()
-            for device in devices:
-                pprint.PrettyPrint(device['hostname'])
+        The get_all_devices method returns every network device managed by Cisco DNA Center.
+        :return: list of dict
         """
         url = self.dnac.url + self.resource
         devices, status = self.crud.get(url,
@@ -229,24 +197,12 @@ class NetworkDevice(DnacApi):
     def get_device_by_id(self, id):
         """
         get_device_by_id finds a device in Cisco DNAC using its UUID.
-
-        Parameters:
-            id : str
-                default: none
-                required: yes
-
-        Return Values:
-            list: A list with a single dictionary for the UUID requested.
-
-        Usage:
-            d = Dnac()
-            nd = NetworkDevice(d, 'network-device')
-            d.api[nd.name] = nd
-            uuid = '84e4b133-2668-4705-8163-5694c84e78fb'
-            device = d.api['network-device'].get_device_by_id(uuid)
-            pprint.PrettyPrint(device)
+        :param id: The network device's UUID.
+            type: str
+            default: none
+            required: yes
+        :return: list with a single dict
         """
-
         url = self.dnac.url + self.resource + ('/%s' % id)
         devices, status = self.crud.get(url,
                                         headers=self.dnac.hdrs,
@@ -265,22 +221,11 @@ class NetworkDevice(DnacApi):
     def get_device_by_name(self, name):
         """
         get_device_by_name finds a device in Cisco DNAC using its hostname.
-
-        Parameters:
-            name : str
-                default: none
-                required: yes
-
-        Return Values:
-            list: A list with a single dictionary for the host requested.
-
-        Usage:
-            d = Dnac()
-            nd = NetworkDevice(d, 'network-device')
-            d.api[nd.name] =  nd
-            name = 'DC1-A3850.cisco.com'
-            device = d.api['network-device'].get_device_by_name(name)
-            pprint.PrettyPrint(device)
+        :param name: The device's hostname.
+            type : str
+            default: none
+            required: yes
+        :return: list with a single dict
         """
         host_filter = '?hostname=' + name
         url = self.dnac.url + self.resource + host_filter
@@ -305,25 +250,13 @@ class NetworkDevice(DnacApi):
 
     def get_devices_by_name_with_regex(self, regex):
         """
-        The get_devices_by_name_with_regex searches through Cisco DNA Center's
-        inventory for all devices whose hostname matches the regular expression
-        it is given.
-
-        Parameters:
-            regex: str
-                default: None
-                required: yes
-
-        Return Values:
-            list: The devices found according to the regular expression search.
-
-        Usage:
-            d = Dnac()
-            nd = NetworkDevice(d, 'network-device')
-            d.api[nd.name] =  nd
-            regex = '.*9300-switch.*'
-            devices = d.api['network-device'].get_devices_by_name_with_regex(regex)
-            pprint.PrettyPrint(devices)
+        The get_devices_by_name_with_regex searches through Cisco DNA Center's inventory for all devices whose hostname
+        matches the regular expression it is given.
+        :param regex: A regular expression to find a device or set of network devices.
+            type: str
+            default: none
+            required: yes
+        :return: list of dict
         """
         host_filter = '?hostname=' + regex
         url = self.dnac.url + self.resource + host_filter
@@ -348,22 +281,12 @@ class NetworkDevice(DnacApi):
 
     def get_id_by_device_name(self, name):
         """
-        Method get_id_by_device_name finds a device in Cisco DNA Center by
-        its hostname and returns its UUID.
-
-        Parameters:
-            name: str
-                default: none
-                required: yes
-
-        Return Values:
-            str: The device's UUID in Cisco DNAC.
-
-        Usage:
-            d = Dnac()
-            nd = NetworkDevice(d, 'network-device')
-            id = d.api['network-device'].get_id_by_device_name('R1')
-            print id
+        Method get_id_by_device_name finds a device in Cisco DNA Center by its hostname and returns its UUID.
+        :param name: The network device's hostname.
+            type: str
+            default: none
+            required: yes
+        :return:
         """
         device = self.get_device_by_name(name)
         return device['id']
@@ -372,23 +295,12 @@ class NetworkDevice(DnacApi):
 
     def get_device_by_ip(self, ip):
         """
-        get_device_by_ip finds a device in Cisco DNAC using its managed IP
-        address.
-
-        Parameters:
-            ip : str
-                default: none
-                required: yes
-
-        Return Values:
-            list: A list with a single dictionary for the requested IP.
-
-        Usage:
-            d = Dnac()
-            nd = NetworkDevice(d, 'network-device')
-            ip = '10.255.1.10'
-            device = d.api['network-device'].get_device_by_ip(ip)
-            print str(device)
+        get_device_by_ip finds a device in Cisco DNAC using its managed IP address.
+        :param ip: The device's IP address.
+            type: str
+            default: none
+            required: yest
+        :return:
         """
         url = self.dnac.url + self.resource + \
             ('?managementIpAddress=%s' % ip)
@@ -413,25 +325,13 @@ class NetworkDevice(DnacApi):
 
     def get_devices_by_ip_with_regex(self, regex):
         """
-        The get_devices_by_ip_with_regex searches through Cisco DNA Center's
-        inventory for all devices whose management IP address matches the
-        regular expression passed.
-
-        Parameters:
-            regex: str
-                default: None
-                required: yes
-
-        Return Values:
-            list: The devices found according to the regular expression search.
-
-        Usage:
-            d = Dnac()
-            nd = NetworkDevice(d, 'network-device')
-            d.api[nd.name] =  nd
-            regex = '192.168.*.*'
-            devices = d.api['network-device'].get_devices_by_ip_with_regex(regex)
-            pprint.PrettyPrint(devices)
+        The get_devices_by_ip_with_regex searches through Cisco DNA Center's inventory for all devices whose
+        management IP address matches the regular expression passed.
+        :param regex: A regular expression of the IP addresses to search.
+            type: str
+            default: none
+            required: yes
+        :return: list of dict
         """
         url = self.dnac.url + self.resource + \
               ('?managementIpAddress=%s' % regex)
@@ -457,23 +357,12 @@ class NetworkDevice(DnacApi):
 
     def get_vlans_by_device_id(self, id):
         """
-        get_vlans_by_device_id obtains the list of VLANs configured on the
-        device given by its UUID.
-
-        Parameters:
-            id : str
-                default: none
-                required: yes
-
-        Return Values:
-            list: The list of VLANs on the network device.
-
-        Usage:
-            d = Dnac()
-            nd = NetworkDevice(d, 'network-device')
-            id = 'a0116157-3a02-4b8d-ad89-45f45ecad5da'
-            vlans = d.api['network-device'].get_vlans_by_device_id(id)
-            print str(vlans)
+        get_vlans_by_device_id obtains the list of VLANs configured on the device given by its UUID.
+        :param id: The target device's UUID.
+            type: str
+            default: none
+            required: yest
+        :return: list
         """
         url = self.dnac.url + self.resource + ('/%s/l2vlan' % id)
         vlans, status = self.crud.get(url,
@@ -492,23 +381,12 @@ class NetworkDevice(DnacApi):
 
     def get_vlans_by_device_name(self, name):
         """
-        get_vlans_by_device_name obtains the list of VLANs configured on the
-        device given by its hostname.
-
-        Parameters:
-            name : str
-                default: none
-                required: yes
-
-        Return Values:
-            list: The list of VLANs on the network device.
-
-        Usage:
-            d = Dnac()
-            nd = NetworkDevice(d, 'network-device')
-            name = 'S1'
-            vlans = d.api['network-device'].get_vlans_by_device_name(name)
-            pprint.PrettyPrint(vlans)
+        get_vlans_by_device_name obtains the list of VLANs configured on the device given by its hostname.
+        :param name: The device's hostname.
+            type: str
+            default: none
+            required: yes
+        :return: list
         """
         device = self.get_device_by_name(name)
         url = self.dnac.url + self.resource + \
@@ -529,23 +407,12 @@ class NetworkDevice(DnacApi):
 
     def get_vlans_by_device_ip(self, ip):
         """
-        get_vlans_by_device_ip obtains the list of VLANs configured on the
-        device given its IP address.
-
-        Parameters:
-            ip : str
-                default: none
-                required: yes
-
-        Return Values:
-            list: The list of VLANs on the network device.
-
-        Usage:
-            d = Dnac()
-            nd = NetworkDevice(d, 'network-device')
-            ip = '10.255.1.10'
-            vlans = d.api['network-device'].get_vlans_by_device_ip(ip)
-            pprint.PrettyPrint(vlans)
+        get_vlans_by_device_ip obtains the list of VLANs configured on the device given its IP address.
+        :param ip: The target device's IP management IP address.
+            type: str
+            default: none
+            required: yest
+        :return: list
         """
         device = self.get_device_by_ip(ip)
         url = self.dnac.url + self.resource + \
@@ -566,24 +433,13 @@ class NetworkDevice(DnacApi):
 
     def get_device_detail_by_name(self, name):
         """
-        get_device_detail_by_name searches for a devices using its hostname
-        and returns a detailed listing of its current configuration state
-        and health.
-
-        Parameters:
-            name: str
-                default: None
-                required: yes
-
-        Return Values:
-            dict: A dictionary of the device's current state
-
-        Usage:
-            d = Dnac()
-            nd = NetworkDevice(d, 'network-device')
-            hostname = 'c9407.cisco.com'
-            details = d.api['network-device'].get_device_detail_by_name(hostname)
-            pprint.PrettyPrint(details)
+        get_device_detail_by_name searches for a devices using its hostname and returns a detailed listing of its
+        current configuration state and health.
+        :param name: The network device's hostname.
+            type: str
+            default: none
+            required: yest
+        :return: dict
         """
         if not self.__detail_resource:
             raise DnacError(
@@ -610,24 +466,13 @@ class NetworkDevice(DnacApi):
 
     def get_device_detail_by_id(self, id):
         """
-        get_device_detail_by_id searches for a devices using its uuid
-        and returns a detailed listing of its current configuration state
-        and health.
-
-        Parameters:
-            id: str
-                default: None
-                required: yes
-
-        Return Values:
-            dict: A dictionary of the device's current state
-
-        Usage:
-            d = Dnac()
-            nd = NetworkDevice(d, 'network-device')
-            uuid = '84e4b133-2668-4705-8163-5694c84e78fb'
-            details = d.api['network-device'].get_device_detail_by_id(uuid)
-            pprint.PrettyPrint(details)
+        get_device_detail_by_id searches for a devices using its uuid and returns a detailed listing of its current
+        configuration state and health.
+        :param id: The device's UUID.
+            type: str
+            default: none
+            required: yest
+        :return: dict
         """
         if not self.__detail_resource:
             raise DnacError(
@@ -654,24 +499,13 @@ class NetworkDevice(DnacApi):
 
     def get_device_detail_by_mac(self, mac):
         """
-        get_device_detail_by_mac searches for a devices using its MAC address
-        and returns a detailed listing of its current configuration state
-        and health.
-
-        Parameters:
-            mac: str
-                default: None
-                required: yes
-
-        Return Values:
-            dict: A dictionary of the device's current state
-
-        Usage:
-            d = Dnac()
-            nd = NetworkDevice(d, 'network-device')
-            mac = 'DE:AD:BE:EF:01:02'
-            details = d.api['network-device'].get_device_detail_by_mac(mac)
-            pprint.PrettyPrint(details)
+        get_device_detail_by_mac searches for a devices using its MAC address and returns a detailed listing of its
+        current configuration state and health.
+        :param mac: The network device's MAC address.
+            type: str
+            default: none
+            required: yes
+        :return: dict
         """
         if not self.__detail_resource:
             raise DnacError(
@@ -698,124 +532,3 @@ class NetworkDevice(DnacApi):
 
 # end class NetworkDevice()
 
-# begin unit test
-
-
-if __name__ == '__main__':
-
-    from dnac import Dnac
-    import pprint
-
-    pp = pprint.PrettyPrinter(indent=4)
-    d = Dnac()
-    ndName = 'network-device'
-    nd = NetworkDevice(d, ndName)
-
-    print('Network Device:')
-    print()
-    print('  dnac     = ' + str(type(nd.dnac)))
-    print('  name     = ' + nd.name)
-    print('  resource = ' + nd.resource)
-    print('  verify   = ' + str(nd.verify))
-    print('  timeout  = ' + str(nd.timeout))
-    print()
-    print('Getting all network devices from Cisco DNAC...')
-
-    devs = nd.get_all_devices()
-
-    print()
-    print('  devs = ' + str(type(devs)))
-    print('  devs = ')
-    pp.pprint(devs)
-    print()
-    print('Getting a network device by its UUID...')
-    
-    uuid = devs[0]['id']
-    print('  id = ' + uuid)
-    devs = nd.get_device_by_id(uuid)
-
-    print()
-    print('  devs = ')
-    pp.pprint(devs)
-    print()
-    print('Getting network device DC1-A3850.cisco.com by name...')
-
-    devs = nd.get_device_by_name('DC1-A3850.cisco.com')
-
-    print()
-    print('  devs = ')
-    pp.pprint(devs)
-    print()
-
-    print('Getting network device DC1-A3850.cisco.com by IP...')
-
-    devs = nd.get_device_by_ip('10.255.1.10')
-
-    print()
-    print('  devs = ')
-    pp.pprint(devs)
-    print()
-
-    print('Getting device\'s VLANs by its UUID...')
-    
-    uuid = devs['id']
-    print('  id = ' + uuid)
-    vlans = nd.get_vlans_by_device_id(uuid)
-
-    print()
-    print('  vlans = ')
-    pp.pprint(vlans)
-    print()
-    print('Getting device DC1-A3850.cisco.com\'s VLANs by its name...')
-
-    vlans = nd.get_vlans_by_device_name('DC1-A3850.cisco.com')
-
-    print()
-    print('  vlans = ')
-    pp.pprint(vlans)
-    print()
-    print('Getting device VLANs by its IP...')
-
-    vlans = nd.get_vlans_by_device_ip('10.255.1.10')
-
-    print('  vlans = ')
-    pp.pprint(vlans)
-
-    print()
-    print('Getting device detail by name for DC1-A3850.cisco.com...')
-    print()
-
-    detail = nd.get_device_detail_by_name('DC1-A3850.cisco.com')
-    pp.pprint(detail)
-
-    print()
-    print('Getting device detail by id for %s...' % uuid)
-    print()
-
-    detail = nd.get_device_detail_by_id(uuid)
-    pp.pprint(detail)
-
-    print()
-    print('Getting device detail by mac for 20:37:06:CF:C5:00...')
-    print()
-
-    detail = nd.get_device_detail_by_mac('20:37:06:CF:C5:00')
-    pp.pprint(detail)
-
-    print()
-    print('Getting devices by name with regex .*dc2.* ...')
-    print()
-
-    devices = nd.get_devices_by_name_with_regex('.*dc2.*')
-    pp.pprint(devices)
-
-    print()
-    print('Getting devices by ip with regex 10.255.*.* ...')
-    print()
-
-    devices = nd.get_devices_by_ip_with_regex('10.255.*.*')
-    pp.pprint(devices)
-
-    print()
-    print('NetworkDevice: unit test complete.')
-    print()

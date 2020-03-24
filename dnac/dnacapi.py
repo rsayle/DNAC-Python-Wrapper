@@ -6,16 +6,13 @@ MODULE = 'dnacapi.py'
 
 class DnacApiError(Exception):
     """
-    DnacApiError is derived from Exception and used as the sole exception
-    that all children classes of DnacApi.  In other words, object inherited
-    from DnacApi, e.g. NetworkDevice and CommandRunner, all raise
-    DnacApiError exceptions instead of defining their own classes.
+    DnacApiError is derived from Exception and used as the sole exception that all children classes of DnacApi.
+    In other words, object inherited from DnacApi, e.g. NetworkDevice and CommandRunner, all raise DnacApiError
+    exceptions instead of defining their own classes.
 
-    DnacApiError has no attributes itself, but its initialization method
-    includes a rich parameter set to indicate the problem, where it
-    happened and what its cause might be.  See the documentation for
-    the __init__ method for an explanation of each parameter and an example
-    of how to raise this exception.
+    DnacApiError has no attributes itself, but its initialization method includes a rich parameter set to indicate the
+    problem, where it happened and what its cause might be.  See the documentation for the __init__ method for an
+    explanation of each parameter and an example of how to raise this exception.
 
     Attributes:
         none

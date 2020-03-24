@@ -74,33 +74,22 @@ class ConfigArchiveSettings(DnacApi):
                  timeout=5):
         """
         The ConfigArchiveSettings __init__ method creates a new object with blank settings.
-
-        Parameters:
-            dnac: A reference to the containing Dnac object.
-                type: Dnac object
-                default: none
-                required: yes
-            name: A user friendly name for finding this object in a Dnac
-                  instance.
-                type: str
-                default: none
-                required: yes
-            verify: A flag used to check Cisco DNAC's certificate.
-                type: boolean
-                default: False
-                required: no
-            timeout: The number of seconds to wait for Cisco DNAC's
-                     response.
-                type: int
-                default: 5
-                required: no
-
-        Return Values:
-            ConfigArchive object: The newly constructed ConfigArchive
-
-        Usage:
-            d = Dnac()
-            archive_settings = ConfigArchiveSettings(d, d.name)
+        :param dnac: A reference to the containing Dnac object.
+            type: Dnac object
+            default: none
+            required: yes
+        :param name: A user friendly name for finding this object in a Dnac instance.
+            type: str
+            default: none
+            required: yes
+        :param verify: A flag used to check Cisco DNAC's certificate.
+            type: boolean
+            default: False
+            required: no
+        :param timeout: The number of seconds to wait for Cisco DNAC's response.
+            type: int
+            default: 5
+            required: no
         """
         if dnac.version in SUPPORTED_DNAC_VERSIONS:
             path = ARCHIVE_SETTINGS_RESOURCE_PATH[dnac.version]
@@ -123,17 +112,7 @@ class ConfigArchiveSettings(DnacApi):
         """
         The settings getter method makes a call to the Cisco DNAC cluster, stores the results in the __settings
         attribute and then returns value to the calling program.
-
-        Parameters:
-            None
-
-        Return Values:
-            dict: the archive's current settings
-
-        Usage:
-            d = Dnac()
-            archive_settings = ConfigArchiveSettings(d, d.name)
-            print(archive_settings.settings)
+        :return: dict
         """
         # make a GET call to DNAC for the current settings
         url = self.dnac.url + ARCHIVE_SETTINGS_RESOURCE_PATH[self.dnac.version]
@@ -155,21 +134,11 @@ class ConfigArchiveSettings(DnacApi):
     def settings(self, settings):
         """
         The settings setter method changes the objects value for its __settings attribute.
-
-        Parameters:
-            settings: The new archive settings for the Cisco DNA Center instance.
-                type: dict
-                default: none
-                required: yes
-
-        Return Values:
-            None
-
-        Usage:
-            d = Dnac()
-            archive_settings = ConfigArchiveSettings(d, d.name)
-            new_settings = new_settings = {'timeout': time, 'noOfDays': days, 'noOfVersion': vers}
-            archive_settings.settings = new_settings
+        :param settings: The new archive settings for the Cisco DNA Center instance.
+            type: dict
+            default: none
+            required: yes
+        :return: none
         """
         self.__settings = settings
         url = self.dnac.url + ARCHIVE_SETTINGS_RESOURCE_PATH[self.dnac.version]
@@ -189,30 +158,3 @@ class ConfigArchiveSettings(DnacApi):
     # end settings setter
 
 # end class ConfigArchiveSettings
-
-# begin unit test
-
-if __name__ == '__main__':
-
-    from dnac import Dnac
-
-    d = Dnac()
-    a = ConfigArchiveSettings(d, d.name)
-
-    print('ConfigArchiveSettings:')
-    print()
-    print('  name =     ', a.name)
-    print('  settings = ', a.settings)
-    print()
-
-    print('ConfigArchive: changing archive settings:')
-    print()
-
-    new = {'timeout': 360001, 'noOfDays': 30, 'noOfVersion': 10}
-    a.settings = new
-
-    print()
-    print('  name =     ', a.name)
-    print('  settings = ', a.settings)
-    print()
-    print('ConfigArchiveSettings: unit test complete.')

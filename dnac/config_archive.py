@@ -69,35 +69,23 @@ class ConfigArchive(DnacApi):
                  timeout=5):
         """
         ConfigArchive's __init__ method initializes the object with an empty archive.
-
-        Parameters:
-            dnac: A reference to the containing Dnac object.
-                type: Dnac object
-                default: none
-                required: yes
-            name: A user friendly name for finding this object in a Dnac
-                  instance.
-                type: str
-                default: none
-                required: yes
-            verify: A flag used to check Cisco DNAC's certificate.
-                type: boolean
-                default: False
-                required: no
-            timeout: The number of seconds to wait for Cisco DNAC's
-                     response.
-                type: int
-                default: 5
-                required: no
-
-        Return Values:
-            ConfigArchive object: The newly constructed ConfigArchive
-
-        Usage:
-            d = Dnac()
-            dnac_archive = ConfigArchive(d, 'archive')
+        :param dnac: A reference to the containing Dnac object.
+            type: Dnac object
+            default: none
+            required: yes
+        :param name: A user friendly name for finding this object in a Dnac instance.
+            type: str
+            default: none
+            required: yes
+        :param verify: A flag used to check Cisco DNAC's certificate.
+            type: boolean
+            default: False
+            required: no
+        :param timeout: The number of seconds to wait for Cisco DNAC's response.
+            type: int
+            default: 5
+            required: no
         """
-
         if dnac.version in SUPPORTED_DNAC_VERSIONS:
             path = ARCHIVE_RESOURCE_PATH[dnac.version]
         else:
@@ -115,18 +103,7 @@ class ConfigArchive(DnacApi):
     def archive(self):
         """
         Get method archive returns the __archive dictionary.
-
-        Parameters:
-            None
-
-        Return Values:
-            dict: The DeviceArchives keyed by a device's UUID.
-
-        Usage:
-            d = Dnac()
-            dnac_archive = ConfigArchive(d, 'archive')
-            dnac_archive.load_all_archives()
-            a_device_archive = dnac_archive.archive[<a_device_uuid>]
+        :return: dict
         """
         return self.__archive
 
@@ -136,17 +113,7 @@ class ConfigArchive(DnacApi):
         """
         ConfigArchive uses its load_all_archives method to retrieve the entire configuration archive from a Cisco
         DNA Center cluster.
-
-        Parameters:
-            None
-
-        Return Values:
-            dict: the device archive
-
-        Usage:
-            d = Dnac()
-            dnac_archive = ConfigArchive(d, 'archive')
-            dnac_archive.load_all_archives()
+        :return: dict
         """
         url = self.dnac.url + self.resource
         archives, status = self.crud.get(url,
@@ -171,21 +138,11 @@ class ConfigArchive(DnacApi):
         The load_device_archive instructs a ConfigArchive to pull the configuration archive of a single device.
         If the archive already contains the device's config, ConfigArchive first deletes the existing archive and
         then it reloads the information from Cisco DNA Center.
-
-        Parameters:
-            device: the target device's UUID
-                type: str
-                default: none
-                required: yes
-
-        Return Values:
-            dict: reference to the newly loaded device archive
-
-        Usage:
-            d = Dnac()
-            device = NetworkDevice(d, 'device')
-            dnac_archive = ConfigArchive(d, 'archive')
-            device_archive = dnac_archive.load_device_archive(device.get_device_by_name('aHostName')['id'])
+        :param device: The target device's UUID.
+            type: str
+            default: none
+            required: yes
+        :return: dict
         """
         if device in self.__archive.keys():
             del self.__archive[device]
@@ -200,21 +157,11 @@ class ConfigArchive(DnacApi):
         """
         The add_new_archive method creates a new DeviceArchive from a device's UUID and then stores it in the
         ConfigArchive's archive attribute.
-
-        Parameters:
-            device: A device's UUID
-                type: str
-                default: none
-                required: yes
-
-        Return Values:
-            A new DeviceArchive object
-
-        Usage:
-            d = Dnac()
-            device = NetworkDevice(d, 'device')
-            dnac_archive = ConfigArchive(d, 'archive')
-            device_archive = dnac_archive.add_new_device_archive(device.get_device_by_name('aHostName')['id'])
+        :param device: A device's UUID.
+            type: str
+            default: none
+            required: yes
+        :return: DeviceArchive object
         """
         if device in self.__archive.keys():
             raise DnacApiError(MODULE, 'add_new_device_archive', ARCHIVE_ALREADY_EXISTS_ERROR, '',
@@ -227,82 +174,3 @@ class ConfigArchive(DnacApi):
 
 # end class ConfigArchive()
 
-
-if __name__ == '__main__':
-
-    from dnac import Dnac
-    from dnac.networkdevice import NetworkDevice
-    from dnac.timestamp import TimeStamp
-
-    d = Dnac()
-    nd = NetworkDevice(d, 'device')
-    ts = TimeStamp()
-    ca = ConfigArchive(d, d.name)
-
-    print('ConfigArchive:')
-    print()
-    print('  archive      = ', ca.archive)
-    print('  len(archive) = %i' % len(ca.archive))
-    print()
-
-    print('ConfigArchive: load all archives:')
-    print()
-
-    ca.load_all_archives()
-
-    print()
-    print('  archive      = ', ca.archive)
-    print('  len(archive) = %i' % len(ca.archive))
-    print()
-
-    print('Config Archive: archive contents :')
-    for device in ca.archive:
-        print()
-        device_archive = ca.archive[device]
-        print('  name     = ', device_archive.name)
-        print('  device   = ', device_archive.device)
-        nd.get_device_by_id(device_archive.device)
-        print('  hostname = ', nd.devices['hostname'])
-        print('  versions = ', len(device_archive.versions))
-        for version in device_archive.versions:
-            print()
-            print('    id           = ', version.id)
-            ts.timestamp = version.created_time
-            print('    created time = ', ts.local_timestamp())
-            print('    files        = %i' % len(version.config_files))
-            print('    config types = ')
-            for key in version.config_files.keys():
-                print('      ', key)
-    print()
-
-    print('ConfigArchive: loading archive for 84e4b133-2668-4705-8163-5694c84e78fb')
-    print()
-
-    ca.load_device_archive('84e4b133-2668-4705-8163-5694c84e78fb')
-
-    print()
-    print('  archive      = ', ca.archive)
-    print('  len(archive) = %i' % len(ca.archive))
-    print()
-
-    print('Config Archive: archive contents for 84e4b133-2668-4705-8163-5694c84e78fb:')
-    for device in ca.archive:
-        print()
-        device_archive = ca.archive[device]
-        print('  name     = ', device_archive.name)
-        print('  device   = ', device_archive.device)
-        nd.get_device_by_id(device_archive.device)
-        print('  hostname = ', nd.devices['hostname'])
-        print('  versions = ', len(device_archive.versions))
-        for version in device_archive.versions:
-            print()
-            print('    id           = ', version.id)
-            ts.timestamp = version.created_time
-            print('    created time = ', ts.local_timestamp())
-            print('    files        = %i' % len(version.config_files))
-            print('    config types = ')
-            for key in version.config_files.keys():
-                print('      ', key)
-    print()
-
-    print('ConfigArchive: unit test completed')
