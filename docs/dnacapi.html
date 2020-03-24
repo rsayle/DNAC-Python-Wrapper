@@ -39,12 +39,9 @@
 <font color="#000000" face="helvetica, arial"><a name="DnacApi">class <strong>DnacApi</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt><a href="#DnacApi">DnacApi</a>&nbsp;is&nbsp;a&nbsp;virtual&nbsp;class&nbsp;for&nbsp;other&nbsp;classes&nbsp;that&nbsp;will&nbsp;implement<br>
-API&nbsp;calls&nbsp;to&nbsp;Cisco&nbsp;DNA&nbsp;Center.&nbsp;&nbsp;Inherit&nbsp;from&nbsp;this&nbsp;class&nbsp;when&nbsp;creating<br>
-other&nbsp;classes&nbsp;to&nbsp;perform&nbsp;API&nbsp;requests.&nbsp;&nbsp;This&nbsp;class&nbsp;is&nbsp;not&nbsp;intended<br>
-to&nbsp;be&nbsp;directly&nbsp;instantiated&nbsp;and&nbsp;provides&nbsp;no&nbsp;logic&nbsp;for&nbsp;making&nbsp;API<br>
-calls&nbsp;nor&nbsp;handling&nbsp;the&nbsp;data&nbsp;returned.&nbsp;&nbsp;Child&nbsp;instances&nbsp;perform<br>
-these&nbsp;tasks.<br>
+<td colspan=2><tt><a href="#DnacApi">DnacApi</a>&nbsp;is&nbsp;a&nbsp;virtual&nbsp;class&nbsp;for&nbsp;other&nbsp;classes&nbsp;that&nbsp;will&nbsp;implement&nbsp;API&nbsp;calls&nbsp;to&nbsp;Cisco&nbsp;DNA&nbsp;Center.&nbsp;&nbsp;Inherit&nbsp;from&nbsp;this<br>
+class&nbsp;when&nbsp;creating&nbsp;other&nbsp;classes&nbsp;to&nbsp;perform&nbsp;API&nbsp;requests.&nbsp;&nbsp;This&nbsp;class&nbsp;is&nbsp;not&nbsp;intended&nbsp;to&nbsp;be&nbsp;directly&nbsp;instantiated<br>
+and&nbsp;provides&nbsp;no&nbsp;logic&nbsp;for&nbsp;making&nbsp;API&nbsp;calls&nbsp;nor&nbsp;handling&nbsp;the&nbsp;data&nbsp;returned.&nbsp;&nbsp;Child&nbsp;instances&nbsp;perform&nbsp;these&nbsp;tasks.<br>
 &nbsp;<br>
 Attributes:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dnac:&nbsp;A&nbsp;reference&nbsp;to&nbsp;the&nbsp;Dnac&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;that&nbsp;houses&nbsp;all&nbsp;the&nbsp;DnacApis.<br>
@@ -81,42 +78,33 @@ Attributes:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>
-<dl><dt><a name="DnacApi-__init__"><strong>__init__</strong></a>(self, dnac, name, resource<font color="#909090">=''</font>, verify<font color="#909090">=False</font>, timeout<font color="#909090">=5</font>)</dt><dd><tt>Class&nbsp;method&nbsp;__init__&nbsp;creates&nbsp;a&nbsp;new&nbsp;<a href="#DnacApi">DnacApi</a>&nbsp;objects&nbsp;and&nbsp;sets&nbsp;its<br>
-attribute&nbsp;values.&nbsp;&nbsp;When&nbsp;instantiating&nbsp;a&nbsp;new&nbsp;<a href="#DnacApi">DnacApi</a>&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;provide<br>
-a&nbsp;reference&nbsp;to&nbsp;the&nbsp;Dnac&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;that&nbsp;holds&nbsp;the&nbsp;APIs,&nbsp;a&nbsp;name&nbsp;used<br>
-to&nbsp;access&nbsp;this&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;from&nbsp;Dnac.api{},&nbsp;and&nbsp;the&nbsp;resource&nbsp;path&nbsp;for<br>
-the&nbsp;API&nbsp;call&nbsp;itself.&nbsp;&nbsp;In&nbsp;addition,&nbsp;the&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;adds&nbsp;itself&nbsp;into<br>
+<dl><dt><a name="DnacApi-__init__"><strong>__init__</strong></a>(self, dnac, name, resource<font color="#909090">=''</font>, verify<font color="#909090">=False</font>, timeout<font color="#909090">=5</font>)</dt><dd><tt>Class&nbsp;method&nbsp;__init__&nbsp;creates&nbsp;a&nbsp;new&nbsp;<a href="#DnacApi">DnacApi</a>&nbsp;objects&nbsp;and&nbsp;sets&nbsp;its&nbsp;attribute&nbsp;values.&nbsp;&nbsp;When&nbsp;instantiating&nbsp;a&nbsp;new<br>
+<a href="#DnacApi">DnacApi</a>&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;provide&nbsp;a&nbsp;reference&nbsp;to&nbsp;the&nbsp;Dnac&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;that&nbsp;holds&nbsp;the&nbsp;APIs,&nbsp;a&nbsp;name&nbsp;used&nbsp;to&nbsp;access&nbsp;this&nbsp;<a href="__builtin__.html#object">object</a><br>
+from&nbsp;Dnac.api{},&nbsp;and&nbsp;the&nbsp;resource&nbsp;path&nbsp;for&nbsp;the&nbsp;API&nbsp;call&nbsp;itself.&nbsp;&nbsp;In&nbsp;addition,&nbsp;the&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;adds&nbsp;itself&nbsp;into<br>
 Dnac.api{}&nbsp;for&nbsp;reference&nbsp;when&nbsp;making&nbsp;API&nbsp;calls.<br>
 &nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dnac:&nbsp;A&nbsp;reference&nbsp;to&nbsp;the&nbsp;containing&nbsp;Dnac&nbsp;<a href="__builtin__.html#object">object</a>.<br>
+:param&nbsp;dnac:&nbsp;A&nbsp;reference&nbsp;to&nbsp;the&nbsp;containing&nbsp;Dnac&nbsp;<a href="__builtin__.html#object">object</a>.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;Dnac&nbsp;<a href="__builtin__.html#object">object</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;name:&nbsp;A&nbsp;user&nbsp;friendly&nbsp;name&nbsp;for&nbsp;find&nbsp;this&nbsp;API&nbsp;in&nbsp;the&nbsp;Dnac&nbsp;<a href="__builtin__.html#object">object</a>.<br>
+:param&nbsp;name:&nbsp;A&nbsp;user&nbsp;friendly&nbsp;name&nbsp;for&nbsp;find&nbsp;this&nbsp;API&nbsp;in&nbsp;the&nbsp;Dnac&nbsp;<a href="__builtin__.html#object">object</a>.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;resource:&nbsp;The&nbsp;API&nbsp;call&nbsp;to&nbsp;Cisco&nbsp;DNAC.<br>
+:param&nbsp;resource:&nbsp;The&nbsp;API&nbsp;call&nbsp;to&nbsp;Cisco&nbsp;DNAC.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes,&nbsp;as&nbsp;a&nbsp;keyword&nbsp;argument<br>
-&nbsp;&nbsp;&nbsp;&nbsp;verify:&nbsp;A&nbsp;flag&nbsp;used&nbsp;to&nbsp;check&nbsp;Cisco&nbsp;DNAC's&nbsp;certificate.<br>
+:param&nbsp;verify:&nbsp;A&nbsp;flag&nbsp;used&nbsp;to&nbsp;check&nbsp;Cisco&nbsp;DNAC's&nbsp;certificate.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;boolean<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;False<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
-&nbsp;&nbsp;&nbsp;&nbsp;timeout:&nbsp;The&nbsp;number&nbsp;of&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;Cisco&nbsp;DNAC's<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;response&nbsp;before&nbsp;the&nbsp;cluster&nbsp;is&nbsp;declared&nbsp;unreachable<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;unavailable.<br>
+:param&nbsp;timeout:&nbsp;The&nbsp;number&nbsp;of&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;Cisco&nbsp;DNAC's&nbsp;response&nbsp;before&nbsp;the&nbsp;cluster&nbsp;is&nbsp;declared<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unreachable&nbsp;or&nbsp;unavailable.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;5<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#DnacApi">DnacApi</a>&nbsp;<a href="__builtin__.html#object">object</a>:&nbsp;a&nbsp;new&nbsp;<a href="#DnacApi">DnacApi</a>&nbsp;<a href="__builtin__.html#object">object</a>.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None.&nbsp;&nbsp;This&nbsp;is&nbsp;a&nbsp;virtual&nbsp;class.</tt></dd></dl>
+:return:&nbsp;<a href="#DnacApi">DnacApi</a>&nbsp;<a href="__builtin__.html#object">object</a></tt></dd></dl>
 
 <hr>
 Data descriptors defined here:<br>
@@ -127,119 +115,38 @@ Data descriptors defined here:<br>
 <dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
 </dl>
 <dl><dt><strong>crud</strong></dt>
-<dd><tt>Get&nbsp;method&nbsp;crud&nbsp;returns&nbsp;the&nbsp;reference&nbsp;to&nbsp;the&nbsp;Crud&nbsp;object&nbsp;this&nbsp;class<br>
-uses&nbsp;to&nbsp;make&nbsp;RESTful&nbsp;API&nbsp;calls.&nbsp;&nbsp;Use&nbsp;this&nbsp;function&nbsp;in&nbsp;order&nbsp;to<br>
-access&nbsp;the&nbsp;Crud&nbsp;object's&nbsp;get,&nbsp;put,&nbsp;post&nbsp;and&nbsp;delete&nbsp;methods.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Crud&nbsp;object:&nbsp;The&nbsp;wrapped&nbsp;Crud&nbsp;object<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;url&nbsp;=&nbsp;self.<strong>dnac</strong>.url&nbsp;+&nbsp;self.<strong>resource</strong><br>
-&nbsp;&nbsp;&nbsp;&nbsp;devices,&nbsp;status&nbsp;=&nbsp;self.<strong>crud</strong>.get(url,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;headers=self.<strong>dnac</strong>.hdrs,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verify=self.<strong>verify</strong>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;timeout=self.<strong>timeout</strong>)</tt></dd>
+<dd><tt>Get&nbsp;method&nbsp;crud&nbsp;returns&nbsp;the&nbsp;reference&nbsp;to&nbsp;the&nbsp;Crud&nbsp;object&nbsp;this&nbsp;class&nbsp;uses&nbsp;to&nbsp;make&nbsp;RESTful&nbsp;API&nbsp;calls.&nbsp;&nbsp;Use&nbsp;this<br>
+function&nbsp;in&nbsp;order&nbsp;to&nbsp;access&nbsp;the&nbsp;Crud&nbsp;object's&nbsp;get,&nbsp;put,&nbsp;post&nbsp;and&nbsp;delete&nbsp;methods.<br>
+:return:&nbsp;Crud&nbsp;object</tt></dd>
 </dl>
 <dl><dt><strong>dnac</strong></dt>
-<dd><tt>Get&nbsp;method&nbsp;dnac&nbsp;returns&nbsp;the&nbsp;reference&nbsp;to&nbsp;the&nbsp;Dnac&nbsp;instance&nbsp;that<br>
-stores&nbsp;this&nbsp;object.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Dnac&nbsp;object:&nbsp;The&nbsp;Dnac&nbsp;object&nbsp;container.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;Do&nbsp;not&nbsp;create&nbsp;a&nbsp;DnacApi&nbsp;object;&nbsp;inherit&nbsp;from&nbsp;it&nbsp;instead<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dapi&nbsp;=&nbsp;DnacApi(dnac,&nbsp;name,&nbsp;resource)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dnac&nbsp;=&nbsp;dapi.dnac</tt></dd>
+<dd><tt>Get&nbsp;method&nbsp;dnac&nbsp;returns&nbsp;the&nbsp;reference&nbsp;to&nbsp;the&nbsp;Dnac&nbsp;instance&nbsp;that&nbsp;stores&nbsp;this&nbsp;object.<br>
+:return:&nbsp;Dnac&nbsp;object</tt></dd>
 </dl>
 <dl><dt><strong>name</strong></dt>
-<dd><tt>Get&nbsp;method&nbsp;name&nbsp;returns&nbsp;__name,&nbsp;a&nbsp;user&nbsp;friendly&nbsp;name&nbsp;for&nbsp;accessing<br>
-this&nbsp;object&nbsp;in&nbsp;Dnac's&nbsp;API&nbsp;store,&nbsp;namely&nbsp;Dnac.api{}<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;The&nbsp;DnacApi&nbsp;object's&nbsp;name<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;Do&nbsp;not&nbsp;create&nbsp;a&nbsp;DnacApi&nbsp;object;&nbsp;inherit&nbsp;from&nbsp;it&nbsp;instead<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dapi&nbsp;=&nbsp;DnacApi(dnac,&nbsp;name,&nbsp;resource)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dapi.name</tt></dd>
+<dd><tt>Get&nbsp;method&nbsp;name&nbsp;returns&nbsp;__name,&nbsp;a&nbsp;user&nbsp;friendly&nbsp;name&nbsp;for&nbsp;accessing&nbsp;this&nbsp;object&nbsp;in&nbsp;Dnac's&nbsp;API&nbsp;store,&nbsp;namely<br>
+Dnac.api{}<br>
+:return:&nbsp;str</tt></dd>
 </dl>
 <dl><dt><strong>resource</strong></dt>
-<dd><tt>Get&nbsp;method&nbsp;resource&nbsp;returns&nbsp;__resource,&nbsp;which&nbsp;is&nbsp;the&nbsp;API&nbsp;call&nbsp;to<br>
-Cisco&nbsp;DNAC.&nbsp;&nbsp;In&nbsp;child&nbsp;classes,&nbsp;use&nbsp;this&nbsp;method&nbsp;to&nbsp;form&nbsp;requests&nbsp;by<br>
-appending&nbsp;it&nbsp;to&nbsp;Cisco&nbsp;DNAC's&nbsp;base&nbsp;url,&nbsp;i.e.&nbsp;Dnac.url.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;The&nbsp;API&nbsp;call.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;Do&nbsp;not&nbsp;create&nbsp;a&nbsp;DnacApi&nbsp;object;&nbsp;inherit&nbsp;from&nbsp;it&nbsp;instead<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dapi&nbsp;=&nbsp;DnacApi(d,&nbsp;name,&nbsp;resource)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;api_call&nbsp;=&nbsp;d.url&nbsp;+&nbsp;dapi.resource</tt></dd>
+<dd><tt>Get&nbsp;method&nbsp;resource&nbsp;returns&nbsp;__resource,&nbsp;which&nbsp;is&nbsp;the&nbsp;API&nbsp;call&nbsp;to&nbsp;Cisco&nbsp;DNAC.&nbsp;&nbsp;In&nbsp;child&nbsp;classes,&nbsp;use&nbsp;this&nbsp;method<br>
+to&nbsp;form&nbsp;requests&nbsp;by&nbsp;appending&nbsp;it&nbsp;to&nbsp;Cisco&nbsp;DNAC's&nbsp;base&nbsp;url,&nbsp;i.e.&nbsp;Dnac.url.<br>
+:return:&nbsp;str</tt></dd>
 </dl>
 <dl><dt><strong>results</strong></dt>
-<dd><tt>The&nbsp;results&nbsp;method&nbsp;is&nbsp;decorated&nbsp;as&nbsp;if&nbsp;it&nbsp;was&nbsp;an&nbsp;attribute&nbsp;of&nbsp;this<br>
-class&nbsp;and&nbsp;can&nbsp;be&nbsp;used&nbsp;accordingly.&nbsp;&nbsp;It&nbsp;returns&nbsp;the&nbsp;raw&nbsp;results<br>
-stored&nbsp;in&nbsp;the&nbsp;class'&nbsp;Crud&nbsp;object&nbsp;obtained&nbsp;from&nbsp;an&nbsp;API&nbsp;call.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;The&nbsp;results&nbsp;of&nbsp;the&nbsp;API&nbsp;call.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;CommandRunner&nbsp;is&nbsp;a&nbsp;DnacApi<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cmd&nbsp;=&nbsp;CommandRunner('running-config')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cmd.formatCmd('&lt;uuid&gt;',&nbsp;'show&nbsp;run')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cmd.runSync()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;str(cmd.results)</tt></dd>
+<dd><tt>The&nbsp;results&nbsp;method&nbsp;is&nbsp;decorated&nbsp;as&nbsp;if&nbsp;it&nbsp;was&nbsp;an&nbsp;attribute&nbsp;of&nbsp;this&nbsp;class&nbsp;and&nbsp;can&nbsp;be&nbsp;used&nbsp;accordingly.<br>
+It&nbsp;returns&nbsp;the&nbsp;raw&nbsp;results&nbsp;stored&nbsp;in&nbsp;the&nbsp;class'&nbsp;Crud&nbsp;object&nbsp;obtained&nbsp;from&nbsp;an&nbsp;API&nbsp;call.<br>
+:return:&nbsp;dict</tt></dd>
 </dl>
 <dl><dt><strong>timeout</strong></dt>
-<dd><tt>Get&nbsp;method&nbsp;timeout&nbsp;returns&nbsp;the&nbsp;value&nbsp;of&nbsp;attribute&nbsp;__timeout.&nbsp;&nbsp;The<br>
-value&nbsp;returned&nbsp;represents&nbsp;the&nbsp;number&nbsp;of&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;the<br>
-HTTP&nbsp;server&nbsp;to&nbsp;respond&nbsp;to&nbsp;an&nbsp;API&nbsp;request<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;int:&nbsp;time&nbsp;to&nbsp;wait&nbsp;in&nbsp;seconds&nbsp;for&nbsp;a&nbsp;response<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dapi&nbsp;=&nbsp;DnacApi(dnac,&nbsp;name,&nbsp;resource)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dapi.timeout</tt></dd>
+<dd><tt>Get&nbsp;method&nbsp;timeout&nbsp;returns&nbsp;the&nbsp;value&nbsp;of&nbsp;attribute&nbsp;__timeout.&nbsp;&nbsp;The&nbsp;value&nbsp;returned&nbsp;represents&nbsp;the&nbsp;number&nbsp;of<br>
+seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;the&nbsp;HTTP&nbsp;server&nbsp;to&nbsp;respond&nbsp;to&nbsp;an&nbsp;API&nbsp;request.<br>
+:return:&nbsp;int</tt></dd>
 </dl>
 <dl><dt><strong>verify</strong></dt>
-<dd><tt>Get&nbsp;method&nbsp;verify&nbsp;returns&nbsp;value&nbsp;of&nbsp;__verify,&nbsp;which&nbsp;is&nbsp;used&nbsp;to<br>
-determine&nbsp;whether&nbsp;or&nbsp;not&nbsp;to&nbsp;check&nbsp;Cisco&nbsp;DNAC's&nbsp;certificate&nbsp;upon<br>
-making&nbsp;an&nbsp;API&nbsp;call.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;boolean:&nbsp;True&nbsp;to&nbsp;check&nbsp;the&nbsp;cert;&nbsp;otherwise,&nbsp;False<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;Do&nbsp;not&nbsp;create&nbsp;a&nbsp;DnacApi&nbsp;object;&nbsp;inherit&nbsp;from&nbsp;it&nbsp;instead<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dapi&nbsp;=&nbsp;DnacApi(d,&nbsp;name,&nbsp;resource)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dapi.verify</tt></dd>
+<dd><tt>Get&nbsp;method&nbsp;verify&nbsp;returns&nbsp;value&nbsp;of&nbsp;__verify,&nbsp;which&nbsp;is&nbsp;used&nbsp;to&nbsp;determine&nbsp;whether&nbsp;or&nbsp;not&nbsp;to&nbsp;check&nbsp;Cisco&nbsp;DNAC's<br>
+certificate&nbsp;upon&nbsp;making&nbsp;an&nbsp;API&nbsp;call.<br>
+:return:&nbsp;bool</tt></dd>
 </dl>
 </td></tr></table> <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -248,16 +155,13 @@ Usage:<br>
 <font color="#000000" face="helvetica, arial"><a name="DnacApiError">class <strong>DnacApiError</strong></a>(<a href="exceptions.html#Exception">exceptions.Exception</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt><a href="#DnacApiError">DnacApiError</a>&nbsp;is&nbsp;derived&nbsp;from&nbsp;<a href="exceptions.html#Exception">Exception</a>&nbsp;and&nbsp;used&nbsp;as&nbsp;the&nbsp;sole&nbsp;exception<br>
-that&nbsp;all&nbsp;children&nbsp;classes&nbsp;of&nbsp;<a href="#DnacApi">DnacApi</a>.&nbsp;&nbsp;In&nbsp;other&nbsp;words,&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;inherited<br>
-from&nbsp;<a href="#DnacApi">DnacApi</a>,&nbsp;e.g.&nbsp;NetworkDevice&nbsp;and&nbsp;CommandRunner,&nbsp;all&nbsp;raise<br>
-<a href="#DnacApiError">DnacApiError</a>&nbsp;exceptions&nbsp;instead&nbsp;of&nbsp;defining&nbsp;their&nbsp;own&nbsp;classes.<br>
+<td colspan=2><tt><a href="#DnacApiError">DnacApiError</a>&nbsp;is&nbsp;derived&nbsp;from&nbsp;<a href="exceptions.html#Exception">Exception</a>&nbsp;and&nbsp;used&nbsp;as&nbsp;the&nbsp;sole&nbsp;exception&nbsp;that&nbsp;all&nbsp;children&nbsp;classes&nbsp;of&nbsp;<a href="#DnacApi">DnacApi</a>.<br>
+In&nbsp;other&nbsp;words,&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;inherited&nbsp;from&nbsp;<a href="#DnacApi">DnacApi</a>,&nbsp;e.g.&nbsp;NetworkDevice&nbsp;and&nbsp;CommandRunner,&nbsp;all&nbsp;raise&nbsp;<a href="#DnacApiError">DnacApiError</a><br>
+exceptions&nbsp;instead&nbsp;of&nbsp;defining&nbsp;their&nbsp;own&nbsp;classes.<br>
 &nbsp;<br>
-<a href="#DnacApiError">DnacApiError</a>&nbsp;has&nbsp;no&nbsp;attributes&nbsp;itself,&nbsp;but&nbsp;its&nbsp;initialization&nbsp;method<br>
-includes&nbsp;a&nbsp;rich&nbsp;parameter&nbsp;set&nbsp;to&nbsp;indicate&nbsp;the&nbsp;problem,&nbsp;where&nbsp;it<br>
-happened&nbsp;and&nbsp;what&nbsp;its&nbsp;cause&nbsp;might&nbsp;be.&nbsp;&nbsp;See&nbsp;the&nbsp;documentation&nbsp;for<br>
-the&nbsp;__init__&nbsp;method&nbsp;for&nbsp;an&nbsp;explanation&nbsp;of&nbsp;each&nbsp;parameter&nbsp;and&nbsp;an&nbsp;example<br>
-of&nbsp;how&nbsp;to&nbsp;raise&nbsp;this&nbsp;exception.<br>
+<a href="#DnacApiError">DnacApiError</a>&nbsp;has&nbsp;no&nbsp;attributes&nbsp;itself,&nbsp;but&nbsp;its&nbsp;initialization&nbsp;method&nbsp;includes&nbsp;a&nbsp;rich&nbsp;parameter&nbsp;set&nbsp;to&nbsp;indicate&nbsp;the<br>
+problem,&nbsp;where&nbsp;it&nbsp;happened&nbsp;and&nbsp;what&nbsp;its&nbsp;cause&nbsp;might&nbsp;be.&nbsp;&nbsp;See&nbsp;the&nbsp;documentation&nbsp;for&nbsp;the&nbsp;__init__&nbsp;method&nbsp;for&nbsp;an<br>
+explanation&nbsp;of&nbsp;each&nbsp;parameter&nbsp;and&nbsp;an&nbsp;example&nbsp;of&nbsp;how&nbsp;to&nbsp;raise&nbsp;this&nbsp;exception.<br>
 &nbsp;<br>
 Attributes:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;none<br>&nbsp;</tt></td></tr>
@@ -270,65 +174,52 @@ Attributes:<br>
 </dl>
 <hr>
 Methods defined here:<br>
-<dl><dt><a name="DnacApiError-__init__"><strong>__init__</strong></a>(self, module, function, error, url, expected_value, received_value, received_msg, cause_or_resolution)</dt><dd><tt><a href="#DnacApiError">DnacApiError</a>'s&nbsp;__init__&nbsp;method&nbsp;formats&nbsp;a&nbsp;message&nbsp;based&nbsp;on&nbsp;its<br>
-parameters&nbsp;and&nbsp;then&nbsp;calls&nbsp;its&nbsp;parent&nbsp;class,&nbsp;<a href="exceptions.html#Exception">Exception</a>,&nbsp;to&nbsp;post&nbsp;it.<br>
-&nbsp;<br>
-Parameter:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;module:&nbsp;Name&nbsp;of&nbsp;the&nbsp;python&nbsp;module&nbsp;in&nbsp;which&nbsp;the&nbsp;error&nbsp;originated.<br>
+<dl><dt><a name="DnacApiError-__init__"><strong>__init__</strong></a>(self, module, function, error, url, expected_value, received_value, received_msg, cause_or_resolution)</dt><dd><tt><a href="#DnacApiError">DnacApiError</a>'s&nbsp;__init__&nbsp;method&nbsp;formats&nbsp;a&nbsp;message&nbsp;based&nbsp;on&nbsp;its&nbsp;parameters&nbsp;and&nbsp;then&nbsp;calls&nbsp;its&nbsp;parent&nbsp;class,<br>
+<a href="exceptions.html#Exception">Exception</a>,&nbsp;to&nbsp;post&nbsp;it.<br>
+:param&nbsp;module:&nbsp;&nbsp;Name&nbsp;of&nbsp;the&nbsp;python&nbsp;module&nbsp;in&nbsp;which&nbsp;the&nbsp;error&nbsp;originated.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;function:&nbsp;The&nbsp;function's&nbsp;name&nbsp;where&nbsp;the&nbsp;problem&nbsp;happened.<br>
+:param&nbsp;function:&nbsp;The&nbsp;function's&nbsp;name&nbsp;where&nbsp;the&nbsp;problem&nbsp;happened.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;error:&nbsp;The&nbsp;error&nbsp;encountered.&nbsp;&nbsp;Use&nbsp;one&nbsp;provided&nbsp;by&nbsp;the&nbsp;system<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;create&nbsp;your&nbsp;own.<br>
+:param&nbsp;error:&nbsp;The&nbsp;error&nbsp;encountered.&nbsp;&nbsp;Use&nbsp;one&nbsp;provided&nbsp;by&nbsp;the&nbsp;system&nbsp;or&nbsp;create&nbsp;your&nbsp;own.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;url:&nbsp;The&nbsp;full&nbsp;resource&nbsp;path&nbsp;used&nbsp;during&nbsp;an&nbsp;API&nbsp;call&nbsp;if<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;applicable.&nbsp;&nbsp;If&nbsp;the&nbsp;exception&nbsp;is&nbsp;unrelated&nbsp;to&nbsp;an&nbsp;API&nbsp;call,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;an&nbsp;empty&nbsp;string.<br>
+:param&nbsp;url:&nbsp;The&nbsp;full&nbsp;resource&nbsp;path&nbsp;used&nbsp;during&nbsp;an&nbsp;API&nbsp;call&nbsp;if&nbsp;applicable.&nbsp;&nbsp;If&nbsp;the&nbsp;exception&nbsp;is&nbsp;unrelated&nbsp;to&nbsp;an<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;call,&nbsp;use&nbsp;an&nbsp;empty&nbsp;string.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;expected_value:&nbsp;The&nbsp;value(s)&nbsp;that&nbsp;should&nbsp;have&nbsp;been&nbsp;provided.&nbsp;&nbsp;If<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;no&nbsp;value&nbsp;was&nbsp;expected,&nbsp;use&nbsp;an&nbsp;empty&nbsp;string.<br>
+:param&nbsp;expected_value:&nbsp;The&nbsp;value(s)&nbsp;that&nbsp;should&nbsp;have&nbsp;been&nbsp;provided.&nbsp;&nbsp;If&nbsp;no&nbsp;value&nbsp;was&nbsp;expected,&nbsp;use&nbsp;an&nbsp;empty<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;string.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;received_value:&nbsp;The&nbsp;value&nbsp;that&nbsp;was&nbsp;handled&nbsp;and&nbsp;cause&nbsp;the&nbsp;program<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;raise&nbsp;an&nbsp;exception.&nbsp;&nbsp;Use&nbsp;an&nbsp;empty&nbsp;string&nbsp;if<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;no&nbsp;actual&nbsp;value&nbsp;caused&nbsp;the&nbsp;error.<br>
+:param&nbsp;received_value:&nbsp;The&nbsp;value&nbsp;that&nbsp;was&nbsp;handled&nbsp;and&nbsp;cause&nbsp;the&nbsp;program&nbsp;to&nbsp;raise&nbsp;an&nbsp;exception.&nbsp;&nbsp;Use&nbsp;an&nbsp;empty<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;string&nbsp;if&nbsp;no&nbsp;actual&nbsp;value&nbsp;caused&nbsp;the&nbsp;error.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;received_msg:&nbsp;Any&nbsp;additional&nbsp;messaging&nbsp;received&nbsp;by&nbsp;the&nbsp;script<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;the&nbsp;error&nbsp;occurred.&nbsp;&nbsp;Use&nbsp;an&nbsp;empty&nbsp;string&nbsp;if<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;no&nbsp;additional&nbsp;message&nbsp;is&nbsp;available&nbsp;or&nbsp;create&nbsp;your<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;own&nbsp;message.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
+:param&nbsp;received_msg:&nbsp;Any&nbsp;additional&nbsp;messaging&nbsp;received&nbsp;by&nbsp;the&nbsp;script&nbsp;when&nbsp;the&nbsp;error&nbsp;occurred.&nbsp;&nbsp;Use&nbsp;an&nbsp;empty<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;string&nbsp;if&nbsp;no&nbsp;additional&nbsp;message&nbsp;is&nbsp;available&nbsp;or&nbsp;create&nbsp;your&nbsp;own&nbsp;message.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str&nbsp;default:&nbsp;none<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;nonet<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cause_or_resolution:&nbsp;Developer's&nbsp;notes&nbsp;on&nbsp;why&nbsp;the&nbsp;exception&nbsp;was<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thrown&nbsp;and&nbsp;any&nbsp;potential&nbsp;solutions.&nbsp;&nbsp;Use<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hints&nbsp;the&nbsp;system&nbsp;provides&nbsp;or&nbsp;create&nbsp;your<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;own.&nbsp;&nbsp;If&nbsp;the&nbsp;cause&nbsp;or&nbsp;solution&nbsp;is&nbsp;unknown,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;an&nbsp;empty&nbsp;string&nbsp;for&nbsp;this&nbsp;parameter.<br>
+:param&nbsp;cause_or_resolution:&nbsp;Developer's&nbsp;notes&nbsp;on&nbsp;why&nbsp;the&nbsp;exception&nbsp;was&nbsp;thrown&nbsp;and&nbsp;any&nbsp;potential&nbsp;solutions.&nbsp;&nbsp;Use<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hints&nbsp;the&nbsp;system&nbsp;provides&nbsp;or&nbsp;create&nbsp;your&nbsp;own.&nbsp;&nbsp;If&nbsp;the&nbsp;cause&nbsp;or&nbsp;solution&nbsp;is&nbsp;unknown,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;an&nbsp;empty&nbsp;string&nbsp;for&nbsp;this&nbsp;parameter.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;require:&nbsp;yes<br>
 &nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#DnacApiError">DnacApiError</a>&nbsp;<a href="__builtin__.html#object">object</a>:&nbsp;the&nbsp;exception&nbsp;that&nbsp;gets&nbsp;thrown.<br>
-&nbsp;<br>
 Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;status&nbsp;!=&nbsp;OK:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;raise&nbsp;<a href="#DnacApiError">DnacApiError</a>(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MODULE,&nbsp;'getAllDevices',&nbsp;REQUEST_NOT_OK,&nbsp;url,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK,&nbsp;status,&nbsp;ERROR_MSGS[status],&nbsp;str(results)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MODULE,&nbsp;'getAllDevices',&nbsp;REQUEST_NOT_OK,&nbsp;url,&nbsp;OK,&nbsp;status,&nbsp;ERROR_MSGS[status],&nbsp;str(results)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</tt></dd></dl>
 
 <hr>
 Data descriptors defined here:<br>

@@ -10,8 +10,8 @@
 <font color="#000000" face="helvetica, arial"><strong>dnac.DnacError</strong> = <a name="dnac.DnacError">class DnacError</a>(<a href="exceptions.html#Exception">exceptions.Exception</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>DnacError&nbsp;is&nbsp;an&nbsp;exception&nbsp;class&nbsp;for&nbsp;any&nbsp;errors&nbsp;specific&nbsp;to&nbsp;setting<br>
-up&nbsp;and&nbsp;maintaining&nbsp;a&nbsp;connection&nbsp;with&nbsp;a&nbsp;Cisco&nbsp;DNA&nbsp;Center&nbsp;cluster.<br>
+<td colspan=2><tt>DnacError&nbsp;is&nbsp;an&nbsp;exception&nbsp;class&nbsp;for&nbsp;any&nbsp;errors&nbsp;specific&nbsp;to&nbsp;setting&nbsp;up&nbsp;and&nbsp;maintaining&nbsp;a&nbsp;connection&nbsp;with&nbsp;a&nbsp;Cisco&nbsp;DNA<br>
+Center&nbsp;cluster.<br>
 &nbsp;<br>
 Attributes:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;None<br>&nbsp;</tt></td></tr>
@@ -25,24 +25,7 @@ Attributes:<br>
 <hr>
 Methods defined here:<br>
 <dl><dt><a name="DnacError-__init__"><strong>__init__</strong></a>(self, msg)</dt><dd><tt>DnacError's&nbsp;__init__&nbsp;method&nbsp;passes&nbsp;a&nbsp;message&nbsp;to&nbsp;its&nbsp;parent&nbsp;class.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;msg:&nbsp;An&nbsp;error&nbsp;message&nbsp;indicating&nbsp;the&nbsp;problem.&nbsp;&nbsp;Current&nbsp;values<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;include:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UNKNOWN_ERROR="Unknown&nbsp;error"<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UNSUPPORTED_DNAC_VERSION="Unsupported&nbsp;Cisco&nbsp;DNA<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Center&nbsp;version"<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;DnacError&nbsp;object:&nbsp;the&nbsp;new&nbsp;exception.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;version&nbsp;in&nbsp;SUPPORTED_DNAC_VERSIONS:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.<strong>__version</strong>&nbsp;=&nbsp;version<br>
-&nbsp;&nbsp;&nbsp;&nbsp;else:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;raise&nbsp;DnacError(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UNSUPPORTED_DNAC_VERSION&nbsp;+&nbsp;":&nbsp;%s"&nbsp;%&nbsp;version<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</tt></dd></dl>
+:param&nbsp;msg:&nbsp;An&nbsp;error&nbsp;message&nbsp;indicating&nbsp;the&nbsp;problem.&nbsp;&nbsp;Current&nbsp;values</tt></dd></dl>
 
 <hr>
 Data descriptors defined here:<br>

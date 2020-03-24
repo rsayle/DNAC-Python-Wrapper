@@ -57,52 +57,30 @@ Usage:<br>
 <tr><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>
 <dl><dt><a name="TimeStamp-__init__"><strong>__init__</strong></a>(self, time<font color="#909090">=0</font>)</dt><dd><tt>The&nbsp;<a href="#TimeStamp">TimeStamp</a>'s&nbsp;__init__&nbsp;method&nbsp;sets&nbsp;its&nbsp;value&nbsp;to&nbsp;the&nbsp;current&nbsp;number&nbsp;of&nbsp;milliseconds&nbsp;in&nbsp;epoch&nbsp;time.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#TimeStamp">TimeStamp</a>&nbsp;<a href="__builtin__.html#object">object</a>:&nbsp;a&nbsp;new&nbsp;<a href="#TimeStamp">TimeStamp</a>&nbsp;instance<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;t&nbsp;=&nbsp;<a href="#TimeStamp">TimeStamp</a>()</tt></dd></dl>
+:param&nbsp;time:&nbsp;Epoch&nbsp;time&nbsp;with&nbsp;which&nbsp;to&nbsp;initialize&nbsp;the&nbsp;new&nbsp;<a href="__builtin__.html#object">object</a>.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;retrieves&nbsp;the&nbsp;current&nbsp;time</tt></dd></dl>
 
 <dl><dt><a name="TimeStamp-__str__"><strong>__str__</strong></a>(self)</dt><dd><tt><a href="#TimeStamp">TimeStamp</a>&nbsp;class'&nbsp;__str__&nbsp;function&nbsp;converts&nbsp;its&nbsp;timestamp&nbsp;attribute,&nbsp;an&nbsp;int,&nbsp;into&nbsp;a&nbsp;string.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;the&nbsp;epoch&nbsp;time&nbsp;in&nbsp;milliseconds&nbsp;when&nbsp;the&nbsp;<a href="#TimeStamp">TimeStamp</a>&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;was&nbsp;created.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;t&nbsp;=&nbsp;<a href="#TimeStamp">TimeStamp</a>()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;print(t)</tt></dd></dl>
+:return:&nbsp;The&nbsp;epoch&nbsp;time&nbsp;in&nbsp;milliseconds&nbsp;when&nbsp;the&nbsp;<a href="#TimeStamp">TimeStamp</a>&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;was&nbsp;created.</tt></dd></dl>
+
+<dl><dt><a name="TimeStamp-get_current_time"><strong>get_current_time</strong></a>(self)</dt><dd><tt>Resets&nbsp;the&nbsp;<a href="#TimeStamp">TimeStamp</a>&nbsp;to&nbsp;the&nbsp;current&nbsp;time.<br>
+:return:&nbsp;The&nbsp;current&nbsp;time&nbsp;as&nbsp;an&nbsp;epoch&nbsp;integer.</tt></dd></dl>
 
 <dl><dt><a name="TimeStamp-local_timestamp"><strong>local_timestamp</strong></a>(self)</dt><dd><tt>The&nbsp;local_timestamp&nbsp;method&nbsp;returns&nbsp;the&nbsp;<a href="__builtin__.html#object">object</a>'s&nbsp;current&nbsp;timestamp&nbsp;value&nbsp;as&nbsp;a&nbsp;formatted&nbsp;string&nbsp;in&nbsp;the&nbsp;Cisco<br>
 DNA&nbsp;Center&nbsp;instance's&nbsp;local&nbsp;timezone.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;the&nbsp;timestamp&nbsp;in&nbsp;local&nbsp;time&nbsp;formatted&nbsp;as&nbsp;%Y-%m-%d&nbsp;%H:%M:%S<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;t&nbsp;=&nbsp;<a href="#TimeStamp">TimeStamp</a>()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;print(t.<a href="#TimeStamp-local_timestamp">local_timestamp</a>())</tt></dd></dl>
+:return:&nbsp;The&nbsp;timestamp&nbsp;in&nbsp;local&nbsp;time&nbsp;formatted&nbsp;as&nbsp;%Y-%m-%d&nbsp;%H:%M:%S</tt></dd></dl>
+
+<dl><dt><a name="TimeStamp-sleep"><strong>sleep</strong></a>(self, seconds)</dt><dd><tt>Instructs&nbsp;the&nbsp;<a href="#TimeStamp">TimeStamp</a>&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;to&nbsp;wait&nbsp;the&nbsp;number&nbsp;of&nbsp;seconds&nbsp;given.<br>
+:param&nbsp;seconds:&nbsp;The&nbsp;number&nbsp;of&nbsp;seconds&nbsp;to&nbsp;halt&nbsp;program&nbsp;activity.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
+:return:&nbsp;none</tt></dd></dl>
 
 <dl><dt><a name="TimeStamp-utc_timestamp"><strong>utc_timestamp</strong></a>(self)</dt><dd><tt>The&nbsp;utc_timestamp&nbsp;method&nbsp;returns&nbsp;the&nbsp;<a href="__builtin__.html#object">object</a>'s&nbsp;current&nbsp;timestamp&nbsp;value&nbsp;as&nbsp;a&nbsp;formatted&nbsp;string&nbsp;in&nbsp;UTC&nbsp;time.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;the&nbsp;timestamp&nbsp;in&nbsp;UTC&nbsp;time&nbsp;formatted&nbsp;as&nbsp;%Y-%m-%d&nbsp;%H:%M:%S<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;t&nbsp;=&nbsp;<a href="#TimeStamp">TimeStamp</a>()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;print(t.<a href="#TimeStamp-utc_timestamp">utc_timestamp</a>())</tt></dd></dl>
+:return:&nbsp;The&nbsp;timestamp&nbsp;in&nbsp;UTC&nbsp;time&nbsp;formatted&nbsp;as&nbsp;%Y-%m-%d&nbsp;%H:%M:%S</tt></dd></dl>
 
 <hr>
 Data descriptors defined here:<br>
@@ -114,16 +92,7 @@ Data descriptors defined here:<br>
 </dl>
 <dl><dt><strong>timestamp</strong></dt>
 <dd><tt>The&nbsp;timestamp&nbsp;getter&nbsp;method&nbsp;returns&nbsp;the&nbsp;object's&nbsp;epoch&nbsp;time&nbsp;in&nbsp;milliseconds.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;None<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;int:&nbsp;The&nbsp;epoch&nbsp;time&nbsp;in&nbsp;milliseconds&nbsp;when&nbsp;the&nbsp;TimeStamp&nbsp;object&nbsp;was&nbsp;created.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;t&nbsp;=&nbsp;TimeStamp()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;print(str(t.timestamp))</tt></dd>
+:return:&nbsp;The&nbsp;epoch&nbsp;time&nbsp;in&nbsp;milliseconds&nbsp;when&nbsp;the&nbsp;TimeStamp&nbsp;object&nbsp;was&nbsp;created.</tt></dd>
 </dl>
 </td></tr></table></td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
