@@ -7,7 +7,7 @@ from dnac.dnacapi import DnacApi, \
 from dnac.crud import ACCEPTED, \
                       REQUEST_NOT_ACCEPTED, \
                       ERROR_MSGS
-from dnac.task import Task
+from dnac.commandrunner_task import CommandRunnerTask
 import json
 import time
 
@@ -15,11 +15,11 @@ MODULE = 'commandrunner.py'
 
 COMMANDRUNNER_RESOURCE_PATH = {
     '1.2.8': '/api/v1/network-device-poller/cli/read-request',
-    '1.2.10': '/dna/intent/api/v1/network-device-poller/cli/read-request',
-    '1.3.0.2': '/dna/intent/api/v1/network-device-poller/cli/read-request',
-    '1.3.0.3': '/dna/intent/api/v1/network-device-poller/cli/read-request',
-    '1.3.1.3': '/dna/intent/api/v1/network-device-poller/cli/read-request',
-    '1.3.1.4': '/dna/intent/api/v1/network-device-poller/cli/read-request'
+    '1.2.10': '/api/v1/network-device-poller/cli/read-request',
+    '1.3.0.2': '/api/v1/network-device-poller/cli/read-request',
+    '1.3.0.3': '/api/v1/network-device-poller/cli/read-request',
+    '1.3.1.3': '/api/v1/network-device-poller/cli/read-request',
+    '1.3.1.4': '/api/v1/network-device-poller/cli/read-request'
 }
 
 
@@ -118,7 +118,7 @@ class CommandRunner(DnacApi):
                            )
         # setup the attributes
         self.__cmds = cmds  # commands to run
-        self.__task = None  # Task object created after running cmds
+        self.__task = None  # CommandRunnerTask object created after running cmds
         super(CommandRunner, self).__init__(dnac,
                                             name,
                                             resource=path,
@@ -154,8 +154,8 @@ class CommandRunner(DnacApi):
     @property
     def task(self):
         """
-        The task get function returns the Task object stored in __task.
-        :return: Task object
+        The task get function returns the CommandRunnerTask object stored in __task.
+        :return: CommandRunnerTask object
         """
         return self.__task
 
@@ -205,12 +205,12 @@ class CommandRunner(DnacApi):
 
     # end format_cmds()
 
-    def run(self):
+    def run(self, wait=3):
         """
-        Method run instructs Cisco DNAC to execute the command set stored in the CommandRunner object.  It does not
-        wait for the task to complete on Cisco DNA Center.  It does, however, create a new Task object, saves it in
-        the __task attribute, checks the task, and then returns the task's status.  See the task.py module for
-        valid task states.  When using this function, the programmer must handle task monitoring.
+        Method run instructs Cisco DNAC to execute the command set stored in the CommandRunner object.  It
+        waits for the task to complete on Cisco DNA Center.  Specifically, it creates a CommandRunnerTask object
+        and stores it in its __task attribute.  When the task completes, it returns the results from the file
+        where Cisco DNA Center stored them.  They can also be retrieved from the task's file getter method.
         :return: str
         """
         url = self.dnac.url + self.resource
@@ -224,45 +224,10 @@ class CommandRunner(DnacApi):
                                ACCEPTED, status, ERROR_MSGS[status],
                                str(results))
         task_id = results['response']['taskId']
-        self.__task = Task(self.dnac, task_id)
-        return self.__task.get_task_results()
+        self.__task = CommandRunnerTask(self.dnac, task_id)
+        return self.__task.get_task_results(wait)
 
     # end run()
-
-    def run_sync(self, wait=3):
-        """
-        runSync issues the commands set in the CommandRunner and waits for their completion.  It performs this action
-        by creating a Task object and then checks the task's state periodically according to the wait time (seconds)
-        passed as an argument. If no wait time is given, it checks every three seconds.
-
-        When the task finishes, the Task object will have also loaded the task's results, which can be immediately
-        accessed via the CommandRunner instance (cmd.task.file.results) or from the function's return value
-        (results = cmd.runSync()).
-
-        :param wait: The time to wait before checking the results.
-            type: int
-            default: 3
-            required: no
-        :return: list
-        """
-        url = self.dnac.url + self.resource
-        results, status = self.crud.post(url,
-                                         headers=self.dnac.hdrs,
-                                         body=self.__cmds,
-                                         verify=self.verify,
-                                         timeout=self.timeout)
-        if status != ACCEPTED:
-            DnacApiError(MODULE, 'run', REQUEST_NOT_ACCEPTED, url,
-                         ACCEPTED, status, ERROR_MSGS[status], str(results))
-        task_id = results['response']['taskId']
-        self.__task = Task(self.dnac, task_id)
-        self.__task.get_task_results()
-        while self.__task.progress == TASK_CREATION:
-            time.sleep(wait)
-            self.__task.get_task_results()
-        return self.__task.file.results
-
-    # end runSync()
 
 # end class CommandRunner()
 

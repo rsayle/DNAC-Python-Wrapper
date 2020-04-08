@@ -48,7 +48,7 @@ class CommandRunnerTask(Task):
             default: 5
         """
         super(CommandRunnerTask, self).__init__(dnac,
-                                                'commandrunner_task_%s' % id,
+                                                id,
                                                 verify=verify,
                                                 timeout=timeout)
         self.__file = NO_FILE
@@ -80,7 +80,7 @@ class CommandRunnerTask(Task):
 
     def get_task_results(self, wait=3):
         """
-        Retrieves the command runner task's results from the file where Cisco DNAC stores the CLI output."
+        Retrieves the command runner task's results from the file where Cisco DNAC stores the CLI output.
         :param wait: Number of seconds to wait for Cisco DNAC to finish the command.
             type: int
             required: no
@@ -90,15 +90,15 @@ class CommandRunnerTask(Task):
         # run the CLI command
         super(CommandRunnerTask, self).get_task_results(wait)
         # task completed - get the fileId in the progress dict
-        self.__progress = json.loads(self.__progress)
-        self.__file_id = self.__progress['fileId']
+        #self.__progress = json.loads(self.__progress)
+        progress = json.loads(self.progress)
+        self.__file_id = progress['fileId']
         # create the task results
         self.__file = File(self.dnac, self.__file_id)
         # retrieve the results, which are automatically saved in
         # File's __results attribute
-        self.__file.get_results()
-        return self.__task_results
-                  
+        return self.__file.get_results()
+
     # end get_task_results()
 
 # end class CommandrunnerTask()
