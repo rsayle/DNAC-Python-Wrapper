@@ -1,0 +1,185 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module dnac.device_archive_task</title>
+<meta charset="utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="dnac.html"><font color="#ffffff">dnac</font></a>.device_archive_task</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/dnac/device_archive_task.py">/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/dnac/device_archive_task.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="dnac.task.html#Task">dnac.task.Task</a>(<a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="dnac.device_archive_task.html#DeviceArchiveTask">DeviceArchiveTask</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="DeviceArchiveTask">class <strong>DeviceArchiveTask</strong></a>(<a href="dnac.task.html#Task">dnac.task.Task</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>The&nbsp;<a href="#DeviceArchiveTask">DeviceArchiveTask</a>&nbsp;is&nbsp;a&nbsp;subclass&nbsp;of&nbsp;<a href="dnac.task.html#Task">Task</a>.&nbsp;&nbsp;As&nbsp;of&nbsp;this&nbsp;version&nbsp;of&nbsp;the&nbsp;wrapper&nbsp;package,&nbsp;<a href="#DeviceArchiveTask">DeviceArchiveTask</a>&nbsp;does<br>
+not&nbsp;modify&nbsp;<a href="dnac.task.html#Task">Task</a>'s&nbsp;behavior.&nbsp;&nbsp;This&nbsp;class&nbsp;exists&nbsp;for&nbsp;stronger&nbsp;class&nbsp;typing&nbsp;and&nbsp;in&nbsp;the&nbsp;event&nbsp;that&nbsp;archiving&nbsp;tasks<br>
+behavior&nbsp;changes&nbsp;and&nbsp;needs&nbsp;additional&nbsp;processing&nbsp;beyond&nbsp;what&nbsp;<a href="dnac.task.html#Task">Task</a>&nbsp;offers.<br>
+&nbsp;<br>
+When&nbsp;a&nbsp;DeviceArchive&nbsp;instance&nbsp;performs&nbsp;CRUD&nbsp;operations&nbsp;for&nbsp;a&nbsp;device,&nbsp;e.g.&nbsp;create&nbsp;a&nbsp;new&nbsp;version,&nbsp;it&nbsp;creates&nbsp;a<br>
+new&nbsp;<a href="#DeviceArchiveTask">DeviceArchiveTask</a>&nbsp;to&nbsp;handle&nbsp;monitoring&nbsp;the&nbsp;transaction&nbsp;and&nbsp;reporting&nbsp;its&nbsp;results.<br>
+&nbsp;<br>
+Attributes:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dnac:&nbsp;A&nbsp;pointer&nbsp;to&nbsp;the&nbsp;Dnac&nbsp;object&nbsp;containing&nbsp;the&nbsp;ConfigArchive&nbsp;instance.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;Dnac&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
+&nbsp;&nbsp;&nbsp;&nbsp;name:&nbsp;A&nbsp;user-friendly&nbsp;name&nbsp;for&nbsp;accessing&nbsp;the&nbsp;ConfigArchive&nbsp;object&nbsp;in&nbsp;a&nbsp;Dnac.api{}.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
+&nbsp;&nbsp;&nbsp;&nbsp;resource:&nbsp;The&nbsp;URI&nbsp;for&nbsp;running&nbsp;commands&nbsp;within&nbsp;Cisco&nbsp;DNAC.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;Cisco&nbsp;DNA&nbsp;Center&nbsp;version&nbsp;dependent<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verify:&nbsp;A&nbsp;flag&nbsp;indicating&nbsp;whether&nbsp;or&nbsp;not&nbsp;to&nbsp;verify&nbsp;Cisco&nbsp;DNA&nbsp;Center's&nbsp;certificate.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;bool<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;False<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
+&nbsp;&nbsp;&nbsp;&nbsp;timeout:&nbsp;The&nbsp;number&nbsp;of&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;Cisco&nbsp;DNAC&nbsp;to&nbsp;respond&nbsp;before&nbsp;timing&nbsp;out.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;5<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
+&nbsp;<br>
+Usage:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;device_archive_task&nbsp;=&nbsp;<a href="#DeviceArchiveTask">DeviceArchiveTask</a>(d,&nbsp;&lt;task_uuid&gt;)<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="dnac.device_archive_task.html#DeviceArchiveTask">DeviceArchiveTask</a></dd>
+<dd><a href="dnac.task.html#Task">dnac.task.Task</a></dd>
+<dd><a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="DeviceArchiveTask-__init__"><strong>__init__</strong></a>(self, dnac, id, verify<font color="#909090">=False</font>, timeout<font color="#909090">=5</font>)</dt><dd><tt>The&nbsp;__init__&nbsp;method&nbsp;creates&nbsp;a&nbsp;new&nbsp;device&nbsp;archive&nbsp;task&nbsp;instance.&nbsp;&nbsp;Use&nbsp;the&nbsp;task&nbsp;ID&nbsp;returned&nbsp;by&nbsp;Cisco&nbsp;DNA&nbsp;Center<br>
+as&nbsp;the&nbsp;id&nbsp;for&nbsp;the&nbsp;new&nbsp;object.<br>
+:param&nbsp;dnac:&nbsp;A&nbsp;reference&nbsp;to&nbsp;the&nbsp;containing&nbsp;Dnac&nbsp;object.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;Dnac&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+:param&nbsp;id:&nbsp;The&nbsp;UUID&nbsp;for&nbsp;monitoring&nbsp;the&nbsp;task&nbsp;in&nbsp;Cisco&nbsp;DNAC.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+:param&nbsp;verify:&nbsp;A&nbsp;flag&nbsp;used&nbsp;to&nbsp;check&nbsp;Cisco&nbsp;DNAC's&nbsp;certificate.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;boolean<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;False<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
+:param&nbsp;timeout:&nbsp;The&nbsp;number&nbsp;of&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;Cisco&nbsp;DNAC's&nbsp;response.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;5<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="dnac.task.html#Task">dnac.task.Task</a>:<br>
+<dl><dt><a name="DeviceArchiveTask-__check_task__"><strong>__check_task__</strong></a>(self)</dt><dd><tt>Hidden&nbsp;method&nbsp;used&nbsp;to&nbsp;retrieve&nbsp;the&nbsp;task&nbsp;results&nbsp;from&nbsp;Cisco&nbsp;DNAC.<br>
+:return:&nbsp;dict</tt></dd></dl>
+
+<dl><dt><a name="DeviceArchiveTask-get_task_results"><strong>get_task_results</strong></a>(self, wait<font color="#909090">=3</font>)</dt><dd><tt>Checks&nbsp;for&nbsp;the&nbsp;task's&nbsp;endTime.&nbsp;&nbsp;If&nbsp;endTime&nbsp;does&nbsp;not&nbsp;exist,&nbsp;then&nbsp;the&nbsp;method&nbsp;waits&nbsp;for&nbsp;the&nbsp;number&nbsp;of&nbsp;seconds<br>
+given&nbsp;and&nbsp;checks&nbsp;again.&nbsp;&nbsp;If&nbsp;endTime&nbsp;exists,&nbsp;then&nbsp;the&nbsp;results&nbsp;get&nbsp;loaded&nbsp;into&nbsp;the&nbsp;object's&nbsp;__task&nbsp;attribute.<br>
+:param&nbsp;wait:&nbsp;Number&nbsp;of&nbsp;seconds&nbsp;to&nbsp;sleep&nbsp;before&nbsp;checking&nbsp;again.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;3<br>
+:return:&nbsp;dict</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="dnac.task.html#Task">dnac.task.Task</a>:<br>
+<dl><dt><strong>end_time</strong></dt>
+<dd><tt>Indicates&nbsp;when&nbsp;the&nbsp;task&nbsp;ended&nbsp;using&nbsp;epoch&nbsp;time.<br>
+:return:&nbsp;int</tt></dd>
+</dl>
+<dl><dt><strong>failure_reason</strong></dt>
+<dd><tt>If&nbsp;the&nbsp;task&nbsp;ended&nbsp;with&nbsp;an&nbsp;error,&nbsp;this&nbsp;method&nbsp;provides&nbsp;the&nbsp;reason&nbsp;it&nbsp;failed.<br>
+:return:&nbsp;str</tt></dd>
+</dl>
+<dl><dt><strong>id</strong></dt>
+<dd><tt>Provides&nbsp;the&nbsp;task's&nbsp;UUID.<br>
+:return:&nbsp;str</tt></dd>
+</dl>
+<dl><dt><strong>is_error</strong></dt>
+<dd><tt>Returns&nbsp;the&nbsp;task's&nbsp;error&nbsp;state.&nbsp;&nbsp;True,&nbsp;if&nbsp;error;&nbsp;otherwise,&nbsp;false,&nbsp;if&nbsp;succeeded.<br>
+:return:&nbsp;bool</tt></dd>
+</dl>
+<dl><dt><strong>progress</strong></dt>
+<dd><tt>Gives&nbsp;the&nbsp;task's&nbsp;current&nbsp;run&nbsp;state.<br>
+:return:&nbsp;str</tt></dd>
+</dl>
+<dl><dt><strong>start_time</strong></dt>
+<dd><tt>Indicates&nbsp;when&nbsp;the&nbsp;task&nbsp;started&nbsp;using&nbsp;epoch&nbsp;time.<br>
+:return:&nbsp;int</tt></dd>
+</dl>
+<hr>
+Data descriptors inherited from <a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>crud</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;crud&nbsp;returns&nbsp;the&nbsp;reference&nbsp;to&nbsp;the&nbsp;Crud&nbsp;object&nbsp;this&nbsp;class&nbsp;uses&nbsp;to&nbsp;make&nbsp;RESTful&nbsp;API&nbsp;calls.&nbsp;&nbsp;Use&nbsp;this<br>
+function&nbsp;in&nbsp;order&nbsp;to&nbsp;access&nbsp;the&nbsp;Crud&nbsp;object's&nbsp;get,&nbsp;put,&nbsp;post&nbsp;and&nbsp;delete&nbsp;methods.<br>
+:return:&nbsp;Crud&nbsp;object</tt></dd>
+</dl>
+<dl><dt><strong>dnac</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;dnac&nbsp;returns&nbsp;the&nbsp;reference&nbsp;to&nbsp;the&nbsp;Dnac&nbsp;instance&nbsp;that&nbsp;stores&nbsp;this&nbsp;object.<br>
+:return:&nbsp;Dnac&nbsp;object</tt></dd>
+</dl>
+<dl><dt><strong>name</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;name&nbsp;returns&nbsp;__name,&nbsp;a&nbsp;user&nbsp;friendly&nbsp;name&nbsp;for&nbsp;accessing&nbsp;this&nbsp;object&nbsp;in&nbsp;Dnac's&nbsp;API&nbsp;store,&nbsp;namely<br>
+Dnac.api{}<br>
+:return:&nbsp;str</tt></dd>
+</dl>
+<dl><dt><strong>resource</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;resource&nbsp;returns&nbsp;__resource,&nbsp;which&nbsp;is&nbsp;the&nbsp;API&nbsp;call&nbsp;to&nbsp;Cisco&nbsp;DNAC.&nbsp;&nbsp;In&nbsp;child&nbsp;classes,&nbsp;use&nbsp;this&nbsp;method<br>
+to&nbsp;form&nbsp;requests&nbsp;by&nbsp;appending&nbsp;it&nbsp;to&nbsp;Cisco&nbsp;DNAC's&nbsp;base&nbsp;url,&nbsp;i.e.&nbsp;Dnac.url.<br>
+:return:&nbsp;str</tt></dd>
+</dl>
+<dl><dt><strong>results</strong></dt>
+<dd><tt>The&nbsp;results&nbsp;method&nbsp;is&nbsp;decorated&nbsp;as&nbsp;if&nbsp;it&nbsp;was&nbsp;an&nbsp;attribute&nbsp;of&nbsp;this&nbsp;class&nbsp;and&nbsp;can&nbsp;be&nbsp;used&nbsp;accordingly.<br>
+It&nbsp;returns&nbsp;the&nbsp;raw&nbsp;results&nbsp;stored&nbsp;in&nbsp;the&nbsp;class'&nbsp;Crud&nbsp;object&nbsp;obtained&nbsp;from&nbsp;an&nbsp;API&nbsp;call.<br>
+:return:&nbsp;dict</tt></dd>
+</dl>
+<dl><dt><strong>timeout</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;timeout&nbsp;returns&nbsp;the&nbsp;value&nbsp;of&nbsp;attribute&nbsp;__timeout.&nbsp;&nbsp;The&nbsp;value&nbsp;returned&nbsp;represents&nbsp;the&nbsp;number&nbsp;of<br>
+seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;the&nbsp;HTTP&nbsp;server&nbsp;to&nbsp;respond&nbsp;to&nbsp;an&nbsp;API&nbsp;request.<br>
+:return:&nbsp;int</tt></dd>
+</dl>
+<dl><dt><strong>verify</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;verify&nbsp;returns&nbsp;value&nbsp;of&nbsp;__verify,&nbsp;which&nbsp;is&nbsp;used&nbsp;to&nbsp;determine&nbsp;whether&nbsp;or&nbsp;not&nbsp;to&nbsp;check&nbsp;Cisco&nbsp;DNAC's<br>
+certificate&nbsp;upon&nbsp;making&nbsp;an&nbsp;API&nbsp;call.<br>
+:return:&nbsp;bool</tt></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>MODULE</strong> = 'device_archive_task.py'</td></tr></table>
+</body></html>

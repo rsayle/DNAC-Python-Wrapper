@@ -1,0 +1,184 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module dnac.device_archive</title>
+<meta charset="utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="dnac.html"><font color="#ffffff">dnac</font></a>.device_archive</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/dnac/device_archive.py">/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/dnac/device_archive.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="json.html">json</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>(<a href="__builtin__.html#object">__builtin__.object</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="dnac.device_archive.html#DeviceArchive">DeviceArchive</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="DeviceArchive">class <strong>DeviceArchive</strong></a>(<a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>The&nbsp;<a href="#DeviceArchive">DeviceArchive</a>&nbsp;class&nbsp;manages&nbsp;the&nbsp;configuration&nbsp;archive&nbsp;for&nbsp;a&nbsp;device.&nbsp;&nbsp;It&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;create&nbsp;new&nbsp;versions<br>
+and&nbsp;delete&nbsp;old&nbsp;ones.<br>
+&nbsp;<br>
+Usage:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;device&nbsp;=&nbsp;NetworkDevice(d,&nbsp;'aDevice')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;archive&nbsp;=&nbsp;<a href="#DeviceArchive">DeviceArchive</a>(d,&nbsp;device.devices['id'])<br>
+&nbsp;&nbsp;&nbsp;&nbsp;archive.<a href="#DeviceArchive-add_configs_to_archive">add_configs_to_archive</a>(running=True,&nbsp;startup=True)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;version&nbsp;in&nbsp;archive.versions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;file&nbsp;in&nbsp;version.config_files:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pprint.PrettyPrinter(file)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;archive.<a href="#DeviceArchive-delete_version">delete_version</a>(version)<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="dnac.device_archive.html#DeviceArchive">DeviceArchive</a></dd>
+<dd><a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="DeviceArchive-__init__"><strong>__init__</strong></a>(self, dnac, device_id, verify<font color="#909090">=False</font>, timeout<font color="#909090">=5</font>)</dt><dd><tt>Creates&nbsp;a&nbsp;new&nbsp;<a href="#DeviceArchive">DeviceArchive</a>&nbsp;object&nbsp;and&nbsp;sets&nbsp;the&nbsp;target&nbsp;network&nbsp;device's&nbsp;ID.<br>
+:param&nbsp;dnac:&nbsp;Reference&nbsp;to&nbsp;the&nbsp;program's&nbsp;Dnac&nbsp;object.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;Dnac&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
+:param&nbsp;device_id:&nbsp;The&nbsp;UUID&nbsp;in&nbsp;Cisco&nbsp;DNAC&nbsp;for&nbsp;the&nbsp;device&nbsp;to&nbsp;be&nbsp;managed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
+:param&nbsp;verify:&nbsp;Flag&nbsp;indicating&nbsp;whether&nbsp;or&nbsp;not&nbsp;to&nbsp;validate&nbsp;Cisco&nbsp;DNA&nbsp;Center's&nbsp;certificate.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;bool<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;False<br>
+:param&nbsp;timeout:&nbsp;Number&nbsp;of&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;Cisco&nbsp;DNA&nbsp;Center&nbsp;to&nbsp;respond&nbsp;to&nbsp;an&nbsp;API&nbsp;call.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;5</tt></dd></dl>
+
+<dl><dt><a name="DeviceArchive-add_configs_to_archive"><strong>add_configs_to_archive</strong></a>(self, running<font color="#909090">=False</font>, startup<font color="#909090">=False</font>)</dt><dd><tt>Instructs&nbsp;the&nbsp;<a href="#DeviceArchive">DeviceArchive</a>&nbsp;instance&nbsp;to&nbsp;add&nbsp;a&nbsp;configuration&nbsp;file&nbsp;to&nbsp;Cisco&nbsp;DNA&nbsp;Center's&nbsp;archive&nbsp;and&nbsp;then<br>
+refresh&nbsp;all&nbsp;available&nbsp;versions.<br>
+:param&nbsp;running:&nbsp;A&nbsp;flag&nbsp;indicating&nbsp;whether&nbsp;or&nbsp;not&nbsp;the&nbsp;device's&nbsp;running&nbsp;config&nbsp;should&nbsp;be&nbsp;archived.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;bool<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;False<br>
+:param&nbsp;startup:&nbsp;A&nbsp;flag&nbsp;indicating&nbsp;whether&nbsp;or&nbsp;not&nbsp;the&nbsp;device's&nbsp;startup&nbsp;config&nbsp;should&nbsp;be&nbsp;archived.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;bool<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;False<br>
+:return:&nbsp;None</tt></dd></dl>
+
+<dl><dt><a name="DeviceArchive-delete_version"><strong>delete_version</strong></a>(self, version)</dt><dd><tt>Deletes&nbsp;the&nbsp;indicated&nbsp;version&nbsp;and&nbsp;its&nbsp;configs&nbsp;from&nbsp;DNA&nbsp;Center's&nbsp;archive.<br>
+:param&nbsp;version:&nbsp;The&nbsp;version&nbsp;to&nbsp;be&nbsp;removed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;Version&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;None<br>
+:return:&nbsp;None</tt></dd></dl>
+
+<dl><dt><a name="DeviceArchive-load_versions"><strong>load_versions</strong></a>(self)</dt><dd><tt>Instructs&nbsp;the&nbsp;<a href="#DeviceArchive">DeviceArchive</a>&nbsp;instance&nbsp;to&nbsp;load&nbsp;all&nbsp;the&nbsp;device's&nbsp;configs&nbsp;available&nbsp;in&nbsp;Cisco&nbsp;DNAC's&nbsp;archive&nbsp;and<br>
+then&nbsp;return&nbsp;them.<br>
+:return:&nbsp;list</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>device</strong></dt>
+<dd><tt>Yields&nbsp;the&nbsp;target&nbsp;devices'&nbsp;UUID.<br>
+:return:&nbsp;str</tt></dd>
+</dl>
+<dl><dt><strong>versions</strong></dt>
+<dd><tt>Provides&nbsp;the&nbsp;list&nbsp;of&nbsp;archive&nbsp;versions&nbsp;available&nbsp;for&nbsp;the&nbsp;device.<br>
+:return:&nbsp;list</tt></dd>
+</dl>
+<hr>
+Data descriptors inherited from <a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>crud</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;crud&nbsp;returns&nbsp;the&nbsp;reference&nbsp;to&nbsp;the&nbsp;Crud&nbsp;object&nbsp;this&nbsp;class&nbsp;uses&nbsp;to&nbsp;make&nbsp;RESTful&nbsp;API&nbsp;calls.&nbsp;&nbsp;Use&nbsp;this<br>
+function&nbsp;in&nbsp;order&nbsp;to&nbsp;access&nbsp;the&nbsp;Crud&nbsp;object's&nbsp;get,&nbsp;put,&nbsp;post&nbsp;and&nbsp;delete&nbsp;methods.<br>
+:return:&nbsp;Crud&nbsp;object</tt></dd>
+</dl>
+<dl><dt><strong>dnac</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;dnac&nbsp;returns&nbsp;the&nbsp;reference&nbsp;to&nbsp;the&nbsp;Dnac&nbsp;instance&nbsp;that&nbsp;stores&nbsp;this&nbsp;object.<br>
+:return:&nbsp;Dnac&nbsp;object</tt></dd>
+</dl>
+<dl><dt><strong>name</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;name&nbsp;returns&nbsp;__name,&nbsp;a&nbsp;user&nbsp;friendly&nbsp;name&nbsp;for&nbsp;accessing&nbsp;this&nbsp;object&nbsp;in&nbsp;Dnac's&nbsp;API&nbsp;store,&nbsp;namely<br>
+Dnac.api{}<br>
+:return:&nbsp;str</tt></dd>
+</dl>
+<dl><dt><strong>resource</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;resource&nbsp;returns&nbsp;__resource,&nbsp;which&nbsp;is&nbsp;the&nbsp;API&nbsp;call&nbsp;to&nbsp;Cisco&nbsp;DNAC.&nbsp;&nbsp;In&nbsp;child&nbsp;classes,&nbsp;use&nbsp;this&nbsp;method<br>
+to&nbsp;form&nbsp;requests&nbsp;by&nbsp;appending&nbsp;it&nbsp;to&nbsp;Cisco&nbsp;DNAC's&nbsp;base&nbsp;url,&nbsp;i.e.&nbsp;Dnac.url.<br>
+:return:&nbsp;str</tt></dd>
+</dl>
+<dl><dt><strong>results</strong></dt>
+<dd><tt>The&nbsp;results&nbsp;method&nbsp;is&nbsp;decorated&nbsp;as&nbsp;if&nbsp;it&nbsp;was&nbsp;an&nbsp;attribute&nbsp;of&nbsp;this&nbsp;class&nbsp;and&nbsp;can&nbsp;be&nbsp;used&nbsp;accordingly.<br>
+It&nbsp;returns&nbsp;the&nbsp;raw&nbsp;results&nbsp;stored&nbsp;in&nbsp;the&nbsp;class'&nbsp;Crud&nbsp;object&nbsp;obtained&nbsp;from&nbsp;an&nbsp;API&nbsp;call.<br>
+:return:&nbsp;dict</tt></dd>
+</dl>
+<dl><dt><strong>timeout</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;timeout&nbsp;returns&nbsp;the&nbsp;value&nbsp;of&nbsp;attribute&nbsp;__timeout.&nbsp;&nbsp;The&nbsp;value&nbsp;returned&nbsp;represents&nbsp;the&nbsp;number&nbsp;of<br>
+seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;the&nbsp;HTTP&nbsp;server&nbsp;to&nbsp;respond&nbsp;to&nbsp;an&nbsp;API&nbsp;request.<br>
+:return:&nbsp;int</tt></dd>
+</dl>
+<dl><dt><strong>verify</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;verify&nbsp;returns&nbsp;value&nbsp;of&nbsp;__verify,&nbsp;which&nbsp;is&nbsp;used&nbsp;to&nbsp;determine&nbsp;whether&nbsp;or&nbsp;not&nbsp;to&nbsp;check&nbsp;Cisco&nbsp;DNAC's<br>
+certificate&nbsp;upon&nbsp;making&nbsp;an&nbsp;API&nbsp;call.<br>
+:return:&nbsp;bool</tt></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>ACCEPTED</strong> = 202<br>
+<strong>ARCHIVE_RESOURCE_PATH</strong> = {'1.2.10': '/api/v1/archive-config', '1.3.0.2': '/api/v1/archive-config', '1.3.0.3': '/api/v1/archive-config', '1.3.1.3': '/api/v1/archive-config', '1.3.1.4': '/api/v1/archive-config'}<br>
+<strong>DEVICE_ARCHIVE_RESOURCE_PATH</strong> = {'1.2.10': '/api/v1/archive-config/network-device', '1.3.0.2': '/api/v1/archive-config/network-device', '1.3.0.3': '/api/v1/archive-config/network-device', '1.3.1.3': '/api/v1/archive-config/network-device', '1.3.1.4': '/api/v1/archive-config/network-device'}<br>
+<strong>DEVICE_LIST_RESOLUTION</strong> = 'Only one device allowed.  Device list is empty or has multiple entries.'<br>
+<strong>DEVICE_TYPE_RESOLUTION</strong> = 'Create the config archive with a valid NetworkDevice object'<br>
+<strong>ERROR_MSGS</strong> = {400: '400 - API request syntax is malformed', 401: '401 - API request has missing or invalid credentials', 403: '403 - API request is unauthorized', 404: '404 - API requested resource does not exist', 409: '409 - API requested resource is in a conflicted state', 415: '415 - API request body is in an unsupported format', 417: '417 - The server cannot meet the requirements of the Expect request-header field', 500: '500 - Server could not fulfill the API request', 501: '501 - Server has not implemented the requested function', 503: '503 - Server is unavailable', ...}<br>
+<strong>ILLEGAL_DEVICE_LIST</strong> = 'Illegal device ID list'<br>
+<strong>ILLEGAL_DEVICE_TYPE</strong> = 'Illegal device type'<br>
+<strong>LEGAL_DEVICE_LIST</strong> = 'dict'<br>
+<strong>LEGAL_DEVICE_TYPE</strong> = 'class NetworkDevice'<br>
+<strong>MODULE</strong> = 'device_archive.py'<br>
+<strong>NO_ARCHIVED_CONFIGS</strong> = []<br>
+<strong>OK</strong> = 200<br>
+<strong>REQUEST_NOT_ACCEPTED</strong> = 'API request is not ACCEPTED'<br>
+<strong>REQUEST_NOT_OK</strong> = 'API request is not OK'<br>
+<strong>SINGLE_DEVICE</strong> = 1<br>
+<strong>SINGLE_DEVICE_ERROR</strong> = 'Archive requested includes multiple devices'<br>
+<strong>SINGLE_DEVICE_ERROR_RESOLUTION</strong> = "Modify the request's scope to one device only."<br>
+<strong>SUPPORTED_DNAC_VERSIONS</strong> = ['1.2.8', '1.2.10', '1.3.0.2', '1.3.0.3', '1.3.1.3', '1.3.1.4']<br>
+<strong>UNSUPPORTED_DNAC_VERSION</strong> = 'Unsupported Cisco DNA Center version'</td></tr></table>
+</body></html>

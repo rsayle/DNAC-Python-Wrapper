@@ -13,3 +13,4 @@
 # pycharm cache
 /.idea
 
+/mkdist

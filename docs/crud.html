@@ -1,14 +1,15 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html><head><title>Python: module crud</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<html><head><title>Python: module dnac.crud</title>
+<meta charset="utf-8">
 </head><body bgcolor="#f0f0f8">
 
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
 <tr bgcolor="#7799ee">
 <td valign=bottom>&nbsp;<br>
-<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>crud</strong></big></big></font></td
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="dnac.html"><font color="#ffffff">dnac</font></a>.crud</strong></big></big></font></td
 ><td align=right valign=bottom
-><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/crud.py">/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/crud.py</a></font></td></tr></table>
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/dnac/crud.py">/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/dnac/crud.py</a></font></td></tr></table>
     <p></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -27,10 +28,10 @@
     
 <tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><dl>
-<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+<dt><font face="helvetica, arial"><a href="__builtin__.html#object">__builtin__.object</a>
 </font></dt><dd>
 <dl>
-<dt><font face="helvetica, arial"><a href="crud.html#Crud">Crud</a>
+<dt><font face="helvetica, arial"><a href="dnac.crud.html#Crud">Crud</a>
 </font></dt></dl>
 </dd>
 </dl>
@@ -38,7 +39,7 @@
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="Crud">class <strong>Crud</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+<font color="#000000" face="helvetica, arial"><a name="Crud">class <strong>Crud</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
 <td colspan=2><tt>Class&nbsp;<a href="#Crud">Crud</a>&nbsp;handles&nbsp;REST&nbsp;API&nbsp;calls&nbsp;(get,&nbsp;put,&nbsp;post&nbsp;and&nbsp;delete)&nbsp;to&nbsp;a<br>
@@ -50,174 +51,113 @@ Attributes:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;results:&nbsp;The&nbsp;results&nbsp;returned&nbsp;by&nbsp;a&nbsp;CRUD&nbsp;API&nbsp;call.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;dict<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>&nbsp;</tt></td></tr>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scope:&nbsp;protected<br>
+&nbsp;<br>
+Usage:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;rest_api&nbsp;=&nbsp;<a href="#Crud">Crud</a>()<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>
-<dl><dt><a name="Crud-__init__"><strong>__init__</strong></a>(self)</dt><dd><tt><a href="#Crud">Crud</a>'s&nbsp;__init__&nbsp;method&nbsp;sets&nbsp;up&nbsp;its&nbsp;results&nbsp;attribute&nbsp;as&nbsp;an&nbsp;empty<br>
-dictionary&nbsp;and&nbsp;then&nbsp;returns&nbsp;the&nbsp;newly&nbsp;created&nbsp;<a href="#Crud">Crud</a>&nbsp;<a href="builtins.html#object">object</a>.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Crud">Crud</a>&nbsp;<a href="builtins.html#object">object</a>:&nbsp;The&nbsp;new&nbsp;<a href="#Crud">Crud</a>&nbsp;instance<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;rest_api&nbsp;=&nbsp;<a href="#Crud">Crud</a>()</tt></dd></dl>
+<dl><dt><a name="Crud-__init__"><strong>__init__</strong></a>(self)</dt><dd><tt><a href="#Crud">Crud</a>'s&nbsp;__init__&nbsp;method&nbsp;sets&nbsp;up&nbsp;its&nbsp;results&nbsp;attribute&nbsp;as&nbsp;an&nbsp;empty&nbsp;dictionary&nbsp;and&nbsp;then&nbsp;returns&nbsp;the&nbsp;newly&nbsp;created<br>
+<a href="#Crud">Crud</a>&nbsp;<a href="__builtin__.html#object">object</a>.</tt></dd></dl>
 
-<dl><dt><a name="Crud-delete"><strong>delete</strong></a>(self, url, headers=None, body='', verify=False, timeout=5)</dt><dd><tt><a href="#Crud">Crud</a>'s&nbsp;delete&nbsp;method&nbsp;performs&nbsp;a&nbsp;DELETE&nbsp;API&nbsp;call,&nbsp;a&nbsp;delete&nbsp;request,<br>
-to&nbsp;a&nbsp;server.&nbsp;&nbsp;It&nbsp;stores&nbsp;the&nbsp;results&nbsp;and&nbsp;also&nbsp;returns&nbsp;them&nbsp;to&nbsp;the<br>
-user&nbsp;along&nbsp;with&nbsp;the&nbsp;request's&nbsp;status&nbsp;code.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;url:&nbsp;The&nbsp;path&nbsp;to&nbsp;the&nbsp;server's&nbsp;API&nbsp;resource.<br>
+<dl><dt><a name="Crud-delete"><strong>delete</strong></a>(self, url, headers<font color="#909090">=None</font>, body<font color="#909090">=''</font>, verify<font color="#909090">=False</font>, timeout<font color="#909090">=5</font>)</dt><dd><tt><a href="#Crud">Crud</a>'s&nbsp;delete&nbsp;method&nbsp;performs&nbsp;a&nbsp;DELETE&nbsp;API&nbsp;call,&nbsp;a&nbsp;delete&nbsp;request,&nbsp;to&nbsp;a&nbsp;server.&nbsp;&nbsp;It&nbsp;stores&nbsp;the&nbsp;results&nbsp;and&nbsp;also<br>
+returns&nbsp;them&nbsp;to&nbsp;the&nbsp;user&nbsp;along&nbsp;with&nbsp;the&nbsp;request's&nbsp;status&nbsp;code.<br>
+:param&nbsp;url:&nbsp;he&nbsp;path&nbsp;to&nbsp;the&nbsp;server's&nbsp;API&nbsp;resource.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;headers:&nbsp;The&nbsp;headers&nbsp;for&nbsp;placing&nbsp;an&nbsp;API&nbsp;call.<br>
+:param&nbsp;headers:&nbsp;The&nbsp;headers&nbsp;for&nbsp;placing&nbsp;an&nbsp;API&nbsp;call.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;dict<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes,&nbsp;as&nbsp;a&nbsp;keyword&nbsp;argument<br>
-&nbsp;&nbsp;&nbsp;&nbsp;body:&nbsp;Any&nbsp;data&nbsp;elements&nbsp;required&nbsp;for&nbsp;the&nbsp;API&nbsp;call.<br>
+:param&nbsp;body:&nbsp;Any&nbsp;data&nbsp;elements&nbsp;required&nbsp;for&nbsp;the&nbsp;API&nbsp;call.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
-&nbsp;&nbsp;&nbsp;&nbsp;verify:&nbsp;A&nbsp;flag&nbsp;indicating&nbsp;if&nbsp;the&nbsp;server's&nbsp;certificate&nbsp;should<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;be&nbsp;authenticated.<br>
+:param&nbsp;verify:&nbsp;A&nbsp;flag&nbsp;indicating&nbsp;if&nbsp;the&nbsp;server's&nbsp;certificate&nbsp;should&nbsp;be&nbsp;authenticated.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;bool<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;False<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
-&nbsp;&nbsp;&nbsp;&nbsp;timeout:&nbsp;Time&nbsp;in&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;the&nbsp;server's&nbsp;response<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;before&nbsp;abandoning&nbsp;the&nbsp;API&nbsp;call.<br>
+:param&nbsp;timeout:&nbsp;Time&nbsp;in&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;the&nbsp;server's&nbsp;response&nbsp;before&nbsp;abandoning&nbsp;the&nbsp;API&nbsp;call.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;5<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;The&nbsp;API&nbsp;response&nbsp;data.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;The&nbsp;API&nbsp;response&nbsp;code.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;rest_api&nbsp;=&nbsp;<a href="#Crud">Crud</a>()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;url&nbsp;=&nbsp;"https://server/resource/path"<br>
-&nbsp;&nbsp;&nbsp;&nbsp;hdrs&nbsp;=&nbsp;{'content-type':&nbsp;'application/json'}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;results,&nbsp;status&nbsp;=&nbsp;rest_api.<a href="#Crud-delete">delete</a>(url,&nbsp;headers=hdrs,&nbsp;body=body)</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no</tt></dd></dl>
 
-<dl><dt><a name="Crud-get"><strong>get</strong></a>(self, url, headers=None, body='', verify=False, timeout=5)</dt><dd><tt><a href="#Crud">Crud</a>'s&nbsp;get&nbsp;method&nbsp;performs&nbsp;a&nbsp;GET&nbsp;API&nbsp;call,&nbsp;a&nbsp;read&nbsp;request,&nbsp;to&nbsp;a<br>
-server.&nbsp;&nbsp;It&nbsp;stores&nbsp;the&nbsp;results&nbsp;and&nbsp;also&nbsp;returns&nbsp;them&nbsp;to&nbsp;the&nbsp;user<br>
-along&nbsp;with&nbsp;the&nbsp;request's&nbsp;status&nbsp;code.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;url:&nbsp;The&nbsp;path&nbsp;to&nbsp;the&nbsp;server's&nbsp;API&nbsp;resource.<br>
+<dl><dt><a name="Crud-get"><strong>get</strong></a>(self, url, headers<font color="#909090">=None</font>, body<font color="#909090">=''</font>, verify<font color="#909090">=False</font>, timeout<font color="#909090">=5</font>, is_json<font color="#909090">=True</font>)</dt><dd><tt><a href="#Crud">Crud</a>'s&nbsp;get&nbsp;method&nbsp;performs&nbsp;a&nbsp;GET&nbsp;API&nbsp;call,&nbsp;a&nbsp;read&nbsp;request,&nbsp;to&nbsp;a&nbsp;server.&nbsp;&nbsp;It&nbsp;stores&nbsp;the&nbsp;results&nbsp;and&nbsp;also&nbsp;returns<br>
+them&nbsp;to&nbsp;the&nbsp;user&nbsp;along&nbsp;with&nbsp;the&nbsp;request's&nbsp;status&nbsp;code.<br>
+:param&nbsp;url:&nbsp;The&nbsp;path&nbsp;to&nbsp;the&nbsp;server's&nbsp;API&nbsp;resource.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;headers:&nbsp;The&nbsp;headers&nbsp;for&nbsp;placing&nbsp;an&nbsp;API&nbsp;call.<br>
+:param&nbsp;headers:&nbsp;headers:&nbsp;The&nbsp;headers&nbsp;for&nbsp;placing&nbsp;an&nbsp;API&nbsp;call.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;dict<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes,&nbsp;as&nbsp;a&nbsp;keyword&nbsp;argument<br>
-&nbsp;&nbsp;&nbsp;&nbsp;body:&nbsp;Any&nbsp;data&nbsp;elements&nbsp;required&nbsp;for&nbsp;the&nbsp;API&nbsp;call.<br>
+:param&nbsp;body:&nbsp;Any&nbsp;data&nbsp;elements&nbsp;required&nbsp;for&nbsp;the&nbsp;API&nbsp;call.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
-&nbsp;&nbsp;&nbsp;&nbsp;verify:&nbsp;A&nbsp;flag&nbsp;indicating&nbsp;if&nbsp;the&nbsp;server's&nbsp;certificate&nbsp;should<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;be&nbsp;authenticated.<br>
+:param&nbsp;verify:&nbsp;A&nbsp;flag&nbsp;indicating&nbsp;if&nbsp;the&nbsp;server's&nbsp;certificate&nbsp;should&nbsp;be&nbsp;authenticated.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;bool<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;False<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
-&nbsp;&nbsp;&nbsp;&nbsp;timeout:&nbsp;Time&nbsp;in&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;the&nbsp;server's&nbsp;response<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;before&nbsp;abandoning&nbsp;the&nbsp;API&nbsp;call.<br>
+:param&nbsp;timeout:&nbsp;Time&nbsp;in&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;the&nbsp;server's&nbsp;response&nbsp;before&nbsp;abandoning&nbsp;the&nbsp;API&nbsp;call.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;5<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;The&nbsp;API&nbsp;response&nbsp;data.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;The&nbsp;API&nbsp;response&nbsp;code.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;rest_api&nbsp;=&nbsp;<a href="#Crud">Crud</a>()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;url&nbsp;=&nbsp;"https://server/resource/path"<br>
-&nbsp;&nbsp;&nbsp;&nbsp;hdrs&nbsp;=&nbsp;{'content-type':&nbsp;'application/json'}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;results,&nbsp;status&nbsp;=&nbsp;rest_api.<a href="#Crud-get">get</a>(url,&nbsp;headers=hdrs)</tt></dd></dl>
+:param&nbsp;is_json:&nbsp;A&nbsp;flag&nbsp;indicating&nbsp;if&nbsp;the&nbsp;response&nbsp;is&nbsp;given&nbsp;in&nbsp;JSON&nbsp;format.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;=&nbsp;bool<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;False<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
+:return:&nbsp;dict,&nbsp;str</tt></dd></dl>
 
-<dl><dt><a name="Crud-post"><strong>post</strong></a>(self, url, headers=None, body='', verify=False, timeout=5)</dt><dd><tt><a href="#Crud">Crud</a>'s&nbsp;post&nbsp;method&nbsp;performs&nbsp;a&nbsp;POST&nbsp;API&nbsp;call,&nbsp;a&nbsp;create&nbsp;request,&nbsp;to<br>
-a&nbsp;server.&nbsp;&nbsp;It&nbsp;stores&nbsp;the&nbsp;results&nbsp;and&nbsp;also&nbsp;returns&nbsp;them&nbsp;to&nbsp;the&nbsp;user<br>
-along&nbsp;with&nbsp;the&nbsp;request's&nbsp;status&nbsp;code.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;url:&nbsp;The&nbsp;path&nbsp;to&nbsp;the&nbsp;server's&nbsp;API&nbsp;resource.<br>
+<dl><dt><a name="Crud-post"><strong>post</strong></a>(self, url, headers<font color="#909090">=None</font>, body<font color="#909090">=''</font>, verify<font color="#909090">=False</font>, timeout<font color="#909090">=5</font>)</dt><dd><tt><a href="#Crud">Crud</a>'s&nbsp;post&nbsp;method&nbsp;performs&nbsp;a&nbsp;POST&nbsp;API&nbsp;call,&nbsp;a&nbsp;create&nbsp;request,&nbsp;to&nbsp;a&nbsp;server.&nbsp;&nbsp;It&nbsp;stores&nbsp;the&nbsp;results&nbsp;and&nbsp;also<br>
+returns&nbsp;them&nbsp;to&nbsp;the&nbsp;user&nbsp;along&nbsp;with&nbsp;the&nbsp;request's&nbsp;status&nbsp;code.<br>
+:param&nbsp;url:&nbsp;he&nbsp;path&nbsp;to&nbsp;the&nbsp;server's&nbsp;API&nbsp;resource.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;headers:&nbsp;The&nbsp;headers&nbsp;for&nbsp;placing&nbsp;an&nbsp;API&nbsp;call.<br>
+:param&nbsp;headers:&nbsp;The&nbsp;headers&nbsp;for&nbsp;placing&nbsp;an&nbsp;API&nbsp;call.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;dict<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes,&nbsp;as&nbsp;a&nbsp;keyword&nbsp;argument<br>
-&nbsp;&nbsp;&nbsp;&nbsp;body:&nbsp;Any&nbsp;data&nbsp;elements&nbsp;required&nbsp;for&nbsp;the&nbsp;API&nbsp;call.<br>
+:param&nbsp;body:&nbsp;Any&nbsp;data&nbsp;elements&nbsp;required&nbsp;for&nbsp;the&nbsp;API&nbsp;call.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
-&nbsp;&nbsp;&nbsp;&nbsp;verify:&nbsp;A&nbsp;flag&nbsp;indicating&nbsp;if&nbsp;the&nbsp;server's&nbsp;certificate&nbsp;should<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;be&nbsp;authenticated.<br>
+:param&nbsp;verify:&nbsp;A&nbsp;flag&nbsp;indicating&nbsp;if&nbsp;the&nbsp;server's&nbsp;certificate&nbsp;should&nbsp;be&nbsp;authenticated.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;bool<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;False<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
-&nbsp;&nbsp;&nbsp;&nbsp;timeout:&nbsp;Time&nbsp;in&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;the&nbsp;server's&nbsp;response<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;before&nbsp;abandoning&nbsp;the&nbsp;API&nbsp;call.<br>
+:param&nbsp;timeout:&nbsp;Time&nbsp;in&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;the&nbsp;server's&nbsp;response&nbsp;before&nbsp;abandoning&nbsp;the&nbsp;API&nbsp;call.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;5<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;The&nbsp;API&nbsp;response&nbsp;data.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;The&nbsp;API&nbsp;response&nbsp;code.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;rest_api&nbsp;=&nbsp;<a href="#Crud">Crud</a>()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;url&nbsp;=&nbsp;"https://server/resource/path"<br>
-&nbsp;&nbsp;&nbsp;&nbsp;body&nbsp;=&nbsp;"\{'parameter'&nbsp;:&nbsp;'value'\}"<br>
-&nbsp;&nbsp;&nbsp;&nbsp;hdrs&nbsp;=&nbsp;{'content-type':&nbsp;'application/json'}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;results,&nbsp;status&nbsp;=&nbsp;rest_api.<a href="#Crud-post">post</a>(url,&nbsp;headers=hdrs,&nbsp;body=body)</tt></dd></dl>
+:return:&nbsp;dict,&nbsp;str</tt></dd></dl>
 
-<dl><dt><a name="Crud-put"><strong>put</strong></a>(self, url, headers=None, body='', verify=False, timeout=5)</dt><dd><tt><a href="#Crud">Crud</a>'s&nbsp;put&nbsp;method&nbsp;performs&nbsp;a&nbsp;PUT&nbsp;API&nbsp;call,&nbsp;an&nbsp;update&nbsp;request,&nbsp;to&nbsp;a<br>
-server.&nbsp;&nbsp;It&nbsp;stores&nbsp;the&nbsp;results&nbsp;and&nbsp;also&nbsp;returns&nbsp;them&nbsp;to&nbsp;the&nbsp;user<br>
-along&nbsp;with&nbsp;the&nbsp;request's&nbsp;status&nbsp;code.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;url:&nbsp;The&nbsp;path&nbsp;to&nbsp;the&nbsp;server's&nbsp;API&nbsp;resource.<br>
+<dl><dt><a name="Crud-put"><strong>put</strong></a>(self, url, headers<font color="#909090">=None</font>, body<font color="#909090">=''</font>, verify<font color="#909090">=False</font>, timeout<font color="#909090">=5</font>)</dt><dd><tt><a href="#Crud">Crud</a>'s&nbsp;put&nbsp;method&nbsp;performs&nbsp;a&nbsp;PUT&nbsp;API&nbsp;call,&nbsp;an&nbsp;update&nbsp;request,&nbsp;to&nbsp;a&nbsp;server.&nbsp;&nbsp;It&nbsp;stores&nbsp;the&nbsp;results&nbsp;and&nbsp;also<br>
+returns&nbsp;them&nbsp;to&nbsp;the&nbsp;user&nbsp;along&nbsp;with&nbsp;the&nbsp;request's&nbsp;status&nbsp;code.<br>
+:param&nbsp;url:&nbsp;he&nbsp;path&nbsp;to&nbsp;the&nbsp;server's&nbsp;API&nbsp;resource.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;headers:&nbsp;The&nbsp;headers&nbsp;for&nbsp;placing&nbsp;an&nbsp;API&nbsp;call.<br>
+:param&nbsp;headers:&nbsp;The&nbsp;headers&nbsp;for&nbsp;placing&nbsp;an&nbsp;API&nbsp;call.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;dict<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes,&nbsp;as&nbsp;a&nbsp;keyword&nbsp;argument<br>
-&nbsp;&nbsp;&nbsp;&nbsp;body:&nbsp;Any&nbsp;data&nbsp;elements&nbsp;required&nbsp;for&nbsp;the&nbsp;API&nbsp;call.<br>
+:param&nbsp;body:&nbsp;Any&nbsp;data&nbsp;elements&nbsp;required&nbsp;for&nbsp;the&nbsp;API&nbsp;call.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
-&nbsp;&nbsp;&nbsp;&nbsp;verify:&nbsp;A&nbsp;flag&nbsp;indicating&nbsp;if&nbsp;the&nbsp;server's&nbsp;certificate&nbsp;should<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;be&nbsp;authenticated.<br>
+:param&nbsp;verify:&nbsp;A&nbsp;flag&nbsp;indicating&nbsp;if&nbsp;the&nbsp;server's&nbsp;certificate&nbsp;should&nbsp;be&nbsp;authenticated.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;bool<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;False<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
-&nbsp;&nbsp;&nbsp;&nbsp;timeout:&nbsp;Time&nbsp;in&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;the&nbsp;server's&nbsp;response<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;before&nbsp;abandoning&nbsp;the&nbsp;API&nbsp;call.<br>
+:param&nbsp;timeout:&nbsp;Time&nbsp;in&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;the&nbsp;server's&nbsp;response&nbsp;before&nbsp;abandoning&nbsp;the&nbsp;API&nbsp;call.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;5<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;The&nbsp;API&nbsp;response&nbsp;data.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;The&nbsp;API&nbsp;response&nbsp;code.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;rest_api&nbsp;=&nbsp;<a href="#Crud">Crud</a>()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;url&nbsp;=&nbsp;"https://server/resource/path"<br>
-&nbsp;&nbsp;&nbsp;&nbsp;body&nbsp;=&nbsp;"\{'parameter'&nbsp;:&nbsp;'newValue'\}"<br>
-&nbsp;&nbsp;&nbsp;&nbsp;hdrs&nbsp;=&nbsp;{'content-type':&nbsp;'application/json'}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;results,&nbsp;status&nbsp;=&nbsp;rest_api.<a href="#Crud-put">put</a>(url,&nbsp;headers=hdrs,&nbsp;body=body)</tt></dd></dl>
+:return:&nbsp;dict,&nbsp;str</tt></dd></dl>
 
 <hr>
 Data descriptors defined here:<br>
@@ -228,20 +168,9 @@ Data descriptors defined here:<br>
 <dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
 </dl>
 <dl><dt><strong>results</strong></dt>
-<dd><tt>Crud's&nbsp;results&nbsp;get&nbsp;method&nbsp;returns&nbsp;the&nbsp;value&nbsp;of&nbsp;its&nbsp;__results<br>
-attribute,&nbsp;which&nbsp;contains&nbsp;the&nbsp;response&nbsp;from&nbsp;the&nbsp;RESTful&nbsp;server<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;The&nbsp;server's&nbsp;response&nbsp;to&nbsp;an&nbsp;API&nbsp;call<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;rest_api&nbsp;=&nbsp;Crud()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;url&nbsp;=&nbsp;"https://server/resource/path"<br>
-&nbsp;&nbsp;&nbsp;&nbsp;rest_api.get(url,&nbsp;headers=hdrs)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;str(rest_api.results)</tt></dd>
+<dd><tt>Crud's&nbsp;results&nbsp;get&nbsp;method&nbsp;returns&nbsp;the&nbsp;value&nbsp;of&nbsp;its&nbsp;__results&nbsp;attribute,&nbsp;which&nbsp;contains&nbsp;the&nbsp;response&nbsp;from&nbsp;the<br>
+RESTful&nbsp;server.<br>
+:return:&nbsp;dict</tt></dd>
 </dl>
 </td></tr></table></td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -251,7 +180,7 @@ Usage:<br>
     
 <tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><strong>ACCEPTED</strong> = 202<br>
-<strong>ERROR_MSGS</strong> = {400: '400 - API request syntax is malformed', 401: '401 - API request has missing or invalid credentials', 403: '403 - API request is unauthorized', 404: '404 - API requested resource does not exist', 409: '409 - API requested resource is in a conflicted state', 415: '415 - API request body is in an unsupported format', 500: '500 - Server could not fulfill the API request', 501: '501 - Server has not implemented the requested function', 503: '503 - Server is unavailable', 504: '504 - Server did not respond before request timed-out'}<br>
+<strong>ERROR_MSGS</strong> = {400: '400 - API request syntax is malformed', 401: '401 - API request has missing or invalid credentials', 403: '403 - API request is unauthorized', 404: '404 - API requested resource does not exist', 409: '409 - API requested resource is in a conflicted state', 415: '415 - API request body is in an unsupported format', 417: '417 - The server cannot meet the requirements of the Expect request-header field', 500: '500 - Server could not fulfill the API request', 501: '501 - Server has not implemented the requested function', 503: '503 - Server is unavailable', ...}<br>
 <strong>OK</strong> = 200<br>
 <strong>REQUEST_NOT_ACCEPTED</strong> = 'API request is not ACCEPTED'<br>
 <strong>REQUEST_NOT_OK</strong> = 'API request is not OK'<br>

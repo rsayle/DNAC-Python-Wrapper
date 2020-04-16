@@ -17,9 +17,9 @@ dnac.api['Set VLAN'].targetType = TARGET_BY_ID
 
 print('%s: setting the template\'s parameters...' % MODULE)
 
-dnac.api['Set VLAN'].versionedTemplateParams['interface'] = 'g1/0/8'
-dnac.api['Set VLAN'].versionedTemplateParams['description'] = 'Provisioned by %s' % MODULE
-dnac.api['Set VLAN'].versionedTemplateParams['vlan'] = 10
+dnac.api['Set VLAN'].set_param('interface', 'g1/0/8')
+dnac.api['Set VLAN'].set_param('description', 'Provisioned by %s' % MODULE)
+dnac.api['Set VLAN'].set_param('vlan', 10)
 
 print('%s: deploying the template...' % MODULE)
 

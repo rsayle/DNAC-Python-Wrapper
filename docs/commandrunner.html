@@ -1,14 +1,15 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html><head><title>Python: module commandrunner</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<html><head><title>Python: module dnac.commandrunner</title>
+<meta charset="utf-8">
 </head><body bgcolor="#f0f0f8">
 
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
 <tr bgcolor="#7799ee">
 <td valign=bottom>&nbsp;<br>
-<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>commandrunner</strong></big></big></font></td
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="dnac.html"><font color="#ffffff">dnac</font></a>.commandrunner</strong></big></big></font></td
 ><td align=right valign=bottom
-><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/commandrunner.py">/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/commandrunner.py</a></font></td></tr></table>
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/dnac/commandrunner.py">/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/dnac/commandrunner.py</a></font></td></tr></table>
     <p></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -18,7 +19,8 @@
     
 <tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="json.html">json</a><br>
-</td><td width="25%" valign=top></td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+</td><td width="25%" valign=top><a href="time.html">time</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ee77aa">
 <td colspan=3 valign=bottom>&nbsp;<br>
@@ -26,10 +28,10 @@
     
 <tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><dl>
-<dt><font face="helvetica, arial"><a href="dnacapi.html#DnacApi">dnacapi.DnacApi</a>(<a href="builtins.html#object">builtins.object</a>)
+<dt><font face="helvetica, arial"><a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>(<a href="__builtin__.html#object">__builtin__.object</a>)
 </font></dt><dd>
 <dl>
-<dt><font face="helvetica, arial"><a href="commandrunner.html#CommandRunner">CommandRunner</a>
+<dt><font face="helvetica, arial"><a href="dnac.commandrunner.html#CommandRunner">CommandRunner</a>
 </font></dt></dl>
 </dd>
 </dl>
@@ -37,24 +39,19 @@
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="CommandRunner">class <strong>CommandRunner</strong></a>(<a href="dnacapi.html#DnacApi">dnacapi.DnacApi</a>)</font></td></tr>
+<font color="#000000" face="helvetica, arial"><a name="CommandRunner">class <strong>CommandRunner</strong></a>(<a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>The&nbsp;<a href="#CommandRunner">CommandRunner</a>&nbsp;class&nbsp;provides&nbsp;the&nbsp;interface&nbsp;for&nbsp;running&nbsp;CLI&nbsp;commands<br>
-on&nbsp;DNA&nbsp;Center.&nbsp;&nbsp;Note&nbsp;that&nbsp;the&nbsp;command&nbsp;runner&nbsp;API&nbsp;only&nbsp;allows&nbsp;read-only<br>
-commands,&nbsp;i.e.&nbsp;show&nbsp;commands.<br>
+<td colspan=2><tt>The&nbsp;<a href="#CommandRunner">CommandRunner</a>&nbsp;class&nbsp;provides&nbsp;the&nbsp;interface&nbsp;for&nbsp;running&nbsp;CLI&nbsp;commands&nbsp;on&nbsp;DNA&nbsp;Center.&nbsp;&nbsp;Note&nbsp;that&nbsp;the&nbsp;command<br>
+runner&nbsp;API&nbsp;only&nbsp;allows&nbsp;read-only&nbsp;commands,&nbsp;i.e.&nbsp;show&nbsp;commands.<br>
 &nbsp;<br>
-Command&nbsp;sets&nbsp;must&nbsp;be&nbsp;formatted&nbsp;as&nbsp;a&nbsp;dictionary&nbsp;with&nbsp;two&nbsp;lists.&nbsp;&nbsp;The<br>
-first&nbsp;item&nbsp;uses&nbsp;"commands"&nbsp;as&nbsp;its&nbsp;key&nbsp;and&nbsp;then&nbsp;has&nbsp;a&nbsp;list&nbsp;of&nbsp;the<br>
-actual&nbsp;CLI&nbsp;commands&nbsp;to&nbsp;run.&nbsp;&nbsp;The&nbsp;second&nbsp;value's&nbsp;key&nbsp;is&nbsp;"deviceUuids"<br>
-and&nbsp;its&nbsp;values&nbsp;are&nbsp;the&nbsp;device&nbsp;IDs&nbsp;where&nbsp;the&nbsp;commands&nbsp;will&nbsp;be&nbsp;run.<br>
-<a href="#CommandRunner">CommandRunner</a>&nbsp;provides&nbsp;two&nbsp;functions&nbsp;to&nbsp;help&nbsp;produce&nbsp;the&nbsp;dictionary<br>
+Command&nbsp;sets&nbsp;must&nbsp;be&nbsp;formatted&nbsp;as&nbsp;a&nbsp;dictionary&nbsp;with&nbsp;two&nbsp;lists.&nbsp;&nbsp;The&nbsp;first&nbsp;item&nbsp;uses&nbsp;"commands"&nbsp;as&nbsp;its&nbsp;key&nbsp;and&nbsp;then<br>
+has&nbsp;a&nbsp;list&nbsp;of&nbsp;the&nbsp;actual&nbsp;CLI&nbsp;commands&nbsp;to&nbsp;run.&nbsp;&nbsp;The&nbsp;second&nbsp;value's&nbsp;key&nbsp;is&nbsp;"deviceUuids"&nbsp;and&nbsp;its&nbsp;values&nbsp;are&nbsp;the<br>
+device&nbsp;IDs&nbsp;where&nbsp;the&nbsp;commands&nbsp;will&nbsp;be&nbsp;run.&nbsp;<a href="#CommandRunner">CommandRunner</a>&nbsp;provides&nbsp;two&nbsp;functions&nbsp;to&nbsp;help&nbsp;produce&nbsp;the&nbsp;dictionary<br>
 used&nbsp;as&nbsp;the&nbsp;API&nbsp;call's&nbsp;body:&nbsp;formatCmd&nbsp;and&nbsp;formatCmds.<br>
 &nbsp;<br>
-To&nbsp;execute&nbsp;the&nbsp;commands,&nbsp;<a href="#CommandRunner">CommandRunner</a>&nbsp;provdes&nbsp;two&nbsp;different&nbsp;methods.<br>
-<a href="#CommandRunner-run">run</a>()&nbsp;issues&nbsp;the&nbsp;commands&nbsp;but&nbsp;does&nbsp;not&nbsp;wait&nbsp;for&nbsp;the&nbsp;task&nbsp;to&nbsp;complete.<br>
-runSync()&nbsp;on&nbsp;the&nbsp;other&nbsp;hand,&nbsp;waits&nbsp;for&nbsp;the&nbsp;task&nbsp;to&nbsp;finish&nbsp;and&nbsp;then<br>
-collects&nbsp;the&nbsp;results.<br>
+To&nbsp;execute&nbsp;the&nbsp;commands,&nbsp;<a href="#CommandRunner">CommandRunner</a>&nbsp;provdes&nbsp;two&nbsp;different&nbsp;methods.&nbsp;<a href="#CommandRunner-run">run</a>()&nbsp;issues&nbsp;the&nbsp;commands&nbsp;but&nbsp;does&nbsp;not&nbsp;wait<br>
+for&nbsp;the&nbsp;task&nbsp;to&nbsp;complete.&nbsp;runSync()&nbsp;on&nbsp;the&nbsp;other&nbsp;hand,&nbsp;waits&nbsp;for&nbsp;the&nbsp;task&nbsp;to&nbsp;finish&nbsp;and&nbsp;then&nbsp;collects&nbsp;the&nbsp;results.<br>
 &nbsp;<br>
 Attributes:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dnac:&nbsp;A&nbsp;pointer&nbsp;to&nbsp;the&nbsp;Dnac&nbsp;object&nbsp;containing&nbsp;the&nbsp;<a href="#CommandRunner">CommandRunner</a>&nbsp;instance.<br>
@@ -95,187 +92,94 @@ Usage:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;results&nbsp;=&nbsp;cmd.runSync()<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
-<dd><a href="commandrunner.html#CommandRunner">CommandRunner</a></dd>
-<dd><a href="dnacapi.html#DnacApi">dnacapi.DnacApi</a></dd>
-<dd><a href="builtins.html#object">builtins.object</a></dd>
+<dd><a href="dnac.commandrunner.html#CommandRunner">CommandRunner</a></dd>
+<dd><a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
 </dl>
 <hr>
 Methods defined here:<br>
-<dl><dt><a name="CommandRunner-__init__"><strong>__init__</strong></a>(self, dnac, name, cmds=None, verify=False, timeout=5)</dt><dd><tt>The&nbsp;__init__&nbsp;method&nbsp;creates&nbsp;a&nbsp;<a href="#CommandRunner">CommandRunner</a>&nbsp;object.&nbsp;&nbsp;As&nbsp;with&nbsp;all<br>
-classes&nbsp;that&nbsp;inherit&nbsp;from&nbsp;<a href="dnacapi.html#DnacApi">DnacApi</a>,&nbsp;a&nbsp;minimum&nbsp;of&nbsp;a&nbsp;Dnac&nbsp;container<br>
-and&nbsp;a&nbsp;name&nbsp;must&nbsp;be&nbsp;given.&nbsp;&nbsp;Optionally,&nbsp;a&nbsp;dictionary&nbsp;of&nbsp;the&nbsp;CLI<br>
-commands&nbsp;to&nbsp;run&nbsp;and&nbsp;the&nbsp;UUIDs&nbsp;of&nbsp;devices&nbsp;to&nbsp;run&nbsp;them&nbsp;on&nbsp;may<br>
-be&nbsp;specified.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dnac:&nbsp;A&nbsp;reference&nbsp;to&nbsp;the&nbsp;containing&nbsp;Dnac&nbsp;object.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;Dnac&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;name:&nbsp;A&nbsp;user&nbsp;friendly&nbsp;name&nbsp;for&nbsp;finding&nbsp;this&nbsp;object&nbsp;in&nbsp;a&nbsp;Dnac<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;instance.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cmds:&nbsp;A&nbsp;dict&nbsp;with&nbsp;the&nbsp;commands&nbsp;and&nbsp;target&nbsp;devices.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;dict<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
-&nbsp;&nbsp;&nbsp;&nbsp;verify:&nbsp;A&nbsp;flag&nbsp;used&nbsp;to&nbsp;check&nbsp;Cisco&nbsp;DNAC's&nbsp;certificate.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;boolean<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;False<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
-&nbsp;&nbsp;&nbsp;&nbsp;timeout:&nbsp;The&nbsp;number&nbsp;of&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;Cisco&nbsp;DNAC's<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;response.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;5<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#CommandRunner">CommandRunner</a>&nbsp;object:&nbsp;The&nbsp;newly&nbsp;constructed&nbsp;<a href="#CommandRunner">CommandRunner</a><br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cmds&nbsp;=&nbsp;{'commands':&nbsp;['show&nbsp;version',&nbsp;'show&nbsp;module'],<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'deviceUuids':&nbsp;['&lt;switch&gt;',&nbsp;'&lt;router&gt;]}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cmd&nbsp;=&nbsp;<a href="#CommandRunner">CommandRunner</a>(d,&nbsp;"aName",&nbsp;cmds=cmds)</tt></dd></dl>
+<dl><dt><a name="CommandRunner-__init__"><strong>__init__</strong></a>(self, dnac, name, cmds<font color="#909090">=None</font>, verify<font color="#909090">=False</font>, timeout<font color="#909090">=5</font>)</dt><dd><tt>The&nbsp;__init__&nbsp;method&nbsp;creates&nbsp;a&nbsp;<a href="#CommandRunner">CommandRunner</a>&nbsp;object.&nbsp;&nbsp;As&nbsp;with&nbsp;all&nbsp;classes&nbsp;that&nbsp;inherit&nbsp;from&nbsp;<a href="dnac.dnacapi.html#DnacApi">DnacApi</a>,&nbsp;a&nbsp;minimum<br>
+of&nbsp;a&nbsp;Dnac&nbsp;container&nbsp;and&nbsp;a&nbsp;name&nbsp;must&nbsp;be&nbsp;given.&nbsp;&nbsp;Optionally,&nbsp;a&nbsp;dictionary&nbsp;of&nbsp;the&nbsp;CLI&nbsp;commands&nbsp;to&nbsp;run&nbsp;and&nbsp;the<br>
+UUIDs&nbsp;of&nbsp;devices&nbsp;to&nbsp;run&nbsp;them&nbsp;on&nbsp;may&nbsp;be&nbsp;specified.<br>
+:param&nbsp;dnac:&nbsp;A&nbsp;reference&nbsp;to&nbsp;the&nbsp;containing&nbsp;Dnac&nbsp;object.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;Dnac&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+:param&nbsp;name:&nbsp;A&nbsp;user&nbsp;friendly&nbsp;name&nbsp;for&nbsp;finding&nbsp;this&nbsp;object&nbsp;in&nbsp;a&nbsp;Dnac&nbsp;instance.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+:param&nbsp;cmds:&nbsp;A&nbsp;dict&nbsp;with&nbsp;the&nbsp;commands&nbsp;and&nbsp;target&nbsp;devices.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;dict<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
+:param&nbsp;verify:&nbsp;A&nbsp;flag&nbsp;used&nbsp;to&nbsp;check&nbsp;Cisco&nbsp;DNAC's&nbsp;certificate.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;boolean<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;False<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
+:param&nbsp;timeout:&nbsp;The&nbsp;number&nbsp;of&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;Cisco&nbsp;DNAC's&nbsp;response.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;5<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no</tt></dd></dl>
 
-<dl><dt><a name="CommandRunner-format_cmd"><strong>format_cmd</strong></a>(self, cmd, uuid)</dt><dd><tt>The&nbsp;formatCmd&nbsp;method&nbsp;takes&nbsp;a&nbsp;single&nbsp;CLI&nbsp;command&nbsp;and&nbsp;runs&nbsp;it&nbsp;against<br>
-the&nbsp;UUID&nbsp;of&nbsp;a&nbsp;network&nbsp;device&nbsp;in&nbsp;Cisco&nbsp;DNA&nbsp;Center.&nbsp;&nbsp;It&nbsp;converts&nbsp;the<br>
-command&nbsp;and&nbsp;the&nbsp;UUID&nbsp;into&nbsp;a&nbsp;dict&nbsp;stored&nbsp;in&nbsp;the&nbsp;__cmds&nbsp;attribute<br>
-and&nbsp;returns&nbsp;__cmds'&nbsp;value.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cmd:&nbsp;A&nbsp;CLI&nbsp;command.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;uuid:&nbsp;A&nbsp;network&nbsp;device&nbsp;UUID.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;The&nbsp;command&nbsp;instructions&nbsp;used&nbsp;as&nbsp;the&nbsp;body&nbsp;for&nbsp;making<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;API&nbsp;call&nbsp;to&nbsp;Cisco&nbsp;DNAC's&nbsp;command&nbsp;runner.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cmd&nbsp;=&nbsp;'show&nbsp;version'<br>
-&nbsp;&nbsp;&nbsp;&nbsp;uuid&nbsp;=&nbsp;'&lt;switch_uuid&gt;'<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cmd&nbsp;=&nbsp;<a href="#CommandRunner">CommandRunner</a>(d,&nbsp;'aName')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cmd.<a href="#CommandRunner-format_cmd">format_cmd</a>(cmd,&nbsp;uuid)</tt></dd></dl>
+<dl><dt><a name="CommandRunner-format_cmd"><strong>format_cmd</strong></a>(self, cmd, uuid)</dt><dd><tt>The&nbsp;formatCmd&nbsp;method&nbsp;takes&nbsp;a&nbsp;single&nbsp;CLI&nbsp;command&nbsp;and&nbsp;runs&nbsp;it&nbsp;against&nbsp;the&nbsp;UUID&nbsp;of&nbsp;a&nbsp;network&nbsp;device&nbsp;in&nbsp;Cisco&nbsp;DNA<br>
+Center.&nbsp;&nbsp;It&nbsp;converts&nbsp;the&nbsp;command&nbsp;and&nbsp;the&nbsp;UUID&nbsp;into&nbsp;a&nbsp;dict&nbsp;stored&nbsp;in&nbsp;the&nbsp;__cmds&nbsp;attribute&nbsp;and&nbsp;returns&nbsp;__cmds'<br>
+value.<br>
+:param&nbsp;cmd:&nbsp;A&nbsp;CLI&nbsp;command.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+:param&nbsp;uuid:&nbsp;A&nbsp;network&nbsp;device&nbsp;UUID.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+:return:&nbsp;dict</tt></dd></dl>
 
-<dl><dt><a name="CommandRunner-format_cmds"><strong>format_cmds</strong></a>(self, cmd_list, uuid_list)</dt><dd><tt>The&nbsp;format_cmds&nbsp;method&nbsp;accepts&nbsp;a&nbsp;list&nbsp;of&nbsp;CLI&nbsp;commands&nbsp;to&nbsp;run&nbsp;against<br>
-a&nbsp;list&nbsp;of&nbsp;UUIDs&nbsp;for&nbsp;the&nbsp;target&nbsp;network&nbsp;devices&nbsp;in&nbsp;Cisco&nbsp;DNA&nbsp;Center.<br>
-It&nbsp;converts&nbsp;the&nbsp;two&nbsp;lists&nbsp;into&nbsp;a&nbsp;dict&nbsp;stored&nbsp;in&nbsp;the&nbsp;__cmds&nbsp;attribute<br>
-and&nbsp;returns&nbsp;__cmds'&nbsp;value.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cmd_list:&nbsp;A&nbsp;list&nbsp;of&nbsp;CLI&nbsp;commands.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;list&nbsp;of&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;uuid_list:&nbsp;A&nbsp;list&nbsp;of&nbsp;network&nbsp;device&nbsp;UUIDs.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;list&nbsp;of&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;The&nbsp;command&nbsp;instructions&nbsp;used&nbsp;as&nbsp;the&nbsp;body&nbsp;for&nbsp;making<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;API&nbsp;call&nbsp;to&nbsp;Cisco&nbsp;DNAC's&nbsp;command&nbsp;runner.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cmds&nbsp;=&nbsp;['show&nbsp;version',&nbsp;'show&nbsp;ip&nbsp;interface&nbsp;brief']<br>
-&nbsp;&nbsp;&nbsp;&nbsp;uuids&nbsp;=&nbsp;['&lt;switch_uuid&gt;',&nbsp;'&lt;router_uuid&gt;']<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cmds&nbsp;=&nbsp;<a href="#CommandRunner">CommandRunner</a>(d,&nbsp;'aName')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cmds.<a href="#CommandRunner-format_cmds">format_cmds</a>(cmds,&nbsp;uuids)</tt></dd></dl>
+<dl><dt><a name="CommandRunner-format_cmds"><strong>format_cmds</strong></a>(self, cmd_list, uuid_list)</dt><dd><tt>The&nbsp;format_cmds&nbsp;method&nbsp;accepts&nbsp;a&nbsp;list&nbsp;of&nbsp;CLI&nbsp;commands&nbsp;to&nbsp;run&nbsp;against&nbsp;a&nbsp;list&nbsp;of&nbsp;UUIDs&nbsp;for&nbsp;the&nbsp;target&nbsp;network<br>
+devices&nbsp;in&nbsp;Cisco&nbsp;DNA&nbsp;Center.&nbsp;It&nbsp;converts&nbsp;the&nbsp;two&nbsp;lists&nbsp;into&nbsp;a&nbsp;dict&nbsp;stored&nbsp;in&nbsp;the&nbsp;__cmds&nbsp;attribute&nbsp;and&nbsp;returns<br>
+__cmds'&nbsp;value.<br>
+:param&nbsp;cmd_list:&nbsp;A&nbsp;list&nbsp;of&nbsp;CLI&nbsp;commands.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;list&nbsp;of&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+:param&nbsp;uuid_list:&nbsp;A&nbsp;list&nbsp;of&nbsp;network&nbsp;device&nbsp;UUIDs.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;list&nbsp;of&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+:return:</tt></dd></dl>
 
-<dl><dt><a name="CommandRunner-run"><strong>run</strong></a>(self)</dt><dd><tt>Method&nbsp;run&nbsp;instructs&nbsp;Cisco&nbsp;DNAC&nbsp;to&nbsp;execute&nbsp;the&nbsp;command&nbsp;set&nbsp;stored&nbsp;in<br>
-the&nbsp;<a href="#CommandRunner">CommandRunner</a>&nbsp;object.&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;wait&nbsp;for&nbsp;the&nbsp;task&nbsp;to<br>
-complete&nbsp;on&nbsp;Cisco&nbsp;DNA&nbsp;Center.&nbsp;&nbsp;It&nbsp;does,&nbsp;however,&nbsp;create&nbsp;a&nbsp;new&nbsp;Task<br>
-object,&nbsp;saves&nbsp;it&nbsp;in&nbsp;the&nbsp;__task&nbsp;attribute,&nbsp;checks&nbsp;the&nbsp;task,&nbsp;and<br>
-then&nbsp;returns&nbsp;the&nbsp;task's&nbsp;status.&nbsp;&nbsp;See&nbsp;the&nbsp;task.py&nbsp;module&nbsp;for<br>
-valid&nbsp;task&nbsp;states.&nbsp;&nbsp;When&nbsp;using&nbsp;this&nbsp;function,&nbsp;the&nbsp;programmer<br>
-must&nbsp;handle&nbsp;task&nbsp;monitoring.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;The&nbsp;current&nbsp;state&nbsp;of&nbsp;the&nbsp;command's&nbsp;progress.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cmd&nbsp;=&nbsp;<a href="#CommandRunner">CommandRunner</a>(d,&nbsp;'aName')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cmdState&nbsp;=&nbsp;cmd.<a href="#CommandRunner-run">run</a>()</tt></dd></dl>
+<dl><dt><a name="CommandRunner-run"><strong>run</strong></a>(self)</dt><dd><tt>Method&nbsp;run&nbsp;instructs&nbsp;Cisco&nbsp;DNAC&nbsp;to&nbsp;execute&nbsp;the&nbsp;command&nbsp;set&nbsp;stored&nbsp;in&nbsp;the&nbsp;<a href="#CommandRunner">CommandRunner</a>&nbsp;object.&nbsp;&nbsp;It&nbsp;does&nbsp;not<br>
+wait&nbsp;for&nbsp;the&nbsp;task&nbsp;to&nbsp;complete&nbsp;on&nbsp;Cisco&nbsp;DNA&nbsp;Center.&nbsp;&nbsp;It&nbsp;does,&nbsp;however,&nbsp;create&nbsp;a&nbsp;new&nbsp;Task&nbsp;object,&nbsp;saves&nbsp;it&nbsp;in<br>
+the&nbsp;__task&nbsp;attribute,&nbsp;checks&nbsp;the&nbsp;task,&nbsp;and&nbsp;then&nbsp;returns&nbsp;the&nbsp;task's&nbsp;status.&nbsp;&nbsp;See&nbsp;the&nbsp;task.py&nbsp;module&nbsp;for<br>
+valid&nbsp;task&nbsp;states.&nbsp;&nbsp;When&nbsp;using&nbsp;this&nbsp;function,&nbsp;the&nbsp;programmer&nbsp;must&nbsp;handle&nbsp;task&nbsp;monitoring.<br>
+:return:&nbsp;str</tt></dd></dl>
 
-<dl><dt><a name="CommandRunner-run_sync"><strong>run_sync</strong></a>(self, wait=3)</dt><dd><tt>runSync&nbsp;issues&nbsp;the&nbsp;commands&nbsp;set&nbsp;in&nbsp;the&nbsp;<a href="#CommandRunner">CommandRunner</a>&nbsp;and&nbsp;waits<br>
-for&nbsp;their&nbsp;completion.&nbsp;&nbsp;It&nbsp;performs&nbsp;this&nbsp;action&nbsp;by&nbsp;creating&nbsp;a<br>
-Task&nbsp;object&nbsp;and&nbsp;then&nbsp;checks&nbsp;the&nbsp;task's&nbsp;state&nbsp;periodically<br>
-according&nbsp;to&nbsp;the&nbsp;wait&nbsp;time&nbsp;(seconds)&nbsp;passed&nbsp;as&nbsp;an&nbsp;argument.<br>
-If&nbsp;no&nbsp;wait&nbsp;time&nbsp;is&nbsp;given,&nbsp;it&nbsp;checks&nbsp;every&nbsp;three&nbsp;seconds.<br>
+<dl><dt><a name="CommandRunner-run_sync"><strong>run_sync</strong></a>(self, wait<font color="#909090">=3</font>)</dt><dd><tt>runSync&nbsp;issues&nbsp;the&nbsp;commands&nbsp;set&nbsp;in&nbsp;the&nbsp;<a href="#CommandRunner">CommandRunner</a>&nbsp;and&nbsp;waits&nbsp;for&nbsp;their&nbsp;completion.&nbsp;&nbsp;It&nbsp;performs&nbsp;this&nbsp;action<br>
+by&nbsp;creating&nbsp;a&nbsp;Task&nbsp;object&nbsp;and&nbsp;then&nbsp;checks&nbsp;the&nbsp;task's&nbsp;state&nbsp;periodically&nbsp;according&nbsp;to&nbsp;the&nbsp;wait&nbsp;time&nbsp;(seconds)<br>
+passed&nbsp;as&nbsp;an&nbsp;argument.&nbsp;If&nbsp;no&nbsp;wait&nbsp;time&nbsp;is&nbsp;given,&nbsp;it&nbsp;checks&nbsp;every&nbsp;three&nbsp;seconds.<br>
 &nbsp;<br>
-When&nbsp;the&nbsp;task&nbsp;finishes,&nbsp;the&nbsp;Task&nbsp;object&nbsp;will&nbsp;have&nbsp;also&nbsp;loaded<br>
-the&nbsp;task's&nbsp;results,&nbsp;which&nbsp;can&nbsp;be&nbsp;immediately&nbsp;accessed&nbsp;via&nbsp;the<br>
-<a href="#CommandRunner">CommandRunner</a>&nbsp;instance&nbsp;(cmd.task.file.results)&nbsp;or&nbsp;from<br>
-the&nbsp;function's&nbsp;return&nbsp;value&nbsp;(results&nbsp;=&nbsp;cmd.runSync()).<br>
+When&nbsp;the&nbsp;task&nbsp;finishes,&nbsp;the&nbsp;Task&nbsp;object&nbsp;will&nbsp;have&nbsp;also&nbsp;loaded&nbsp;the&nbsp;task's&nbsp;results,&nbsp;which&nbsp;can&nbsp;be&nbsp;immediately<br>
+accessed&nbsp;via&nbsp;the&nbsp;<a href="#CommandRunner">CommandRunner</a>&nbsp;instance&nbsp;(cmd.task.file.results)&nbsp;or&nbsp;from&nbsp;the&nbsp;function's&nbsp;return&nbsp;value<br>
+(results&nbsp;=&nbsp;cmd.runSync()).<br>
 &nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;wait:&nbsp;The&nbsp;time&nbsp;to&nbsp;wait&nbsp;before&nbsp;checking&nbsp;the&nbsp;results.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;3<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;list:&nbsp;The&nbsp;command&nbsp;set's&nbsp;output<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cmd&nbsp;=&nbsp;<a href="#CommandRunner">CommandRunner</a>(d,&nbsp;'aCmdName')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;results&nbsp;=&nbsp;cmd.runSync(wait=10)</tt></dd></dl>
+:param&nbsp;wait:&nbsp;The&nbsp;time&nbsp;to&nbsp;wait&nbsp;before&nbsp;checking&nbsp;the&nbsp;results.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;3<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
+:return:&nbsp;list</tt></dd></dl>
 
 <hr>
 Data descriptors defined here:<br>
 <dl><dt><strong>cmds</strong></dt>
 <dd><tt>Get&nbsp;method&nbsp;cmds&nbsp;returns&nbsp;the&nbsp;__cmds&nbsp;body&nbsp;to&nbsp;be&nbsp;sent&nbsp;to&nbsp;Cisco&nbsp;DNAC.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;A&nbsp;list&nbsp;of&nbsp;CLI&nbsp;commands&nbsp;and&nbsp;the&nbsp;devices&nbsp;on&nbsp;which&nbsp;to<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;execute&nbsp;them.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cmds&nbsp;=&nbsp;{'commands':&nbsp;['show&nbsp;version',&nbsp;'show&nbsp;module'],<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'deviceUuids':&nbsp;['&lt;switch&gt;',&nbsp;'&lt;router&gt;]}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cmd&nbsp;=&nbsp;CommandRunner(d,&nbsp;"aName",&nbsp;cmds=cmds)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pprint.PrettyPrint(cmd.cmds)</tt></dd>
+:return:&nbsp;dict</tt></dd>
 </dl>
 <dl><dt><strong>task</strong></dt>
 <dd><tt>The&nbsp;task&nbsp;get&nbsp;function&nbsp;returns&nbsp;the&nbsp;Task&nbsp;object&nbsp;stored&nbsp;in&nbsp;__task.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Task&nbsp;object:&nbsp;The&nbsp;task&nbsp;associated&nbsp;with&nbsp;the&nbsp;CommandRunner<br>
-&nbsp;&nbsp;&nbsp;&nbsp;instance.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cmd&nbsp;=&nbsp;CommandRunner(d,&nbsp;'aName')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cliCmd&nbsp;=&nbsp;'show&nbsp;module'<br>
-&nbsp;&nbsp;&nbsp;&nbsp;switch&nbsp;=&nbsp;'&lt;switch's&nbsp;UUID&gt;'<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cmd.formatCmd(cliCmd,&nbsp;switch)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cmd.run()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;task&nbsp;=&nbsp;cmd.task</tt></dd>
+:return:&nbsp;Task&nbsp;object</tt></dd>
 </dl>
 <hr>
-Data descriptors inherited from <a href="dnacapi.html#DnacApi">dnacapi.DnacApi</a>:<br>
+Data descriptors inherited from <a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>:<br>
 <dl><dt><strong>__dict__</strong></dt>
 <dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
 </dl>
@@ -283,119 +187,38 @@ Data descriptors inherited from <a href="dnacapi.html#DnacApi">dnacapi.DnacApi</
 <dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
 </dl>
 <dl><dt><strong>crud</strong></dt>
-<dd><tt>Get&nbsp;method&nbsp;crud&nbsp;returns&nbsp;the&nbsp;reference&nbsp;to&nbsp;the&nbsp;Crud&nbsp;object&nbsp;this&nbsp;class<br>
-uses&nbsp;to&nbsp;make&nbsp;RESTful&nbsp;API&nbsp;calls.&nbsp;&nbsp;Use&nbsp;this&nbsp;function&nbsp;in&nbsp;order&nbsp;to<br>
-access&nbsp;the&nbsp;Crud&nbsp;object's&nbsp;get,&nbsp;put,&nbsp;post&nbsp;and&nbsp;delete&nbsp;methods.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Crud&nbsp;object:&nbsp;The&nbsp;wrapped&nbsp;Crud&nbsp;object<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;url&nbsp;=&nbsp;self.<strong>dnac</strong>.url&nbsp;+&nbsp;self.<strong>resource</strong><br>
-&nbsp;&nbsp;&nbsp;&nbsp;devices,&nbsp;status&nbsp;=&nbsp;self.<strong>crud</strong>.get(url,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;headers=self.<strong>dnac</strong>.hdrs,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verify=self.<strong>verify</strong>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;timeout=self.<strong>timeout</strong>)</tt></dd>
+<dd><tt>Get&nbsp;method&nbsp;crud&nbsp;returns&nbsp;the&nbsp;reference&nbsp;to&nbsp;the&nbsp;Crud&nbsp;object&nbsp;this&nbsp;class&nbsp;uses&nbsp;to&nbsp;make&nbsp;RESTful&nbsp;API&nbsp;calls.&nbsp;&nbsp;Use&nbsp;this<br>
+function&nbsp;in&nbsp;order&nbsp;to&nbsp;access&nbsp;the&nbsp;Crud&nbsp;object's&nbsp;get,&nbsp;put,&nbsp;post&nbsp;and&nbsp;delete&nbsp;methods.<br>
+:return:&nbsp;Crud&nbsp;object</tt></dd>
 </dl>
 <dl><dt><strong>dnac</strong></dt>
-<dd><tt>Get&nbsp;method&nbsp;dnac&nbsp;returns&nbsp;the&nbsp;reference&nbsp;to&nbsp;the&nbsp;Dnac&nbsp;instance&nbsp;that<br>
-stores&nbsp;this&nbsp;object.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Dnac&nbsp;object:&nbsp;The&nbsp;Dnac&nbsp;object&nbsp;container.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;Do&nbsp;not&nbsp;create&nbsp;a&nbsp;DnacApi&nbsp;object;&nbsp;inherit&nbsp;from&nbsp;it&nbsp;instead<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dapi&nbsp;=&nbsp;DnacApi(dnac,&nbsp;name,&nbsp;resource)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dnac&nbsp;=&nbsp;dapi.dnac</tt></dd>
+<dd><tt>Get&nbsp;method&nbsp;dnac&nbsp;returns&nbsp;the&nbsp;reference&nbsp;to&nbsp;the&nbsp;Dnac&nbsp;instance&nbsp;that&nbsp;stores&nbsp;this&nbsp;object.<br>
+:return:&nbsp;Dnac&nbsp;object</tt></dd>
 </dl>
 <dl><dt><strong>name</strong></dt>
-<dd><tt>Get&nbsp;method&nbsp;name&nbsp;returns&nbsp;__name,&nbsp;a&nbsp;user&nbsp;friendly&nbsp;name&nbsp;for&nbsp;accessing<br>
-this&nbsp;object&nbsp;in&nbsp;Dnac's&nbsp;API&nbsp;store,&nbsp;namely&nbsp;Dnac.api{}<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;The&nbsp;DnacApi&nbsp;object's&nbsp;name<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;Do&nbsp;not&nbsp;create&nbsp;a&nbsp;DnacApi&nbsp;object;&nbsp;inherit&nbsp;from&nbsp;it&nbsp;instead<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dapi&nbsp;=&nbsp;DnacApi(dnac,&nbsp;name,&nbsp;resource)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dapi.name</tt></dd>
+<dd><tt>Get&nbsp;method&nbsp;name&nbsp;returns&nbsp;__name,&nbsp;a&nbsp;user&nbsp;friendly&nbsp;name&nbsp;for&nbsp;accessing&nbsp;this&nbsp;object&nbsp;in&nbsp;Dnac's&nbsp;API&nbsp;store,&nbsp;namely<br>
+Dnac.api{}<br>
+:return:&nbsp;str</tt></dd>
 </dl>
 <dl><dt><strong>resource</strong></dt>
-<dd><tt>Get&nbsp;method&nbsp;resource&nbsp;returns&nbsp;__resource,&nbsp;which&nbsp;is&nbsp;the&nbsp;API&nbsp;call&nbsp;to<br>
-Cisco&nbsp;DNAC.&nbsp;&nbsp;In&nbsp;child&nbsp;classes,&nbsp;use&nbsp;this&nbsp;method&nbsp;to&nbsp;form&nbsp;requests&nbsp;by<br>
-appending&nbsp;it&nbsp;to&nbsp;Cisco&nbsp;DNAC's&nbsp;base&nbsp;url,&nbsp;i.e.&nbsp;Dnac.url.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;The&nbsp;API&nbsp;call.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;Do&nbsp;not&nbsp;create&nbsp;a&nbsp;DnacApi&nbsp;object;&nbsp;inherit&nbsp;from&nbsp;it&nbsp;instead<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dapi&nbsp;=&nbsp;DnacApi(d,&nbsp;name,&nbsp;resource)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;api_call&nbsp;=&nbsp;d.url&nbsp;+&nbsp;dapi.resource</tt></dd>
+<dd><tt>Get&nbsp;method&nbsp;resource&nbsp;returns&nbsp;__resource,&nbsp;which&nbsp;is&nbsp;the&nbsp;API&nbsp;call&nbsp;to&nbsp;Cisco&nbsp;DNAC.&nbsp;&nbsp;In&nbsp;child&nbsp;classes,&nbsp;use&nbsp;this&nbsp;method<br>
+to&nbsp;form&nbsp;requests&nbsp;by&nbsp;appending&nbsp;it&nbsp;to&nbsp;Cisco&nbsp;DNAC's&nbsp;base&nbsp;url,&nbsp;i.e.&nbsp;Dnac.url.<br>
+:return:&nbsp;str</tt></dd>
 </dl>
 <dl><dt><strong>results</strong></dt>
-<dd><tt>The&nbsp;results&nbsp;method&nbsp;is&nbsp;decorated&nbsp;as&nbsp;if&nbsp;it&nbsp;was&nbsp;an&nbsp;attribute&nbsp;of&nbsp;this<br>
-class&nbsp;and&nbsp;can&nbsp;be&nbsp;used&nbsp;accordingly.&nbsp;&nbsp;It&nbsp;returns&nbsp;the&nbsp;raw&nbsp;results<br>
-stored&nbsp;in&nbsp;the&nbsp;class'&nbsp;Crud&nbsp;object&nbsp;obtained&nbsp;from&nbsp;an&nbsp;API&nbsp;call.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;The&nbsp;results&nbsp;of&nbsp;the&nbsp;API&nbsp;call.<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;CommandRunner&nbsp;is&nbsp;a&nbsp;DnacApi<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cmd&nbsp;=&nbsp;CommandRunner('running-config')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cmd.formatCmd('&lt;uuid&gt;',&nbsp;'show&nbsp;run')<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cmd.runSync()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;str(cmd.results)</tt></dd>
+<dd><tt>The&nbsp;results&nbsp;method&nbsp;is&nbsp;decorated&nbsp;as&nbsp;if&nbsp;it&nbsp;was&nbsp;an&nbsp;attribute&nbsp;of&nbsp;this&nbsp;class&nbsp;and&nbsp;can&nbsp;be&nbsp;used&nbsp;accordingly.<br>
+It&nbsp;returns&nbsp;the&nbsp;raw&nbsp;results&nbsp;stored&nbsp;in&nbsp;the&nbsp;class'&nbsp;Crud&nbsp;object&nbsp;obtained&nbsp;from&nbsp;an&nbsp;API&nbsp;call.<br>
+:return:&nbsp;dict</tt></dd>
 </dl>
 <dl><dt><strong>timeout</strong></dt>
-<dd><tt>Get&nbsp;method&nbsp;timeout&nbsp;returns&nbsp;the&nbsp;value&nbsp;of&nbsp;attribute&nbsp;__timeout.&nbsp;&nbsp;The<br>
-value&nbsp;returned&nbsp;represents&nbsp;the&nbsp;number&nbsp;of&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;the<br>
-HTTP&nbsp;server&nbsp;to&nbsp;respond&nbsp;to&nbsp;an&nbsp;API&nbsp;request<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;int:&nbsp;time&nbsp;to&nbsp;wait&nbsp;in&nbsp;seconds&nbsp;for&nbsp;a&nbsp;response<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dapi&nbsp;=&nbsp;DnacApi(dnac,&nbsp;name,&nbsp;resource)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dapi.timeout</tt></dd>
+<dd><tt>Get&nbsp;method&nbsp;timeout&nbsp;returns&nbsp;the&nbsp;value&nbsp;of&nbsp;attribute&nbsp;__timeout.&nbsp;&nbsp;The&nbsp;value&nbsp;returned&nbsp;represents&nbsp;the&nbsp;number&nbsp;of<br>
+seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;the&nbsp;HTTP&nbsp;server&nbsp;to&nbsp;respond&nbsp;to&nbsp;an&nbsp;API&nbsp;request.<br>
+:return:&nbsp;int</tt></dd>
 </dl>
 <dl><dt><strong>verify</strong></dt>
-<dd><tt>Get&nbsp;method&nbsp;verify&nbsp;returns&nbsp;value&nbsp;of&nbsp;__verify,&nbsp;which&nbsp;is&nbsp;used&nbsp;to<br>
-determine&nbsp;whether&nbsp;or&nbsp;not&nbsp;to&nbsp;check&nbsp;Cisco&nbsp;DNAC's&nbsp;certificate&nbsp;upon<br>
-making&nbsp;an&nbsp;API&nbsp;call.<br>
-&nbsp;<br>
-Parameters:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;none<br>
-&nbsp;<br>
-Return&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;boolean:&nbsp;True&nbsp;to&nbsp;check&nbsp;the&nbsp;cert;&nbsp;otherwise,&nbsp;False<br>
-&nbsp;<br>
-Usage:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;Do&nbsp;not&nbsp;create&nbsp;a&nbsp;DnacApi&nbsp;object;&nbsp;inherit&nbsp;from&nbsp;it&nbsp;instead<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dapi&nbsp;=&nbsp;DnacApi(d,&nbsp;name,&nbsp;resource)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dapi.verify</tt></dd>
+<dd><tt>Get&nbsp;method&nbsp;verify&nbsp;returns&nbsp;value&nbsp;of&nbsp;__verify,&nbsp;which&nbsp;is&nbsp;used&nbsp;to&nbsp;determine&nbsp;whether&nbsp;or&nbsp;not&nbsp;to&nbsp;check&nbsp;Cisco&nbsp;DNAC's<br>
+certificate&nbsp;upon&nbsp;making&nbsp;an&nbsp;API&nbsp;call.<br>
+:return:&nbsp;bool</tt></dd>
 </dl>
 </td></tr></table></td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -405,11 +228,10 @@ Usage:<br>
     
 <tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><strong>ACCEPTED</strong> = 202<br>
-<strong>COMMANDRUNNER_RESOURCE_PATH</strong> = {'1.2.10': '/dna/intent/api/v1/network-device-poller/cli/read-request', '1.2.8': '/api/v1/network-device-poller/cli/read-request'}<br>
-<strong>ERROR_MSGS</strong> = {400: '400 - API request syntax is malformed', 401: '401 - API request has missing or invalid credentials', 403: '403 - API request is unauthorized', 404: '404 - API requested resource does not exist', 409: '409 - API requested resource is in a conflicted state', 415: '415 - API request body is in an unsupported format', 500: '500 - Server could not fulfill the API request', 501: '501 - Server has not implemented the requested function', 503: '503 - Server is unavailable', 504: '504 - Server did not respond before request timed-out'}<br>
+<strong>COMMANDRUNNER_RESOURCE_PATH</strong> = {'1.2.10': '/dna/intent/api/v1/network-device-poller/cli/read-request', '1.2.8': '/api/v1/network-device-poller/cli/read-request', '1.3.0.2': '/dna/intent/api/v1/network-device-poller/cli/read-request', '1.3.0.3': '/dna/intent/api/v1/network-device-poller/cli/read-request', '1.3.1.3': '/dna/intent/api/v1/network-device-poller/cli/read-request', '1.3.1.4': '/dna/intent/api/v1/network-device-poller/cli/read-request'}<br>
+<strong>ERROR_MSGS</strong> = {400: '400 - API request syntax is malformed', 401: '401 - API request has missing or invalid credentials', 403: '403 - API request is unauthorized', 404: '404 - API requested resource does not exist', 409: '409 - API requested resource is in a conflicted state', 415: '415 - API request body is in an unsupported format', 417: '417 - The server cannot meet the requirements of the Expect request-header field', 500: '500 - Server could not fulfill the API request', 501: '501 - Server has not implemented the requested function', 503: '503 - Server is unavailable', ...}<br>
 <strong>MODULE</strong> = 'commandrunner.py'<br>
 <strong>REQUEST_NOT_ACCEPTED</strong> = 'API request is not ACCEPTED'<br>
-<strong>SUPPORTED_DNAC_VERSIONS</strong> = ['1.2.8', '1.2.10']<br>
-<strong>TASK_CREATION</strong> = 'CLI Runner request creation'<br>
+<strong>SUPPORTED_DNAC_VERSIONS</strong> = ['1.2.8', '1.2.10', '1.3.0.2', '1.3.0.3', '1.3.1.3', '1.3.1.4']<br>
 <strong>UNSUPPORTED_DNAC_VERSION</strong> = 'Unsupported Cisco DNA Center version'</td></tr></table>
 </body></html>

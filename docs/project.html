@@ -1,0 +1,212 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module dnac.project</title>
+<meta charset="utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="dnac.html"><font color="#ffffff">dnac</font></a>.project</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/dnac/project.py">/cygdrive/c/Users/rsayle/PycharmProjects/DNAC-Python-Wrapper/dnac/project.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="json.html">json</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>(<a href="__builtin__.html#object">__builtin__.object</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="dnac.project.html#Project">Project</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Project">class <strong>Project</strong></a>(<a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>The&nbsp;<a href="#Project">Project</a>&nbsp;class&nbsp;represents&nbsp;a&nbsp;configuration&nbsp;template&nbsp;project&nbsp;in&nbsp;Cisco&nbsp;DNA&nbsp;Center.&nbsp;&nbsp;It&nbsp;serves&nbsp;as&nbsp;a&nbsp;container&nbsp;for<br>
+grouping&nbsp;templates.&nbsp;&nbsp;Templates&nbsp;must&nbsp;be&nbsp;associated&nbsp;with&nbsp;a&nbsp;project.&nbsp;&nbsp;If&nbsp;a&nbsp;template&nbsp;cannot&nbsp;be&nbsp;associated&nbsp;to&nbsp;an<br>
+existing&nbsp;project,&nbsp;create&nbsp;the&nbsp;project&nbsp;first.<br>
+&nbsp;<br>
+Usage:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;proj&nbsp;=&nbsp;<a href="#Project">Project</a>(d,&nbsp;'aProject')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pprint.PrettyPrinter(proj.project)<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="dnac.project.html#Project">Project</a></dd>
+<dd><a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Project-__clean_project__"><strong>__clean_project__</strong></a>(self, project)</dt></dl>
+
+<dl><dt><a name="Project-__init__"><strong>__init__</strong></a>(self, dnac, name, verify<font color="#909090">=False</font>, timeout<font color="#909090">=5</font>)</dt><dd><tt>Upon&nbsp;creating&nbsp;a&nbsp;new&nbsp;<a href="#Project">Project</a>&nbsp;object,&nbsp;__init__&nbsp;sets&nbsp;the&nbsp;__project&nbsp;field&nbsp;as&nbsp;an&nbsp;empty&nbsp;dict.&nbsp;&nbsp;As&nbsp;long&nbsp;as&nbsp;the<br>
+project's&nbsp;name&nbsp;is&nbsp;not&nbsp;set&nbsp;to&nbsp;'NEW_PROJECT',&nbsp;the&nbsp;<a href="#Project">Project</a>&nbsp;attempts&nbsp;to&nbsp;load&nbsp;its&nbsp;attributes&nbsp;as&nbsp;given&nbsp;in&nbsp;Cisco<br>
+DNA&nbsp;Center.&nbsp;&nbsp;If&nbsp;its&nbsp;name&nbsp;is&nbsp;NEW_PROJECT,&nbsp;then&nbsp;this&nbsp;method&nbsp;creates&nbsp;an&nbsp;empty&nbsp;<a href="#Project">Project</a>&nbsp;that&nbsp;can&nbsp;be&nbsp;used&nbsp;to<br>
+import&nbsp;a&nbsp;project&nbsp;from&nbsp;a&nbsp;backup&nbsp;file&nbsp;(see&nbsp;the&nbsp;import_project&nbsp;method&nbsp;for&nbsp;more&nbsp;details).<br>
+Usage:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;Dnac()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;proj&nbsp;=&nbsp;<a href="#Project">Project</a>(d,&nbsp;'aProject')<br>
+:param&nbsp;dnac:&nbsp;a&nbsp;reference&nbsp;to&nbsp;the&nbsp;containing&nbsp;Dnac&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;Dnac&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+:param&nbsp;name:&nbsp;the&nbsp;project's&nbsp;name&nbsp;as&nbsp;it&nbsp;appears&nbsp;in&nbsp;a&nbsp;live&nbsp;Cisco&nbsp;DNA&nbsp;Center&nbsp;cluster<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;none<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;yes<br>
+:param&nbsp;verify:&nbsp;a&nbsp;flag&nbsp;used&nbsp;to&nbsp;check&nbsp;DNAC's&nbsp;certificate<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;bool<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;False<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no<br>
+:param&nbsp;timeout:&nbsp;the&nbsp;time&nbsp;in&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;an&nbsp;API&nbsp;response&nbsp;from&nbsp;DNA&nbsp;Center<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;5<br>
+&nbsp;&nbsp;&nbsp;&nbsp;required:&nbsp;no</tt></dd></dl>
+
+<dl><dt><a name="Project-__str__"><strong>__str__</strong></a>(self)</dt><dd><tt>Returns&nbsp;the&nbsp;<a href="#Project">Project</a>'s&nbsp;contents&nbsp;as&nbsp;a&nbsp;json&nbsp;formatted&nbsp;string.<br>
+:return:&nbsp;str</tt></dd></dl>
+
+<dl><dt><a name="Project-add_project"><strong>add_project</strong></a>(self, project)</dt><dd><tt>Adds&nbsp;a&nbsp;project&nbsp;to&nbsp;Cisco&nbsp;DNA&nbsp;Center<br>
+:param&nbsp;project:&nbsp;The&nbsp;project&nbsp;data&nbsp;represented&nbsp;as&nbsp;a&nbsp;dict<br>
+:return:&nbsp;<a href="#Project">Project</a>&nbsp;object</tt></dd></dl>
+
+<dl><dt><a name="Project-export_project"><strong>export_project</strong></a>(self)</dt><dd><tt>Writes&nbsp;the&nbsp;project&nbsp;as&nbsp;a&nbsp;json&nbsp;formatted&nbsp;string&nbsp;to&nbsp;a&nbsp;file.&nbsp;&nbsp;The&nbsp;file&nbsp;will&nbsp;be&nbsp;named&nbsp;according&nbsp;to&nbsp;the&nbsp;format:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;<a href="#Project">Project</a>.name&gt;.proj<br>
+:return:&nbsp;file</tt></dd></dl>
+
+<dl><dt><a name="Project-get_all_projects"><strong>get_all_projects</strong></a>(self)</dt><dd><tt>The&nbsp;get_all_projects&nbsp;method&nbsp;returns&nbsp;all&nbsp;projects&nbsp;residing&nbsp;in&nbsp;Cisco&nbsp;DNAC.<br>
+:return:&nbsp;list</tt></dd></dl>
+
+<dl><dt><a name="Project-get_project_by_name"><strong>get_project_by_name</strong></a>(self, name)</dt><dd><tt>Get_project_by_name&nbsp;queries&nbsp;Cisco&nbsp;DNA&nbsp;Center&nbsp;to&nbsp;return&nbsp;the&nbsp;project&nbsp;specified&nbsp;in&nbsp;the&nbsp;name&nbsp;parameter.&nbsp;&nbsp;If&nbsp;found,<br>
+the&nbsp;method&nbsp;loads&nbsp;the&nbsp;project's&nbsp;details&nbsp;in&nbsp;the&nbsp;object's&nbsp;__project&nbsp;dictionary.<br>
+:param&nbsp;name:&nbsp;<a href="#Project">Project</a>&nbsp;name&nbsp;to&nbsp;search&nbsp;for<br>
+:return:&nbsp;<a href="#Project">Project</a>&nbsp;object</tt></dd></dl>
+
+<dl><dt><a name="Project-import_project"><strong>import_project</strong></a>(self, project)</dt><dd><tt>Creates&nbsp;a&nbsp;new&nbsp;project&nbsp;from&nbsp;a&nbsp;file.<br>
+:param&nbsp;project:&nbsp;File&nbsp;name&nbsp;containing&nbsp;the&nbsp;project's&nbsp;parameters<br>
+:return:&nbsp;<a href="#Project">Project</a>&nbsp;object</tt></dd></dl>
+
+<dl><dt><a name="Project-load_project"><strong>load_project</strong></a>(self, name)</dt><dd><tt>Loads&nbsp;a&nbsp;project's&nbsp;attributes&nbsp;from&nbsp;Cisco&nbsp;DNA&nbsp;Center.&nbsp;&nbsp;This&nbsp;method&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;refresh&nbsp;a&nbsp;<a href="#Project">Project</a>&nbsp;object's<br>
+fields&nbsp;when&nbsp;API&nbsp;calls&nbsp;have&nbsp;been&nbsp;made&nbsp;that&nbsp;modify&nbsp;the&nbsp;project.<br>
+:param&nbsp;name:&nbsp;The&nbsp;project's&nbsp;name&nbsp;in&nbsp;Cisco&nbsp;DNAC<br>
+:return:&nbsp;<a href="#Project">Project</a>&nbsp;object</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>description</strong></dt>
+<dd><tt>Provides&nbsp;the&nbsp;project's&nbsp;description.<br>
+:return:&nbsp;str</tt></dd>
+</dl>
+<dl><dt><strong>is_deletable</strong></dt>
+<dd><tt>Defines&nbsp;whether&nbsp;or&nbsp;not&nbsp;the&nbsp;project&nbsp;can&nbsp;be&nbsp;deleted.<br>
+:return:&nbsp;bool</tt></dd>
+</dl>
+<dl><dt><strong>project</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;for&nbsp;the&nbsp;object's&nbsp;project&nbsp;field,&nbsp;which&nbsp;contains&nbsp;the&nbsp;project's&nbsp;complete&nbsp;representation&nbsp;as&nbsp;given&nbsp;in<br>
+Cisco&nbsp;DNAC.<br>
+:return:&nbsp;dict</tt></dd>
+</dl>
+<dl><dt><strong>project_id</strong></dt>
+<dd><tt>Furnishes&nbsp;the&nbsp;project's&nbsp;UUID.<br>
+:return:&nbsp;str</tt></dd>
+</dl>
+<dl><dt><strong>project_name</strong></dt>
+<dd><tt>Gives&nbsp;the&nbsp;project's&nbsp;name.<br>
+:return:&nbsp;str</tt></dd>
+</dl>
+<dl><dt><strong>tags</strong></dt>
+<dd><tt>Lists&nbsp;all&nbsp;tags&nbsp;associated&nbsp;to&nbsp;the&nbsp;project.<br>
+:return:&nbsp;list</tt></dd>
+</dl>
+<dl><dt><strong>templates</strong></dt>
+<dd><tt>Lists&nbsp;the&nbsp;templates&nbsp;contained&nbsp;in&nbsp;the&nbsp;project.<br>
+:return:&nbsp;list</tt></dd>
+</dl>
+<hr>
+Data descriptors inherited from <a href="dnac.dnacapi.html#DnacApi">dnac.dnacapi.DnacApi</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>crud</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;crud&nbsp;returns&nbsp;the&nbsp;reference&nbsp;to&nbsp;the&nbsp;Crud&nbsp;object&nbsp;this&nbsp;class&nbsp;uses&nbsp;to&nbsp;make&nbsp;RESTful&nbsp;API&nbsp;calls.&nbsp;&nbsp;Use&nbsp;this<br>
+function&nbsp;in&nbsp;order&nbsp;to&nbsp;access&nbsp;the&nbsp;Crud&nbsp;object's&nbsp;get,&nbsp;put,&nbsp;post&nbsp;and&nbsp;delete&nbsp;methods.<br>
+:return:&nbsp;Crud&nbsp;object</tt></dd>
+</dl>
+<dl><dt><strong>dnac</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;dnac&nbsp;returns&nbsp;the&nbsp;reference&nbsp;to&nbsp;the&nbsp;Dnac&nbsp;instance&nbsp;that&nbsp;stores&nbsp;this&nbsp;object.<br>
+:return:&nbsp;Dnac&nbsp;object</tt></dd>
+</dl>
+<dl><dt><strong>name</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;name&nbsp;returns&nbsp;__name,&nbsp;a&nbsp;user&nbsp;friendly&nbsp;name&nbsp;for&nbsp;accessing&nbsp;this&nbsp;object&nbsp;in&nbsp;Dnac's&nbsp;API&nbsp;store,&nbsp;namely<br>
+Dnac.api{}<br>
+:return:&nbsp;str</tt></dd>
+</dl>
+<dl><dt><strong>resource</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;resource&nbsp;returns&nbsp;__resource,&nbsp;which&nbsp;is&nbsp;the&nbsp;API&nbsp;call&nbsp;to&nbsp;Cisco&nbsp;DNAC.&nbsp;&nbsp;In&nbsp;child&nbsp;classes,&nbsp;use&nbsp;this&nbsp;method<br>
+to&nbsp;form&nbsp;requests&nbsp;by&nbsp;appending&nbsp;it&nbsp;to&nbsp;Cisco&nbsp;DNAC's&nbsp;base&nbsp;url,&nbsp;i.e.&nbsp;Dnac.url.<br>
+:return:&nbsp;str</tt></dd>
+</dl>
+<dl><dt><strong>results</strong></dt>
+<dd><tt>The&nbsp;results&nbsp;method&nbsp;is&nbsp;decorated&nbsp;as&nbsp;if&nbsp;it&nbsp;was&nbsp;an&nbsp;attribute&nbsp;of&nbsp;this&nbsp;class&nbsp;and&nbsp;can&nbsp;be&nbsp;used&nbsp;accordingly.<br>
+It&nbsp;returns&nbsp;the&nbsp;raw&nbsp;results&nbsp;stored&nbsp;in&nbsp;the&nbsp;class'&nbsp;Crud&nbsp;object&nbsp;obtained&nbsp;from&nbsp;an&nbsp;API&nbsp;call.<br>
+:return:&nbsp;dict</tt></dd>
+</dl>
+<dl><dt><strong>timeout</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;timeout&nbsp;returns&nbsp;the&nbsp;value&nbsp;of&nbsp;attribute&nbsp;__timeout.&nbsp;&nbsp;The&nbsp;value&nbsp;returned&nbsp;represents&nbsp;the&nbsp;number&nbsp;of<br>
+seconds&nbsp;to&nbsp;wait&nbsp;for&nbsp;the&nbsp;HTTP&nbsp;server&nbsp;to&nbsp;respond&nbsp;to&nbsp;an&nbsp;API&nbsp;request.<br>
+:return:&nbsp;int</tt></dd>
+</dl>
+<dl><dt><strong>verify</strong></dt>
+<dd><tt>Get&nbsp;method&nbsp;verify&nbsp;returns&nbsp;value&nbsp;of&nbsp;__verify,&nbsp;which&nbsp;is&nbsp;used&nbsp;to&nbsp;determine&nbsp;whether&nbsp;or&nbsp;not&nbsp;to&nbsp;check&nbsp;Cisco&nbsp;DNAC's<br>
+certificate&nbsp;upon&nbsp;making&nbsp;an&nbsp;API&nbsp;call.<br>
+:return:&nbsp;bool</tt></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>ACCEPTED</strong> = 202<br>
+<strong>CHECK_OR_CREATE_PROJECT</strong> = "Check the project's name in DNA Center or create it if it does not exist"<br>
+<strong>ERROR_MSGS</strong> = {400: '400 - API request syntax is malformed', 401: '401 - API request has missing or invalid credentials', 403: '403 - API request is unauthorized', 404: '404 - API requested resource does not exist', 409: '409 - API requested resource is in a conflicted state', 415: '415 - API request body is in an unsupported format', 417: '417 - The server cannot meet the requirements of the Expect request-header field', 500: '500 - Server could not fulfill the API request', 501: '501 - Server has not implemented the requested function', 503: '503 - Server is unavailable', ...}<br>
+<strong>ILLEGAL_PROJECT_LIST</strong> = 'Multiple projects were returned when searching by name'<br>
+<strong>MODULE</strong> = 'project.py'<br>
+<strong>NO_PROJECT</strong> = [[], {}]<br>
+<strong>NO_TEMPLATES</strong> = []<br>
+<strong>OK</strong> = 200<br>
+<strong>PROJECT_ALREADY_EXISTS</strong> = 'Project already exists'<br>
+<strong>PROJECT_IMPORT_FAILED</strong> = 'Failed to import the project'<br>
+<strong>PROJECT_NOT_FOUND</strong> = 'Could not find the project named'<br>
+<strong>PROJECT_RESOURCE_PATH</strong> = {'1.3.1.3': '/api/v2/template-programmer/project', '1.3.1.4': '/api/v2/template-programmer/project'}<br>
+<strong>REQUEST_NOT_ACCEPTED</strong> = 'API request is not ACCEPTED'<br>
+<strong>REQUEST_NOT_OK</strong> = 'API request is not OK'<br>
+<strong>STUB_PROJECT</strong> = 'STUB_PROJECT'<br>
+<strong>SUPPORTED_DNAC_VERSIONS</strong> = ['1.2.8', '1.2.10', '1.3.0.2', '1.3.0.3', '1.3.1.3', '1.3.1.4']<br>
+<strong>UNSUPPORTED_DNAC_VERSION</strong> = 'Unsupported Cisco DNA Center version'<br>
+<strong>USE_UNIQUE_PROJECT_NAME</strong> = 'Choose a project name that does not exist in DNA Center'</td></tr></table>
+</body></html>
