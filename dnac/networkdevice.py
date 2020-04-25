@@ -14,18 +14,18 @@ MODULE = 'networkdevice.py'
 NETWORK_DEVICE_RESOURCE_PATH = {
     '1.2.8': '/dna/intent/api/v1/network-device',
     '1.2.10': '/dna/intent/api/v1/network-device',
-    '1.3.0.2': '/api/v1/network-device',
-    '1.3.0.3': '/api/v1/network-device',
-    '1.3.1.3': '/api/v1/network-device',
-    '1.3.1.4': '/api/v1/network-device'
+    '1.3.0.2': '/dna/intent/api/v1/network-device',
+    '1.3.0.3': '/dna/intent/api/v1/network-device',
+    '1.3.1.3': '/dna/intent/api/v1/network-device',
+    '1.3.1.4': '/dna/intent/api/v1/network-device'
 }
 
 DEVICE_DETAIL_RESOURCE_PATH = {
     '1.2.10': '/dna/intent/api/v1/device-detail',
-    '1.3.0.2': '/api/v1/device-detail',
-    '1.3.0.3': '/api/v1/device-detail',
-    '1.3.1.3': '/api/v1/device-detail',
-    '1.3.1.4': '/api/v1/device-detail'
+    '1.3.0.2': '/dna/intent/api/v1/device-detail',
+    '1.3.0.3': '/dna/intent/api/v1/device-detail',
+    '1.3.1.3': '/dna/intent/api/v1/device-detail',
+    '1.3.1.4': '/dna/intent/api/v1/device-detail'
 }
 
 DEVICE_DETAIL_IDENTIFIERS = {
@@ -33,6 +33,8 @@ DEVICE_DETAIL_IDENTIFIERS = {
     'id': 'uuid',
     'name': 'nwDeviceName'
 }
+
+STUB_DEVICE = 'STUB_DEVICE'
 
 # error messages
 NO_DEVICES = 'API response list is empty'

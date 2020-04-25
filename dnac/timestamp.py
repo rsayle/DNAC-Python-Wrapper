@@ -45,6 +45,7 @@ class TimeStamp(object):
         TimeStamp class' __str__ function converts its timestamp attribute, an int, into a string.
         :return: The epoch time in milliseconds when the TimeStamp object was created.
         """
+        return str(self.__timestamp)
 
     # end __str__
 
