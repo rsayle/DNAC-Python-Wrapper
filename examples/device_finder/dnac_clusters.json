@@ -1,0 +1,20 @@
+[
+    {
+        "name": "denlab-en-dnac.cisco.com",
+        "ip": "",
+        "version": "1.3.1.4",
+        "port": 443,
+        "user": "admin",
+        "passwd": "C!sco123",
+        "content_type": "application/json"
+    },
+    {
+        "name": "",
+        "ip": "173.36.255.155",
+        "version": "1.3.1.4",
+        "port": 443,
+        "user": "admin",
+        "passwd": "c!sco123",
+        "content_type": "application/json"
+     }
+]
